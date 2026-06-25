@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索 - MakeupPal</title>
+    <style id="theme-vars">
+/* MakeupPal Brand Design System */
+/* Rose Gold + Cream Warm Palette */
+
+:root {
+  /* === Brand Colors === */
+  --color-primary: #C4956A;
+  --color-primary-light: #D4B08A;
+  --color-primary-lighter: #E8D5C0;
+  --color-primary-lightest: #F5EDE4;
+  --color-primary-dark: #A87D56;
+  --color-primary-darker: #8B6542;
+
+  /* Background & Surface */
+  --color-bg: #FFF8F0;
+  --color-bg-secondary: #FFF1E6;
+  --color-bg-tertiary: #FFE8D6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+
+  /* Text */
+  --color-text-primary: #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-tertiary: #9E9790;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #C4956A;
+
+  /* Semantic State Colors */
+  --state-success: #4CAF50;
+  --state-warning: #FF9800;
+  --state-error: #E53935;
+  --state-info: #42A5F5;
+
+  /* Border */
+  --color-border: #E8DDD2;
+  --color-border-light: #F0E8DF;
+
+  /* === Typography === */
+  --font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* === Spacing === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+
+  /* === Radius === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* === Shadow === */
+  --shadow-sm: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-md: 0 2px 8px rgba(196, 149, 106, 0.05);
+  --shadow-lg: 0 4px 16px rgba(196, 149, 106, 0.05);
+  --shadow-xl: 0 8px 32px rgba(196, 149, 106, 0.05);
+  --shadow-card: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* === Animation === */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* === Z-index === */
+  --z-tab-bar: 100;
+  --z-bottom-sheet: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* === Layout === */
+  --tab-bar-height: 56px;
+  --header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px;
+}
+
+/* === Typography Classes === */
+.text-xs { font-size: var(--font-size-xs); line-height: var(--line-height-tight); }
+.text-sm { font-size: var(--font-size-sm); line-height: var(--line-height-normal); }
+.text-base { font-size: var(--font-size-base); line-height: var(--line-height-normal); }
+.text-md { font-size: var(--font-size-md); line-height: var(--line-height-normal); }
+.text-lg { font-size: var(--font-size-lg); line-height: var(--line-height-normal); }
+.text-xl { font-size: var(--font-size-xl); line-height: var(--line-height-tight); }
+.text-2xl { font-size: var(--font-size-2xl); line-height: var(--line-height-tight); }
+.text-3xl { font-size: var(--font-size-3xl); line-height: var(--line-height-tight); }
+.text-4xl { font-size: var(--font-size-4xl); line-height: var(--line-height-tight); }
+
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* === Color Utility Classes === */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-brand { color: var(--color-primary); }
+.text-brand-dark { color: var(--color-primary-dark); }
+.text-success { color: var(--state-success); }
+.text-warning { color: var(--state-warning); }
+.text-error { color: var(--state-error); }
+
+.bg-page { background-color: var(--color-bg); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-brand { background-color: var(--color-primary); }
+.bg-brand-light { background-color: var(--color-primary-lighter); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+
+/* === Component Classes === */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-brand {
+  background: var(--color-primary-lightest);
+  color: var(--color-primary-dark);
+}
+
+.badge-success {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.badge-warning {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.badge-error {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: var(--z-bottom-sheet);
+  transition: opacity var(--transition-fast);
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  z-index: calc(var(--z-bottom-sheet) + 1);
+  transition: transform var(--transition-fast);
+}
+
+.bottom-sheet-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  margin: 8px auto;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* GP Token Badge */
+.gp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #C4956A, #D4B08A);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Tab Bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--tab-bar-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: var(--z-tab-bar);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  transition: color var(--transition-fast);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.tab-item.active {
+  color: var(--color-primary);
+}
+
+.tab-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Button Styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(196, 149, 106, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border: 1.5px solid var(--color-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 42, 38, 0.85);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  z-index: var(--z-toast);
+  backdrop-filter: blur(8px);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+  <!-- ========== Search Header (Sticky) ========== -->
+  <header class="sticky top-0 z-50 bg-page px-4 pt-3 pb-2" style="background: var(--color-bg);">
+    <div class="flex items-center gap-3">
+      <div class="flex-1 relative">
+        <div class="absolute left-3 top-1/2 -translate-y-1/2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <input
+          type="text"
+          class="search-input w-full pl-10 pr-10 py-2.5 rounded-full text-sm border-2 transition-all duration-200"
+          style="background: var(--color-surface); border-color: var(--color-border-light); color: var(--color-text-primary); font-size: var(--font-size-base);"
+          placeholder="搜索美妆问题..."
+        >
+        <div class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Category Tags ========== -->
+  <div class="px-4 py-2">
+    <div class="category-scroll flex gap-2 overflow-x-auto whitespace-nowrap pb-1">
+      <!-- Active tag -->
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary); color: var(--color-text-inverse); font-size: var(--font-size-sm);">
+        眼部
+      </button>
+      <!-- Inactive tags -->
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary-lightest); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+        唇部
+      </button>
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary-lightest); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+        底妆
+      </button>
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary-lightest); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+        场景妆
+      </button>
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary-lightest); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+        修容
+      </button>
+      <button class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 shrink-0"
+              style="background: var(--color-primary-lightest); color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+        护肤
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== Main Content ========== -->
+  <main class="px-4 pb-24" style="padding-bottom: calc(var(--tab-bar-height) + 16px + env(safe-area-inset-bottom, 0px));">
+
+    <!-- ===== Card 1: Expanded ===== -->
+    <div class="card mb-3" style="background: var(--color-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);">
+      <!-- Accordion Header -->
+      <div class="accordion-header flex items-center justify-between px-4 py-3.5 cursor-pointer select-none" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--color-primary-lightest);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">眼线总是画不对称怎么办？</span>
+        </div>
+        <svg class="chevron-icon rotated shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <!-- Accordion Body (Expanded) -->
+      <div class="accordion-body open">
+        <div class="px-4 pb-3 space-y-2.5">
+          <!-- Solution A -->
+          <div class="solution-card flex items-start gap-3 p-3 rounded-xl cursor-pointer" style="background: var(--color-bg-secondary); border-radius: var(--radius-md);">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: var(--color-surface); box-shadow: var(--shadow-sm);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">分段画法</span>
+                <span class="badge" style="background: #E8F5E9; color: #2E7D32; font-size: var(--font-size-xs);">简单</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs" style="color: var(--color-text-tertiary); font-size: var(--font-size-xs);">
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  3分钟
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                  眼线笔
+                </span>
+              </div>
+            </div>
+            <svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+
+          <!-- Solution B -->
+          <div class="solution-card flex items-start gap-3 p-3 rounded-xl cursor-pointer" style="background: var(--color-bg-secondary); border-radius: var(--radius-md);">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: var(--color-surface); box-shadow: var(--shadow-sm);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">胶带辅助法</span>
+                <span class="badge" style="background: #FFF3E0; color: #E65100; font-size: var(--font-size-xs);">中等</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs" style="color: var(--color-text-tertiary); font-size: var(--font-size-xs);">
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  5分钟
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                  眼线笔+透明胶带
+                </span>
+              </div>
+            </div>
+            <svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+
+          <!-- Solution C -->
+          <div class="solution-card flex items-start gap-3 p-3 rounded-xl cursor-pointer" style="background: var(--color-bg-secondary); border-radius: var(--radius-md);">
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: var(--color-surface); box-shadow: var(--shadow-sm);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">棉签修正法</span>
+                <span class="badge" style="background: #E8F5E9; color: #2E7D32; font-size: var(--font-size-xs);">简单</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs" style="color: var(--color-text-tertiary); font-size: var(--font-size-xs);">
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  2分钟
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                  眼线笔+棉签
+                </span>
+              </div>
+            </div>
+            <svg class="shrink-0 mt-1" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Card 2: Collapsed ===== -->
+    <div class="card mb-3" style="background: var(--color-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);">
+      <div class="accordion-header flex items-center justify-between px-4 py-3.5 cursor-pointer select-none" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--color-primary-lightest);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">口红总是沾杯怎么办？</span>
+        </div>
+        <svg class="chevron-icon shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <div class="accordion-body">
+        <div class="px-4 pb-3 space-y-2.5">
+          <!-- Placeholder solutions (hidden when collapsed) -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Card 3: Collapsed ===== -->
+    <div class="card mb-3" style="background: var(--color-surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);">
+      <div class="accordion-header flex items-center justify-between px-4 py-3.5 cursor-pointer select-none" onclick="toggleAccordion(this)">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background: var(--color-primary-lightest);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <span class="font-medium text-sm" style="color: var(--color-text-primary); font-size: var(--font-size-base);">底妆卡粉起皮怎么解决？</span>
+        </div>
+        <svg class="chevron-icon shrink-0" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9E9790" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <div class="accordion-body">
+        <div class="px-4 pb-3 space-y-2.5">
+          <!-- Placeholder solutions (hidden when collapsed) -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Risk Warning Section ===== -->
+    <div class="risk-card mb-3 p-4 rounded-xl" style="background: #FFEBEE; border-left: 3px solid #E53935; border-radius: 0 var(--radius-lg) var(--radius-lg) 0;">
+      <div class="flex items-start gap-2.5">
+        <div class="shrink-0 mt-0.5">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-semibold text-sm mb-1" style="color: #C62828; font-size: var(--font-size-base);">防踩雷提醒</h4>
+          <p class="text-xs mb-3" style="color: #D32F2F; font-size: var(--font-size-sm); line-height: var(--line-height-relaxed);">
+            含有XX成分的产品可能引起过敏，建议敏感肌使用前先做局部测试。
+          </p>
+          <button class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200"
+                  style="border: 1.5px solid var(--color-primary); color: var(--color-primary); background: transparent; font-size: var(--font-size-sm);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            替代推荐
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========== Bottom Tab Bar ========== -->
+  <nav class="tab-bar" data-active-tab="search" style="max-width: 414px; margin: 0 auto;">
+    <!-- 首页 -->
+    <div class="tab-item" data-dom-id="tab-home">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>首页</span>
+    </div>
+    <!-- 搜索 (Active) -->
+    <div class="tab-item active" data-dom-id="tab-search">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <span>搜索</span>
+    </div>
+    <!-- 商城 -->
+    <div class="tab-item" data-dom-id="tab-mall">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span>商城</span>
+    </div>
+    <!-- 镜面 -->
+    <div class="tab-item" data-dom-id="tab-mirror">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span>镜面</span>
+    </div>
+    <!-- 我的 -->
+    <div class="tab-item" data-dom-id="tab-profile">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>我的</span>
+    </div>
+  </nav>
+
+  <!-- ========== JavaScript ========== -->
+  <script>
+    function toggleAccordion(header) {
+      const card = header.closest('.card');
+      const body = card.querySelector('.accordion-body');
+      const chevron = header.querySelector('.chevron-icon');
+
+      if (body.classList.contains('open')) {
+        body.classList.remove('open');
+        chevron.classList.remove('rotated');
+      } else {
+        body.classList.add('open');
+        chevron.classList.add('rotated');
+      }
+    }
+
+    // Category tag toggle
+    document.querySelectorAll('.category-scroll button').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-scroll button').forEach(b => {
+          b.style.background = 'var(--color-primary-lightest)';
+          b.style.color = 'var(--color-text-secondary)';
+        });
+        this.style.background = 'var(--color-primary)';
+        this.style.color = 'var(--color-text-inverse)';
+      });
+    });
+  </script>
+
+
+    <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: var(--font-family);
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      margin: 0;
+      padding: 0;
+      max-width: 414px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Search bar focus ring */
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(196, 149, 106, 0.25);
+    }
+
+    /* Category scroll hide scrollbar */
+    .category-scroll::-webkit-scrollbar { display: none; }
+    .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Accordion transition */
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.2s ease;
+      opacity: 0;
+    }
+    .accordion-body.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+
+    /* Chevron rotation */
+    .chevron-icon {
+      transition: transform 0.2s ease;
+    }
+    .chevron-icon.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Solution card hover */
+    .solution-card {
+      transition: all 0.2s ease;
+    }
+    .solution-card:active {
+      transform: scale(0.98);
+      background: var(--color-bg-secondary);
+    }
+
+    /* Risk warning pulse */
+    @keyframes pulse-border {
+      0%, 100% { border-color: #E53935; }
+      50% { border-color: #FF6F60; }
+    }
+    .risk-card {
+      animation: pulse-border 3s ease-in-out infinite;
+    }
+
+    /* Tab bar active indicator */
+    .tab-item.active::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 2px;
+      background: var(--color-primary);
+      border-radius: 1px;
+    }
+    .tab-item { position: relative; }
+  </style>
+</body>
+</html>

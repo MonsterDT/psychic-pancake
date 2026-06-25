@@ -1,0 +1,69 @@
+{
+  "root": {
+    "nodeId": "gen-project-shell",
+    "kind": "project-shell",
+    "pageIds": ["page-home", "page-search", "page-mall", "page-mirror", "page-profile"],
+    "output": "partials/project-shell.html",
+    "sharedRegions": ["tab-bar", "page-frame"],
+    "privateRegions": [],
+    "mutableSlots": ["activeTabItem"],
+    "status": "planned",
+    "children": [
+      {
+        "nodeId": "gen-page-home",
+        "kind": "page-leaf",
+        "pageIds": ["page-home"],
+        "output": "pages/home.html",
+        "sharedRegions": [],
+        "privateRegions": ["home-header", "home-banner", "home-features", "home-feed"],
+        "mutableSlots": ["activeTabItem"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-search",
+        "kind": "page-leaf",
+        "pageIds": ["page-search"],
+        "output": "pages/search.html",
+        "sharedRegions": [],
+        "privateRegions": ["search-header", "search-tags", "search-results"],
+        "mutableSlots": ["activeTabItem"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-mall",
+        "kind": "page-leaf",
+        "pageIds": ["page-mall"],
+        "output": "pages/mall.html",
+        "sharedRegions": [],
+        "privateRegions": ["mall-header", "mall-categories", "mall-products"],
+        "mutableSlots": ["activeTabItem"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-mirror",
+        "kind": "page-leaf",
+        "pageIds": ["page-mirror"],
+        "output": "pages/mirror.html",
+        "sharedRegions": [],
+        "privateRegions": ["mirror-header", "mirror-chat", "mirror-camera"],
+        "mutableSlots": ["activeTabItem"],
+        "status": "planned",
+        "children": []
+      },
+      {
+        "nodeId": "gen-page-profile",
+        "kind": "page-leaf",
+        "pageIds": ["page-profile"],
+        "output": "pages/profile.html",
+        "sharedRegions": [],
+        "privateRegions": ["profile-header", "profile-cards", "profile-list"],
+        "mutableSlots": ["activeTabItem"],
+        "status": "planned",
+        "children": []
+      }
+    ]
+  }
+}
