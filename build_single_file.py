@@ -1,7 +1,7 @@
 import base64, os, re
 
-html_path = '/workspace/makeuppal-demo-v2.9.html'
-output_path = '/workspace/makeuppal-demo-v2.9-standalone.html'
+html_path = '/workspace/makeuppal-demo-v3.0.1.html'
+output_path = '/workspace/makeuppal-demo-v3.0.1-mobile.html'
 assets_dir = '/workspace/ui-design/assets'
 
 with open(html_path, 'r', encoding='utf-8') as f:
