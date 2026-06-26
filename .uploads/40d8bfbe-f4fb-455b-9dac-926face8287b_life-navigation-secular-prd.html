@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生命导航（Life Navigator）- 产品需求文档 PRD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="_shared/js/mermaid.min.js"></script>
+<script src="_shared/js/echarts.min.js"></script>
+<style>
+@font-face {
+  font-family: 'LocalSerif';
+  src: url('_shared/fonts/CrimsonPro-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'LocalSerif';
+  src: url('_shared/fonts/CrimsonPro-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'LocalSans';
+  src: url('_shared/fonts/WorkSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'LocalSans';
+  src: url('_shared/fonts/WorkSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+:root {
+  --primary: #F59E0B;
+  --primary-dark: #D97706;
+  --primary-light: #FCD34D;
+  --green: #10B981;
+  --green-light: #D1FAE5;
+  --indigo: #6366F1;
+  --indigo-light: #E0E7FF;
+  --warm-bg: #FFFBEB;
+  --warm-bg2: #FEF3C7;
+  --text: #1F2937;
+  --text-light: #6B7280;
+  --text-lighter: #9CA3AF;
+  --border: #E5E7EB;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.10);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans SC', 'LocalSans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--warm-bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== COVER ===== */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(165deg, #FFFBEB 0%, #FEF3C7 30%, #FDE68A 60%, #FCD34D 100%);
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-dark);
+  margin-bottom: 32px;
+  border: 1px solid rgba(245,158,11,0.3);
+  letter-spacing: 2px;
+}
+.cover h1 {
+  font-family: 'Noto Serif SC', 'LocalSerif', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.cover h1 span {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cover .subtitle {
+  font-family: 'Noto Serif SC', 'LocalSerif', serif;
+  font-size: clamp(18px, 2.5vw, 28px);
+  color: var(--text-light);
+  margin-bottom: 12px;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+.cover .slogan {
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: var(--primary-dark);
+  font-weight: 500;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.cover-meta-item {
+  background: rgba(255,255,255,0.6);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-light);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.cover-meta-item strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ===== TOC ===== */
+.toc {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+.toc-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text);
+}
+.toc-list {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.toc-list li a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.toc-list li a:hover {
+  border-color: var(--primary);
+  box-shadow: var(--card-shadow);
+  transform: translateX(4px);
+}
+.toc-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.toc-text {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* ===== SECTION ===== */
+.section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-num {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.section h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.section h2 .en {
+  font-size: 0.5em;
+  color: var(--text-lighter);
+  font-weight: 400;
+  font-family: 'LocalSans', sans-serif;
+}
+.section-header p {
+  color: var(--text-light);
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 24px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.card h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h3 .icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.icon-orange { background: #FEF3C7; color: var(--primary-dark); }
+.icon-green { background: #D1FAE5; color: #059669; }
+.icon-indigo { background: #E0E7FF; color: var(--indigo); }
+.icon-rose { background: #FFE4E6; color: #E11D48; }
+.card p, .card li {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.8;
+}
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+.card ul li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+}
+.card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* ===== HIGHLIGHT ===== */
+.highlight-box {
+  background: linear-gradient(135deg, #FEF3C7, #FFFBEB);
+  border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 24px 28px;
+  margin: 24px 0;
+}
+.highlight-box.green {
+  background: linear-gradient(135deg, #D1FAE5, #ECFDF5);
+  border-color: var(--green);
+}
+.highlight-box.indigo {
+  background: linear-gradient(135deg, #E0E7FF, #EEF2FF);
+  border-color: var(--indigo);
+}
+.highlight-box p {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ===== TABLE ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+}
+table thead {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+}
+table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+table tbody tr:hover {
+  background: #FEF3C7;
+}
+table tbody tr:nth-child(even) {
+  background: #FFFBEB;
+}
+
+/* ===== TAG ===== */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tag-orange { background: #FEF3C7; color: var(--primary-dark); }
+.tag-green { background: #D1FAE5; color: #059669; }
+.tag-indigo { background: #E0E7FF; color: var(--indigo); }
+
+/* ===== MERMAID ===== */
+.mermaid-container {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  margin: 32px 0;
+  overflow-x: auto;
+}
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+.mermaid svg {
+  max-width: 100%;
+}
+
+/* ===== CHART ===== */
+.chart-container {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  margin: 32px 0;
+}
+.chart-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+/* ===== UI PROTOTYPE ===== */
+.proto-section {
+  margin: 40px 0;
+}
+.proto-section h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.proto-desc {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Phone Frame */
+.phone-frame {
+  width: 375px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 40px;
+  border: 8px solid #1F2937;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.phone-frame .phone-status-bar {
+  height: 44px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.phone-frame .phone-notch {
+  width: 120px;
+  height: 28px;
+  background: #1F2937;
+  border-radius: 0 0 16px 16px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.phone-content {
+  min-height: 600px;
+  position: relative;
+}
+
+/* ===== WIDE PROTO (tablet/desktop) ===== */
+.tablet-frame {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+/* ===== PROTO INTERNAL STYLES ===== */
+.proto-header-gradient {
+  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
+  padding: 24px 20px;
+  color: #fff;
+  text-align: center;
+}
+.proto-header-green {
+  background: linear-gradient(135deg, #A7F3D0 0%, #10B981 50%, #059669 100%);
+  padding: 24px 20px;
+  color: #fff;
+  text-align: center;
+}
+.proto-header-indigo {
+  background: linear-gradient(135deg, #C7D2FE 0%, #6366F1 50%, #4F46E5 100%);
+  padding: 24px 20px;
+  color: #fff;
+  text-align: center;
+}
+.proto-card {
+  background: #fff;
+  margin: 16px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid #F3F4F6;
+}
+.proto-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.proto-card p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+.proto-btn {
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.proto-btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+}
+.proto-btn-green {
+  background: linear-gradient(135deg, var(--green), #059669);
+  color: #fff;
+}
+.proto-btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary-dark);
+}
+
+/* ===== ROADMAP ===== */
+.roadmap {
+  display: grid;
+  gap: 20px;
+}
+.roadmap-phase {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.roadmap-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.roadmap-line {
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.roadmap-line::before {
+  content: '';
+  width: 2px;
+  height: 20px;
+  background: var(--border);
+}
+
+/* ===== SUB SECTION ===== */
+.sub-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sub-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+/* ===== DIVIDER ===== */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 80px 0;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-lighter);
+  font-size: 14px;
+  border-top: 1px solid var(--border);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ===== NUMBER LIST ===== */
+.step-list {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+}
+.step-list li {
+  counter-increment: step;
+  padding: 16px 20px 16px 60px;
+  position: relative;
+  margin-bottom: 8px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.step-list li::before {
+  content: counter(step);
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ===== METRIC GRID ===== */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+.metric-item {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+.metric-value {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Noto Serif SC', serif;
+}
+.metric-label {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* ===== COMPARISON TABLE (for terminology) ===== */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.comparison-from {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #991B1B;
+}
+.comparison-to {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #065F46;
+}
+.comparison-arrow {
+  text-align: center;
+  font-size: 18px;
+  color: var(--primary);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .comparison-grid { grid-template-columns: 1fr; }
+  .comparison-arrow { transform: rotate(90deg); }
+  .phone-frame { border-radius: 24px; border-width: 4px; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  body { background: #fff; }
+  .cover { min-height: auto; padding: 40px; }
+  .section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <div class="cover-badge">PRODUCT REQUIREMENTS DOCUMENT</div>
+  <h1><span>生命导航</span><br>Life Navigator</h1>
+  <p class="subtitle">产品需求文档（世俗版）</p>
+  <p class="slogan">"发现你的内在罗盘，规划你的人生航程"</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <strong>文档版本</strong>
+      V1.0 世俗化版本
+    </div>
+    <div class="cover-meta-item">
+      <strong>产品类型</strong>
+      个人成长与生命规划工具
+    </div>
+    <div class="cover-meta-item">
+      <strong>创建日期</strong>
+      2026年6月27日
+    </div>
+    <div class="cover-meta-item">
+      <strong>合规定位</strong>
+      非宗教类 / 大众市场
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TOC ==================== -->
+<div class="toc">
+  <h2 class="toc-title">目录</h2>
+  <ol class="toc-list">
+    <li><a href="#sec1"><span class="toc-num">01</span><span class="toc-text">需求背景与市场分析</span></a></li>
+    <li><a href="#sec2"><span class="toc-num">02</span><span class="toc-text">产品定位与愿景</span></a></li>
+    <li><a href="#sec3"><span class="toc-num">03</span><span class="toc-text">用户画像分析</span></a></li>
+    <li><a href="#sec4"><span class="toc-num">04</span><span class="toc-text">功能需求（五大模块）</span></a></li>
+    <li><a href="#sec5"><span class="toc-num">05</span><span class="toc-text">高保真UI原型展示</span></a></li>
+    <li><a href="#sec6"><span class="toc-num">06</span><span class="toc-text">非功能需求</span></a></li>
+    <li><a href="#sec7"><span class="toc-num">07</span><span class="toc-text">技术架构与MVP路线图</span></a></li>
+    <li><a href="#sec8"><span class="toc-num">08</span><span class="toc-text">指标体系与成功标准</span></a></li>
+  </ol>
+</div>
+
+<!-- ==================== SECTION 1: 需求背景 ==================== -->
+<div class="section" id="sec1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2>需求背景与市场分析 <span class="en">Background & Market Analysis</span></h2>
+    <p>为什么我们需要"生命导航"？——当下个人成长领域的巨大缺口</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-orange">&#9670;</span> 市场痛点</h3>
+    <ul>
+      <li><strong>碎片化困境</strong>：人们在短视频、社交媒体中获取海量人生建议，但无法形成系统化认知框架</li>
+      <li><strong>方向感缺失</strong>：尤其在25-45岁阶段，大量人群经历职业迷茫、意义感缺失，缺乏科学的自我探索工具</li>
+      <li><strong>价值观混乱</strong>：社会节奏加速，个体在"恐惧驱动"和"欲望驱动"之间摇摆，缺乏"意义驱动"的引导</li>
+      <li><strong>工具断层</strong>：市面工具要么过于功利（仅关注效率和KPI），要么过于玄学（缺乏科学基础），缺少兼具深度与实用性的中间产品</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-green">&#9670;</span> 政策契合度</h3>
+    <ul>
+      <li><strong>《"健康中国2030"规划纲要》</strong>：强调全民心理健康，促进积极的人生观和社会心态建设</li>
+      <li><strong>终身学习政策</strong>：国家大力倡导构建学习型社会，个人成长工具属于终身学习的基础设施</li>
+      <li><strong>积极心理学推广</strong>：国家心理服务体系建设的推进，为科学化的个人成长工具创造了良好的土壤</li>
+      <li><strong>合规定位</strong>：本产品定位为"非宗教类个人成长工具"，完全符合《互联网宗教信息服务管理办法》的合规要求，面向大众市场传播</li>
+    </ul>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>核心理念</strong>：人生不是盲目的奔跑，而是有方向的绽放。"生命导航"融合东西方普世智慧，结合认知科学与积极心理学，帮助每一位用户找到属于自己的内在罗盘。</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-indigo">&#9670;</span> 世俗化转换策略</h3>
+    <p>本产品源自一套经过实践验证的个人成长方法论。为使产品能在中国法律法规框架内、面向大众市场传播，我们对术语体系进行了全面的世俗化转换：</p>
+    <div style="margin-top:20px; display:grid; gap:10px;">
+      <div class="comparison-grid">
+        <div class="comparison-from">天国 / 天国时代</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">人生新阶段 / 觉醒时代</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">属灵 / 灵命</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">内在力量 / 内在成长</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">呼召 / 命定 / 天命</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">人生使命 / 自我召唤</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">祷告 / 安息 / 读经</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">正念冥想 / 内省 / 经典阅读</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">圣灵</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">内在智慧 / 直觉 / 潜能</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">恩典 / 传递恩典</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">善意传递 / 善意流动</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">属灵伙伴</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">成长伙伴</div>
+      </div>
+      <div class="comparison-grid">
+        <div class="comparison-from">先知 / 祭司 / 君王</div>
+        <div class="comparison-arrow">&#10142;</div>
+        <div class="comparison-to">远见者 / 守护者 / 引领者</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 2: 产品定位 ==================== -->
+<div class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2>产品定位与愿景 <span class="en">Product Positioning & Vision</span></h2>
+    <p>定义产品是什么、不是什么，以及我们要去哪里</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card" style="border-top: 3px solid var(--primary);">
+      <h3><span class="icon icon-orange">L</span> 产品名称</h3>
+      <p><strong style="font-size:24px; color:var(--text);">生命导航<br>Life Navigator</strong></p>
+      <p style="margin-top:12px;">一款面向中国大众的个人成长与生命规划工具，帮助用户系统性地探索自我、发现使命、规划人生。</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--green);">
+      <h3><span class="icon icon-green">V</span> 产品Slogan</h3>
+      <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--primary-dark); font-style:italic; line-height:1.6;">"发现你的内在罗盘，<br>规划你的人生航程"</p>
+      <p style="margin-top:12px;">不追逐潮流，而是找到属于自己的方向。</p>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--indigo);">
+      <h3><span class="icon icon-indigo">M</span> 产品使命</h3>
+      <p style="font-family:'Noto Serif SC',serif; font-size:18px; color:var(--text); line-height:1.6;">帮助一亿人找到人生方向，活出有意义、有温度、有价值的人生。</p>
+      <p style="margin-top:12px;">用科技的力量，让个人成长变得系统化、可测量、可持续。</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span>差异化定位</h3>
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>维度</th><th>生命导航</th><th>效率工具（如Notion）</th><th>冥想APP（如Keep冥想）</th><th>知识付费平台</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>核心聚焦</strong></td><td>自我探索 + 人生规划</td><td>任务管理 + 知识整理</td><td>减压放松</td><td>技能学习</td></tr>
+        <tr><td><strong>深度</strong></td><td>深层价值观与意义</td><td>浅层效率</td><td>情绪调节</td><td>能力提升</td></tr>
+        <tr><td><strong>理论根基</strong></td><td>多学科融合</td><td>GTD等方法论</td><td>正念/冥想</td><td>碎片知识</td></tr>
+        <tr><td><strong>用户粘性</strong></td><td>长期成长陪伴</td><td>日常使用</td><td>按需使用</td><td>课程周期</td></tr>
+        <tr><td><strong>独特价值</strong></td><td>从"知"到"行"的闭环</td><td>高效组织</td><td>减压</td><td>获取知识</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span>理论基础来源</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">1</span> 费斯汀格法则</h3>
+      <p>生活中的10%由发生在你身上的事情组成，另外90%由你对所发生事情的反应决定。帮助用户认识到内在选择的力量。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">2</span> 积极心理学</h3>
+      <p>马丁-塞利格曼的PERMA模型，关注积极情绪、投入、人际关系、意义和成就，为产品提供科学框架。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">3</span> 认知行为理论</h3>
+      <p>信念影响情绪和行为。帮助用户识别核心信念，建立更健康的认知模式。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-orange">4</span> 马斯洛需求层次</h3>
+      <p>从生理需求到自我实现，帮助用户理解自己当前所处的层次，规划成长路径。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">5</span> 彼得-德鲁克管理学</h3>
+      <p>"认识你自己"——德鲁克认为管理者的首要任务是认识自己的优势和价值观，这与产品理念高度契合。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">6</span> 柏拉图哲学</h3>
+      <p>洞穴寓言——从"影子"到"真实"的认知升维过程，启发用户进行深层次的自我反思。</p>
+    </div>
+  </div>
+
+  <div class="highlight-box green">
+    <p><strong>中国传统哲学融入</strong>：产品还汲取儒家"修齐治平"的自我修炼观、道家"道法自然"的和谐理念、佛学"正念觉察"的修行方法（仅限哲学层面，不涉及宗教实践），形成东西方融合的普世智慧体系。</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 3: 用户画像 ==================== -->
+<div class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2>用户画像分析 <span class="en">User Personas</span></h2>
+    <p>三类核心用户，覆盖从18岁到50岁的成长需求</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card" style="border-left: 4px solid var(--primary);">
+      <h3><span class="icon icon-orange">&#9632;</span> 职场成长者</h3>
+      <p><span class="tag tag-orange">25-40岁</span> <span class="tag tag-orange">核心用户</span></p>
+      <p style="margin-top:12px;"><strong>特征画像</strong>：</p>
+      <ul>
+        <li>工作3-10年，经历了从热情到倦怠的转变</li>
+        <li>收入尚可，但常感"这不是我想要的生活"</li>
+        <li>对"35岁危机"有焦虑感</li>
+        <li>尝试过时间管理、效率工具，但发现方向比速度更重要</li>
+      </ul>
+      <p><strong>核心诉求</strong>：找到真正的人生方向，在职业与生活之间找到平衡</p>
+      <p><strong>使用场景</strong>：通勤路上做每日智慧卡片、周末做自我探索、睡前做正念冥想</p>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--green);">
+      <h3><span class="icon icon-green">&#9632;</span> 创业者/管理者</h3>
+      <p><span class="tag tag-green">30-50岁</span> <span class="tag tag-green">高价值用户</span></p>
+      <p style="margin-top:12px;"><strong>特征画像</strong>：</p>
+      <ul>
+        <li>事业有成就，但开始思考"下一个十年做什么"</li>
+        <li>对企业文化和团队管理有深层思考（如胖东来案例的关注者）</li>
+        <li>渴望从"成功"走向"有意义"</li>
+        <li>愿意为高品质内容付费</li>
+      </ul>
+      <p><strong>核心诉求</strong>：在商业成功之上，找到人生使命，建立使命驱动型组织</p>
+      <p><strong>使用场景</strong>：战略复盘时使用BHD框架、企业家读书会、价值观对齐工作坊</p>
+    </div>
+    <div class="card" style="border-left: 4px solid var(--indigo);">
+      <h3><span class="icon icon-indigo">&#9632;</span> 自我探索者</h3>
+      <p><span class="tag tag-indigo">18-35岁</span> <span class="tag tag-indigo">增长潜力大</span></p>
+      <p style="margin-top:12px;"><strong>特征画像</strong>：</p>
+      <ul>
+        <li>大学生或初入职场，对自我成长有浓厚兴趣</li>
+        <li>热衷MBTI、九型人格、优势测评等工具</li>
+        <li>希望通过系统工具了解自己，找到适合的发展方向</li>
+        <li>活跃于社交媒体，乐于分享成长体验</li>
+      </ul>
+      <p><strong>核心诉求</strong>：科学地认识自己，找到天赋与热情的交汇点</p>
+      <p><strong>使用场景</strong>：深夜做人生规划、社交媒体分享探索结果、与成长伙伴互动</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 4: 功能需求 ==================== -->
+<div class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2>功能需求 <span class="en">Feature Requirements</span></h2>
+    <p>五大核心模块，构建完整的个人成长闭环</p>
+  </div>
+
+  <!-- Mermaid: Product Architecture -->
+  <div class="mermaid-container">
+    <div class="mermaid">
+graph TD
+    A["<b>生命导航 Life Navigator</b>"] --> B["模块A：自我探索之旅"]
+    A --> C["模块B：使命定位与人生规划"]
+    A --> D["模块C：日常成长系统"]
+    A --> E["模块D：价值经济学实践"]
+    A --> F["模块E：成长社区"]
+    
+    B --> B1["7阶段探索框架"]
+    B --> B2["种子发现四维评估"]
+    B --> B3["生命平衡7维自评"]
+    
+    B1 --> B1a["深度对话"]
+    B1 --> B1b["价值观卡牌"]
+    B1 --> B1c["旅程地图"]
+    B1 --> B1d["角色排序"]
+    B1 --> B1e["愿景冥想"]
+    B1 --> B1f["给未来写信"]
+    B1 --> B1g["平衡自评"]
+    
+    B2 --> B2a["热情评估"]
+    B2 --> B2b["天赋发现"]
+    B2 --> B2c["社会需求分析"]
+    B2 --> B2d["价值实现路径"]
+    
+    C --> C1["种子发现五阶路径"]
+    C --> C2["BHD框架定位"]
+    C --> C3["人生DNA定位"]
+    C --> C4["全生命周期画像"]
+    
+    D --> D1["每日智慧卡片"]
+    D --> D2["21天习惯计划"]
+    D --> D3["五维目标管理+OKR"]
+    D --> D4["PDCA检视"]
+    
+    E --> E1["投资vs投机自评"]
+    E --> E2["受托者意识追踪"]
+    E --> E3["善意传递日志"]
+    E --> E4["驱动系统自检"]
+    
+    F --> F1["成长笔记/知识库"]
+    F --> F2["时间胶囊"]
+    F --> F3["成长伙伴配对"]
+    F --> F4["蜕变故事分享墙"]
+
+    style A fill:#F59E0B,stroke:#D97706,color:#fff
+    style B fill:#FEF3C7,stroke:#F59E0B,color:#1F2937
+    style C fill:#D1FAE5,stroke:#10B981,color:#1F2937
+    style D fill:#E0E7FF,stroke:#6366F1,color:#1F2937
+    style E fill:#FFE4E6,stroke:#F43F5E,color:#1F2937
+    style F fill:#FCE7F3,stroke:#EC4899,color:#1F2937
+    </div>
+    <p style="text-align:center; margin-top:16px; color:var(--text-light); font-size:13px;">图4-1：生命导航产品信息架构图</p>
+  </div>
+
+  <!-- ===== Module A ===== -->
+  <h3 class="sub-title"><span class="dot"></span> 模块A：自我探索之旅（核心体验）</h3>
+  <p style="color:var(--text-light); margin-bottom:24px;">基于现有demo升级的7阶段深度自我探索框架，帮助用户完成一次完整的人生审视</p>
+
+  <div class="card">
+    <h3><span class="icon icon-orange">A1</span> 7阶段探索框架</h3>
+    <p>用户将依次经历以下7个精心设计的探索阶段：</p>
+    <ol class="step-list" style="margin-top:16px;">
+      <li><strong>深度对话</strong> —— 通过引导式对话，帮助用户开启自我反思，建立信任感</li>
+      <li><strong>价值观卡牌</strong> —— 通过卡牌选择，帮助用户发现和排列自己的核心价值观与附属价值观</li>
+      <li><strong>生命旅程地图</strong> —— 绘制个人成长时间线，将每个经历重新解读为成长养分</li>
+      <li><strong>角色排序</strong> —— 在"求真 / 尚美 / 向善"三维度中探索人生角色倾向</li>
+      <li><strong>愿景冥想</strong> —— 通过引导式正念冥想，描绘人生终极愿景——理想终局画像</li>
+      <li><strong>给未来写信</strong> —— 写一封给5年/10年后自己的信，锚定人生方向</li>
+      <li><strong>生命平衡自评</strong> —— 7维生命平衡评估（事业/财务/健康/家庭/社交/成长/内心宁静）</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-green">A2</span> 种子发现四维评估</h3>
+    <p>借鉴"播种"智慧，转化为现代心理学的天赋发现模型：</p>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:16px;">
+      <div style="background:#FEF3C7; padding:16px; border-radius:10px; text-align:center;">
+        <strong style="color:var(--primary-dark);">维度一：热情</strong>
+        <p style="font-size:13px;">什么事情让你忘记时间？做什么事时你感到最充实？</p>
+      </div>
+      <div style="background:#D1FAE5; padding:16px; border-radius:10px; text-align:center;">
+        <strong style="color:#059669;">维度二：天赋</strong>
+        <p style="font-size:13px;">你天生擅长什么？别人最常夸你什么？做什么事学得最快？</p>
+      </div>
+      <div style="background:#E0E7FF; padding:16px; border-radius:10px; text-align:center;">
+        <strong style="color:var(--indigo);">维度三：社会需求</strong>
+        <p style="font-size:13px;">世界需要什么？社会有哪些未被满足的需求？</p>
+      </div>
+      <div style="background:#FFE4E6; padding:16px; border-radius:10px; text-align:center;">
+        <strong style="color:#E11D48;">维度四：价值实现</strong>
+        <p style="font-size:13px;">你能通过什么方式获得合理回报，同时保持内心满足？</p>
+      </div>
+    </div>
+    <div class="highlight-box green" style="margin-top:16px;">
+      <p>当热情、天赋、社会需求、价值实现四个维度交汇时，就是你的"种子"——最值得投入的人生方向。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-indigo">A3</span> 角色探索模型：求真 / 尚美 / 向善</h3>
+    <p>每个人在不同人生阶段都会倾向于不同的核心角色维度：</p>
+    <table>
+      <thead><tr><th>角色维度</th><th>核心追求</th><th>典型表现</th><th>代表人物</th></tr></thead>
+      <tbody>
+        <tr><td><strong>远见者（求真）</strong></td><td>探索真理、追求认知深度</td><td>独立思考、善于洞察本质、喜欢研究</td><td>柏拉图、爱因斯坦</td></tr>
+        <tr><td><strong>守护者（尚美）</strong></td><td>创造美好、维护和谐</td><td>审美敏锐、善于创造、重视品质</td><td>达-芬奇、乔布斯</td></tr>
+        <tr><td><strong>引领者（向善）</strong></td><td>服务他人、推动变革</td><td>使命驱动、善于激励、乐于奉献</td><td>德鲁克、于东来</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ===== Module B ===== -->
+  <h3 class="sub-title"><span class="dot"></span> 模块B：使命定位与人生规划</h3>
+
+  <div class="card">
+    <h3><span class="icon icon-orange">B1</span> 种子发现五阶路径</h3>
+    <p>从热情到人生使命的渐进式发现路径：</p>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:16px; justify-content:center;">
+      <div style="background:#FEF3C7; padding:12px 20px; border-radius:10px; text-align:center;">
+        <strong>热情</strong>
+      </div>
+      <span style="font-size:20px; color:var(--primary);">&#10142;</span>
+      <div style="background:#FDE68A; padding:12px 20px; border-radius:10px; text-align:center;">
+        <strong>天赋</strong>
+      </div>
+      <span style="font-size:20px; color:var(--primary);">&#10142;</span>
+      <div style="background:#D1FAE5; padding:12px 20px; border-radius:10px; text-align:center;">
+        <strong>社会使命</strong>
+      </div>
+      <span style="font-size:20px; color:var(--primary);">&#10142;</span>
+      <div style="background:#E0E7FF; padding:12px 20px; border-radius:10px; text-align:center;">
+        <strong>价值变现</strong>
+      </div>
+      <span style="font-size:20px; color:var(--primary);">&#10142;</span>
+      <div style="background:#F59E0B; padding:12px 20px; border-radius:10px; text-align:center; color:#fff;">
+        <strong>人生使命</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-green">B2</span> BHD框架</h3>
+    <p>一个简洁而强大的自我定位工具——由德鲁克自我管理思想发展而来：</p>
+    <table>
+      <thead><tr><th>维度</th><th>核心问题</th><th>探索方向</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Being（我是谁）</strong></td><td>我的核心价值观是什么？我的优势在哪里？我真正关心什么？</td><td>身份认同与价值观探索</td></tr>
+        <tr><td><strong>Having（我拥有什么）</strong></td><td>我有哪些资源？人脉、能力、经验、资金？</td><td>资源盘点与能力评估</td></tr>
+        <tr><td><strong>Doing（我当下做什么）</strong></td><td>我现在在做什么？这些行动是否指向我的使命？</td><td>行动对齐与目标检视</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-indigo">B3</span> 人生DNA定位</h3>
+    <p>将人生方向凝练为三个要素的有机组合：</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:16px;">
+      <div style="background:linear-gradient(135deg,#FDE68A,#F59E0B); padding:20px; border-radius:12px; text-align:center; color:#fff;">
+        <strong style="font-size:20px;">使命</strong>
+        <p style="font-size:13px; margin-top:8px;">方向——你为什么而存在？</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#A7F3D0,#10B981); padding:20px; border-radius:12px; text-align:center; color:#fff;">
+        <strong style="font-size:20px;">愿景</strong>
+        <p style="font-size:13px; margin-top:8px;">梦想——你想成为什么样的人？</p>
+      </div>
+      <div style="background:linear-gradient(135deg,#C7D2FE,#6366F1); padding:20px; border-radius:12px; text-align:center; color:#fff;">
+        <strong style="font-size:20px;">价值观</strong>
+        <p style="font-size:13px; margin-top:8px;">方法——你以什么原则行事？</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-orange">B4</span> 全生命周期画像</h3>
+    <p>帮助用户绘制从20岁到80岁+的人生理想终局画像，在时间维度上审视当下所处的位置，确保短期行动与长期愿景一致。</p>
+    <div class="highlight-box indigo" style="margin-top:12px;">
+      <p><strong>案例结合</strong>：胖东来——以"爱"和"自由"为核心价值观的企业标杆，展示了价值观驱动如何创造卓越的商业成果和社会价值。</p>
+    </div>
+  </div>
+
+  <!-- ===== Module C ===== -->
+  <h3 class="sub-title"><span class="dot"></span> 模块C：日常成长系统</h3>
+  <p style="color:var(--text-light); margin-bottom:24px;">让应用"常用常新"，将自我探索转化为日常习惯</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">C1</span> 每日智慧卡片</h3>
+      <p>每天推送一张精选智慧卡片，来源涵盖：</p>
+      <ul>
+        <li>东西方经典哲学语录</li>
+        <li>积极心理学洞见</li>
+        <li>管理学大师箴言</li>
+        <li>中国传统智慧精华</li>
+        <li>当代思想家观点</li>
+      </ul>
+      <p style="margin-top:8px;">支持收藏、分享、写感悟笔记。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">C2</span> 21天习惯改变计划</h3>
+      <p>基于行为科学设计：</p>
+      <ul>
+        <li>自定义习惯目标（如每日阅读、运动、正念）</li>
+        <li>可视化打卡日历</li>
+        <li>连续完成奖励机制</li>
+        <li>中断后温和重启引导</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">C3</span> 五维目标管理 + OKR</h3>
+      <p>覆盖人生五大维度：</p>
+      <ul>
+        <li><strong>事业</strong>：职业发展目标</li>
+        <li><strong>家庭</strong>：家庭关系建设</li>
+        <li><strong>健康</strong>：身心健康管理</li>
+        <li><strong>学习</strong>：知识技能提升</li>
+        <li><strong>财富</strong>：财务目标规划</li>
+      </ul>
+      <p>结合OKR方法论，确保目标可追踪、可衡量。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-rose">C4</span> PDCA检视提醒</h3>
+      <p>定期提醒用户进行计划检视：</p>
+      <ul>
+        <li><strong>Plan</strong>：设定阶段目标</li>
+        <li><strong>Do</strong>：执行并记录</li>
+        <li><strong>Check</strong>：检视偏差</li>
+        <li><strong>Act</strong>：调整优化</li>
+      </ul>
+      <p>支持周检视、月检视、季度检视三种频率。</p>
+    </div>
+  </div>
+
+  <!-- ===== Module D ===== -->
+  <h3 class="sub-title"><span class="dot"></span> 模块D：价值经济学实践工具</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">D1</span> 投资思维 vs 投机思维</h3>
+      <p>通过自评问卷帮助用户认识自己的核心思维方式：</p>
+      <ul>
+        <li><strong>投资思维</strong>：长期主义、延迟满足、价值创造</li>
+        <li><strong>投机思维</strong>：短期导向、即时满足、零和博弈</li>
+      </ul>
+      <p style="margin-top:8px;">生成个性化建议报告，引导向投资思维转变。</p>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">D2</span> 受托者意识实践</h3>
+      <p>将"管家精神"转化为现代受托者意识：</p>
+      <ul>
+        <li>时间管理报告（时间投入与价值产出分析）</li>
+        <li>金钱管理报告（消费 vs 投资比例）</li>
+        <li>能力管理报告（能力成长曲线）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">D3</span> 善意传递日志</h3>
+      <p>记录日常善意行为，让善意形成流动：</p>
+      <ul>
+        <li>每日善意行为记录</li>
+        <li>帮助他人实践日志</li>
+        <li>善意传递链可视化</li>
+        <li>月度善意回顾与感悟</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-rose">D4</span> 驱动系统自检</h3>
+      <p>帮助用户识别自己的核心驱动力来源：</p>
+      <ul>
+        <li><strong>恐惧驱动</strong>：害怕失去、害怕失败</li>
+        <li><strong>欲望驱动</strong>：追逐名利、贪图享乐</li>
+        <li><strong>意义驱动</strong>：使命感、价值创造</li>
+      </ul>
+      <p>生成驱动类型分析报告，引导向意义驱动转变。</p>
+    </div>
+  </div>
+
+  <!-- ===== Module E ===== -->
+  <h3 class="sub-title"><span class="dot"></span> 模块E：成长社区</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">E1</span> 成长笔记</h3>
+      <p>与探索模块关联的结构化知识库：</p>
+      <ul>
+        <li>管理学经典笔记</li>
+        <li>心理学知识卡片</li>
+        <li>哲学思考摘要</li>
+        <li>个人成长感悟</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">E2</span> 时间胶囊</h3>
+      <p>给未来信件的定时发送功能：</p>
+      <ul>
+        <li>设定收信时间（1/3/5/10年后）</li>
+        <li>支持文字、图片、语音</li>
+        <li>到期自动推送提醒</li>
+        <li>时间线回顾所有胶囊</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">E3</span> 成长伙伴</h3>
+      <p>基于价值观和目标匹配的伙伴系统：</p>
+      <ul>
+        <li>智能配对算法</li>
+        <li>互相鼓励与检视</li>
+        <li>共同目标打卡</li>
+        <li>定期成长对话</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-rose">E4</span> 蜕变故事</h3>
+      <p>用户分享成长故事的平台：</p>
+      <ul>
+        <li>成长里程碑记录</li>
+        <li>人生转折点回顾</li>
+        <li>蜕变前后对比</li>
+        <li>社区互动与激励</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Mermaid: Core Flow -->
+  <div class="mermaid-container">
+    <div class="mermaid">
+graph LR
+    Start["用户首次进入"] --> Explore["自我探索之旅<br>（7阶段深度探索）"]
+    Explore --> Seed["种子发现<br>（四维评估）"]
+    Seed --> Mission["使命定位<br>（BHD + 人生DNA）"]
+    Mission --> Plan["人生规划<br>（全生命周期画像）"]
+    Plan --> Daily["日常成长系统<br>（每日/每周/每月）"]
+    Daily --> Econ["价值经济学实践<br>（思维升级）"]
+    Econ --> Community["成长社区<br>（分享与连接）"]
+    Community -->|持续迭代| Explore
+    
+    Daily -->|每日循环| WisdomCard["每日智慧卡片"]
+    Daily -->|每周循环| PDCA["PDCA检视"]
+    Daily -->|每月循环| Review["目标回顾"]
+    
+    style Start fill:#F59E0B,stroke:#D97706,color:#fff
+    style Explore fill:#FEF3C7,stroke:#F59E0B,color:#1F2937
+    style Seed fill:#FDE68A,stroke:#D97706,color:#1F2937
+    style Mission fill:#D1FAE5,stroke:#10B981,color:#1F2937
+    style Plan fill:#A7F3D0,stroke:#059669,color:#1F2937
+    style Daily fill:#E0E7FF,stroke:#6366F1,color:#1F2937
+    style Econ fill:#C7D2FE,stroke:#4F46E5,color:#fff
+    style Community fill:#FCE7F3,stroke:#EC4899,color:#1F2937
+    style WisdomCard fill:#DBEAFE,stroke:#3B82F6,color:#1F2937
+    style PDCA fill:#DBEAFE,stroke:#3B82F6,color:#1F2937
+    style Review fill:#DBEAFE,stroke:#3B82F6,color:#1F2937
+    </div>
+    <p style="text-align:center; margin-top:16px; color:var(--text-light); font-size:13px;">图4-2：核心功能流程图 —— 自我探索到日常成长的完整闭环</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 5: UI原型 ==================== -->
+<div class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2>高保真UI原型展示 <span class="en">UI Prototype Showcase</span></h2>
+    <p>六个核心页面的交互原型设计，温暖、专业、有亲和力</p>
+  </div>
+
+  <!-- Proto 1: 自我探索首页 -->
+  <div class="proto-section">
+    <h3>5.1 自我探索首页</h3>
+    <p class="proto-desc">用户进入APP后的第一个核心页面，展示探索之旅的概览和进度</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>9:41</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div class="proto-header-gradient">
+          <p style="font-size:14px; opacity:0.9; margin-bottom:4px;">欢迎回来</p>
+          <h3 style="font-size:22px; font-weight:700; margin-bottom:8px;">你好，探索者</h3>
+          <p style="font-size:13px; opacity:0.85;">人生不是盲目的奔跑，而是有方向的绽放</p>
+        </div>
+        <div style="padding:16px;">
+          <!-- Progress Card -->
+          <div class="proto-card" style="margin:0 0 16px 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="margin:0;">我的探索之旅</h4>
+              <span style="font-size:12px; color:var(--primary-dark); font-weight:600;">3/7 阶段</span>
+            </div>
+            <div style="background:#F3F4F6; border-radius:8px; height:8px; overflow:hidden;">
+              <div style="background:linear-gradient(90deg,#F59E0B,#D97706); height:100%; width:43%; border-radius:8px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11px; color:var(--text-light);">
+              <span>深度对话 - 完成</span>
+              <span>价值观卡牌 - 完成</span>
+              <span style="color:var(--primary-dark); font-weight:600;">旅程地图 - 进行中</span>
+            </div>
+          </div>
+
+          <!-- Daily Card -->
+          <div class="proto-card" style="margin:0 0 16px 0; background:linear-gradient(135deg,#FEF3C7,#FFFBEB); border-color:#FDE68A;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:48px; height:48px; border-radius:12px; background:linear-gradient(135deg,#F59E0B,#D97706); display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px;">&#9733;</div>
+              <div style="flex:1;">
+                <h4 style="margin:0; font-size:15px;">今日智慧</h4>
+                <p style="margin:4px 0 0 0; font-size:13px; color:var(--text); line-height:1.5;">"认识你自己。" —— 苏格拉底</p>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:12px;">
+              <div style="flex:1; background:#fff; padding:8px; border-radius:8px; text-align:center; font-size:12px; color:var(--text-light); border:1px solid #E5E7EB;">收藏</div>
+              <div style="flex:1; background:linear-gradient(135deg,#F59E0B,#D97706); padding:8px; border-radius:8px; text-align:center; font-size:12px; color:#fff;">写感悟</div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div style="background:#fff; padding:16px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); border:1px solid #F3F4F6;">
+              <div style="width:40px; height:40px; border-radius:10px; background:#D1FAE5; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:18px;">&#9678;</div>
+              <p style="font-size:13px; font-weight:600; color:var(--text); margin:0;">种子发现</p>
+              <p style="font-size:11px; color:var(--text-light); margin:4px 0 0;">找到你的天赋方向</p>
+            </div>
+            <div style="background:#fff; padding:16px; border-radius:12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); border:1px solid #F3F4F6;">
+              <div style="width:40px; height:40px; border-radius:10px; background:#E0E7FF; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:18px;">&#9775;</div>
+              <p style="font-size:13px; font-weight:600; color:var(--text); margin:0;">愿景冥想</p>
+              <p style="font-size:11px; color:var(--text-light); margin:4px 0 0;">描绘理想终局</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <div style="position:absolute; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #E5E7EB; display:flex; padding:8px 0; padding-bottom:env(safe-area-inset-bottom,8px);">
+          <div style="flex:1; text-align:center;">
+            <div style="font-size:20px;">&#9776;</div>
+            <div style="font-size:10px; color:var(--text-light);">首页</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div style="font-size:20px; color:var(--primary);">&#9673;</div>
+            <div style="font-size:10px; color:var(--primary-dark); font-weight:600;">探索</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div style="font-size:20px;">&#9733;</div>
+            <div style="font-size:10px; color:var(--text-light);">成长</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div style="font-size:20px;">&#9825;</div>
+            <div style="font-size:10px; color:var(--text-light);">社区</div>
+          </div>
+          <div style="flex:1; text-align:center;">
+            <div style="font-size:20px;">&#9881;</div>
+            <div style="font-size:10px; color:var(--text-light);">我的</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proto 2: 种子发现评估页 -->
+  <div class="proto-section">
+    <h3>5.2 种子发现评估页</h3>
+    <p class="proto-desc">四维评估的核心交互页面，帮助用户发现热情、天赋、社会需求、价值实现的交汇点</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>9:41</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div class="proto-header-green">
+          <p style="font-size:13px; opacity:0.9; margin-bottom:4px;">种子发现 / 第一步</p>
+          <h3 style="font-size:20px; font-weight:700; margin-bottom:4px;">发现你的热情</h3>
+          <p style="font-size:12px; opacity:0.85;">什么事情让你忘记时间？</p>
+        </div>
+        <div style="padding:16px;">
+          <!-- Question -->
+          <div class="proto-card" style="margin:0 0 16px 0;">
+            <div style="display:flex; gap:12px; align-items:flex-start;">
+              <div style="width:28px; height:28px; border-radius:50%; background:var(--green); color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0;">1</div>
+              <div>
+                <h4 style="margin:0; font-size:15px;">回忆过去一周</h4>
+                <p style="margin:4px 0 0 0; font-size:13px;">哪件事让你完全沉浸其中，甚至忘记了时间？</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Answer Options -->
+          <div class="proto-card" style="margin:0 0 12px 0; border:2px solid var(--green); cursor:pointer;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; border:2px solid var(--green); display:flex; align-items:center; justify-content:center;">
+                <div style="width:12px; height:12px; border-radius:50%; background:var(--green);"></div>
+              </div>
+              <div>
+                <p style="font-size:14px; font-weight:500; color:var(--text); margin:0;">阅读和写作</p>
+                <p style="font-size:12px; color:var(--text-light); margin:2px 0 0;">每次沉浸在文字中3-4小时不觉疲倦</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="proto-card" style="margin:0 0 12px 0; cursor:pointer;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; border:2px solid #D1D5DB;"></div>
+              <div>
+                <p style="font-size:14px; font-weight:500; color:var(--text); margin:0;">帮助他人解决问题</p>
+                <p style="font-size:12px; color:var(--text-light); margin:2px 0 0;">同事朋友经常来找我倾诉和咨询</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="proto-card" style="margin:0 0 12px 0; cursor:pointer;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; border:2px solid #D1D5DB;"></div>
+              <div>
+                <p style="font-size:14px; font-weight:500; color:var(--text); margin:0;">学习新技能</p>
+                <p style="font-size:12px; color:var(--text-light); margin:2px 0 0;">对新事物充满好奇，乐于尝试</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="proto-card" style="margin:0 0 16px 0; cursor:pointer;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <div style="width:24px; height:24px; border-radius:50%; border:2px solid #D1D5DB;"></div>
+              <div>
+                <p style="font-size:14px; font-weight:500; color:var(--text); margin:0;">运动和户外活动</p>
+                <p style="font-size:12px; color:var(--text-light); margin:2px 0 0;">在运动中感到最大的自由和快乐</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress -->
+          <div style="background:#fff; padding:12px 16px; border-radius:12px; border:1px solid #E5E7EB; display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:12px; color:var(--text-light);">问题 1 / 5</span>
+            <div style="display:flex; gap:4px;">
+              <div style="width:24px; height:4px; border-radius:2px; background:var(--green);"></div>
+              <div style="width:24px; height:4px; border-radius:2px; background:#E5E7EB;"></div>
+              <div style="width:24px; height:4px; border-radius:2px; background:#E5E7EB;"></div>
+              <div style="width:24px; height:4px; border-radius:2px; background:#E5E7EB;"></div>
+              <div style="width:24px; height:4px; border-radius:2px; background:#E5E7EB;"></div>
+            </div>
+            <button class="proto-btn proto-btn-green" style="padding:8px 20px; font-size:13px;">下一步</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proto 3: 7维生命平衡雷达图 -->
+  <div class="proto-section">
+    <h3>5.3 7维生命平衡雷达图</h3>
+    <p class="proto-desc">自我探索第7阶段的核心可视化页面，展示用户在七个生命维度的平衡状态</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>9:41</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div class="proto-header-indigo">
+          <p style="font-size:13px; opacity:0.9; margin-bottom:4px;">自我探索 / 第七阶段</p>
+          <h3 style="font-size:20px; font-weight:700; margin-bottom:4px;">生命平衡自评</h3>
+          <p style="font-size:12px; opacity:0.85;">在七个维度上为当前状态打分</p>
+        </div>
+        <div style="padding:16px;">
+          <div class="proto-card" style="margin:0 0 16px 0;">
+            <div id="radar-chart-mobile" style="width:100%; height:300px;"></div>
+          </div>
+
+          <!-- Dimension Scores -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">事业</span>
+                <span style="font-size:13px; font-weight:700; color:var(--primary-dark);">7.5</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#F59E0B; height:100%; width:75%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">财务</span>
+                <span style="font-size:13px; font-weight:700; color:var(--primary-dark);">6.0</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#D97706; height:100%; width:60%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">健康</span>
+                <span style="font-size:13px; font-weight:700; color:var(--green);">5.5</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#10B981; height:100%; width:55%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">家庭</span>
+                <span style="font-size:13px; font-weight:700; color:var(--green);">8.0</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#10B981; height:100%; width:80%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">社交</span>
+                <span style="font-size:13px; font-weight:700; color:var(--indigo);">6.5</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#6366F1; height:100%; width:65%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">成长</span>
+                <span style="font-size:13px; font-weight:700; color:var(--primary-dark);">8.5</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#F59E0B; height:100%; width:85%; border-radius:4px;"></div></div>
+            </div>
+            <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #E5E7EB; grid-column:span 2;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:13px; font-weight:500;">内心宁静</span>
+                <span style="font-size:13px; font-weight:700; color:var(--indigo);">5.0</span>
+              </div>
+              <div style="background:#F3F4F6; border-radius:4px; height:4px; margin-top:6px;"><div style="background:#6366F1; height:100%; width:50%; border-radius:4px;"></div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; background:#E0E7FF; padding:16px; border-radius:12px;">
+            <p style="font-size:13px; color:#4338CA; font-weight:500; margin:0;">洞察：你的"成长"和"家庭"维度得分较高，而"内心宁静"和"健康"维度有较大提升空间。建议关注身心平衡。</p>
+          </div>
+
+          <button class="proto-btn proto-btn-primary" style="width:100%; margin-top:16px;">生成探索报告</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proto 4: 人生DNA定位卡片 -->
+  <div class="proto-section">
+    <h3>5.4 人生DNA定位卡片</h3>
+    <p class="proto-desc">将使命、愿景、价值观凝练为可分享的精美卡片</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>9:41</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div class="proto-header-gradient">
+          <p style="font-size:13px; opacity:0.9; margin-bottom:4px;">使命定位</p>
+          <h3 style="font-size:20px; font-weight:700; margin-bottom:4px;">我的人生DNA</h3>
+          <p style="font-size:12px; opacity:0.85;">使命 + 愿景 + 价值观 = 人生罗盘</p>
+        </div>
+        <div style="padding:16px;">
+          <!-- Mission -->
+          <div class="proto-card" style="margin:0 0 16px 0; border-top:3px solid #F59E0B;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#FDE68A,#F59E0B); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700;">使</div>
+              <div>
+                <p style="font-size:11px; color:var(--text-light); margin:0; text-transform:uppercase; letter-spacing:1px;">MISSION 使命</p>
+                <p style="font-size:15px; font-weight:600; color:var(--text); margin:2px 0 0;">方向</p>
+              </div>
+            </div>
+            <p style="font-size:14px; color:var(--text); line-height:1.7; margin:0;">用文字和故事的力量，帮助更多人找到人生的方向和意义。</p>
+          </div>
+
+          <!-- Vision -->
+          <div class="proto-card" style="margin:0 0 16px 0; border-top:3px solid #10B981;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#A7F3D0,#10B981); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700;">愿</div>
+              <div>
+                <p style="font-size:11px; color:var(--text-light); margin:0; text-transform:uppercase; letter-spacing:1px;">VISION 愿景</p>
+                <p style="font-size:15px; font-weight:600; color:var(--text); margin:2px 0 0;">梦想</p>
+              </div>
+            </div>
+            <p style="font-size:14px; color:var(--text); line-height:1.7; margin:0;">成为一个以善意和智慧影响世界的写作者与引导者，拥有一间靠近自然的工作室，身边有志同道合的伙伴。</p>
+          </div>
+
+          <!-- Values -->
+          <div class="proto-card" style="margin:0 0 16px 0; border-top:3px solid #6366F1;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <div style="width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,#C7D2FE,#6366F1); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700;">值</div>
+              <div>
+                <p style="font-size:11px; color:var(--text-light); margin:0; text-transform:uppercase; letter-spacing:1px;">VALUES 价值观</p>
+                <p style="font-size:15px; font-weight:600; color:var(--text); margin:2px 0 0;">方法</p>
+              </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <span style="background:#E0E7FF; color:#4338CA; padding:6px 14px; border-radius:50px; font-size:13px; font-weight:500;">真诚</span>
+              <span style="background:#D1FAE5; color:#065F46; padding:6px 14px; border-radius:50px; font-size:13px; font-weight:500;">善意</span>
+              <span style="background:#FEF3C7; color:#92400E; padding:6px 14px; border-radius:50px; font-size:13px; font-weight:500;">成长</span>
+              <span style="background:#FFE4E6; color:#9F1239; padding:6px 14px; border-radius:50px; font-size:13px; font-weight:500;">勇气</span>
+              <span style="background:#DBEAFE; color:#1E40AF; padding:6px 14px; border-radius:50px; font-size:13px; font-weight:500;">自由</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex; gap:12px;">
+            <button class="proto-btn proto-btn-outline" style="flex:1; font-size:13px;">编辑</button>
+            <button class="proto-btn proto-btn-primary" style="flex:1; font-size:13px;">分享卡片</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proto 5: 每日智慧卡片 -->
+  <div class="proto-section">
+    <h3>5.5 每日智慧卡片</h3>
+    <p class="proto-desc">日常成长系统的核心触点，每天为用户提供一份智慧营养</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>7:30</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div class="proto-header-gradient">
+          <p style="font-size:14px; opacity:0.9;">2026年6月27日 周六</p>
+          <h3 style="font-size:22px; font-weight:700;">每日智慧</h3>
+        </div>
+        <div style="padding:16px;">
+          <!-- Main Card -->
+          <div style="background:linear-gradient(135deg,#FEF3C7 0%,#FFFBEB 100%); border-radius:20px; padding:32px 24px; text-align:center; border:1px solid #FDE68A; box-shadow:0 4px 20px rgba(245,158,11,0.15); margin-bottom:20px;">
+            <div style="font-size:32px; margin-bottom:16px;">&#9788;</div>
+            <p style="font-family:'Noto Serif SC',serif; font-size:20px; color:var(--text); line-height:1.8; margin-bottom:16px;">"优秀的管理者<br>首先管理好自己。"</p>
+            <p style="font-size:14px; color:var(--primary-dark); font-weight:500;">—— 彼得-德鲁克</p>
+            <div style="margin-top:16px; display:flex; justify-content:center; gap:8px;">
+              <span class="tag tag-orange">管理学</span>
+              <span class="tag tag-green">自我管理</span>
+            </div>
+          </div>
+
+          <!-- Reflection -->
+          <div class="proto-card" style="margin:0 0 16px 0;">
+            <h4 style="margin:0 0 8px;">今日反思</h4>
+            <p style="font-size:13px; color:var(--text-light); margin-bottom:12px;">花2分钟思考：你最近在哪些方面"管理"好了自己？哪些方面还需要提升？</p>
+            <div style="background:#F9FAFB; border-radius:8px; padding:12px; border:1px solid #E5E7EB; min-height:60px;">
+              <p style="font-size:13px; color:var(--text-lighter); margin:0;">写下你的思考...</p>
+            </div>
+          </div>
+
+          <!-- Habit Tracker -->
+          <div class="proto-card" style="margin:0 0 16px 0;">
+            <h4 style="margin:0 0 12px;">今日习惯打卡</h4>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #F3F4F6;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:32px; height:32px; border-radius:8px; background:#D1FAE5; display:flex; align-items:center; justify-content:center; font-size:14px;">&#10003;</div>
+                  <span style="font-size:14px;">正念冥想 10分钟</span>
+                </div>
+                <span style="font-size:12px; color:var(--green); font-weight:600;">已完成</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid #F3F4F6;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:32px; height:32px; border-radius:8px; background:#FEF3C7; display:flex; align-items:center; justify-content:center; font-size:14px;">&#9733;</div>
+                  <span style="font-size:14px;">阅读30分钟</span>
+                </div>
+                <span style="font-size:12px; color:var(--text-light);">待完成</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:32px; height:32px; border-radius:8px; background:#E0E7FF; display:flex; align-items:center; justify-content:center; font-size:14px;">&#9825;</div>
+                  <span style="font-size:14px;">善意行为（帮助1人）</span>
+                </div>
+                <span style="font-size:12px; color:var(--text-light);">待完成</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Streak -->
+          <div style="background:linear-gradient(135deg,#F59E0B,#D97706); padding:16px; border-radius:16px; text-align:center; color:#fff;">
+            <p style="font-size:28px; font-weight:700; margin:0;">15 天</p>
+            <p style="font-size:13px; opacity:0.9; margin:4px 0 0;">连续打卡中，加油！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proto 6: 驱动系统自检页 -->
+  <div class="proto-section">
+    <h3>5.6 驱动系统自检页</h3>
+    <p class="proto-desc">帮助用户识别和觉察自己的核心驱动力，从恐惧/欲望驱动转向意义驱动</p>
+    <div class="phone-frame">
+      <div class="phone-status-bar" style="position:relative;">
+        <div class="phone-notch"></div>
+        <span>9:41</span>
+      </div>
+      <div class="phone-content" style="background:#FFFBEB;">
+        <div style="background:linear-gradient(135deg,#E0E7FF 0%,#C7D2FE 50%,#A5B4FC 100%); padding:24px 20px; color:#fff; text-align:center;">
+          <p style="font-size:13px; opacity:0.9; margin-bottom:4px;">价值经济学 / 自检工具</p>
+          <h3 style="font-size:20px; font-weight:700; margin-bottom:4px;">驱动系统自检</h3>
+          <p style="font-size:12px; opacity:0.85;">你被什么驱动着前行？</p>
+        </div>
+        <div style="padding:16px;">
+          <!-- Drive Types -->
+          <div class="proto-card" style="margin:0 0 12px 0; border-left:4px solid #EF4444;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#991B1B;">恐惧驱动</h4>
+              <span style="font-size:13px; font-weight:700; color:#EF4444;">35%</span>
+            </div>
+            <p style="font-size:12px; margin:0 0 8px;">被害怕失败、害怕失去所驱动。短期内有效，长期消耗精力。</p>
+            <div style="background:#FEE2E2; border-radius:4px; height:6px;"><div style="background:#EF4444; height:100%; width:35%; border-radius:4px;"></div></div>
+          </div>
+
+          <div class="proto-card" style="margin:0 0 12px 0; border-left:4px solid #F59E0B;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#92400E;">欲望驱动</h4>
+              <span style="font-size:13px; font-weight:700; color:#F59E0B;">30%</span>
+            </div>
+            <p style="font-size:12px; margin:0 0 8px;">被名利、享乐所驱动。满足感短暂，容易陷入"更多"的循环。</p>
+            <div style="background:#FEF3C7; border-radius:4px; height:6px;"><div style="background:#F59E0B; height:100%; width:30%; border-radius:4px;"></div></div>
+          </div>
+
+          <div class="proto-card" style="margin:0 0 16px 0; border-left:4px solid #10B981;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#065F46;">意义驱动</h4>
+              <span style="font-size:13px; font-weight:700; color:#10B981;">35%</span>
+            </div>
+            <p style="font-size:12px; margin:0 0 8px;">被使命感、价值创造所驱动。可持续、滋养型的内在动力。</p>
+            <div style="background:#D1FAE5; border-radius:4px; height:6px;"><div style="background:#10B981; height:100%; width:35%; border-radius:4px;"></div></div>
+          </div>
+
+          <!-- Chart placeholder in prototype -->
+          <div class="proto-card" style="margin:0 0 16px 0; text-align:center;">
+            <div id="drive-chart-mobile" style="width:100%; height:220px;"></div>
+          </div>
+
+          <!-- Insight -->
+          <div style="background:#ECFDF5; padding:16px; border-radius:12px; border:1px solid #A7F3D0; margin-bottom:16px;">
+            <p style="font-size:13px; color:#065F46; line-height:1.6; margin:0;"><strong>洞察</strong>：你的恐惧驱动和意义驱动比例相近，说明你正在转变期。建议关注那些让你感到"即使没有回报也愿意去做"的事情——那就是意义驱动的信号。</p>
+          </div>
+
+          <!-- Actions -->
+          <div style="display:flex; gap:12px;">
+            <button class="proto-btn proto-btn-outline" style="flex:1; font-size:13px;">重新评估</button>
+            <button class="proto-btn proto-btn-primary" style="flex:1; font-size:13px;">查看建议</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 6: 非功能需求 ==================== -->
+<div class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <h2>非功能需求 <span class="en">Non-Functional Requirements</span></h2>
+    <p>确保产品体验的技术保障与合规要求</p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">&#9733;</span> 移动端优先响应式</h3>
+      <ul>
+        <li>移动端优先设计（H5/小程序双端）</li>
+        <li>适配主流手机屏幕尺寸（375px-428px）</li>
+        <li>支持平板和桌面端响应式布局</li>
+        <li>加载时间 < 2秒（4G网络下）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">&#9670;</span> 数据隐私保护</h3>
+      <ul>
+        <li>严格遵守《个人信息保护法》</li>
+        <li>用户数据本地加密存储</li>
+        <li>支持数据导出和账号注销</li>
+        <li>隐私政策透明公开</li>
+        <li>最小必要数据采集原则</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">&#9775;</span> 离线可用</h3>
+      <ul>
+        <li>核心探索功能支持离线使用</li>
+        <li>每日智慧卡片离线缓存</li>
+        <li>数据联网后自动同步</li>
+        <li>冲突解决机制（以最新版本为准）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-rose">&#9776;</span> 可导出PDF</h3>
+      <ul>
+        <li>探索报告支持一键导出PDF</li>
+        <li>人生DNA定位卡片可导出</li>
+        <li>生命平衡评估可导出</li>
+        <li>目标管理进度报告可导出</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box indigo">
+    <p><strong>合规保障</strong>：产品内容经合规审核，不涉及任何宗教内容。所有引用均来自哲学、心理学、管理学等非宗教领域。APP上架前将通过苹果和安卓的内容审核流程。</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 7: 技术架构与路线图 ==================== -->
+<div class="section" id="sec7">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <h2>技术架构与MVP路线图 <span class="en">Tech Architecture & Roadmap</span></h2>
+    <p>轻量级技术方案，快速验证核心假设</p>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span> 技术架构概览</h3>
+  <div class="card">
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; text-align:center;">
+      <div style="background:#FEF3C7; padding:20px; border-radius:12px;">
+        <strong style="color:var(--primary-dark); font-size:16px; display:block;">前端</strong>
+        <p style="font-size:13px; margin-top:8px;">H5 (React/Vue) + 微信小程序<br>移动端优先响应式</p>
+      </div>
+      <div style="background:#D1FAE5; padding:20px; border-radius:12px;">
+        <strong style="color:#059669; font-size:16px; display:block;">后端</strong>
+        <p style="font-size:13px; margin-top:8px;">轻量BaaS<br>Serverless Functions</p>
+      </div>
+      <div style="background:#E0E7FF; padding:20px; border-radius:12px;">
+        <strong style="color:var(--indigo); font-size:16px; display:block;">数据</strong>
+        <p style="font-size:13px; margin-top:8px;">云数据库 + 本地缓存<br>端到端加密</p>
+      </div>
+    </div>
+    <div style="margin-top:16px; background:#F9FAFB; padding:16px; border-radius:12px;">
+      <p style="font-size:14px; color:var(--text-light);"><strong>设计原则</strong>：轻量启动、快速迭代。MVP阶段采用最小可行技术方案，验证产品核心价值后再进行架构升级。</p>
+    </div>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span> MVP四阶段路线图</h3>
+
+  <!-- Mermaid: Roadmap Timeline -->
+  <div class="mermaid-container">
+    <div class="mermaid">
+graph TB
+    subgraph Phase1["Phase 1: 核心探索（M1-M3）"]
+        direction TB
+        P1A["自我探索之旅<br>7阶段框架"] --> P1B["种子发现<br>四维评估"]
+        P1B --> P1C["报告生成<br>PDF导出"]
+    end
+
+    subgraph Phase2["Phase 2: 日常成长（M4-M6）"]
+        direction TB
+        P2A["每日智慧卡片"] --> P2B["21天习惯计划"]
+        P2B --> P2C["五维目标+OKR"]
+        P2C --> P2D["PDCA检视"]
+    end
+
+    subgraph Phase3["Phase 3: 社区与工具（M7-M9）"]
+        direction TB
+        P3A["成长笔记知识库"] --> P3B["时间胶囊"]
+        P3B --> P3C["成长伙伴配对"]
+        P3C --> P3D["价值经济学工具"]
+        P3D --> P3E["蜕变故事墙"]
+    end
+
+    subgraph Phase4["Phase 4: AI与全端（M10-M12）"]
+        direction TB
+        P4A["AI智能导航<br>个性化建议"] --> P4B["全端化<br>iOS/Android/H5"]
+        P4B --> P4C["高级分析<br>成长报告"]
+    end
+
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    Phase3 --> Phase4
+
+    style Phase1 fill:#FEF3C7,stroke:#F59E0B,color:#1F2937
+    style Phase2 fill:#D1FAE5,stroke:#10B981,color:#1F2937
+    style Phase3 fill:#E0E7FF,stroke:#6366F1,color:#1F2937
+    style Phase4 fill:#FCE7F3,stroke:#EC4899,color:#1F2937
+    </div>
+    <p style="text-align:center; margin-top:16px; color:var(--text-light); font-size:13px;">图7-1：MVP四阶段路线图时间线</p>
+  </div>
+
+  <!-- Roadmap Detail -->
+  <div class="roadmap" style="margin-top:32px;">
+    <div class="roadmap-phase">
+      <div class="roadmap-dot" style="background:linear-gradient(135deg,#F59E0B,#D97706);">1</div>
+      <div class="card" style="flex:1;">
+        <h3 style="color:var(--primary-dark);">Phase 1：核心探索（第1-3个月）</h3>
+        <p><strong>目标</strong>：验证自我探索的核心价值假设</p>
+        <ul>
+          <li>7阶段自我探索之旅完整实现</li>
+          <li>种子发现四维评估</li>
+          <li>7维生命平衡雷达图</li>
+          <li>探索报告生成与PDF导出</li>
+          <li>基础用户注册与数据存储</li>
+        </ul>
+        <p><strong>成功标准</strong>：种子用户100人，完成率 > 60%，NPS > 40</p>
+      </div>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot" style="background:linear-gradient(135deg,#10B981,#059669);">2</div>
+      <div class="card" style="flex:1;">
+        <h3 style="color:#059669;">Phase 2：日常成长（第4-6个月）</h3>
+        <p><strong>目标</strong>：建立用户粘性，验证留存假设</p>
+        <ul>
+          <li>每日智慧卡片推送系统</li>
+          <li>21天习惯改变计划</li>
+          <li>五维人生目标管理 + OKR</li>
+          <li>PDCA周期检视提醒</li>
+          <li>推送通知与个性化推荐</li>
+        </ul>
+        <p><strong>成功标准</strong>：DAU/MAU > 20%，7日留存 > 40%</p>
+      </div>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot" style="background:linear-gradient(135deg,#6366F1,#4F46E5);">3</div>
+      <div class="card" style="flex:1;">
+        <h3 style="color:var(--indigo);">Phase 3：社区与工具（第7-9个月）</h3>
+        <p><strong>目标</strong>：建立社区生态，提升用户价值</p>
+        <ul>
+          <li>成长笔记与知识库</li>
+          <li>时间胶囊功能</li>
+          <li>成长伙伴智能配对</li>
+          <li>价值经济学实践工具套件</li>
+          <li>蜕变故事分享墙</li>
+        </ul>
+        <p><strong>成功标准</strong>：用户主动分享率 > 15%，社区日活 > 500</p>
+      </div>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot" style="background:linear-gradient(135deg,#EC4899,#DB2777);">4</div>
+      <div class="card" style="flex:1;">
+        <h3 style="color:#DB2777;">Phase 4：AI与全端（第10-12个月）</h3>
+        <p><strong>目标</strong>：智能化升级，全平台覆盖</p>
+        <ul>
+          <li>AI智能导航助手（个性化建议）</li>
+          <li>原生iOS/Android APP</li>
+          <li>高级成长分析报告</li>
+          <li>企业版（团队使命对齐工具）</li>
+          <li>付费增值服务上线</li>
+        </ul>
+        <p><strong>成功标准</strong>：总用户 > 10万，付费转化率 > 5%</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== SECTION 8: 指标体系 ==================== -->
+<div class="section" id="sec8">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <h2>指标体系与成功标准 <span class="en">Metrics & Success Criteria</span></h2>
+    <p>用数据驱动产品迭代，衡量真实成长价值</p>
+  </div>
+
+  <!-- ECharts: 7维雷达图 -->
+  <div class="chart-container">
+    <div class="chart-title">7维生命平衡雷达图（示例数据）</div>
+    <div id="radar-chart-main" style="width:100%; height:400px;"></div>
+    <p style="text-align:center; margin-top:8px; color:var(--text-light); font-size:13px;">图8-1：用户完成自我探索后的7维生命平衡评估示例</p>
+  </div>
+
+  <!-- ECharts: 驱动类型对比 -->
+  <div class="chart-container">
+    <div class="chart-title">三种驱动类型效果对比</div>
+    <div id="drive-chart-main" style="width:100%; height:400px;"></div>
+    <p style="text-align:center; margin-top:8px; color:var(--text-light); font-size:13px;">图8-2：恐惧驱动 vs 欲望驱动 vs 意义驱动的长期效果对比</p>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span> 北极星指标</h3>
+  <div class="highlight-box" style="margin-bottom:32px;">
+    <p style="font-size:18px; text-align:center;"><strong>月活用户周平均使用天数</strong></p>
+    <p style="text-align:center; margin-top:8px;">衡量用户是否将"生命导航"真正融入日常生活，而非一次性使用产品</p>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span> 过程指标</h3>
+  <div class="card">
+    <table>
+      <thead><tr><th>指标类别</th><th>指标名称</th><th>定义</th><th>Phase 1 目标</th><th>Phase 4 目标</th></tr></thead>
+      <tbody>
+        <tr><td><strong>获客</strong></td><td>种子用户数</td><td>注册并完成首次探索的用户</td><td>100</td><td>100,000</td></tr>
+        <tr><td><strong>获客</strong></td><td>自然裂变率</td><td>通过分享链接带来的新用户比例</td><td>10%</td><td>30%</td></tr>
+        <tr><td><strong>激活</strong></td><td>探索完成率</td><td>完成全部7阶段的用户比例</td><td>60%</td><td>70%</td></tr>
+        <tr><td><strong>激活</strong></td><td>首次使用时长</strong></td><td>首次使用APP的平均时长</td><td>15分钟</td><td>20分钟</td></tr>
+        <tr><td><strong>留存</strong></td><td>次日留存</td><td>次日再次使用APP的用户比例</td><td>50%</td><td>65%</td></tr>
+        <tr><td><strong>留存</strong></td><td>7日留存</td><td>7日后仍在使用的用户比例</td><td>30%</td><td>45%</td></tr>
+        <tr><td><strong>留存</strong></td><td>30日留存</td><td>30日后仍在使用的用户比例</td><td>15%</td><td>30%</td></tr>
+        <tr><td><strong>粘性</strong></td><td>DAU/MAU</td><td>月活用户中每日使用者的比例</td><td>15%</td><td>25%</td></tr>
+        <tr><td><strong>粘性</strong></td><td>周均使用天数</td><td>月活用户一周内平均使用天数</td><td>2天</td><td>3.5天</td></tr>
+        <tr><td><strong>变现</strong></td><td>付费转化率</td><td>从免费到付费用户的转化比例</td><td>-</td><td>5%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-title"><span class="dot"></span> 质量指标</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h3><span class="icon icon-orange">&#9733;</span> 用户满意度</h3>
+      <div class="metric-grid">
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--primary);">NPS > 40</div>
+          <div class="metric-label">净推荐值</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--green);">4.5+</div>
+          <div class="metric-label">应用商店评分</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-green">&#9670;</span> 技术质量</h3>
+      <div class="metric-grid">
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--indigo);">99.5%</div>
+          <div class="metric-label">服务可用性</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--primary);">&lt; 2s</div>
+          <div class="metric-label">页面加载时间</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="icon icon-indigo">&#9775;</span> 内容质量</h3>
+      <div class="metric-grid">
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--green);">100%</div>
+          <div class="metric-label">内容合规率</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-value" style="color:var(--indigo);">0</div>
+          <div class="metric-label">宗教内容投诉</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p>生命导航（Life Navigator）产品需求文档 V1.0</p>
+  <p style="margin-top:8px;">本产品定位为非宗教类个人成长工具，所有内容均基于心理学、管理学、哲学等非宗教领域。</p>
+  <p style="margin-top:8px;">文档创建日期：2026年6月27日</p>
+</div>
+
+<script>
+// Initialize Mermaid
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#FEF3C7',
+    primaryTextColor: '#1F2937',
+    primaryBorderColor: '#F59E0B',
+    lineColor: '#D97706',
+    secondaryColor: '#D1FAE5',
+    tertiaryColor: '#E0E7FF',
+    fontSize: '13px'
+  }
+});
+
+// ===== ECharts: Radar Chart (Main) =====
+const radarMain = echarts.init(document.getElementById('radar-chart-main'));
+const radarOption = {
+  color: ['#F59E0B', '#10B981'],
+  tooltip: { trigger: 'item' },
+  legend: {
+    data: ['当前状态', '理想状态'],
+    bottom: 10,
+    textStyle: { fontSize: 13 }
+  },
+  radar: {
+    indicator: [
+      { name: '事业', max: 10 },
+      { name: '财务', max: 10 },
+      { name: '健康', max: 10 },
+      { name: '家庭', max: 10 },
+      { name: '社交', max: 10 },
+      { name: '成长', max: 10 },
+      { name: '内心宁静', max: 10 }
+    ],
+    shape: 'circle',
+    splitNumber: 5,
+    axisName: { fontSize: 13, color: '#1F2937' },
+    splitLine: { lineStyle: { color: '#E5E7EB' } },
+    splitArea: {
+      areaStyle: {
+        color: ['rgba(245,158,11,0.05)', 'rgba(16,185,129,0.05)', 'rgba(99,102,241,0.05)', 'rgba(245,158,11,0.02)', 'rgba(16,185,129,0.02)']
+      }
+    },
+    axisLine: { lineStyle: { color: '#D1D5DB' } }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [7.5, 6.0, 5.5, 8.0, 6.5, 8.5, 5.0],
+        name: '当前状态',
+        areaStyle: { color: 'rgba(245,158,11,0.2)' },
+        lineStyle: { color: '#F59E0B', width: 2 },
+        itemStyle: { color: '#F59E0B' }
+      },
+      {
+        value: [8, 8, 8, 8, 8, 8, 8],
+        name: '理想状态',
+        areaStyle: { color: 'rgba(16,185,129,0.1)' },
+        lineStyle: { color: '#10B981', width: 2, type: 'dashed' },
+        itemStyle: { color: '#10B981' }
+      }
+    ]
+  }]
+};
+radarMain.setOption(radarOption);
+window.addEventListener('resize', () => radarMain.resize());
+
+// ===== ECharts: Drive Comparison (Main) =====
+const driveMain = echarts.init(document.getElementById('drive-chart-main'));
+const driveOption = {
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+  legend: {
+    data: ['短期效率', '长期可持续性', '内心满足感', '创造力', '人际关系质量'],
+    bottom: 0,
+    textStyle: { fontSize: 12 }
+  },
+  grid: { left: '3%', right: '4%', bottom: '15%', top: '8%', containLabel: true },
+  xAxis: {
+    type: 'category',
+    data: ['恐惧驱动', '欲望驱动', '意义驱动'],
+    axisLabel: { fontSize: 14, fontWeight: 'bold' }
+  },
+  yAxis: { type: 'value', max: 10, axisLabel: { fontSize: 12 } },
+  series: [
+    { name: '短期效率', type: 'bar', data: [8, 9, 6], itemStyle: { color: '#F59E0B' }, barWidth: 16 },
+    { name: '长期可持续性', type: 'bar', data: [3, 4, 9], itemStyle: { color: '#10B981' }, barWidth: 16 },
+    { name: '内心满足感', type: 'bar', data: [2, 3, 9], itemStyle: { color: '#6366F1' }, barWidth: 16 },
+    { name: '创造力', type: 'bar', data: [3, 5, 9], itemStyle: { color: '#EC4899' }, barWidth: 16 },
+    { name: '人际关系质量', type: 'bar', data: [4, 4, 8], itemStyle: { color: '#8B5CF6' }, barWidth: 16 }
+  ]
+};
+driveMain.setOption(driveOption);
+window.addEventListener('resize', () => driveMain.resize());
+
+// ===== ECharts: Radar Chart (Mobile Proto) =====
+setTimeout(() => {
+  const radarMobileEl = document.getElementById('radar-chart-mobile');
+  if (radarMobileEl) {
+    const radarMobile = echarts.init(radarMobileEl);
+    const radarMobileOption = {
+      color: ['#F59E0B', '#10B981'],
+      radar: {
+        indicator: [
+          { name: '事业', max: 10 },
+          { name: '财务', max: 10 },
+          { name: '健康', max: 10 },
+          { name: '家庭', max: 10 },
+          { name: '社交', max: 10 },
+          { name: '成长', max: 10 },
+          { name: '内心宁静', max: 10 }
+        ],
+        shape: 'circle',
+        splitNumber: 4,
+        radius: '65%',
+        axisName: { fontSize: 11, color: '#1F2937' },
+        splitLine: { lineStyle: { color: '#E5E7EB' } },
+        splitArea: {
+          areaStyle: {
+            color: ['rgba(245,158,11,0.03)', 'rgba(16,185,129,0.03)', 'rgba(99,102,241,0.03)', 'rgba(245,158,11,0.01)']
+          }
+        },
+        axisLine: { lineStyle: { color: '#D1D5DB' } }
+      },
+      series: [{
+        type: 'radar',
+        data: [
+          {
+            value: [7.5, 6.0, 5.5, 8.0, 6.5, 8.5, 5.0],
+            name: '当前',
+            areaStyle: { color: 'rgba(245,158,11,0.25)' },
+            lineStyle: { color: '#F59E0B', width: 2 },
+            itemStyle: { color: '#F59E0B' }
+          }
+        ]
+      }]
+    };
+    radarMobile.setOption(radarMobileOption);
+    window.addEventListener('resize', () => radarMobile.resize());
+  }
+
+  // ===== ECharts: Drive Chart (Mobile Proto) =====
+  const driveMobileEl = document.getElementById('drive-chart-mobile');
+  if (driveMobileEl) {
+    const driveMobile = echarts.init(driveMobileEl);
+    const driveMobileOption = {
+      series: [{
+        type: 'pie',
+        radius: ['45%', '70%'],
+        center: ['50%', '50%'],
+        avoidLabelOverlap: true,
+        itemStyle: { borderRadius: 8, borderColor: '#fff', borderWidth: 3 },
+        label: { show: true, fontSize: 12, fontWeight: 'bold' },
+        data: [
+          { value: 35, name: '恐惧驱动', itemStyle: { color: '#EF4444' } },
+          { value: 30, name: '欲望驱动', itemStyle: { color: '#F59E0B' } },
+          { value: 35, name: '意义驱动', itemStyle: { color: '#10B981' } }
+        ]
+      }]
+    };
+    driveMobile.setOption(driveMobileOption);
+    window.addEventListener('resize', () => driveMobile.resize());
+  }
+}, 500);
+</script>
+
+</body>
+</html>
