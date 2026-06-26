@@ -4191,7 +4191,12 @@ body {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
 }
+.library-cat-tabs::-webkit-scrollbar { display: none; }
 .library-cat-tab {
   flex-shrink: 0;
   font-size: var(--font-size-base);
@@ -4225,7 +4230,10 @@ body {
   padding: var(--spacing-3) var(--spacing-4);
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border-light);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.library-sub-tabs::-webkit-scrollbar { display: none; }
 .library-sub-tab {
   flex-shrink: 0;
   font-size: var(--font-size-xs);
@@ -4739,6 +4747,119 @@ body {
   justify-content: center;
   cursor: pointer;
   color: #fff;
+  transition: all var(--duration-fast);
+}
+.template-detail-action-btn:active { transform: scale(0.9); }
+.template-detail-action-btn.favorited svg {
+  fill: #ff6b6b;
+  stroke: #ff6b6b;
+}
+
+/* Share Modal */
+.share-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+.share-modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+.share-modal-content {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-bg-card);
+  border-radius: 20px 20px 0 0;
+  padding: 24px 20px calc(20px + var(--safe-bottom));
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.share-modal-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.share-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.share-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+.share-item:active { transform: scale(0.95); }
+.share-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+.share-name {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+.share-cancel {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+.share-cancel:active { opacity: 0.8; }
+
+/* Favorites Page */
+.favorites-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+.favorites-header {
+  padding: calc(var(--spacing-4) + var(--safe-top)) var(--spacing-4) var(--spacing-3);
+  background: var(--color-bg-card);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.favorites-header h2 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  flex: 1;
+  margin: 0;
+}
+.favorites-empty {
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.favorites-empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.favorites-empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 .template-badge-corner {
   position: absolute;
@@ -6056,7 +6177,7 @@ body {
       </div>
       <div class="profile-stats">
         <div class="stat"><div class="stat-num">328</div><div class="stat-label">焕新值</div></div>
-        <div class="stat"><div class="stat-num">28</div><div class="stat-label">收藏</div></div>
+        <div class="stat" onclick="switchTab('favorites')" style="cursor: pointer;"><div class="stat-num" id="profile-fav-count">28</div><div class="stat-label">收藏</div></div>
         <div class="stat"><div class="stat-num">12</div><div class="stat-label">关注</div></div>
         <div class="stat"><div class="stat-num">156</div><div class="stat-label">粉丝</div></div>
       </div>
@@ -6542,12 +6663,12 @@ body {
         </svg>
       </div>
       <div class="template-detail-actions">
-        <div class="template-detail-action-btn" onclick="showToast('已收藏')">
+        <div class="template-detail-action-btn" id="detail-fav-btn" onclick="toggleFavorite()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
         </div>
-        <div class="template-detail-action-btn" onclick="showToast('分享')">
+        <div class="template-detail-action-btn" onclick="openShareModal()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="18" cy="5" r="3"/>
             <circle cx="6" cy="12" r="3"/>
@@ -6758,6 +6879,69 @@ body {
 
   <!-- ===== Toast ===== -->
   <div class="toast" id="toast">提示信息</div>
+
+  <!-- ===== Share Modal ===== -->
+  <div class="share-modal-overlay" id="share-modal" onclick="closeShareModal(event)">
+    <div class="share-modal-content" onclick="event.stopPropagation()">
+      <div class="share-modal-title">分享到</div>
+      <div class="share-grid">
+        <div class="share-item" onclick="doShare('抖音')">
+          <div class="share-icon" style="background: #000; color: #fff;">🎵</div>
+          <span class="share-name">抖音</span>
+        </div>
+        <div class="share-item" onclick="doShare('小红书')">
+          <div class="share-icon" style="background: #FE2C55; color: #fff;">📕</div>
+          <span class="share-name">小红书</span>
+        </div>
+        <div class="share-item" onclick="doShare('微信')">
+          <div class="share-icon" style="background: #07C160; color: #fff;">💬</div>
+          <span class="share-name">微信</span>
+        </div>
+        <div class="share-item" onclick="doShare('朋友圈')">
+          <div class="share-icon" style="background: #07C160; color: #fff;">🌏</div>
+          <span class="share-name">朋友圈</span>
+        </div>
+        <div class="share-item" onclick="doShare('微博')">
+          <div class="share-icon" style="background: #E6162D; color: #fff;">🔴</div>
+          <span class="share-name">微博</span>
+        </div>
+        <div class="share-item" onclick="doShare('QQ')">
+          <div class="share-icon" style="background: #12B7F5; color: #fff;">🐧</div>
+          <span class="share-name">QQ</span>
+        </div>
+        <div class="share-item" onclick="doShare('复制链接')">
+          <div class="share-icon" style="background: #666; color: #fff;">🔗</div>
+          <span class="share-name">复制链接</span>
+        </div>
+        <div class="share-item" onclick="doShare('保存图片')">
+          <div class="share-icon" style="background: #888; color: #fff;">💾</div>
+          <span class="share-name">保存图片</span>
+        </div>
+      </div>
+      <button class="share-cancel" onclick="closeShareModal()">取消</button>
+    </div>
+  </div>
+
+  <!-- ===== Favorites Page ===== -->
+  <div class="page" id="page-favorites">
+    <div class="favorites-header">
+      <button class="icon-btn" onclick="switchTab('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <h2>我的收藏</h2>
+      <div style="width: 32px;"></div>
+    </div>
+    <div class="waterfall-grid" style="padding: var(--spacing-3) var(--spacing-3);" id="favorites-list">
+      <div class="favorites-empty">
+        <div class="favorites-empty-icon">🤍</div>
+        <div class="favorites-empty-text">还没有收藏内容哦</div>
+        <div class="favorites-empty-text" style="margin-top: 4px; font-size: 12px;">去发现页看看喜欢的妆容吧</div>
+      </div>
+    </div>
+    <div style="height: 80px;"></div>
+  </div>
 
   <!-- ===== Scan Result Modal ===== -->
   <div class="modal-overlay" id="scan-modal" onclick="closeScanModal(event)">
@@ -6970,15 +7154,114 @@ body {
   }
 
   // ===== Library =====
+  const librarySubCats = {
+    daren: ['全部', '日常妆', '约会妆', '职场妆', '派对妆', '复古妆'],
+    jubu: ['全部', '眼妆', '眉妆', '唇妆', '底妆', '腮红'],
+    qa: ['全部', '底妆技巧', '眼妆教程', '护肤知识', '产品测评', '工具使用'],
+    gufeng: ['全部', '唐妆', '宋妆', '明妆', '汉妆', '戏曲妆'],
+    yinfa: ['全部', '减龄妆', '日常淡妆', '婚礼妆', '聚会妆', '护肤'],
+    dapai: ['全部', 'YSL', 'Dior', 'Chanel', 'Armani', '雅诗兰黛'],
+    star: ['全部', '日常同款', '红毯同款', '杂志同款', '舞台同款', '古装同款']
+  };
+  let currentLibraryCat = 'daren';
+
   function switchLibraryCat(el, cat) {
+    currentLibraryCat = cat;
     document.querySelectorAll('.library-cat-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
-    showToast('切换分类：' + el.textContent);
+    const subTabs = document.getElementById('librarySubTabs');
+    if (subTabs && librarySubCats[cat]) {
+      const subs = librarySubCats[cat];
+      subTabs.innerHTML = subs.map((s, i) =>
+        `<span class="library-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchLibrarySub(this)">${s}</span>`
+      ).join('');
+    }
+    el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
   function switchLibrarySub(el) {
     document.querySelectorAll('.library-sub-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+  }
+
+  // ===== Favorites =====
+  let favorites = [];
+  let currentTemplateId = 'tpl_001';
+
+  function toggleFavorite() {
+    const btn = document.getElementById('detail-fav-btn');
+    const idx = favorites.indexOf(currentTemplateId);
+    if (idx > -1) {
+      favorites.splice(idx, 1);
+      if (btn) btn.classList.remove('favorited');
+      showToast('已取消收藏');
+    } else {
+      favorites.push(currentTemplateId);
+      if (btn) btn.classList.add('favorited');
+      showToast('已收藏');
+    }
+    updateFavCount();
+    renderFavoritesList();
+  }
+
+  function updateFavCount() {
+    const el = document.getElementById('profile-fav-count');
+    if (el) el.textContent = 28 + favorites.length;
+  }
+
+  function renderFavoritesList() {
+    const list = document.getElementById('favorites-list');
+    if (!list) return;
+    if (favorites.length === 0) {
+      list.innerHTML = `
+        <div class="favorites-empty">
+          <div class="favorites-empty-icon">🤍</div>
+          <div class="favorites-empty-text">还没有收藏内容哦</div>
+          <div class="favorites-empty-text" style="margin-top: 4px; font-size: 12px;">去发现页看看喜欢的妆容吧</div>
+        </div>`;
+      return;
+    }
+    const sampleCards = [
+      { img: 'ui-design/assets/feed-card-1.jpg', title: '晚宴精致妆容｜高级感富家千金妆教程', badge: 'L2 精选', badgeClass: 'l2', creator: '美妆师Luna', avatar: 'L', price: '50 GP', h: 180 },
+      { img: 'ui-design/assets/feed-card-2.jpg', title: '日常清新裸妆｜伪素颜神器 5分钟搞定', badge: '免费', badgeClass: 'free', creator: '小妆日记', avatar: '妆', price: '免费', h: 220 },
+      { img: 'ui-design/assets/product-1.jpg', title: '大唐盛世妆｜非遗文化创意妆容分享', badge: '国风', badgeClass: 'gufeng', creator: '花西子', avatar: '唐', price: '80 GP', h: 200 },
+      { img: 'ui-design/assets/product-2.jpg', title: '通勤大地色眼妆｜新手也能画好的入门教程', badge: 'L3 大师', badgeClass: 'l3', creator: '职场美妆', avatar: '职', price: '60 GP', h: 210 }
+    ];
+    list.innerHTML = favorites.map((fid, i) => {
+      const card = sampleCards[i % sampleCards.length];
+      return `
+        <div class="waterfall-card" onclick="openTemplateDetail()">
+          <div class="waterfall-card-img" style="height: ${card.h}px;">
+            <img src="${card.img}" alt="${card.title}">
+            <span class="waterfall-badge ${card.badgeClass}">${card.badge}</span>
+          </div>
+          <div class="waterfall-card-info">
+            <div class="waterfall-card-title">${card.title}</div>
+            <div class="waterfall-card-bottom">
+              <div class="waterfall-card-creator">
+                <div class="waterfall-creator-avatar">${card.avatar}</div>
+                <span class="waterfall-creator-name">${card.creator}</span>
+              </div>
+              <span class="waterfall-card-price">${card.price}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ===== Share =====
+  function openShareModal() {
+    document.getElementById('share-modal').classList.add('show');
+  }
+
+  function closeShareModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('share-modal').classList.remove('show');
+  }
+
+  function doShare(platform) {
+    closeShareModal();
+    showToast('已分享到' + platform);
   }
 
   // ===== Modals =====
