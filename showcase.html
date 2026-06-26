@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妆伴 MakeupPal · Demo Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #C4956A;
+            --primary-light: #D4B08A;
+            --primary-lighter: #E8D5C0;
+            --primary-lightest: #F5EDE4;
+            --primary-dark: #A87D56;
+            --bg: #FBF6F0;
+            --bg-card: #FFFFFF;
+            --text: #2D2A26;
+            --text-secondary: #6B6560;
+            --text-muted: #9E9790;
+            --border: #EDE4DA;
+            --shadow-sm: 0 2px 8px rgba(196, 149, 106, 0.06);
+            --shadow-md: 0 8px 32px rgba(196, 149, 106, 0.08);
+            --shadow-lg: 0 20px 60px rgba(196, 149, 106, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(196, 149, 106, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 176, 138, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .showcase-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Header ===== */
+        .showcase-header {
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--primary-lightest);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .showcase-title {
+            font-family: 'Noto Serif SC', 'PingFang SC', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .showcase-title span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .showcase-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .showcase-version {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', monospace;
+        }
+
+        /* ===== Main Content ===== */
+        .showcase-main {
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* ===== iPhone Frame ===== */
+        .iphone-wrapper {
+            flex-shrink: 0;
+            animation: fadeInUp 0.8s ease 0.2s both;
+            position: sticky;
+            top: 40px;
+        }
+
+        .iphone-frame {
+            width: 320px;
+            height: 660px;
+            background: #1C1C1E;
+            border-radius: 48px;
+            padding: 12px;
+            box-shadow: 
+                0 0 0 2px #2C2C2E,
+                0 25px 80px rgba(0, 0, 0, 0.25),
+                0 50px 120px rgba(196, 149, 106, 0.15);
+            position: relative;
+        }
+
+        .iphone-screen {
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            border-radius: 38px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .iphone-notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 28px;
+            background: #1C1C1E;
+            border-radius: 0 0 18px 18px;
+            z-index: 10;
+        }
+
+        .iphone-notch::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 18px;
+            width: 8px;
+            height: 8px;
+            background: #2C2C2E;
+            border-radius: 50%;
+        }
+
+        .iphone-notch::after {
+            content: '';
+            position: absolute;
+            top: 7px;
+            right: 16px;
+            width: 10px;
+            height: 10px;
+            background: #2C2C2E;
+            border-radius: 50%;
+            box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+        }
+
+        .iphone-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .iphone-side-btn {
+            position: absolute;
+            background: #2C2C2E;
+            border-radius: 2px;
+        }
+
+        .btn-volume-up {
+            left: -3px;
+            top: 120px;
+            width: 3px;
+            height: 32px;
+        }
+
+        .btn-volume-down {
+            left: -3px;
+            top: 168px;
+            width: 3px;
+            height: 32px;
+        }
+
+        .btn-silent {
+            left: -3px;
+            top: 80px;
+            width: 3px;
+            height: 24px;
+        }
+
+        .btn-power {
+            right: -3px;
+            top: 140px;
+            width: 3px;
+            height: 60px;
+        }
+
+        .iphone-label {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* ===== Feature Panel ===== */
+        .feature-panel {
+            flex: 1;
+            max-width: 420px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .panel-section {
+            margin-bottom: 28px;
+        }
+
+        .panel-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--primary-lighter);
+        }
+
+        /* ===== Page Nav List ===== */
+        .page-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .page-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--primary-light));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .page-nav-item:hover {
+            border-color: var(--primary-lighter);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .page-nav-item.active {
+            border-color: var(--primary-lighter);
+            background: linear-gradient(90deg, rgba(196, 149, 106, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .page-nav-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .page-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: var(--primary-lightest);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .page-nav-item.active .page-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
+        }
+
+        .page-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .page-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .page-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .page-arrow {
+            color: var(--text-muted);
+            font-size: 12px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-4px);
+        }
+
+        .page-nav-item.active .page-arrow,
+        .page-nav-item:hover .page-arrow {
+            opacity: 1;
+            transform: translateX(0);
+            color: var(--primary);
+        }
+
+        /* ===== Feature Detail Card ===== */
+        .feature-detail-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-detail-header {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feature-detail-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-detail-title .emoji {
+            font-size: 22px;
+        }
+
+        .feature-detail-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: var(--primary-lightest);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            background: var(--primary-lighter);
+            transform: translateX(4px);
+        }
+
+        .feature-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .feature-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== Stats Row ===== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary-lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* ===== Quick Actions ===== */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .action-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            background: var(--primary-lightest);
+            transform: translateY(-1px);
+        }
+
+        .action-chip .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        /* ===== Core Capabilities ===== */
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .capability-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .capability-card:hover {
+            border-color: var(--primary-lighter);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .capability-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--primary-lightest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .capability-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .capability-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .showcase-main {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .iphone-wrapper {
+                position: static;
+            }
+
+            .feature-panel {
+                max-width: 500px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .showcase-container {
+                padding: 24px 16px;
+            }
+
+            .showcase-title {
+                font-size: 28px;
+            }
+
+            .iphone-frame {
+                width: 280px;
+                height: 580px;
+                border-radius: 42px;
+            }
+
+            .iphone-screen {
+                border-radius: 32px;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <!-- Header -->
+        <header class="showcase-header">
+            <div class="brand-badge">
+                <span class="brand-badge-dot"></span>
+                AI 虚拟试妆美妆 App
+            </div>
+            <h1 class="showcase-title">妆伴 <span>MakeupPal</span></h1>
+            <p class="showcase-subtitle">你的专属 AI 美妆顾问 · 让每一次上妆都恰到好处</p>
+            <div class="showcase-version">v3.2.0 · Showcase Demo</div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="showcase-main">
+            <!-- iPhone Frame -->
+            <div class="iphone-wrapper">
+                <div class="iphone-frame">
+                    <div class="iphone-side-btn btn-silent"></div>
+                    <div class="iphone-side-btn btn-volume-up"></div>
+                    <div class="iphone-side-btn btn-volume-down"></div>
+                    <div class="iphone-side-btn btn-power"></div>
+                    <div class="iphone-screen">
+                        <div class="iphone-notch"></div>
+                        <iframe id="demoFrame" src="demo-dist/index.html" title="MakeupPal Demo"></iframe>
+                    </div>
+                </div>
+                <div class="iphone-label">iPhone 14 Pro · Demo Preview</div>
+            </div>
+
+            <!-- Feature Panel -->
+            <div class="feature-panel">
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">核心页面</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">功能模块</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6大</div>
+                        <div class="stat-label">弹窗体系</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="panel-section">
+                    <div class="panel-title">快速演示</div>
+                    <div class="quick-actions">
+                        <span class="action-chip" onclick="showOnboarding()">
+                            <span class="dot"></span>
+                            Onboarding 引导
+                        </span>
+                        <span class="action-chip" onclick="showTemplateDetail()">
+                            <span class="dot"></span>
+                            模板详情
+                        </span>
+                        <span class="action-chip" onclick="showGpCenter()">
+                            <span class="dot"></span>
+                            焕新值中心
+                        </span>
+                        <span class="action-chip" onclick="showShare()">
+                            <span class="dot"></span>
+                            分享面板
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Page Navigation -->
+                <div class="panel-section">
+                    <div class="panel-title">核心页面</div>
+                    <div class="page-nav-list" id="pageNavList">
+                        <div class="page-nav-item active" data-page="home" onclick="switchPage(this, 'home')">
+                            <div class="page-icon">🏠</div>
+                            <div class="page-info">
+                                <div class="page-name">首页</div>
+                                <div class="page-desc">推荐 Feed · 热度榜 · 金刚区</div>
+                            </div>
+                            <div class="page-arrow">→</div>
+                        </div>
+                        <div class="page-nav-item" data-page="library" onclick="switchPage(this, 'library')">
+                            <div class="page-icon">📚</div>
+                            <div class="page-info">
+                                <div class="page-name">颜库</div>
+                                <div class="page-desc">模板瀑布流 · 分类浏览 · 问答</div>
+                            </div>
+                            <div class="page-arrow">→</div>
+                        </div>
+                        <div class="page-nav-item" data-page="mirror" onclick="switchPage(this, 'mirror')">
+                            <div class="page-icon">🪞</div>
+                            <div class="page-info">
+                                <div class="page-name">焕新镜面</div>
+                                <div class="page-desc">AI 虚拟试妆 · Chat 美妆顾问</div>
+                            </div>
+                            <div class="page-arrow">→</div>
+                        </div>
+                        <div class="page-nav-item" data-page="mall" onclick="switchPage(this, 'mall')">
+                            <div class="page-icon">🛍️</div>
+                            <div class="page-info">
+                                <div class="page-name">市集</div>
+                                <div class="page-desc">妆容商城 · 分类筛选 · 详情页</div>
+                            </div>
+                            <div class="page-arrow">→</div>
+                        </div>
+                        <div class="page-nav-item" data-page="profile" onclick="switchPage(this, 'profile')">
+                            <div class="page-icon">👤</div>
+                            <div class="page-info">
+                                <div class="page-name">我的</div>
+                                <div class="page-desc">个人中心 · GP 中心 · 工具箱</div>
+                            </div>
+                            <div class="page-arrow">→</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature Detail -->
+                <div class="panel-section">
+                    <div class="panel-title">功能亮点</div>
+                    <div class="feature-detail-card" id="featureDetail">
+                        <div class="feature-detail-header">
+                            <div class="feature-detail-title">
+                                <span class="emoji">🏠</span>
+                                <span>首页 · 内容发现入口</span>
+                            </div>
+                            <div class="feature-detail-subtitle">
+                                个性化推荐 Feed，热度榜单实时更新，一键进入核心功能
+                            </div>
+                        </div>
+                        <div class="feature-list" id="featureList">
+                            <div class="feature-item">
+                                <div class="feature-dot"></div>
+                                <div class="feature-text">
+                                    <div class="feature-name">面部档案卡</div>
+                                    <div class="feature-desc">肤质/脸型/骨相评分一目了然，点击查看详情</div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-dot"></div>
+                                <div class="feature-text">
+                                    <div class="feature-name">金刚区五宫格</div>
+                                    <div class="feature-desc">镜面模式/局部搜索/商城/成分扫描/创作者快速入口</div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-dot"></div>
+                                <div class="feature-text">
+                                    <div class="feature-name">本周热度榜</div>
+                                    <div class="feature-desc">Top 3 高亮展示，横向滚动浏览热门妆容</div>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-dot"></div>
+                                <div class="feature-text">
+                                    <div class="feature-name">瀑布流推荐</div>
+                                    <div class="feature-desc">双列卡片布局，算法推荐个性化妆容内容</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Capabilities -->
+                <div class="panel-section">
+                    <div class="panel-title">核心能力</div>
+                    <div class="capabilities-grid">
+                        <div class="capability-card">
+                            <div class="capability-icon">🔍</div>
+                            <div class="capability-name">成分安全扫描</div>
+                            <div class="capability-desc">拍照识别成分，敏感肌风险预警</div>
+                        </div>
+                        <div class="capability-card">
+                            <div class="capability-icon">🎨</div>
+                            <div class="capability-name">风格偏好</div>
+                            <div class="capability-desc">智能匹配适合你的妆容风格</div>
+                        </div>
+                        <div class="capability-card">
+                            <div class="capability-icon">📊</div>
+                            <div class="capability-name">肤质报告</div>
+                            <div class="capability-desc">AI 分析肤质，定制护肤建议</div>
+                        </div>
+                        <div class="capability-card">
+                            <div class="capability-icon">💎</div>
+                            <div class="capability-name">焕新值经济</div>
+                            <div class="capability-desc">任务驱动，GP 兑换商城闭环</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pageFeatures = {
+            home: {
+                emoji: '🏠',
+                title: '首页 · 内容发现入口',
+                subtitle: '个性化推荐 Feed，热度榜单实时更新，一键进入核心功能',
+                features: [
+                    { name: '面部档案卡', desc: '肤质/脸型/骨相评分一目了然，点击查看详情' },
+                    { name: '金刚区五宫格', desc: '镜面模式/局部搜索/商城/成分扫描/创作者快速入口' },
+                    { name: '本周热度榜', desc: 'Top 3 高亮展示，横向滚动浏览热门妆容' },
+                    { name: '瀑布流推荐', desc: '双列卡片布局，算法推荐个性化妆容内容' }
+                ]
+            },
+            library: {
+                emoji: '📚',
+                title: '颜库 · 内容消费主场景',
+                subtitle: '海量妆容模板，7 大分类精准筛选，找到最适合你的那一款',
+                features: [
+                    { name: '七大主分类', desc: '达人精选/局部拆解/美妆问答/国风/银发/大牌/明星同款' },
+                    { name: '动态子分类', desc: '点击主分类动态加载子分类，层级清晰，筛选精准' },
+                    { name: '瀑布流布局', desc: '小红书风格双列卡片，不规则比例更显真实' },
+                    { name: '等级标签体系', desc: '免费/L2 精选/L3 大师，快速识别模板等级' }
+                ]
+            },
+            mirror: {
+                emoji: '🪞',
+                title: '焕新镜面 · AI 虚拟试妆',
+                subtitle: 'Chat + Mirror 双模式，对话推荐到一键试妆完整闭环',
+                features: [
+                    { name: 'AI 虚拟试妆', desc: '前置摄像头实时上脸效果预览，所见即所得' },
+                    { name: 'Chat 美妆顾问', desc: 'AI 对话智能推荐，快捷提问一键触发' },
+                    { name: '双模式切换', desc: '顶部 Chat/Mirror 切换按钮，流畅过渡' },
+                    { name: '滤镜与补光', desc: '美颜滤镜开关，色温补光调节，多档预设可选' }
+                ]
+            },
+            mall: {
+                emoji: '🛍️',
+                title: '市集 · 商业变现入口',
+                subtitle: '六大子分类，多层级筛选，商品详情页完整展示',
+                features: [
+                    { name: '六大子分类', desc: '达人推荐/自营品牌/热门榜/国风/银发/明星同款' },
+                    { name: '孙分类体系', desc: '每个子分类下有 5-6 个孙分类，精准定位' },
+                    { name: '商品详情页', desc: '大图展示/创作者信息/妆容步骤/产品清单' },
+                    { name: '一键试妆', desc: '详情页底部直达试妆，购买到体验无缝衔接' }
+                ]
+            },
+            profile: {
+                emoji: '👤',
+                title: '我的 · 用户资产与服务',
+                subtitle: '个人中心，焕新值管理，工具箱，品牌合作一站式',
+                features: [
+                    { name: '焕新值 GP', desc: '任务体系驱动活跃，兑换商城闭环变现' },
+                    { name: '我的模板', desc: '已收藏/已购买 Tab 切换，管理个人妆容资产' },
+                    { name: '功能工具箱', desc: '风格偏好/我的报告/门店地图/创作者中心' },
+                    { name: '品牌合作中心', desc: 'B 端品牌方入驻入口，SaaS 数据看板' }
+                ]
+            }
+        };
+
+        function switchPage(el, page) {
+            document.querySelectorAll('.page-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            el.classList.add('active');
+
+            const data = pageFeatures[page];
+            if (data) {
+                updateFeatureDetail(data);
+            }
+
+            const frame = document.getElementById('demoFrame');
+            if (frame && frame.contentWindow && frame.contentWindow.switchTab) {
+                try {
+                    frame.contentWindow.switchTab(page);
+                } catch (e) {
+                    console.log('Switch tab failed:', e);
+                }
+            }
+        }
+
+        function updateFeatureDetail(data) {
+            const header = document.querySelector('#featureDetail .feature-detail-header');
+            const list = document.getElementById('featureList');
+
+            header.innerHTML = `
+                <div class="feature-detail-title">
+                    <span class="emoji">${data.emoji}</span>
+                    <span>${data.title}</span>
+                </div>
+                <div class="feature-detail-subtitle">${data.subtitle}</div>
+            `;
+
+            list.innerHTML = data.features.map(f => `
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <div class="feature-text">
+                        <div class="feature-name">${f.name}</div>
+                        <div class="feature-desc">${f.desc}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const frame = document.getElementById('demoFrame');
+            frame.addEventListener('load', function() {
+                console.log('Demo loaded successfully');
+            });
+        });
+
+        function showOnboarding() {
+            const frame = document.getElementById('demoFrame');
+            if (frame && frame.contentWindow && frame.contentWindow.showOnboarding) {
+                try {
+                    frame.contentWindow.showOnboarding();
+                } catch (e) {
+                    console.log('Show onboarding failed:', e);
+                }
+            }
+            showToast('📱 Onboarding 引导已打开');
+        }
+
+        function showTemplateDetail() {
+            const frame = document.getElementById('demoFrame');
+            if (frame && frame.contentWindow && frame.contentWindow.openTemplateDetail) {
+                try {
+                    frame.contentWindow.switchTab('library');
+                    setTimeout(() => {
+                        frame.contentWindow.openTemplateDetail();
+                    }, 200);
+                } catch (e) {
+                    console.log('Show template detail failed:', e);
+                }
+            }
+            showToast('💄 模板详情已打开');
+        }
+
+        function showGpCenter() {
+            const frame = document.getElementById('demoFrame');
+            if (frame && frame.contentWindow && frame.contentWindow.openGpCenter) {
+                try {
+                    frame.contentWindow.switchTab('profile');
+                    setTimeout(() => {
+                        frame.contentWindow.openGpCenter();
+                    }, 200);
+                } catch (e) {
+                    console.log('Show GP center failed:', e);
+                }
+            }
+            showToast('💎 焕新值中心已打开');
+        }
+
+        function showShare() {
+            const frame = document.getElementById('demoFrame');
+            if (frame && frame.contentWindow && frame.contentWindow.openShareModal) {
+                try {
+                    frame.contentWindow.switchTab('library');
+                    setTimeout(() => {
+                        frame.contentWindow.openShareModal();
+                    }, 200);
+                } catch (e) {
+                    console.log('Show share failed:', e);
+                }
+            }
+            showToast('📤 分享面板已打开');
+        }
+
+        function showToast(msg) {
+            const existing = document.querySelector('.showcase-toast');
+            if (existing) existing.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'showcase-toast';
+            toast.textContent = msg;
+            toast.style.cssText = `
+                position: fixed;
+                top: 24px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-20px);
+                background: rgba(45, 42, 38, 0.92);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 9999;
+                opacity: 0;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            `;
+            document.body.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(-20px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
