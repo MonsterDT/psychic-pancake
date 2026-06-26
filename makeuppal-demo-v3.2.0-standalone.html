@@ -602,6 +602,599 @@ body {
 .risk-label.danger { color: var(--color-danger); }
 
 /* ============ Mall Page ============ */
+.mall-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-light);
+}
+.mall-sub-tabs {
+  display: flex;
+  gap: var(--spacing-2);
+  overflow-x: auto;
+  padding: 0 var(--spacing-4) var(--spacing-3);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mall-sub-tabs::-webkit-scrollbar { display: none; }
+.mall-sub-tab {
+  flex-shrink: 0;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: 1px solid var(--color-border-light);
+  white-space: nowrap;
+}
+.mall-sub-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Category Panel */
+.mirror-settings-modal {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 20px 20px 0 0;
+  margin: 0;
+  padding: var(--spacing-3) var(--spacing-4) calc(var(--spacing-5) + var(--safe-bottom));
+}
+.settings-section {
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.settings-section:last-child { border-bottom: none; }
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.settings-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+.settings-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.settings-name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+.settings-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.settings-sub-options {
+  margin-top: var(--spacing-3);
+  padding-left: 52px;
+}
+.settings-sub-title {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+.settings-slider {
+  width: 100%;
+  accent-color: var(--color-primary);
+}
+.filter-presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.filter-preset {
+  padding: 6px 14px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.filter-preset.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.light-presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.light-preset {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.light-preset.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+.switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--color-border);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+.switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: all var(--duration-fast);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.switch.active { background: var(--color-primary); }
+.switch.active .switch-thumb { left: 22px; }
+
+.category-panel-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0.5);
+  display: none;
+}
+.category-panel-overlay.show { display: block; animation: fadeIn 0.2s ease; }
+.category-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75%;
+  max-width: 320px;
+  height: 100%;
+  background: var(--color-bg-card);
+  overflow-y: auto;
+  animation: slideInRight 0.3s ease;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.category-panel-header {
+  padding: calc(var(--spacing-5) + var(--safe-top)) var(--spacing-4) var(--spacing-3);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.category-panel-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+.category-list { padding: var(--spacing-3) 0; }
+.category-group-title {
+  padding: var(--spacing-3) var(--spacing-4) var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+.category-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+  padding: 0 var(--spacing-4) var(--spacing-3);
+}
+.category-item {
+  padding: var(--spacing-2);
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+}
+.category-item:active {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.category-item-icon {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+/* ===== My Templates ===== */
+.template-tabs {
+  display: flex;
+  gap: var(--spacing-4);
+  padding: 0 var(--spacing-4);
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-bg-card);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.template-tab {
+  padding: var(--spacing-3) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.template-tab.active {
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+  border-bottom-color: var(--color-primary);
+}
+.template-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--spacing-3);
+  cursor: pointer;
+}
+.template-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.template-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.template-info {
+  padding: var(--spacing-2) var(--spacing-2) var(--spacing-3);
+}
+.template-info h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 4px;
+  color: var(--color-text);
+}
+.template-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
+/* ===== My Reports ===== */
+.report-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.report-card:active { transform: scale(0.98); }
+.report-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.report-info { flex: 1; min-width: 0; }
+.report-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.report-desc {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+.report-meta {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ===== Toolbox ===== */
+.tool-section-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-3);
+  margin-top: var(--spacing-4);
+}
+.tool-section-title:first-child { margin-top: 0; }
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-2);
+}
+.tool-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3) var(--spacing-2);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.tool-item:active { transform: scale(0.95); }
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.tool-name {
+  font-size: 11px;
+  color: var(--color-text);
+}
+
+/* ===== Style Preference ===== */
+.pref-section {
+  margin-bottom: var(--spacing-4);
+}
+.pref-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-3);
+}
+.style-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.style-chip {
+  padding: 6px 14px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: 1px solid var(--color-border-light);
+  transition: all var(--duration-fast);
+}
+.style-chip.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.color-pref {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2);
+}
+.color-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.color-opt.active {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--color-border-light);
+}
+
+/* ===== Store Map ===== */
+.store-map-hero {
+  height: 200px;
+  background: linear-gradient(180deg, #e8f4f8 0%, #f5f5f5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-placeholder {
+  text-align: center;
+}
+.store-list {
+  padding: var(--spacing-3) var(--spacing-4);
+}
+.store-item {
+  display: flex;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+}
+.store-item:last-child { border-bottom: none; }
+.store-img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.store-info { flex: 1; min-width: 0; }
+.store-name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.store-address {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+.store-meta {
+  display: flex;
+  gap: var(--spacing-3);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ===== Creator Center ===== */
+.creator-hero {
+  background: linear-gradient(135deg, var(--color-primary), #ff6b9d);
+  padding: calc(var(--spacing-5) + var(--safe-top)) var(--spacing-4) var(--spacing-5);
+  color: #fff;
+  text-align: center;
+}
+.creator-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  margin: 0 auto var(--spacing-2);
+  border: 2px solid rgba(255,255,255,0.4);
+}
+.creator-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 4px;
+}
+.creator-level {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: var(--spacing-4);
+}
+.creator-stats {
+  display: flex;
+  justify-content: space-around;
+}
+.creator-stat { text-align: center; }
+.cs-num {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+.cs-label {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+.creator-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
+}
+.creator-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3) var(--spacing-2);
+  cursor: pointer;
+}
+.creator-action:active { transform: scale(0.95); }
+.ca-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.ca-name {
+  font-size: 11px;
+  color: var(--color-text);
+}
+.creator-works {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-3);
+}
+.work-item {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+}
+.work-img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.work-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.work-info {
+  padding: var(--spacing-2);
+}
+.work-title {
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.work-meta {
+  display: flex;
+  gap: var(--spacing-2);
+  font-size: 10px;
+  color: var(--color-text-muted);
+}
+
 .mall-tabs {
   display: flex;
   gap: 0;
@@ -4381,8 +4974,38 @@ body {
   font-size: 10px;
   cursor: pointer;
   padding: 8px;
+  min-width: 56px;
+  transition: all var(--duration-fast);
 }
 .mirror-bottom-btn:active { opacity: 0.7; }
+.mirror-bottom-btn.active { color: #fff; }
+.mirror-bottom-btn.active svg { stroke: var(--color-primary); }
+.mirror-shutter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.mirror-mode-switch {
+  display: flex;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
+}
+.mirror-mode-item {
+  padding: 4px 14px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+.mirror-mode-item.active {
+  background: #fff;
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
 .mirror-shutter-btn {
   width: 64px;
   height: 64px;
@@ -4394,8 +5017,29 @@ body {
   cursor: pointer;
   position: relative;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: all var(--duration-fast);
 }
 .mirror-shutter-btn:active { transform: scale(0.95); }
+.mirror-shutter-btn.video-mode {
+  background: transparent;
+  border: 4px solid #fff;
+}
+.mirror-shutter-btn.video-mode .mirror-shutter-inner {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #ff4757;
+}
+.mirror-shutter-btn.recording {
+  border-color: #ff4757;
+}
+.mirror-shutter-btn.recording .mirror-shutter-inner {
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.85); opacity: 0.7; }
+}
 .mirror-shutter-btn::before {
   content: '';
   position: absolute;
@@ -4403,11 +5047,13 @@ body {
   border-radius: 50%;
   border: 3px solid var(--color-primary);
 }
+.mirror-shutter-btn.video-mode::before { border: none; }
 .mirror-shutter-inner {
   width: 28px;
   height: 28px;
   border-radius: var(--radius-sm);
   background: var(--color-primary);
+  transition: all var(--duration-fast);
 }
 
 /* ============ Chat Mode V2 ============ */
@@ -5418,7 +6064,7 @@ body {
         <div class="kingkong-icon">🪞</div>
         <span class="kingkong-label">镜面模式</span>
       </div>
-      <div class="kingkong-item" onclick="switchTab('library'); showToast('美妆问答')">
+      <div class="kingkong-item" onclick="goToLibraryCat('jubu')">
         <div class="kingkong-icon">🔍</div>
         <span class="kingkong-label">局部搜索</span>
       </div>
@@ -5896,26 +6542,38 @@ body {
 
   <!-- ===== Mall Page ===== -->
   <div class="page" id="page-mall">
-    <header class="app-header">
-      <div class="header-left">
-        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">妆容商城</h2>
+    <header class="app-header" style="padding-bottom: var(--spacing-3);">
+      <div class="mall-search-box" style="flex: 1;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0; color: var(--color-text-muted);">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" placeholder="搜索妆容、品牌、商品..." id="mallSearch" style="flex: 1; border: none; background: transparent; outline: none; font-size: var(--font-size-sm); color: var(--color-text); font-family: var(--font-sans);">
       </div>
-      <div class="header-right">
-        <button class="icon-btn" onclick="showToast('搜索')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-          </svg>
-        </button>
-      </div>
+      <button class="icon-btn" onclick="openCategoryPanel()" style="margin-left: 8px; flex-shrink: 0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="6" x2="20" y2="6"/>
+          <line x1="7" y1="12" x2="17" y2="12"/>
+          <line x1="10" y1="18" x2="14" y2="18"/>
+        </svg>
+      </button>
     </header>
 
-    <div class="mall-tabs no-scrollbar">
-      <div class="mall-tab active">全部</div>
-      <div class="mall-tab">官方品牌</div>
-      <div class="mall-tab">热门推荐</div>
-      <div class="mall-tab">国风专栏</div>
-      <div class="mall-tab">银发焕新</div>
+    <div class="mall-tabs no-scrollbar" id="marketCatTabs">
+      <div class="mall-tab active" onclick="switchMarketCat(this, 'daren')">达人推荐</div>
+      <div class="mall-tab" onclick="switchMarketCat(this, 'ziying')">自营品牌</div>
+      <div class="mall-tab" onclick="switchMarketCat(this, 'hot')">热门榜</div>
+      <div class="mall-tab" onclick="switchMarketCat(this, 'gufeng')">国风专栏</div>
+      <div class="mall-tab" onclick="switchMarketCat(this, 'yinfa')">银发焕新</div>
+      <div class="mall-tab" onclick="switchMarketCat(this, 'star')">明星同款</div>
+    </div>
+
+    <div class="mall-sub-tabs" id="marketSubTabs">
+      <span class="mall-sub-tab active">全部</span>
+      <span class="mall-sub-tab">新品上市</span>
+      <span class="mall-sub-tab">限时特惠</span>
+      <span class="mall-sub-tab">爆款推荐</span>
+      <span class="mall-sub-tab">礼盒套装</span>
     </div>
 
     <div class="brand-strip">
@@ -6006,7 +6664,7 @@ body {
   <div class="page" id="page-mirror">
     <div class="mirror-hero-v2">
       <!-- Settings Button -->
-      <div class="mirror-settings-btn" onclick="showToast('设置')">
+      <div class="mirror-settings-btn" onclick="openMirrorSettings()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="3"/>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/>
@@ -6066,19 +6724,23 @@ body {
 
       <!-- Bottom Toolbar (Mirror Mode) -->
       <div class="mirror-bottom-bar" id="mirrorBottomBar">
-        <div class="mirror-bottom-btn" onclick="showToast('滤镜')">
+        <div class="mirror-bottom-btn" id="filterBtn" onclick="toggleFilter()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           </svg>
           <span>滤镜</span>
         </div>
-        <div class="mirror-bottom-btn" onclick="showToast('拍照')">
-          <div class="mirror-shutter-btn">
+        <div class="mirror-shutter-wrapper">
+          <div class="mirror-mode-switch">
+            <span class="mirror-mode-item" id="modePhoto" onclick="setMirrorMode('photo')">拍照</span>
+            <span class="mirror-mode-item active" id="modeVideo" onclick="setMirrorMode('video')">摄像</span>
+          </div>
+          <div class="mirror-shutter-btn" id="mirrorShutter" onclick="doShutter()">
             <div class="mirror-shutter-inner"></div>
           </div>
         </div>
-        <div class="mirror-bottom-btn" onclick="showToast('补光灯')">
+        <div class="mirror-bottom-btn" id="lightBtn" onclick="toggleFillLight()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/>
             <line x1="12" y1="1" x2="12" y2="3"/>
@@ -6212,25 +6874,25 @@ body {
 
     <!-- Function Grid 1 (5 items) -->
     <div class="profile-grid-5">
-      <div class="profile-grid-item" onclick="showToast('风格偏好')">
-        <div class="profile-grid-icon">🎨</div>
-        <span class="profile-grid-label">风格偏好</span>
-      </div>
-      <div class="profile-grid-item" onclick="showToast('我的模板')">
+      <div class="profile-grid-item" onclick="openMyTemplates()">
         <div class="profile-grid-icon">💄</div>
         <span class="profile-grid-label">我的模板</span>
       </div>
-      <div class="profile-grid-item" onclick="showToast('工具箱')">
+      <div class="profile-grid-item" onclick="openMyReports()">
+        <div class="profile-grid-icon">📊</div>
+        <span class="profile-grid-label">我的报告</span>
+      </div>
+      <div class="profile-grid-item" onclick="openToolbox()">
         <div class="profile-grid-icon">🧰</div>
         <span class="profile-grid-label">工具箱</span>
       </div>
-      <div class="profile-grid-item" onclick="showToast('国风专区')">
-        <div class="profile-grid-icon">🏮</div>
-        <span class="profile-grid-label">国风</span>
+      <div class="profile-grid-item" onclick="openStylePreference()">
+        <div class="profile-grid-icon">🎨</div>
+        <span class="profile-grid-label">风格偏好</span>
       </div>
-      <div class="profile-grid-item" onclick="showToast('银发专区')">
-        <div class="profile-grid-icon">👩‍🦳</div>
-        <span class="profile-grid-label">银发</span>
+      <div class="profile-grid-item" onclick="openCreatorCenter()">
+        <div class="profile-grid-icon">✨</div>
+        <span class="profile-grid-label">创作者</span>
       </div>
     </div>
 
@@ -6240,7 +6902,7 @@ body {
         <div class="profile-grid-icon">🔬</div>
         <span class="profile-grid-label">成分扫描</span>
       </div>
-      <div class="profile-grid-item" onclick="showToast('门店地图')">
+      <div class="profile-grid-item" onclick="openStoreMap()">
         <div class="profile-grid-icon">📍</div>
         <span class="profile-grid-label">门店地图</span>
       </div>
@@ -6355,6 +7017,329 @@ body {
         <span class="brand-status pending">意向中</span>
       </div>
     </div>
+  </div>
+
+  <!-- ===== My Templates Page ===== -->
+  <div class="page" id="page-my-templates">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">我的模板</h2>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-sm btn-outline" onclick="showToast('上传模板')">上传</button>
+      </div>
+    </header>
+    <div class="template-tabs">
+      <span class="template-tab active">已收藏</span>
+      <span class="template-tab">已购买</span>
+      <span class="template-tab">我创建的</span>
+      <span class="template-tab">历史记录</span>
+    </div>
+    <div class="waterfall-grid" style="padding: var(--spacing-3);">
+      <div class="template-card">
+        <div class="template-img"><img src="ui-design/assets/look-1.jpg" alt=""></div>
+        <div class="template-info"><h4>法式慵懒妆</h4><div class="template-meta"><span>达人 · 小A</span><span>❤️ 2.3k</span></div></div>
+      </div>
+      <div class="template-card">
+        <div class="template-img"><img src="ui-design/assets/look-2.jpg" alt=""></div>
+        <div class="template-info"><h4>日系清透妆</h4><div class="template-meta"><span>自营</span><span>❤️ 5.1k</span></div></div>
+      </div>
+      <div class="template-card">
+        <div class="template-img"><img src="ui-design/assets/look-3.jpg" alt=""></div>
+        <div class="template-info"><h4>复古港风妆</h4><div class="template-meta"><span>达人 · 木子</span><span>❤️ 3.8k</span></div></div>
+      </div>
+      <div class="template-card">
+        <div class="template-img"><img src="ui-design/assets/look-4.jpg" alt=""></div>
+        <div class="template-info"><h4>职场通勤妆</h4><div class="template-meta"><span>官方</span><span>❤️ 1.2k</span></div></div>
+      </div>
+    </div>
+    <div style="height: 80px;"></div>
+  </div>
+
+  <!-- ===== My Reports Page ===== -->
+  <div class="page" id="page-my-reports">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">我的报告</h2>
+      </div>
+    </header>
+    <div style="padding: var(--spacing-4);">
+      <div class="report-card">
+        <div class="report-icon">🧬</div>
+        <div class="report-info">
+          <div class="report-title">肤质检测报告</div>
+          <div class="report-desc">混合性肤质 · 敏感肌倾向</div>
+          <div class="report-meta">2024-01-15 · 点击查看详情</div>
+        </div>
+      </div>
+      <div class="report-card">
+        <div class="report-icon">👤</div>
+        <div class="report-info">
+          <div class="report-title">面部分析报告</div>
+          <div class="report-desc">鹅蛋脸 · 骨相评分 86</div>
+          <div class="report-meta">2024-01-10 · 点击查看详情</div>
+        </div>
+      </div>
+      <div class="report-card">
+        <div class="report-icon">💄</div>
+        <div class="report-info">
+          <div class="report-title">妆容适配报告</div>
+          <div class="report-desc">推荐风格：日常/法式/清透</div>
+          <div class="report-meta">2024-01-08 · 点击查看详情</div>
+        </div>
+      </div>
+      <div class="report-card">
+        <div class="report-icon">🔬</div>
+        <div class="report-info">
+          <div class="report-title">成分检测报告</div>
+          <div class="report-desc">已检测 12 款产品 · 3 款需注意</div>
+          <div class="report-meta">2024-01-05 · 点击查看详情</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Toolbox Page ===== -->
+  <div class="page" id="page-toolbox">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">工具箱</h2>
+      </div>
+    </header>
+    <div style="padding: var(--spacing-4);">
+      <div class="tool-section-title">常用工具</div>
+      <div class="tool-grid">
+        <div class="tool-item" onclick="showToast('色号查询')">
+          <div class="tool-icon">🎨</div><div class="tool-name">色号查询</div>
+        </div>
+        <div class="tool-item" onclick="showToast('脸型测试')">
+          <div class="tool-icon">👤</div><div class="tool-name">脸型测试</div>
+        </div>
+        <div class="tool-item" onclick="showToast('肤质检测')">
+          <div class="tool-icon">🧬</div><div class="tool-name">肤质检测</div>
+        </div>
+        <div class="tool-item" onclick="showToast('发色推荐')">
+          <div class="tool-icon">💇</div><div class="tool-name">发色推荐</div>
+        </div>
+        <div class="tool-item" onclick="showToast('穿搭搭配')">
+          <div class="tool-icon">👗</div><div class="tool-name">穿搭搭配</div>
+        </div>
+        <div class="tool-item" onclick="showToast('香水推荐')">
+          <div class="tool-icon">🌸</div><div class="tool-name">香水推荐</div>
+        </div>
+      </div>
+      <div class="tool-section-title">专业工具</div>
+      <div class="tool-grid">
+        <div class="tool-item" onclick="showToast('成分分析')">
+          <div class="tool-icon">🔬</div><div class="tool-name">成分分析</div>
+        </div>
+        <div class="tool-item" onclick="showToast('保质期提醒')">
+          <div class="tool-icon">📅</div><div class="tool-name">保质期</div>
+        </div>
+        <div class="tool-item" onclick="showToast('空瓶记录')">
+          <div class="tool-icon">🧴</div><div class="tool-name">空瓶记录</div>
+        </div>
+        <div class="tool-item" onclick="showToast('化妆教程')">
+          <div class="tool-icon">📚</div><div class="tool-name">化妆教程</div>
+        </div>
+        <div class="tool-item" onclick="showToast('妆造日历')">
+          <div class="tool-icon">🗓️</div><div class="tool-name">妆造日历</div>
+        </div>
+        <div class="tool-item" onclick="showToast('更多工具')">
+          <div class="tool-icon">➕</div><div class="tool-name">更多</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Style Preference Page ===== -->
+  <div class="page" id="page-style-pref">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">风格偏好</h2>
+      </div>
+    </header>
+    <div style="padding: var(--spacing-4);">
+      <div class="pref-section">
+        <div class="pref-title">日常风格</div>
+        <div class="style-chips">
+          <span class="style-chip active">日常通勤</span>
+          <span class="style-chip active">清透自然</span>
+          <span class="style-chip">复古港风</span>
+          <span class="style-chip">法式慵懒</span>
+          <span class="style-chip active">日系甜美</span>
+          <span class="style-chip">韩系精致</span>
+          <span class="style-chip">欧美性感</span>
+          <span class="style-chip">国风古典</span>
+        </div>
+      </div>
+      <div class="pref-section">
+        <div class="pref-title">色系偏好</div>
+        <div class="color-pref">
+          <div class="color-opt active"><div class="color-dot" style="background:#D4A574;"></div>暖棕</div>
+          <div class="color-opt"><div class="color-dot" style="background:#A67B5B;"></div>大地</div>
+          <div class="color-opt active"><div class="color-dot" style="background:#E8B4B8;"></div>玫瑰</div>
+          <div class="color-opt"><div class="color-dot" style="background:#8B7E74;"></div>灰调</div>
+          <div class="color-opt"><div class="color-dot" style="background:#CD5C5C;"></div>红棕</div>
+          <div class="color-opt active"><div class="color-dot" style="background:#DEB887;"></div>杏色</div>
+        </div>
+      </div>
+      <div class="pref-section">
+        <div class="pref-title">妆容浓淡</div>
+        <input type="range" class="settings-slider" min="0" max="100" value="40">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">
+          <span>伪素颜</span><span>日常妆</span><span>浓妆</span>
+        </div>
+      </div>
+      <div class="pref-section">
+        <div class="pref-title">场景偏好</div>
+        <div class="style-chips">
+          <span class="style-chip active">上班</span>
+          <span class="style-chip active">约会</span>
+          <span class="style-chip">派对</span>
+          <span class="style-chip">旅行</span>
+          <span class="style-chip active">逛街</span>
+          <span class="style-chip">婚礼</span>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-4);" onclick="showToast('偏好已保存')">保存偏好</button>
+    </div>
+  </div>
+
+  <!-- ===== Store Map Page ===== -->
+  <div class="page" id="page-store-map">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">门店地图</h2>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('搜索')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <div class="store-map-hero">
+      <div class="map-placeholder">
+        <div style="font-size: 48px;">🗺️</div>
+        <div style="font-size: 13px; color: var(--color-text-muted); margin-top: 8px;">地图加载中...</div>
+      </div>
+    </div>
+    <div class="store-list">
+      <div class="store-item">
+        <div class="store-img">🏪</div>
+        <div class="store-info">
+          <div class="store-name">丝芙兰（朝阳大悦城店）</div>
+          <div class="store-address">北京市朝阳区朝阳北路101号</div>
+          <div class="store-meta"><span>⭐ 4.8</span><span>1.2km</span><span style="color: var(--color-primary);">营业中</span></div>
+        </div>
+      </div>
+      <div class="store-item">
+        <div class="store-img">💄</div>
+        <div class="store-info">
+          <div class="store-name">MAC（三里屯店）</div>
+          <div class="store-address">北京市朝阳区三里屯路19号</div>
+          <div class="store-meta"><span>⭐ 4.6</span><span>2.5km</span><span style="color: var(--color-primary);">营业中</span></div>
+        </div>
+      </div>
+      <div class="store-item">
+        <div class="store-img">✨</div>
+        <div class="store-info">
+          <div class="store-name">完美日记（国贸店）</div>
+          <div class="store-address">北京市朝阳区建国门外大街1号</div>
+          <div class="store-meta"><span>⭐ 4.5</span><span>3.8km</span><span style="color: var(--color-text-muted);">休息中</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 80px;"></div>
+  </div>
+
+  <!-- ===== Creator Center Page ===== -->
+  <div class="page" id="page-creator">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">创作者中心</h2>
+      </div>
+    </header>
+    <div class="creator-hero">
+      <div class="creator-avatar">美</div>
+      <div class="creator-name">小美</div>
+      <div class="creator-level">新锐创作者 · Lv.2</div>
+      <div class="creator-stats">
+        <div class="creator-stat"><div class="cs-num">12</div><div class="cs-label">作品</div></div>
+        <div class="creator-stat"><div class="cs-num">1,234</div><div class="cs-label">粉丝</div></div>
+        <div class="creator-stat"><div class="cs-num">5,678</div><div class="cs-label">获赞</div></div>
+        <div class="creator-stat"><div class="cs-num">¥328</div><div class="cs-label">收益</div></div>
+      </div>
+    </div>
+    <div style="padding: var(--spacing-4);">
+      <div class="creator-actions">
+        <div class="creator-action" onclick="showToast('上传作品')">
+          <div class="ca-icon">📤</div><div class="ca-name">上传作品</div>
+        </div>
+        <div class="creator-action" onclick="showToast('数据中心')">
+          <div class="ca-icon">📊</div><div class="ca-name">数据中心</div>
+        </div>
+        <div class="creator-action" onclick="showToast('收益中心')">
+          <div class="ca-icon">💰</div><div class="ca-name">收益中心</div>
+        </div>
+        <div class="creator-action" onclick="showToast('创作学院')">
+          <div class="ca-icon">🎓</div><div class="ca-name">创作学院</div>
+        </div>
+      </div>
+      <div class="section-header" style="margin-top: var(--spacing-4);">
+        <div class="section-title">我的作品</div>
+        <span style="font-size: 12px; color: var(--color-text-muted);">全部 →</span>
+      </div>
+      <div class="creator-works">
+        <div class="work-item">
+          <div class="work-img"><img src="ui-design/assets/look-1.jpg" alt=""></div>
+          <div class="work-info">
+            <div class="work-title">法式慵懒妆教程</div>
+            <div class="work-meta"><span>👁️ 2,340</span><span>❤️ 568</span></div>
+          </div>
+        </div>
+        <div class="work-item">
+          <div class="work-img"><img src="ui-design/assets/look-2.jpg" alt=""></div>
+          <div class="work-info">
+            <div class="work-title">日常通勤5分钟</div>
+            <div class="work-meta"><span>👁️ 5,678</span><span>❤️ 1,234</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 80px;"></div>
   </div>
 
   <!-- ===== Onboarding Overlay ===== -->
@@ -6922,6 +7907,137 @@ body {
     </div>
   </div>
 
+  <!-- ===== Mirror Settings Modal ===== -->
+  <div class="modal-overlay" id="mirror-settings-modal" onclick="closeMirrorSettings(event)">
+    <div class="modal mirror-settings-modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">镜面设置</h3>
+
+      <div class="settings-section">
+        <div class="settings-row">
+          <div class="settings-info">
+            <div class="settings-icon">🎨</div>
+            <div>
+              <div class="settings-name">美颜滤镜</div>
+              <div class="settings-desc">开启后自动美颜</div>
+            </div>
+          </div>
+          <div class="switch active" id="filterSwitch" onclick="toggleFilterSwitch()">
+            <div class="switch-thumb"></div>
+          </div>
+        </div>
+        <div class="settings-sub-options" id="filterSubOptions">
+          <div class="settings-sub-title">滤镜强度</div>
+          <input type="range" class="settings-slider" min="0" max="100" value="60" oninput="showToast('滤镜强度：' + this.value + '%')">
+          <div class="filter-presets">
+            <div class="filter-preset active">自然</div>
+            <div class="filter-preset">清透</div>
+            <div class="filter-preset">冷白</div>
+            <div class="filter-preset">暖肤</div>
+            <div class="filter-preset">胶片</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-row">
+          <div class="settings-info">
+            <div class="settings-icon">💡</div>
+            <div>
+              <div class="settings-name">补光灯</div>
+              <div class="settings-desc">环形补光效果</div>
+            </div>
+          </div>
+          <div class="switch" id="lightSwitch" onclick="toggleLightSwitch()">
+            <div class="switch-thumb"></div>
+          </div>
+        </div>
+        <div class="settings-sub-options" id="lightSubOptions" style="display:none;">
+          <div class="settings-sub-title">补光强度</div>
+          <input type="range" class="settings-slider" min="0" max="100" value="50" oninput="showToast('补光强度：' + this.value + '%')">
+          <div class="settings-sub-title" style="margin-top: 12px;">色温</div>
+          <div class="light-presets">
+            <div class="light-preset active">冷光</div>
+            <div class="light-preset">自然光</div>
+            <div class="light-preset">暖光</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-row">
+          <div class="settings-info">
+            <div class="settings-icon">🔄</div>
+            <div>
+              <div class="settings-name">翻转摄像头</div>
+              <div class="settings-desc">切换前后置</div>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('切换摄像头')">切换</button>
+        </div>
+      </div>
+
+      <div style="height: 24px;"></div>
+    </div>
+  </div>
+
+  <!-- ===== Category Panel ===== -->
+  <div class="category-panel-overlay" id="category-panel" onclick="closeCategoryPanel(event)">
+    <div class="category-panel" onclick="event.stopPropagation()">
+      <div class="category-panel-header">
+        <span>品类分类</span>
+        <div class="category-panel-close" onclick="closeCategoryPanel()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </div>
+      </div>
+      <div class="category-list">
+        <div class="category-group-title">面部彩妆</div>
+        <div class="category-items">
+          <div class="category-item" onclick="selectCategory('底妆')"><div class="category-item-icon">💄</div>底妆</div>
+          <div class="category-item" onclick="selectCategory('粉饼')"><div class="category-item-icon">🌸</div>粉饼</div>
+          <div class="category-item" onclick="selectCategory('遮瑕')"><div class="category-item-icon">✨</div>遮瑕</div>
+          <div class="category-item" onclick="selectCategory('腮红')"><div class="category-item-icon">🍑</div>腮红</div>
+          <div class="category-item" onclick="selectCategory('修容')"><div class="category-item-icon">🎨</div>修容</div>
+          <div class="category-item" onclick="selectCategory('高光')"><div class="category-item-icon">💫</div>高光</div>
+        </div>
+        <div class="category-group-title">眼妆</div>
+        <div class="category-items">
+          <div class="category-item" onclick="selectCategory('眼影')"><div class="category-item-icon">👁️</div>眼影</div>
+          <div class="category-item" onclick="selectCategory('眼线')"><div class="category-item-icon">✏️</div>眼线</div>
+          <div class="category-item" onclick="selectCategory('睫毛膏')"><div class="category-item-icon">🦋</div>睫毛膏</div>
+          <div class="category-item" onclick="selectCategory('眉笔')"><div class="category-item-icon">📍</div>眉笔</div>
+          <div class="category-item" onclick="selectCategory('假睫毛')"><div class="category-item-icon">🌟</div>假睫毛</div>
+        </div>
+        <div class="category-group-title">唇妆</div>
+        <div class="category-items">
+          <div class="category-item" onclick="selectCategory('口红')"><div class="category-item-icon">💋</div>口红</div>
+          <div class="category-item" onclick="selectCategory('唇釉')"><div class="category-item-icon">💧</div>唇釉</div>
+          <div class="category-item" onclick="selectCategory('唇线笔')"><div class="category-item-icon">✒️</div>唇线笔</div>
+          <div class="category-item" onclick="selectCategory('润唇膏')"><div class="category-item-icon">🌿</div>润唇膏</div>
+        </div>
+        <div class="category-group-title">护肤</div>
+        <div class="category-items">
+          <div class="category-item" onclick="selectCategory('洁面')"><div class="category-item-icon">🧼</div>洁面</div>
+          <div class="category-item" onclick="selectCategory('爽肤水')"><div class="category-item-icon">💦</div>爽肤水</div>
+          <div class="category-item" onclick="selectCategory('精华')"><div class="category-item-icon">🧪</div>精华</div>
+          <div class="category-item" onclick="selectCategory('面霜')"><div class="category-item-icon">🥛</div>面霜</div>
+          <div class="category-item" onclick="selectCategory('面膜')"><div class="category-item-icon">🧖</div>面膜</div>
+          <div class="category-item" onclick="selectCategory('防晒')"><div class="category-item-icon">☀️</div>防晒</div>
+        </div>
+        <div class="category-group-title">美妆工具</div>
+        <div class="category-items">
+          <div class="category-item" onclick="selectCategory('化妆刷')"><div class="category-item-icon">🖌️</div>化妆刷</div>
+          <div class="category-item" onclick="selectCategory('美妆蛋')"><div class="category-item-icon">🥚</div>美妆蛋</div>
+          <div class="category-item" onclick="selectCategory('睫毛夹')"><div class="category-item-icon">📎</div>睫毛夹</div>
+          <div class="category-item" onclick="selectCategory('卷发棒')"><div class="category-item-icon">🌀</div>卷发棒</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== Favorites Page ===== -->
   <div class="page" id="page-favorites">
     <div class="favorites-header">
@@ -7182,6 +8298,146 @@ body {
   function switchLibrarySub(el) {
     document.querySelectorAll('.library-sub-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+  }
+
+  function goToLibraryCat(cat) {
+    switchTab('library');
+    setTimeout(() => {
+      const tabs = document.querySelectorAll('.library-cat-tab');
+      tabs.forEach(t => {
+        if (t.getAttribute('onclick')?.includes(cat)) {
+          switchLibraryCat(t, cat);
+        }
+      });
+    }, 50);
+  }
+
+  // ===== Profile Sub-pages =====
+  function openMyTemplates() { switchTab('my-templates'); }
+  function openMyReports() { switchTab('my-reports'); }
+  function openToolbox() { switchTab('toolbox'); }
+  function openStylePreference() { switchTab('style-pref'); }
+  function openStoreMap() { switchTab('store-map'); }
+  function openCreatorCenter() { switchTab('creator'); }
+
+  // ===== Mirror Settings & Modes =====
+  let mirrorMode = 'photo'; // photo | video
+  let isRecording = false;
+  let filterOn = true;
+  let fillLightOn = false;
+
+  function openMirrorSettings() {
+    document.getElementById('mirror-settings-modal').classList.add('show');
+  }
+  function closeMirrorSettings(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('mirror-settings-modal').classList.remove('show');
+  }
+
+  function toggleFilterSwitch() {
+    filterOn = !filterOn;
+    const sw = document.getElementById('filterSwitch');
+    const sub = document.getElementById('filterSubOptions');
+    sw.classList.toggle('active', filterOn);
+    sub.style.display = filterOn ? 'block' : 'none';
+    document.getElementById('filterBtn').classList.toggle('active', filterOn);
+  }
+
+  function toggleLightSwitch() {
+    fillLightOn = !fillLightOn;
+    const sw = document.getElementById('lightSwitch');
+    const sub = document.getElementById('lightSubOptions');
+    sw.classList.toggle('active', fillLightOn);
+    sub.style.display = fillLightOn ? 'block' : 'none';
+    document.getElementById('lightBtn').classList.toggle('active', fillLightOn);
+  }
+
+  function toggleFilter() {
+    filterOn = !filterOn;
+    document.getElementById('filterBtn').classList.toggle('active', filterOn);
+    document.getElementById('filterSwitch').classList.toggle('active', filterOn);
+    document.getElementById('filterSubOptions').style.display = filterOn ? 'block' : 'none';
+    showToast(filterOn ? '滤镜已开启' : '滤镜已关闭');
+  }
+
+  function toggleFillLight() {
+    fillLightOn = !fillLightOn;
+    document.getElementById('lightBtn').classList.toggle('active', fillLightOn);
+    document.getElementById('lightSwitch').classList.toggle('active', fillLightOn);
+    document.getElementById('lightSubOptions').style.display = fillLightOn ? 'block' : 'none';
+    showToast(fillLightOn ? '补光灯已开启' : '补光灯已关闭');
+  }
+
+  function setMirrorMode(mode) {
+    mirrorMode = mode;
+    document.getElementById('modePhoto').classList.toggle('active', mode === 'photo');
+    document.getElementById('modeVideo').classList.toggle('active', mode === 'video');
+    const shutter = document.getElementById('mirrorShutter');
+    shutter.classList.toggle('video-mode', mode === 'video');
+    if (isRecording) {
+      isRecording = false;
+      shutter.classList.remove('recording');
+    }
+  }
+
+  function doShutter() {
+    const shutter = document.getElementById('mirrorShutter');
+    if (mirrorMode === 'photo') {
+      shutter.style.transform = 'scale(0.9)';
+      setTimeout(() => shutter.style.transform = '', 100);
+      showToast('拍照成功');
+    } else {
+      isRecording = !isRecording;
+      shutter.classList.toggle('recording', isRecording);
+      showToast(isRecording ? '开始录制...' : '录制完成');
+    }
+  }
+
+  // ===== Market (Mall) =====
+  const marketSubCats = {
+    daren: ['全部', '新品上市', '达人同款', '口碑好物', '限时特惠', '礼盒套装'],
+    ziying: ['全部', 'YSL', 'Dior', 'Chanel', 'Armani', '雅诗兰黛', '兰蔻'],
+    hot: ['全部', '热卖TOP10', '新品榜', '好评榜', '回购榜', '性价比榜'],
+    gufeng: ['全部', '唐妆系列', '宋妆系列', '明妆系列', '汉妆系列', '戏曲妆'],
+    yinfa: ['全部', '减龄淡妆', '气质日常', '婚礼妆容', '聚会妆', '护肤保养'],
+    star: ['全部', '日常同款', '红毯同款', '杂志同款', '舞台同款', '古装同款']
+  };
+
+  function switchMarketCat(el, cat) {
+    document.querySelectorAll('#marketCatTabs .mall-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const subTabs = document.getElementById('marketSubTabs');
+    if (subTabs && marketSubCats[cat]) {
+      const subs = marketSubCats[cat];
+      subTabs.innerHTML = subs.map((s, i) =>
+        `<span class="mall-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchMarketSub(this)">${s}</span>`
+      ).join('');
+    }
+    el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+
+  function switchMarketSub(el) {
+    document.querySelectorAll('.mall-sub-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function openCategoryPanel() {
+    document.getElementById('category-panel').classList.add('show');
+  }
+
+  function closeCategoryPanel(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('category-panel').classList.remove('show');
+  }
+
+  function selectCategory(name) {
+    closeCategoryPanel();
+    showToast('已选品类：' + name);
+    const search = document.getElementById('mallSearch');
+    if (search) {
+      search.value = name;
+      search.focus();
+    }
   }
 
   // ===== Favorites =====
