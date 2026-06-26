@@ -5260,7 +5260,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
 }
 .mirror-mode-switch {
   display: flex;
@@ -7011,10 +7010,6 @@ body {
           <span>滤镜</span>
         </div>
         <div class="mirror-shutter-wrapper">
-          <div class="mirror-mode-switch">
-            <span class="mirror-mode-item" id="modePhoto" onclick="setMirrorMode('photo')">拍照</span>
-            <span class="mirror-mode-item active" id="modeVideo" onclick="setMirrorMode('video')">摄像</span>
-          </div>
           <div class="mirror-shutter-btn" id="mirrorShutter" onclick="doShutter()">
             <div class="mirror-shutter-inner"></div>
           </div>
@@ -8261,19 +8256,6 @@ body {
             <div class="light-preset" onclick="selectLightPreset(this)">自然光</div>
             <div class="light-preset" onclick="selectLightPreset(this)">暖光</div>
           </div>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-row">
-          <div class="settings-info">
-            <div class="settings-icon">🔄</div>
-            <div>
-              <div class="settings-name">翻转摄像头</div>
-              <div class="settings-desc">切换前后置</div>
-            </div>
-          </div>
-          <button class="btn btn-outline btn-sm" onclick="flipCamera()">切换</button>
         </div>
       </div>
 
