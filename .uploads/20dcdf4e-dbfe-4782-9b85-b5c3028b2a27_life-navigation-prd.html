@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生命导航 · 产品需求文档 (PRD)</title>
+  <script src="./_shared/js/mermaid.min.js"></script>
+  <script src="./_shared/js/echarts.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e1b4b;
+      --bg-tertiary: #312e81;
+      --accent-indigo: #6366f1;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --glass-bg: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-bg-light: rgba(255,255,255,0.12);
+      --glass-border-light: rgba(255,255,255,0.18);
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --font-serif: 'Noto Serif SC', serif;
+      --font-sans: 'Noto Sans SC', sans-serif;
+      --max-width: 960px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%, var(--bg-primary) 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: var(--text-primary);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* Starfield */
+    .stars-bg { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+    .star { position:absolute; background:white; border-radius:50%; animation: twinkle 3s infinite; }
+    @keyframes twinkle { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+    /* Glass */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem;
+    }
+    .glass-light {
+      background: var(--glass-bg-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border-light);
+      border-radius: 1rem;
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #c4b5fd 0%, #f0abfc 50%, #fda4af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Button */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple), var(--accent-pink));
+      background-size: 200% 200%;
+      border: none; color: white; padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem; font-weight: 600; cursor: pointer;
+      transition: all 0.3s ease; font-family: var(--font-sans);
+    }
+    .btn-primary:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(99,102,241,0.5); }
+    .btn-ghost {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 0.75rem; cursor: pointer;
+      transition: all 0.3s ease; font-family: var(--font-sans);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
+
+    /* Layout */
+    .page-wrapper { position: relative; z-index: 1; max-width: var(--max-width); margin: 0 auto; padding: 2rem 1.5rem; }
+    .page-wrapper.wide { max-width: 1200px; }
+
+    /* Sections */
+    .section { margin-bottom: 3rem; }
+    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(139,92,246,0.3), rgba(236,72,153,0.3), transparent); margin: 2.5rem 0; }
+
+    /* Headings */
+    h1 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.5rem; }
+    h2 { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(139,92,246,0.2); }
+    h3 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 600; margin-bottom: 0.75rem; color: #e2e8f0; }
+    h4 { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #cbd5e1; }
+
+    /* Cover */
+    .cover { text-align: center; padding: 4rem 1rem 3rem; }
+    .cover-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .cover-badge {
+      display: inline-block; padding: 0.3rem 1rem; border-radius: 2rem; font-size: 0.85rem;
+      background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(168,85,247,0.3));
+      border: 1px solid rgba(139,92,246,0.4); margin-bottom: 1.5rem;
+    }
+    .cover-meta { color: var(--text-muted); font-size: 0.9rem; margin-top: 1.5rem; }
+
+    /* Table of contents */
+    .toc { padding: 1.5rem 2rem; margin-bottom: 2rem; }
+    .toc h3 { text-align: center; margin-bottom: 1rem; font-size: 1.1rem; }
+    .toc-list { list-style: none; columns: 2; column-gap: 2rem; }
+    .toc-list li { margin-bottom: 0.5rem; break-inside: avoid; }
+    .toc-list a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; font-size: 0.95rem; }
+    .toc-list a:hover { color: #c4b5fd; }
+    .toc-list .toc-num { color: var(--accent-purple); font-weight: 600; margin-right: 0.5rem; }
+
+    /* Cards */
+    .card { padding: 1.5rem; margin-bottom: 1rem; }
+    .card-title { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .icon-circle { width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 0.75rem; flex-shrink: 0; }
+    .icon-indigo { background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(99,102,241,0.1)); }
+    .icon-purple { background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(168,85,247,0.1)); }
+    .icon-pink { background: linear-gradient(135deg, rgba(236,72,153,0.3), rgba(236,72,153,0.1)); }
+    .icon-gold { background: linear-gradient(135deg, rgba(251,191,36,0.3), rgba(251,191,36,0.1)); }
+
+    /* Tables */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead th { background: rgba(99,102,241,0.15); color: #c4b5fd; font-weight: 600; text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(139,92,246,0.3); }
+    tbody td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: var(--text-secondary); }
+    tbody tr:hover { background: rgba(255,255,255,0.04); }
+    .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 500; }
+    .tag-indigo { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .tag-purple { background: rgba(168,85,247,0.2); color: #d8b4fe; }
+    .tag-pink { background: rgba(236,72,153,0.2); color: #f9a8d4; }
+    .tag-green { background: rgba(34,197,94,0.2); color: #86efac; }
+    .tag-gold { background: rgba(251,191,36,0.2); color: #fde68a; }
+
+    /* Callout */
+    .callout { padding: 1rem 1.25rem; border-radius: 0.75rem; margin: 1rem 0; font-size: 0.95rem; border-left: 4px solid; }
+    .callout-info { background: rgba(99,102,241,0.1); border-color: var(--accent-indigo); }
+    .callout-warn { background: rgba(251,191,36,0.1); border-color: #fbbf24; }
+    .callout-important { background: rgba(236,72,153,0.1); border-color: var(--accent-pink); }
+    .callout-title { font-weight: 600; margin-bottom: 0.25rem; }
+
+    /* Lists */
+    ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; color: var(--text-secondary); }
+    li { margin-bottom: 0.35rem; }
+
+    /* Mermaid */
+    .mermaid-container { padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
+    .mermaid { display: flex; justify-content: center; }
+    .mermaid svg { max-width: 100%; }
+
+    /* ECharts */
+    .chart-container { width: 100%; height: 400px; margin: 1.5rem 0; }
+    .chart-container-wide { width: 100%; height: 500px; margin: 1.5rem 0; }
+
+    /* Prototype section */
+    .proto-frame {
+      border: 2px solid rgba(139,92,246,0.3); border-radius: 1.25rem;
+      overflow: hidden; margin: 1.5rem 0; position: relative;
+      max-width: 420px; margin-left: auto; margin-right: auto;
+    }
+    .proto-header {
+      background: rgba(30,27,75,0.9); padding: 0.5rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid rgba(139,92,246,0.2);
+    }
+    .proto-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .proto-title { font-size: 0.8rem; color: var(--text-muted); margin-left: 0.5rem; }
+    .proto-body { padding: 1rem; min-height: 300px; }
+    .proto-body .mini-glass {
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 0.75rem;
+      padding: 0.75rem; margin-bottom: 0.5rem;
+    }
+    .proto-body .mini-btn {
+      display: block; width: 100%; padding: 0.65rem; border: none; border-radius: 0.6rem;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-purple));
+      color: white; font-weight: 600; font-size: 0.85rem; text-align: center;
+      font-family: var(--font-sans);
+    }
+    .proto-body .mini-input {
+      width: 100%; padding: 0.6rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06); color: var(--text-primary); font-size: 0.85rem;
+      font-family: var(--font-sans);
+    }
+    .proto-body .mini-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .proto-body .mini-tag {
+      display: inline-block; padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.75rem;
+      background: rgba(139,92,246,0.2); color: #c4b5fd;
+    }
+    .proto-body .progress-bar {
+      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.1); overflow: hidden; margin-top: 0.4rem;
+    }
+    .proto-body .progress-bar .fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple), var(--accent-pink));
+    }
+    .proto-body .step-indicator {
+      display: flex; align-items: center; gap: 0.25rem; margin-bottom: 0.75rem;
+    }
+    .proto-body .step-dot {
+      width: 28px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.15);
+    }
+    .proto-body .step-dot.active { background: var(--accent-purple); }
+    .proto-body .step-dot.done { background: var(--accent-indigo); }
+    .proto-body .avatar-placeholder {
+      width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-pink)); font-size: 1.2rem;
+    }
+    .proto-body .list-item {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .proto-body .list-item:last-child { border-bottom: none; }
+    .proto-body .score-ring {
+      width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      border: 3px solid var(--accent-purple); font-weight: 700; font-size: 1.1rem;
+      background: rgba(168,85,247,0.1);
+    }
+    .proto-body .tab-bar {
+      display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 0.75rem;
+    }
+    .proto-body .tab-item {
+      flex: 1; text-align: center; padding: 0.5rem; font-size: 0.8rem; color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+    }
+    .proto-body .tab-item.active { color: #c4b5fd; border-bottom-color: var(--accent-purple); }
+    .proto-body .star-item { font-size: 0.8rem; padding: 0.4rem 0; color: var(--text-secondary); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 3rem; }
+
+    /* Phase grid */
+    .phase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    .phase-card { position: relative; overflow: hidden; }
+    .phase-card .phase-num {
+      position: absolute; top: -0.5rem; right: -0.3rem; font-size: 4rem; font-weight: 700;
+      opacity: 0.06; font-family: var(--font-serif);
+    }
+    .phase-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .phase-title { font-family: var(--font-serif); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .phase-desc { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Metric grid */
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+    .metric-card { text-align: center; padding: 1.25rem; }
+    .metric-value { font-size: 2rem; font-weight: 700; font-family: var(--font-serif); }
+    .metric-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    /* Architecture diagram */
+    .arch-layer { padding: 1rem; margin-bottom: 0.75rem; text-align: center; border-radius: 0.75rem; }
+    .arch-layer-title { font-weight: 600; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .arch-items { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+    .arch-item { padding: 0.3rem 0.75rem; border-radius: 0.5rem; font-size: 0.8rem; background: rgba(255,255,255,0.1); }
+
+    /* Mermaid config override */
+    .mermaid { font-family: var(--font-sans) !important; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .page-wrapper { padding: 1rem; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.4rem; }
+      .toc-list { columns: 1; }
+      .card-grid, .card-grid-3 { grid-template-columns: 1fr; }
+      .phase-grid { grid-template-columns: 1fr 1fr; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .proto-frame { max-width: 100%; }
+    }
+
+    /* Scroll animation */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Numbered heading */
+    .num-heading { counter-increment: section; }
+    .num-heading::before { content: counter(section) ". "; color: var(--accent-purple); }
+
+    /* Entity model */
+    .entity-box { padding: 1rem; border-radius: 0.75rem; border: 1px solid rgba(139,92,246,0.2); margin-bottom: 0.75rem; }
+    .entity-name { font-weight: 700; color: #c4b5fd; margin-bottom: 0.5rem; font-size: 1rem; }
+    .entity-field { font-size: 0.85rem; color: var(--text-muted); padding: 0.15rem 0; }
+    .entity-field span { color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <!-- Starfield background -->
+  <div class="stars-bg" id="stars"></div>
+
+  <div class="page-wrapper">
+
+    <!-- ==================== COVER ==================== -->
+    <div class="cover">
+      <div class="cover-badge">PRD v1.0</div>
+      <h1 class="gradient-text" style="font-size:3rem;">生命导航</h1>
+      <p class="font-serif" style="font-size:1.4rem; color:#e2e8f0; margin-bottom:0.5rem;">Life Navigation</p>
+      <p class="cover-subtitle">基于天国商业课程体系的属灵生命导航工具<br>产品需求文档 (Product Requirements Document)</p>
+      <div class="cover-meta">
+        <p>来源：望宏老师主内商学院 · 天国商业课程体系</p>
+        <p>版本：v1.0 &nbsp;|&nbsp; 日期：2026年6月 &nbsp;|&nbsp; 作者：产品团队</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== TOC ==================== -->
+    <div class="toc glass">
+      <h3 class="gradient-text">目录导航</h3>
+      <ol class="toc-list">
+        <li><a href="#sec1"><span class="toc-num">01</span>需求背景</a></li>
+        <li><a href="#sec2"><span class="toc-num">02</span>用户画像与场景</a></li>
+        <li><a href="#sec3"><span class="toc-num">03</span>产品定位与愿景</a></li>
+        <li><a href="#sec4"><span class="toc-num">04</span>功能需求</a></li>
+        <li style="padding-left:1rem"><a href="#sec4a">模块A：生命导航探索</a></li>
+        <li style="padding-left:1rem"><a href="#sec4b">模块B：种子发现与使命定位</a></li>
+        <li style="padding-left:1rem"><a href="#sec4c">模块C：日常导航与成长系统</a></li>
+        <li style="padding-left:1rem"><a href="#sec4d">模块D：天国经济学实践工具</a></li>
+        <li style="padding-left:1rem"><a href="#sec4e">模块E：社区与分享</a></li>
+        <li><a href="#sec5"><span class="toc-num">05</span>非功能需求</a></li>
+        <li><a href="#sec6"><span class="toc-num">06</span>技术架构建议</a></li>
+        <li><a href="#sec7"><span class="toc-num">07</span>MVP范围与路线图</a></li>
+        <li><a href="#sec8"><span class="toc-num">08</span>指标体系</a></li>
+      </ol>
+    </div>
+
+    <!-- ==================== SECTION 1: 需求背景 ==================== -->
+    <section id="sec1" class="section">
+      <h2 class="gradient-text">一、需求背景</h2>
+
+      <h3>1.1 业务背景与触发来源</h3>
+      <p style="color:var(--text-secondary)">生命导航应用源于<strong>望宏老师主内商学院</strong>的天国商业课程体系。望宏老师创立了一套完整的「天国商业课程理论」，涵盖时代观、宇宙观、人生观、世界观、经济学和新征程六大核心课程。课程通过撒商教育模式，帮助学员从信仰根基出发，重新审视生命方向、事业定位和人生规划。</p>
+
+      <p style="color:var(--text-secondary); margin-top:0.75rem;">作为课程课后作业，已有一个<strong>单页HTML原型Demo</strong>（移动端优先），包含7个阶段的自我探索流程：破冰对话、价值观卡牌、人生旅程地图、角色排序、愿景冥想、给未来写信、生命平衡自评，最终生成个人生命导航报告。本PRD旨在将这个Demo升级为一款完整的、可持续使用的生命导航产品。</p>
+
+      <div class="callout callout-info">
+        <div class="callout-title">核心课程体系</div>
+        天国商业课程包含六大课程：天国时代观、天国宇宙观、天国人生观、天国世界观、天国经济学、天国新征程，形成完整的属灵认知与行动框架。
+      </div>
+
+      <h3>1.2 用户当前状态与痛点</h3>
+      <div class="card-grid">
+        <div class="glass card">
+          <div class="icon-circle icon-purple">&#127919;</div>
+          <div class="card-title">方向迷茫</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">许多基督徒在职场和生活中缺乏清晰的使命感召，不知道如何将信仰与日常生活、事业选择有机结合。</p>
+        </div>
+        <div class="glass card">
+          <div class="icon-circle icon-indigo">&#128218;</div>
+          <div class="card-title">课程转化难</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">学员听完课程后，缺乏将课程理念转化为实际行动的工具和持续跟进机制，学习效果难以落地。</p>
+        </div>
+        <div class="glass card">
+          <div class="icon-circle icon-pink">&#128200;</div>
+          <div class="card-title">成长无追踪</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">生命成长是长期过程，但现有工具多为一次性测评，缺乏「常用常新」的持续陪伴和成长追踪能力。</p>
+        </div>
+        <div class="glass card">
+          <div class="icon-circle icon-gold">&#127758;</div>
+          <div class="card-title">价值观冲突</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">世俗价值观与天国价值观的张力让许多人感到困惑，需要系统化的框架帮助梳理和锚定核心价值观。</p>
+        </div>
+      </div>
+
+      <h3>1.3 如果不解决的后果</h3>
+      <div class="callout callout-warn">
+        <div class="callout-title">影响评估</div>
+        <ul style="color:var(--text-secondary); margin-top:0.5rem;">
+          <li><strong>课程效果衰减</strong>：学员课后无法将知识转化为行动，课程影响力仅限于课堂期间，形成「听完就忘」的循环</li>
+          <li><strong>信仰生活脱节</strong>：基督徒的属灵生命与日常生活、职场事业长期割裂，无法活出「在地如在天」的见证</li>
+          <li><strong>生命成长停滞</strong>：缺乏持续的自我认知更新和目标检视，生命成长陷入「原地踏步」的状态</li>
+          <li><strong>课程体系价值未释放</strong>：六大课程和作业工具包（种子发现表、永恒画像、十年画像、年度计划）的深度价值未被数字化释放</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 2: 用户画像 ==================== -->
+    <section id="sec2" class="section">
+      <h2 class="gradient-text">二、用户画像与场景</h2>
+
+      <h3>2.1 核心用户画像</h3>
+      <div class="card-grid">
+        <!-- Persona 1 -->
+        <div class="glass card">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+            <div class="avatar-placeholder" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent-indigo),var(--accent-pink));font-size:1.2rem;">&#9975;</div>
+            <div>
+              <div style="font-weight:600;">课程学员</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">核心用户 · 高粘性</div>
+            </div>
+          </div>
+          <ul style="font-size:0.9rem; color:var(--text-secondary); padding-left:1.2rem;">
+            <li>已参加望宏老师天国商业课程</li>
+            <li>希望将课程理念落地实践</li>
+            <li>需要种子发现、永恒画像等工具</li>
+            <li>追求信仰与事业的统一</li>
+          </ul>
+          <div style="margin-top:0.75rem;"><span class="tag tag-indigo">已完成课程</span> <span class="tag tag-purple">高意愿</span></div>
+        </div>
+        <!-- Persona 2 -->
+        <div class="glass card">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+            <div class="avatar-placeholder" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--accent-purple),var(--accent-pink));font-size:1.2rem;">&#128139;</div>
+            <div>
+              <div style="font-weight:600;">主内弟兄姊妹</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">扩展用户 · 中粘性</div>
+            </div>
+          </div>
+          <ul style="font-size:0.9rem; color:var(--text-secondary); padding-left:1.2rem;">
+            <li>未参加过课程但对属灵成长有需求</li>
+            <li>寻求生命方向和使命定位</li>
+            <li>希望有日常灵修和成长陪伴工具</li>
+            <li>可能通过分享链接进入</li>
+          </ul>
+          <div style="margin-top:0.75rem;"><span class="tag tag-pink">潜在转化</span> <span class="tag tag-green">口碑驱动</span></div>
+        </div>
+        <!-- Persona 3 -->
+        <div class="glass card">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+            <div class="avatar-placeholder" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fbbf24,#f59e0b);font-size:1.2rem;">&#127775;</div>
+            <div>
+              <div style="font-weight:600;">生命成长追求者</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">泛用户 · 低粘性</div>
+            </div>
+          </div>
+          <ul style="font-size:0.9rem; color:var(--text-secondary); padding-left:1.2rem;">
+            <li>对自我探索、人生规划感兴趣</li>
+            <li>不一定是基督徒</li>
+            <li>被「生命导航」概念吸引</li>
+            <li>可能通过搜索或朋友推荐发现</li>
+          </ul>
+          <div style="margin-top:0.75rem;"><span class="tag tag-gold">探索性</span> <span class="tag tag-indigo">增长潜力</span></div>
+        </div>
+      </div>
+
+      <h3>2.2 使用场景与动机</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>用户类型</th>
+              <th>核心场景</th>
+              <th>使用动机</th>
+              <th>期望成果</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>课程学员</strong></td>
+              <td>课后完成作业 / 定期回顾生命规划</td>
+              <td>完成课程要求；将学习内容转化为可执行的行动方案</td>
+              <td>生成种子发现表、永恒画像、年度OKR计划</td>
+            </tr>
+            <tr>
+              <td><strong>主内弟兄姊妹</strong></td>
+              <td>年度重新审视 / 遇到人生十字路口时</td>
+              <td>寻求属灵指引；梳理使命与价值观</td>
+              <td>清晰的生命方向定位和日常灵修陪伴</td>
+            </tr>
+            <tr>
+              <td><strong>成长追求者</strong></td>
+              <td>碎片时间自我探索 / 朋友推荐体验</td>
+              <td>好奇心驱动；寻找人生方向工具</td>
+              <td>有趣的自我发现体验；可能有信仰启蒙</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.3 角色区分</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>角色</th>
+              <th>权限</th>
+              <th>功能范围</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>普通用户</strong></td>
+              <td>基础功能</td>
+              <td>生命导航探索（7阶段）、种子发现评估、报告生成</td>
+            </tr>
+            <tr>
+              <td><strong>注册用户</strong></td>
+              <td>完整功能</td>
+              <td>全部功能 + 数据持久化 + 历史对比 + 社区互动</td>
+            </tr>
+            <tr>
+              <td><strong>课程学员</strong></td>
+              <td>专属内容</td>
+              <td>注册用户全部 + 课程关联知识库 + 作业提交 + 导师反馈</td>
+            </tr>
+            <tr>
+              <td><strong>导师/管理员</strong></td>
+              <td>管理后台</td>
+              <td>学员数据查看、课程管理、内容编辑、社区管理</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 3: 产品定位与愿景 ==================== -->
+    <section id="sec3" class="section">
+      <h2 class="gradient-text">三、产品定位与愿景</h2>
+
+      <h3>3.1 产品定位</h3>
+      <div class="glass card" style="padding:1.5rem; margin:1rem 0; text-align:center;">
+        <p style="font-family:var(--font-serif); font-size:1.2rem; line-height:1.8;">
+          <span class="gradient-text" style="font-size:1.4rem; font-weight:700;">生命导航</span> 是一款
+          <span class="gradient-text-gold" style="font-weight:600;">基于天国商业课程体系的属灵生命导航工具</span>，
+          以信仰为根基、专业方法论为骨架、持续陪伴为灵魂，
+          帮助用户完成从「认识自我」到「超越自我」再到「规划自我」的全生命周期成长之旅。
+        </p>
+      </div>
+
+      <h3>3.2 差异化优势</h3>
+      <div class="card-grid-3">
+        <div class="glass card" style="text-align:center;">
+          <div class="icon-circle icon-indigo" style="margin:0 auto 0.75rem;">&#9975;</div>
+          <div class="card-title" style="text-align:center;">信仰根基</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">以天国商业课程六大课程为理论支撑，每个功能模块都植根于属灵认知框架，区别于世俗的自我探索工具。</p>
+        </div>
+        <div class="glass card" style="text-align:center;">
+          <div class="icon-circle icon-purple" style="margin:0 auto 0.75rem;">&#128300;</div>
+          <div class="card-title" style="text-align:center;">专业方法论</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">种子发现模型、Being-Having-Doing框架、OKR+PDCA闭环、全生命周期画像等专业工具，确保方法论的科学性和可操作性。</p>
+        </div>
+        <div class="glass card" style="text-align:center;">
+          <div class="icon-circle icon-pink" style="margin:0 auto 0.75rem;">&#127793;</div>
+          <div class="card-title" style="text-align:center;">常用常新</div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">不是一次性测评工具，而是持续陪伴生命成长的导航系统。日常灵粮、OKR追踪、PDCA检视、社区互动让用户持续回流。</p>
+        </div>
+      </div>
+
+      <h3>3.3 核心理念</h3>
+      <div class="callout callout-important">
+        <div class="callout-title">产品灵魂</div>
+        <p style="color:var(--text-secondary); margin-top:0.25rem; font-family:var(--font-serif); font-size:1.1rem; font-style:italic;">
+          「人生不是修行，而是绽放」—— 生命导航帮助每个人找到那颗神所赐的种子，浇灌它、培育它，让生命从内而外地绽放。
+        </p>
+      </div>
+
+      <h3>3.4 MVP范围与迭代方向</h3>
+      <p style="color:var(--text-secondary);">MVP阶段聚焦于将现有Demo升级为完整的「生命导航探索 + 种子发现 + 报告生成」闭环体验，验证核心价值假设。后续逐步扩展为包含日常导航、社区互动和AI智能导航的全功能生命成长平台。</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 4: 功能需求 ==================== -->
+    <section id="sec4" class="section">
+      <h2 class="gradient-text">四、功能需求</h2>
+
+      <!-- Product Architecture Diagram -->
+      <h3>4.0 产品信息架构</h3>
+      <div class="mermaid-container glass">
+        <div class="mermaid">
+graph TD
+    A[生命导航 Life Navigation] --> B[模块A<br/>生命导航探索]
+    A --> C[模块B<br/>种子发现与使命定位]
+    A --> D[模块C<br/>日常导航与成长]
+    A --> E[模块D<br/>天国经济学工具]
+    A --> F[模块E<br/>社区与分享]
+
+    B --> B1[种子发现四维评估]
+    B --> B2[价值观探索]
+    B --> B3[生命旅程地图]
+    B --> B4[角色探索]
+    B --> B5[愿景冥想]
+    B --> B6[生命平衡自评]
+    B --> B7[导航报告生成]
+
+    C --> C1[发现种子模型]
+    C --> C2[Being-Having-Doing]
+    C --> C3[使命愿景价值观定位]
+    C --> C4[全生命周期画像]
+
+    D --> D1[每日灵粮推送]
+    D --> D2[21天改变计划]
+    D --> D3[年度OKR管理]
+    D --> D4[PDCA检视提醒]
+    D --> D5[角色平衡追踪]
+
+    E --> E1[投资vs投机自评]
+    E --> E2[管家精神追踪]
+    E --> E3[爱心传递记录]
+    E --> E4[驱动系统自检]
+
+    F --> F1[课程学习笔记]
+    F --> F2[生命规划分享]
+    F --> F3[属灵伙伴配对]
+    F --> F4[见证分享墙]
+        </div>
+      </div>
+
+      <!-- ==================== MODULE A ==================== -->
+      <div id="sec4a" class="section" style="margin-top:2.5rem;">
+        <h2 style="font-size:1.5rem;">模块A：生命导航探索 <span class="tag tag-indigo" style="font-size:0.75rem; vertical-align:middle;">MVP核心</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">基于现有7阶段Demo升级，融入天国商业课程的核心元素，打造深度的自我探索体验。</p>
+
+        <h3>A1. 种子发现四维评估</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>激情评估</strong></td>
+                <td>通过情境选择题评估用户的激情所在：什么事情让你忘记时间？什么话题让你不自觉地兴奋？</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>天赋评估</strong></td>
+                <td>通过能力自评和他评，识别用户的天赋领域：别人常夸你什么？什么事情你学得特别快？</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>天职评估</strong></td>
+                <td>探索内心深处觉得「这是神让我做的事」的领域：什么事情让你有深深的使命感？</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>事业评估</strong></td>
+                <td>评估天职在现实中的变现可能性：市场需求、竞争优势、可行性分析</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>四维雷达图</strong></td>
+                <td>将四维评估结果可视化为雷达图，展示激情/天赋/天职/事业的匹配度</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>种子类型判定</strong></td>
+                <td>根据四维评估结果判定种子类型：激情型/天赋型/使命型/综合型，给出个性化解读</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-title">交互逻辑说明</div>
+          <p style="color:var(--text-secondary);">每维度包含5-8道情境化选择题，采用卡片式交互（类似价值观卡牌），每题限时60秒以捕捉直觉反应。完成后生成本维度得分，四维全部完成后汇总生成种子雷达图。支持中途保存进度，下次继续。</p>
+        </div>
+
+        <!-- Prototype A1 -->
+        <h4>原型示意：种子发现四维评估</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">种子发现 · 激情评估</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div class="step-indicator">
+              <div class="step-dot done"></div>
+              <div class="step-dot done"></div>
+              <div class="step-dot active"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+              <div class="step-dot"></div>
+            </div>
+            <div class="mini-glass" style="text-align:center; padding:1.25rem;">
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.5rem;">第 3 / 6 题</div>
+              <div style="font-family:var(--font-serif); font-size:1.05rem; margin-bottom:1rem; line-height:1.6;">
+                当你沉浸在某件事中，<br>常常忘记吃饭和睡觉，<br>那件事通常是？
+              </div>
+              <div class="mini-card-grid" style="gap:0.4rem; margin-bottom:0.75rem;">
+                <div class="mini-glass" style="text-align:center; padding:0.6rem; cursor:pointer; font-size:0.85rem;">
+                  &#127912; 创作或设计
+                </div>
+                <div class="mini-glass" style="text-align:center; padding:0.6rem; cursor:pointer; font-size:0.85rem;">
+                  &#128187; 编程或研究
+                </div>
+                <div class="mini-glass" style="text-align:center; padding:0.6rem; cursor:pointer; font-size:0.85rem;">
+                  &#128101; 与人交流
+                </div>
+                <div class="mini-glass" style="text-align:center; padding:0.6rem; cursor:pointer; font-size:0.85rem;">
+                  &#127807; 户外或运动
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
+              <button class="btn-ghost" style="padding:0.4rem 0.8rem; font-size:0.8rem;">上一题</button>
+              <span style="font-size:0.75rem; color:var(--text-muted);">剩余 45s</span>
+            </div>
+          </div>
+        </div>
+
+        <h3>A2. 价值观探索</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>价值观卡牌选择</strong></td>
+                <td>30+价值观卡片（含天国价值观和世俗价值观），用户选择最重要的8张，再排序</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>天国vs世俗对比</strong></td>
+                <td>选择后自动标注每张卡片的归属（天国价值观/世俗价值观），引导用户反思差异</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>价值观冲突诊断</strong></td>
+                <td>分析用户选择的价值观中是否存在内在冲突，给出反思提示</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>价值观稳定性追踪</strong></td>
+                <td>多次测评对比，观察价值观是否随时间发生变化</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype A2 -->
+        <h4>原型示意：价值观卡牌选择</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">价值观卡牌 · 选择阶段</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+              <span style="font-size:0.85rem; color:var(--text-muted);">请选择你认为最重要的 8 个价值观</span>
+              <span class="mini-tag">已选 5/8</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.4rem;">
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#10024; 爱</div>
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#128142; 家庭</div>
+              <div class="mini-glass" style="text-align:center; padding:0.5rem; font-size:0.8rem;">&#128176; 财富</div>
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#127775; 信仰</div>
+              <div class="mini-glass" style="text-align:center; padding:0.5rem; font-size:0.8rem;">&#127942; 成就</div>
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#128588; 平安</div>
+              <div class="mini-glass" style="text-align:center; padding:0.5rem; font-size:0.8rem;">&#128161; 智慧</div>
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#127793; 自由</div>
+              <div class="mini-glass selected" style="text-align:center; padding:0.5rem; font-size:0.8rem; border:1px solid var(--accent-purple); background:rgba(168,85,247,0.15);">&#128147; 喜乐</div>
+            </div>
+            <div style="margin-top:0.75rem;">
+              <button class="mini-btn" style="opacity:0.5;">还需选择 3 个</button>
+            </div>
+          </div>
+        </div>
+
+        <h3>A3. 生命旅程地图</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>人生时间轴绘制</strong></td>
+                <td>在时间轴上标记人生的关键节点（高峰和低谷），形成个人生命旅程地图</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>「田地vs决斗场」标注</strong></td>
+                <td>融入天国世界观，引导用户标注每个节点的认知框架：是以「训练场」视角还是「决斗场」视角看待困难</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>困难观反思</strong></td>
+                <td>对每个困难节点引导反思：这个困难教会了我什么？如何以「试探量身定做」的视角重新理解？</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>金银宝石vs草木禾秸</strong></td>
+                <td>引导用户评估人生投入产出：哪些是永恒价值（金银宝石），哪些是暂时价值（草木禾秸）</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>A4. 角色探索</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>人生角色识别</strong></td>
+                <td>列出用户当前承担的各种角色（子女、配偶、父母、职场人、事奉者等），进行重要度排序</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>天国企业家/工匠模型映射</strong></td>
+                <td>将用户角色映射到天国企业家模型（真/美/善 &amp; 灵命/生命/使命），评估每个角色的属灵维度</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>角色平衡度分析</strong></td>
+                <td>分析理想角色分配 vs 实际时间精力分配，发现失衡领域</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>灵魂体模型</strong></td>
+                <td>基于天国人生观灵魂体模型，评估各角色的灵/魂/体投入比例</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>A5. 愿景冥想</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>引导式冥想</strong></td>
+                <td>配合舒缓音乐和引导语音，帮助用户进入冥想状态， envision自己的未来画面</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>永恒画像引导</strong></td>
+                <td>融入课程「永恒画像」概念：引导用户从彼岸（永恒）视角审视此岸（当下）的使命</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>画面记录</strong></td>
+                <td>冥想结束后，用文字/语音记录脑海中浮现的画面和感受</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>墓志铭撰写</strong></td>
+                <td>从终点回望，撰写自己的墓志铭——你希望人们如何记住你？</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>A6. 生命平衡自评</h3>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">在现有6维雷达图基础上，新增「信仰灵修」维度，形成7维生命平衡评估模型。</p>
+
+        <!-- 7-dimension Radar Chart -->
+        <div class="glass" style="padding:1rem; margin-bottom:1rem;">
+          <h4 style="text-align:center; margin-bottom:0.5rem;">7维生命平衡雷达图（示例）</h4>
+          <div id="radarChart" class="chart-container" style="height:350px;"></div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>维度</th><th>说明</th><th>评分范围</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>事业</strong></td><td>工作满意度、职业发展方向、天职匹配度</td><td>1-10</td></tr>
+              <tr><td><strong>财务</strong></td><td>财务健康状况、管家精神实践、投资vs投机倾向</td><td>1-10</td></tr>
+              <tr><td><strong>健康</strong></td><td>身体健康、运动习惯、天国医学（情绪管理）</td><td>1-10</td></tr>
+              <tr><td><strong>家庭</strong></td><td>家庭关系质量、角色履行度、盟约之爱实践</td><td>1-10</td></tr>
+              <tr><td><strong>社交</strong></td><td>人际关系质量、爱心传递、社区连接</td><td>1-10</td></tr>
+              <tr><td><strong>成长</strong></td><td>学习投入、技能提升、认知升维（高维连接）</td><td>1-10</td></tr>
+              <tr style="background:rgba(168,85,247,0.08);"><td><strong style="color:#c4b5fd;">信仰灵修</strong> <span class="tag tag-purple" style="font-size:0.7rem;">新增</span></td><td style="color:#c4b5fd;">祷告生活、圣经阅读、安息实践、属灵伙伴关系</td><td>1-10</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype A6 -->
+        <h4>原型示意：生命平衡自评</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">生命平衡自评</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="text-align:center; margin-bottom:0.75rem;">
+              <span style="font-family:var(--font-serif); font-size:1rem;">你的信仰灵修生活如何？</span>
+            </div>
+            <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:1rem;">
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">1</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">2</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">3</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">4</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">5</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid var(--accent-purple); background:rgba(168,85,247,0.2); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#c4b5fd; cursor:pointer; transform:scale(1.15);">6</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">7</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">8</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">9</div>
+              <div style="width:36px; height:36px; border-radius:50%; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:var(--text-muted); cursor:pointer;">10</div>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width:57%;"></div></div>
+            <div style="text-align:center; margin-top:0.4rem; font-size:0.8rem; color:var(--text-muted);">信仰灵修 · 6/10 · 第 7/7 维度</div>
+          </div>
+        </div>
+
+        <h3>A7. 导航报告生成</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>综合生命导航报告</strong></td>
+                <td>整合所有评估结果，生成包含种子类型、价值观排序、角色分析、生命平衡雷达图的综合报告</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>PDF导出</strong></td>
+                <td>报告支持导出为精美PDF，便于打印和分享</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>历史报告对比</strong></td>
+                <td>多次测评后可对比不同时期的生命状态变化</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ==================== MODULE B ==================== -->
+      <div id="sec4b" class="section">
+        <h2 style="font-size:1.5rem;">模块B：种子发现与使命定位 <span class="tag tag-indigo" style="font-size:0.75rem; vertical-align:middle;">MVP核心</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">基于课程第六课「天国新征程」中的核心方法论，帮助用户从发现种子到定位使命的完整路径。</p>
+
+        <!-- Core flow diagram -->
+        <h3>B0. 核心功能流程图</h3>
+        <div class="mermaid-container glass">
+          <div class="mermaid">
+graph LR
+    A[发现种子<br/>激情评估] --> B[天赋确认<br/>天赋评估]
+    B --> C[使命觉醒<br/>天职评估]
+    C --> D[价值变现<br/>事业评估]
+    D --> E[天命/天召<br/>终极定位]
+    E --> F[Being<br/>我是谁]
+    E --> G[Having<br/>我有甚么]
+    E --> H[Doing<br/>我要做什么]
+    F --> I[使命愿景<br/>价值观定位]
+    G --> I
+    H --> I
+    I --> J[全生命周期<br/>画像规划]
+    J --> K[永恒画像<br/>彼岸锚定]
+    J --> L[十年画像<br/>中期规划]
+    J --> M[年度计划<br/>OKR+PDCA]
+          </div>
+        </div>
+
+        <h3>B1. 发现种子模型</h3>
+        <div class="glass card" style="padding:1.25rem; margin:1rem 0;">
+          <p style="font-family:var(--font-serif); font-size:1rem; text-align:center; margin-bottom:1rem;">
+            <span class="gradient-text">激情</span> &rarr; <span class="gradient-text">天赋</span> &rarr; <span class="gradient-text">使命</span> &rarr; <span class="gradient-text">价值变现</span> &rarr; <span class="gradient-text-gold">天命/天召</span>
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:0.5rem; text-align:center; font-size:0.8rem;">
+            <div class="mini-glass" style="padding:0.5rem; border-radius:0.5rem;">
+              <div style="font-size:1.2rem; margin-bottom:0.25rem;">&#128293;</div>
+              <div style="color:#c4b5fd; font-weight:600;">激情</div>
+              <div style="color:var(--text-muted); font-size:0.7rem;">内心热情</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center; color:var(--accent-purple); font-size:1.2rem;">&rarr;</div>
+            <div class="mini-glass" style="padding:0.5rem; border-radius:0.5rem;">
+              <div style="font-size:1.2rem; margin-bottom:0.25rem;">&#127775;</div>
+              <div style="color:#c4b5fd; font-weight:600;">天赋</div>
+              <div style="color:var(--text-muted); font-size:0.7rem;">神赐能力</div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center; color:var(--accent-purple); font-size:1.2rem;">&rarr;</div>
+            <div class="mini-glass" style="padding:0.5rem; border-radius:0.5rem;">
+              <div style="font-size:1.2rem; margin-bottom:0.25rem;">&#127793;</div>
+              <div style="color:#fde68a; font-weight:600;">使命</div>
+              <div style="color:var(--text-muted); font-size:0.7rem;">天职呼召</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>五阶评估引擎</strong></td>
+                <td>依次引导用户完成激情/天赋/使命/价值变现/天命的五阶段评估</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>种子匹配度分析</strong></td>
+                <td>分析五阶之间的匹配程度，识别最强连接和断裂点</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>种子画像生成</strong></td>
+                <td>基于评估结果生成个性化的「种子画像」卡片，含核心优势、成长建议</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>历史种子追踪</strong></td>
+                <td>记录多次评估结果，追踪种子成长轨迹</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype B -->
+        <h4>原型示意：种子画像</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">种子画像结果</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="text-align:center; margin-bottom:1rem;">
+              <div style="width:72px; height:72px; border-radius:50%; margin:0 auto 0.5rem; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--accent-indigo),var(--accent-pink)); font-size:2rem; box-shadow:0 0 30px rgba(99,102,241,0.4);">&#127793;</div>
+              <div style="font-family:var(--font-serif); font-size:1.1rem; font-weight:600;">你的种子类型：使命型种子</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">激情 &#9733;&#9733;&#9733;&#9733; &#9734; | 天赋 &#9733;&#9733;&#9733; &#9734;&#9734; | 使命 &#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+            <div class="mini-glass">
+              <div style="font-size:0.8rem; color:#c4b5fd; font-weight:600; margin-bottom:0.25rem;">&#128161; 核心优势</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">强烈的使命感驱动，对教育领域充满热情，具备跨文化沟通天赋</div>
+            </div>
+            <div class="mini-glass">
+              <div style="font-size:0.8rem; color:#fde68a; font-weight:600; margin-bottom:0.25rem;">&#127793; 成长建议</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">建议在天赋维度加强专业能力建设，将使命感与专业技能结合</div>
+            </div>
+            <div class="mini-glass">
+              <div style="font-size:0.8rem; color:#86efac; font-weight:600; margin-bottom:0.25rem;">&#128214; 经文激励</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary); font-style:italic;">「我晓得我所信的是谁」— 提摩太后书 1:12</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>B2. Being-Having-Doing 身份框架</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>维度</th><th>核心问题</th><th>评估内容</th><th>优先级</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Being（我是谁）</strong></td>
+                <td>我的身份定义是什么？</td>
+                <td>基于课程身份四维度（创造/十字架/新约/重生），探索在基督里的身份认知</td>
+                <td><span class="tag tag-pink">P0</span></td>
+              </tr>
+              <tr>
+                <td><strong>Having（我有甚么）</strong></td>
+                <td>神给了我哪些资源？</td>
+                <td>恩赐清单、经验资产、人脉资源、物质资源的管家意识评估</td>
+                <td><span class="tag tag-pink">P0</span></td>
+              </tr>
+              <tr>
+                <td><strong>Doing（我要做什么）</strong></td>
+                <td>我的行动方向是什么？</td>
+                <td>基于Being和Having的交集，确定行动优先级和第一步行动</td>
+                <td><span class="tag tag-pink">P0</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>B3. 使命愿景价值观定位工具</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>使命陈述生成器</strong></td>
+                <td>通过引导式问答，帮助用户提炼一句话使命陈述（方向）</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>愿景描绘工具</strong></td>
+                <td>引导用户描绘5年/10年后的理想状态画面（梦想）</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>价值观锚定</strong></td>
+                <td>基于模块A的价值观探索结果，筛选出3-5个核心价值观（方法）</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+              <tr>
+                <td><strong>DNA模型展示</strong></td>
+                <td>以企业DNA模型（使命+愿景+价值观）的视觉形式展示个人定位结果</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>MVP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype B3 -->
+        <h4>原型示意：使命愿景价值观 DNA 卡片</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">个人生命 DNA</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="text-align:center; margin-bottom:0.75rem;">
+              <span style="font-family:var(--font-serif); font-size:1rem;" class="gradient-text">我的生命DNA</span>
+            </div>
+            <div class="mini-glass" style="border-left:3px solid var(--accent-indigo);">
+              <div style="font-size:0.75rem; color:var(--accent-indigo); font-weight:600;">&#127919; 使命（方向）</div>
+              <div style="font-size:0.9rem; margin-top:0.25rem;">通过教育帮助华人企业家发现天国商业智慧</div>
+            </div>
+            <div class="mini-glass" style="border-left:3px solid var(--accent-purple);">
+              <div style="font-size:0.75rem; color:var(--accent-purple); font-weight:600;">&#127775; 愿景（梦想）</div>
+              <div style="font-size:0.9rem; margin-top:0.25rem;">10年内建立覆盖100个城市的属灵商业领袖网络</div>
+            </div>
+            <div class="mini-glass" style="border-left:3px solid var(--accent-pink);">
+              <div style="font-size:0.75rem; color:var(--accent-pink); font-weight:600;">&#128142; 价值观（方法）</div>
+              <div style="font-size:0.9rem; margin-top:0.25rem;">
+                <span class="mini-tag" style="margin:0.1rem;">诚信</span>
+                <span class="mini-tag" style="margin:0.1rem;">爱心</span>
+                <span class="mini-tag" style="margin:0.1rem;">谦卑</span>
+                <span class="mini-tag" style="margin:0.1rem;">忠心</span>
+              </div>
+            </div>
+            <button class="mini-btn" style="margin-top:0.5rem;">保存我的DNA</button>
+          </div>
+        </div>
+
+        <h3>B4. 全生命周期画像</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>画像类型</th><th>时间跨度</th><th>核心内容</th><th>优先级</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>永恒画像</strong></td>
+                <td>永恒视角</td>
+                <td>彼岸使命/愿景/价值观 + 此岸OKR + 墓志铭，锚定永恒方向</td>
+                <td><span class="tag tag-pink">P0</span></td>
+              </tr>
+              <tr>
+                <td><strong>十年画像</strong></td>
+                <td>10年规划</td>
+                <td>使命/愿景/价值观 + 五维OKR（事业/家庭/健康/学习/财富）+ 挑战指数</td>
+                <td><span class="tag tag-purple">P1</span></td>
+              </tr>
+              <tr>
+                <td><strong>年度计划</strong></td>
+                <td>1年规划</td>
+                <td>五维OKR + PDCA闭环，可按季度分解执行</td>
+                <td><span class="tag tag-purple">P1</span></td>
+              </tr>
+              <tr>
+                <td><strong>年龄段画像</strong></td>
+                <td>20-80岁+</td>
+                <td>不同人生阶段的角色定位和重点目标规划</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ==================== MODULE C ==================== -->
+      <div id="sec4c" class="section">
+        <h2 style="font-size:1.5rem;">模块C：日常导航与成长系统 <span class="tag tag-purple" style="font-size:0.75rem; vertical-align:middle;">常用常新</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">让生命导航从一次性测评工具转变为持续陪伴的日常导航系统，实现「常用常新」的核心产品价值。</p>
+
+        <h3>C1. 每日灵粮/经文推送</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>每日经文</strong></td>
+                <td>每天推送一段经文，内容与当前课程主题或用户生命阶段关联</td>
+                <td><span class="tag tag-pink">P0</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>课程关联</strong></td>
+                <td>经文推送与六大课程主题对应（如天国人生观对应身份认知经文）</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>灵修笔记</strong></td>
+                <td>支持在经文下方记录灵修感悟和祷告事项</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>推送时间自定义</strong></td>
+                <td>用户可设置每日推送时间（默认早7:00）</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype C1 -->
+        <h4>原型示意：每日灵粮</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">今日灵粮</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="text-align:center; margin-bottom:0.75rem;">
+              <div style="font-size:0.8rem; color:var(--text-muted);">2026年6月27日 · 周六</div>
+              <div style="font-size:0.8rem; color:var(--accent-purple); margin-top:0.25rem;">天国人生观 · 身份认知</div>
+            </div>
+            <div class="mini-glass" style="text-align:center; padding:1rem;">
+              <div style="font-family:var(--font-serif); font-size:1.05rem; line-height:1.8; font-style:italic;">
+                「所以，你们或吃或喝，无论做什么，<br>都要为荣耀神而行。」
+              </div>
+              <div style="font-size:0.85rem; color:var(--accent-purple); margin-top:0.5rem;">— 哥林多前书 10:31</div>
+            </div>
+            <div class="mini-glass">
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.25rem;">&#128221; 灵修笔记</div>
+              <div style="font-size:0.85rem; color:var(--text-secondary);">今天在工作中，我要记住无论做什么都是为荣耀神...</div>
+            </div>
+            <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+              <button class="btn-ghost" style="flex:1; padding:0.4rem; font-size:0.8rem;">&#128147; 收藏</button>
+              <button class="btn-ghost" style="flex:1; padding:0.4rem; font-size:0.8rem;">&#128172; 分享</button>
+            </div>
+          </div>
+        </div>
+
+        <h3>C2. 21天改变计划追踪</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>计划创建</strong></td>
+                <td>基于课程第六课的21天执行方案模板，创建个人21天改变计划</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>每日打卡</strong></td>
+                <td>21天日历视图，支持每日打卡签到和简短记录</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>连续天数统计</strong></td>
+                <td>显示连续完成天数，利用费斯汀格法则（90%主观回应）鼓励坚持</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>计划模板库</strong></td>
+                <td>提供与课程主题对应的21天计划模板（如21天祷告计划、21天感恩日记等）</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>C3. 年度/季度 OKR 目标管理</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>五维OKR设定</strong></td>
+                <td>在事业/家庭/健康/学习/财富/灵修六大维度设定Objective和Key Results</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>季度分解</strong></td>
+                <td>年度OKR自动分解为季度目标，支持手动调整</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>进度追踪</strong></td>
+                <td>OKR完成度可视化，支持关键结果打分（0-1.0）</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>维度平衡提醒</strong></td>
+                <td>当某维度长期无进展时，通过推送提醒关注</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>C4. PDCA 检视提醒</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>周检视</strong></td>
+                <td>每周日推送PDCA检视提醒，回顾本周Plan-Do-Check-Act</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>月度复盘</strong></td>
+                <td>每月末生成月度复盘报告，OKR完成度 + 生命平衡变化</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>年度大复盘</strong></td>
+                <td>年末自动生成年报，含年度OKR完成情况、生命平衡变化趋势、种子成长轨迹</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>C5. 角色平衡度追踪</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>理想vs现实差距</strong></td>
+                <td>可视化展示角色理想分配 vs 实际时间精力分配的差距</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 2</td>
+              </tr>
+              <tr>
+                <td><strong>周时间分配记录</strong></td>
+                <td>简易时间分配记录（每个角色每周投入时间），支持快速填写</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>平衡建议</strong></td>
+                <td>基于差距分析给出调整建议和经文鼓励</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ==================== MODULE D ==================== -->
+      <div id="sec4d" class="section">
+        <h2 style="font-size:1.5rem;">模块D：天国经济学实践工具 <span class="tag tag-green" style="font-size:0.75rem; vertical-align:middle;">Phase 3</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">将课程第五课「天国经济学」的核心理论转化为可操作的日常实践工具。</p>
+
+        <h3>D1. 投资vs投机自我评估</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>金钱观评估</strong></td>
+                <td>通过场景题评估用户的金钱观念倾向：投资型（种收法则）vs 投机型（快钱思维）</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>种收法则实践</strong></td>
+                <td>记录「播种」行为（时间/金钱/善意投入）和「收获」结果，体验种收法则</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>财务健康仪表盘</strong></td>
+                <td>个人/家庭财务健康状况的定期自评和趋势追踪</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>D2. 管家精神实践追踪</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>三大资源管家报告</strong></td>
+                <td>定期评估时间/金钱/恩赐三项资源的管家状况，生成管家报告</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>月度管家自评</strong></td>
+                <td>每月提醒用户进行管家自评：我的资源是否被忠心管理？</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>D3. 爱心传递记录</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>爱心日志</strong></td>
+                <td>记录每日/每周的爱心传递行为（施比受更有福的实践），支持文字+图片</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>爱心传递链</strong></td>
+                <td>可视化展示爱心的传递链条，见证恩典流转</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 4</td>
+              </tr>
+              <tr>
+                <td><strong>奉献三原则提醒</strong></td>
+                <td>融入课程奉献三原则，在记录时给予属灵视角的引导</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>D4. 驱动系统自检</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>驱动模式自评</strong></td>
+                <td>定期自评当前主要驱动力：恐惧驱动 / 欲望驱动 / 爱心驱动</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>驱动转变追踪</strong></td>
+                <td>追踪驱动系统的升级轨迹：从恐惧→欲望→爱心的转变过程</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 4</td>
+              </tr>
+              <tr>
+                <td><strong>课程关联提醒</strong></td>
+                <td>根据自评结果推荐相关课程内容和经文</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype D4 -->
+        <h4>原型示意：驱动系统自检</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">驱动系统自检</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div style="text-align:center; margin-bottom:0.75rem;">
+              <span style="font-family:var(--font-serif); font-size:1rem;">你的核心驱动力是什么？</span>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">请选择最符合当前状态的描述</div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+              <div class="mini-glass" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer;">
+                <div style="font-size:1.5rem;">&#128562;</div>
+                <div>
+                  <div style="font-size:0.85rem; font-weight:600;">恐惧驱动</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">因为害怕失去、害怕失败而行动</div>
+                </div>
+              </div>
+              <div class="mini-glass" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer; border:2px solid var(--accent-purple); background:rgba(168,85,247,0.1);">
+                <div style="font-size:1.5rem;">&#128293;</div>
+                <div>
+                  <div style="font-size:0.85rem; font-weight:600;">欲望驱动</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">因为想要更多成就、更多回报而行动</div>
+                </div>
+              </div>
+              <div class="mini-glass" style="display:flex; align-items:center; gap:0.75rem; cursor:pointer;">
+                <div style="font-size:1.5rem;">&#128147;</div>
+                <div>
+                  <div style="font-size:0.85rem; font-weight:600;">爱心驱动</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">因为爱神爱人、甘心乐意而行动</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ==================== MODULE E ==================== -->
+      <div id="sec4e" class="section">
+        <h2 style="font-size:1.5rem;">模块E：社区与分享 <span class="tag tag-gold" style="font-size:0.75rem; vertical-align:middle;">Phase 3</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:1rem;">建立属灵共同体，让生命导航不是一个人的孤独旅程，而是彼此陪伴的同行之路。</p>
+
+        <h3>E1. 课程学习笔记</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>六大课程知识库</strong></td>
+                <td>为六大课程建立结构化知识库，学员可查看课程大纲、核心概念、关键经文</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>个人学习笔记</strong></td>
+                <td>支持在学习过程中记录笔记，关联到具体课程章节</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>笔记分享</strong></td>
+                <td>学员可选择将笔记分享到社区，供其他学员参考</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>E2. 生命规划分享</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>给未来信件定时发送</strong></td>
+                <td>在模块A中写的「给未来信」可选择在未来特定时间发送给自己（邮件/站内信）</td>
+                <td><span class="tag tag-purple">P1</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>生命规划报告分享</strong></td>
+                <td>生成的生命导航报告可选择分享给属灵伙伴或导师</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>分享权限控制</strong></td>
+                <td>支持设置分享范围（仅自己/指定伙伴/公开社区）和有效期</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>E3. 属灵伙伴配对</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>伙伴匹配</strong></td>
+                <td>基于生命阶段和关注维度，智能推荐属灵伙伴（需双方同意）</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>互相检视</strong></td>
+                <td>伙伴之间可互相查看OKR进度，互相鼓励和提醒</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 4</td>
+              </tr>
+              <tr>
+                <td><strong>定期互动提醒</strong></td>
+                <td>提醒伙伴之间保持联系（每周/每两周一次）</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 4</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>E4. 见证分享墙</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>功能项</th><th>描述</th><th>优先级</th><th>阶段</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>见证发布</strong></td>
+                <td>用户可发布生命成长见证，包含文字、图片和经文引用</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>匿名发布</strong></td>
+                <td>支持匿名发布，保护用户隐私</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+              <tr>
+                <td><strong>点赞/鼓励互动</strong></td>
+                <td>见证下方支持点赞和文字鼓励互动</td>
+                <td><span class="tag tag-indigo">P2</span></td>
+                <td>Phase 3</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Prototype E4 -->
+        <h4>原型示意：见证分享墙</h4>
+        <div class="proto-frame">
+          <div class="proto-header">
+            <div class="proto-dot" style="background:#ef4444;"></div>
+            <div class="proto-dot" style="background:#fbbf24;"></div>
+            <div class="proto-dot" style="background:#22c55e;"></div>
+            <span class="proto-title">见证分享</span>
+          </div>
+          <div class="proto-body" style="background:linear-gradient(135deg,#0f172a,#1e1b4b);">
+            <div class="mini-glass">
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#6366f1,#ec4899); display:flex; align-items:center; justify-content:center; font-size:0.8rem;">&#128520;</div>
+                <div>
+                  <div style="font-size:0.85rem; font-weight:600;">匿名弟兄</div>
+                  <div style="font-size:0.7rem; color:var(--text-muted);">3小时前</div>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.6;">做完种子发现评估后，我才意识到自己一直以来被恐惧驱动着做决定。今天决定迈出信心的一步，辞职开始全职服侍。感谢这个工具帮助我看清自己。</div>
+              <div style="font-size:0.8rem; color:var(--accent-purple); font-style:italic; margin-top:0.4rem;">「你要专心仰赖耶和华」— 箴言 3:5</div>
+              <div style="display:flex; gap:0.5rem; margin-top:0.5rem; font-size:0.8rem;">
+                <span style="color:var(--text-muted);">&#128147; 12</span>
+                <span style="color:var(--text-muted);">&#128172; 3条鼓励</span>
+              </div>
+            </div>
+            <div style="text-align:center; margin-top:0.75rem;">
+              <button class="mini-btn">&#9997; 分享我的见证</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 5: 非功能需求 ==================== -->
+    <section id="sec5" class="section">
+      <h2 class="gradient-text">五、非功能需求</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>需求类别</th><th>具体要求</th><th>优先级</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>移动端优先</strong></td>
+              <td>所有核心功能必须在移动端（375px-428px宽度）有良好体验；响应式设计兼容平板和桌面端</td>
+              <td><span class="tag tag-pink">P0</span></td>
+            </tr>
+            <tr>
+              <td><strong>数据安全与隐私</strong></td>
+              <td>属灵信息高度敏感，所有数据端到端加密；支持本地存储优先，可选云端同步；符合个人信息保护法要求；用户可随时导出/删除全部数据</td>
+              <td><span class="tag tag-pink">P0</span></td>
+            </tr>
+            <tr>
+              <td><strong>离线可用</strong></td>
+              <td>核心探索流程（7阶段评估）支持完全离线使用；数据在本地缓存，联网后自动同步</td>
+              <td><span class="tag tag-pink">P0</span></td>
+            </tr>
+            <tr>
+              <td><strong>PDF导出</strong></td>
+              <td>生命导航报告支持导出为精美PDF，包含雷达图、种子画像、使命陈述等全部内容</td>
+              <td><span class="tag tag-pink">P0</span></td>
+            </tr>
+            <tr>
+              <td><strong>性能要求</strong></td>
+              <td>首屏加载时间 &lt; 2秒（3G网络）；核心交互响应 &lt; 100ms；支持PWA离线缓存</td>
+              <td><span class="tag tag-purple">P1</span></td>
+            </tr>
+            <tr>
+              <td><strong>无障碍</strong></td>
+              <td>支持字体大小调节（3档）；支持高对比度模式；满足WCAG 2.1 AA标准</td>
+              <td><span class="tag tag-indigo">P2</span></td>
+            </tr>
+            <tr>
+              <td><strong>国际化</strong></td>
+              <td>MVP阶段仅支持简体中文；预留多语言架构，后续可扩展英文、繁体中文</td>
+              <td><span class="tag tag-indigo">P2</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-important">
+        <div class="callout-title">隐私设计原则</div>
+        <p style="color:var(--text-secondary);">生命导航涉及用户的属灵信仰、内心感受、家庭关系等高度敏感信息。产品设计必须遵循「最小采集、本地优先、用户可控」三大原则，确保用户的灵魂隐私得到充分尊重和保护。</p>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 6: 技术架构 ==================== -->
+    <section id="sec6" class="section">
+      <h2 class="gradient-text">六、技术架构建议（高层）</h2>
+
+      <h3>6.1 架构总览</h3>
+      <div style="margin:1rem 0;">
+        <div class="arch-layer glass-light" style="background:rgba(99,102,241,0.1); border-color:rgba(99,102,241,0.3);">
+          <div class="arch-layer-title" style="color:#a5b4fc;">前端层</div>
+          <div class="arch-items">
+            <div class="arch-item">H5 Web App</div>
+            <div class="arch-item">微信小程序</div>
+            <div class="arch-item">PWA 支持</div>
+            <div class="arch-item">Vue 3 / React</div>
+          </div>
+        </div>
+        <div class="arch-layer glass-light" style="background:rgba(168,85,247,0.1); border-color:rgba(168,85,247,0.3);">
+          <div class="arch-layer-title" style="color:#d8b4fe;">API / BaaS 层</div>
+          <div class="arch-items">
+            <div class="arch-item">Supabase / Firebase</div>
+            <div class="arch-item">RESTful API</div>
+            <div class="arch-item">Auth (JWT)</div>
+            <div class="arch-item">Push Notification</div>
+          </div>
+        </div>
+        <div class="arch-layer glass-light" style="background:rgba(236,72,153,0.1); border-color:rgba(236,72,153,0.3);">
+          <div class="arch-layer-title" style="color:#f9a8d4;">数据层</div>
+          <div class="arch-items">
+            <div class="arch-item">PostgreSQL</div>
+            <div class="arch-item">Redis 缓存</div>
+            <div class="arch-item">对象存储 (PDF/图片)</div>
+            <div class="arch-item">IndexedDB (离线)</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>6.2 前端方案</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>方案</th><th>技术选型</th><th>优势</th><th>建议阶段</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>MVP</strong></td>
+              <td>H5 单页应用（纯前端 + localStorage）</td>
+              <td>开发最快，无需后端，离线天然支持</td>
+              <td>Phase 1</td>
+            </tr>
+            <tr>
+              <td><strong>小程序</strong></td>
+              <td>微信小程序（uni-app / Taro 跨端）</td>
+              <td>触达方便，社交分享友好，推送能力强</td>
+              <td>Phase 2</td>
+            </tr>
+            <tr>
+              <td><strong>全端</strong></td>
+              <td>Vue 3 + uni-app + Supabase BaaS</td>
+              <td>一套代码多端运行，后端轻量</td>
+              <td>Phase 3+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3 核心数据模型</h3>
+      <div class="card-grid">
+        <div class="entity-box glass">
+          <div class="entity-name">User 用户</div>
+          <div class="entity-field"><span>id</span> - 用户唯一标识</div>
+          <div class="entity-field"><span>phone/email</span> - 登录凭证</div>
+          <div class="entity-field"><span>nickname</span> - 昵称</div>
+          <div class="entity-field"><span>created_at</span> - 注册时间</div>
+          <div class="entity-field"><span>settings</span> - 偏好设置(JSON)</div>
+        </div>
+        <div class="entity-box glass">
+          <div class="entity-name">Assessment 评估记录</div>
+          <div class="entity-field"><span>id</span> - 评估记录ID</div>
+          <div class="entity-field"><span>user_id</span> - 关联用户</div>
+          <div class="entity-field"><span>type</span> - 评估类型(种子/价值观/平衡...)</div>
+          <div class="entity-field"><span>answers</span> - 答题数据(JSON)</div>
+          <div class="entity-field"><span>result</span> - 评估结果(JSON)</div>
+          <div class="entity-field"><span>completed_at</span> - 完成时间</div>
+        </div>
+        <div class="entity-box glass">
+          <div class="entity-name">LifeDNA 生命DNA</div>
+          <div class="entity-field"><span>id</span> - DNA记录ID</div>
+          <div class="entity-field"><span>user_id</span> - 关联用户</div>
+          <div class="entity-field"><span>mission</span> - 使命陈述</div>
+          <div class="entity-field"><span>vision</span> - 愿景描绘</div>
+          <div class="entity-field"><span>values</span> - 核心价值观(JSON)</div>
+          <div class="entity-field"><span>epitaph</span> - 墓志铭</div>
+          <div class="entity-field"><span>version</span> - 版本号</div>
+        </div>
+        <div class="entity-box glass">
+          <div class="entity-name">OKR 目标管理</div>
+          <div class="entity-field"><span>id</span> - OKR ID</div>
+          <div class="entity-field"><span>user_id</span> - 关联用户</div>
+          <div class="entity-field"><span>period</span> - 周期(年/季/月)</div>
+          <div class="entity-field"><span>dimension</span> - 维度(事业/家庭...)</div>
+          <div class="entity-field"><span>objective</span> - 目标描述</div>
+          <div class="entity-field"><span>key_results</span> - 关键结果(JSON)</div>
+          <div class="entity-field"><span>score</span> - 完成度评分</div>
+        </div>
+        <div class="entity-box glass">
+          <div class="entity-name">DailyLog 日常记录</div>
+          <div class="entity-field"><span>id</span> - 记录ID</div>
+          <div class="entity-field"><span>user_id</span> - 关联用户</div>
+          <div class="entity-field"><span>date</span> - 日期</div>
+          <div class="entity-field"><span>type</span> - 类型(灵粮/爱心/打卡...)</div>
+          <div class="entity-field"><span>content</span> - 内容(JSON)</div>
+          <div class="entity-field"><span>mood</span> - 情绪指数</div>
+        </div>
+        <div class="entity-box glass">
+          <div class="entity-name">Partner 属灵伙伴</div>
+          <div class="entity-field"><span>id</span> - 关系ID</div>
+          <div class="entity-field"><span>user_a_id</span> - 用户A</div>
+          <div class="entity-field"><span>user_b_id</span> - 用户B</div>
+          <div class="entity-field"><span>status</span> - 状态(待确认/已配对)</div>
+          <div class="entity-field"><span>paired_at</span> - 配对时间</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 7: MVP路线图 ==================== -->
+    <section id="sec7" class="section">
+      <h2 class="gradient-text">七、MVP范围与路线图</h2>
+
+      <h3>7.1 Phase 路线图</h3>
+      <div class="mermaid-container glass">
+        <div class="mermaid">
+timeline
+    title 生命导航产品路线图
+    section Phase 1 (MVP)
+        生命导航探索升级 : 融入天国元素的7阶段流程
+        种子发现四维评估 : 激情/天赋/天职/事业
+        使命愿景价值观定位 : DNA模型生成
+        报告生成与PDF导出 : 综合生命导航报告
+    section Phase 2
+        每日灵粮推送系统 : 课程主题关联经文
+        21天改变计划追踪 : 打卡与连续天数
+        OKR目标管理 : 五维OKR+季度分解
+        PDCA周检视提醒 : 每周自动推送
+        微信小程序版 : 触达更广用户群
+    section Phase 3
+        课程知识库 : 六大课程结构化内容
+        天国经济学工具 : 投资评估/管家追踪
+        见证分享社区 : 匿名分享与鼓励互动
+        属灵伙伴配对 : 智能推荐与互检
+        爱心传递记录 : 施比受更有福日志
+    section Phase 4
+        AI智能导航助手 : 基于用户画像的个性化建议
+        驱动转变追踪 : 恐惧→欲望→爱心
+        原生APP化 : iOS/Android原生应用
+        爱心传递链 : 恩典流转可视化
+        多语言支持 : 英文/繁体中文
+        </div>
+      </div>
+
+      <h3>7.2 Phase 详细规划</h3>
+      <div class="phase-grid">
+        <div class="glass card phase-card">
+          <div class="phase-num">01</div>
+          <div class="phase-label" style="color:var(--accent-indigo);">Phase 1 · MVP</div>
+          <div class="phase-title">核心探索闭环</div>
+          <div class="phase-desc">
+            <ul style="padding-left:1rem; font-size:0.85rem;">
+              <li>7阶段探索流程升级</li>
+              <li>种子发现四维评估</li>
+              <li>价值观探索（含天国对比）</li>
+              <li>生命平衡7维雷达图</li>
+              <li>DNA模型生成</li>
+              <li>报告PDF导出</li>
+              <li>离线支持</li>
+            </ul>
+          </div>
+          <div style="margin-top:0.5rem;"><span class="tag tag-indigo">8-10周</span></div>
+        </div>
+        <div class="glass card phase-card">
+          <div class="phase-num">02</div>
+          <div class="phase-label" style="color:var(--accent-purple);">Phase 2</div>
+          <div class="phase-title">日常导航系统</div>
+          <div class="phase-desc">
+            <ul style="padding-left:1rem; font-size:0.85rem;">
+              <li>每日灵粮推送</li>
+              <li>21天改变计划</li>
+              <li>五维OKR管理</li>
+              <li>PDCA周检视</li>
+              <li>角色平衡追踪</li>
+              <li>用户注册/登录</li>
+              <li>微信小程序</li>
+            </ul>
+          </div>
+          <div style="margin-top:0.5rem;"><span class="tag tag-purple">10-12周</span></div>
+        </div>
+        <div class="glass card phase-card">
+          <div class="phase-num">03</div>
+          <div class="phase-label" style="color:var(--accent-pink);">Phase 3</div>
+          <div class="phase-title">社区与工具箱</div>
+          <div class="phase-desc">
+            <ul style="padding-left:1rem; font-size:0.85rem;">
+              <li>课程知识库</li>
+              <li>天国经济学工具</li>
+              <li>见证分享墙</li>
+              <li>属灵伙伴配对</li>
+              <li>爱心传递记录</li>
+              <li>驱动系统自检</li>
+              <li>学习笔记系统</li>
+            </ul>
+          </div>
+          <div style="margin-top:0.5rem;"><span class="tag tag-pink">12-14周</span></div>
+        </div>
+        <div class="glass card phase-card">
+          <div class="phase-num">04</div>
+          <div class="phase-label gradient-text-gold">Phase 4</div>
+          <div class="phase-title">AI智能导航</div>
+          <div class="phase-desc">
+            <ul style="padding-left:1rem; font-size:0.85rem;">
+              <li>AI智能导航助手</li>
+              <li>个性化建议引擎</li>
+              <li>驱动转变追踪</li>
+              <li>原生APP化</li>
+              <li>多语言支持</li>
+              <li>爱心传递链</li>
+              <li>高级数据分析</li>
+            </ul>
+          </div>
+          <div style="margin-top:0.5rem;"><span class="tag tag-gold">14-16周</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ==================== SECTION 8: 指标体系 ==================== -->
+    <section id="sec8" class="section">
+      <h2 class="gradient-text">八、指标体系</h2>
+
+      <h3>8.1 北极星指标</h3>
+      <div class="glass card" style="padding:1.5rem; text-align:center; margin:1rem 0;">
+        <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.25rem;">North Star Metric</div>
+        <div style="font-family:var(--font-serif); font-size:1.4rem; font-weight:700;" class="gradient-text">月活跃用户的周平均使用天数</div>
+        <p style="font-size:0.9rem; color:var(--text-secondary); margin-top:0.5rem;">
+          衡量产品「常用常新」价值的核心指标——不仅来用了，而且持续在用。
+        </p>
+      </div>
+
+      <h3>8.2 过程指标</h3>
+      <div class="metric-grid">
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">80%</div>
+          <div class="metric-label">7阶段完成率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">开始探索的用户中，完成全部7阶段评估的比例</p>
+        </div>
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">60%</div>
+          <div class="metric-label">报告生成率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">完成评估后生成个人报告的比例</p>
+        </div>
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">40%</div>
+          <div class="metric-label">7日留存率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">首次使用后7天内再次打开应用的比例</p>
+        </div>
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">25%</div>
+          <div class="metric-label">OKR周活跃率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">设定OKR的用户中，每周活跃更新进度的比例</p>
+        </div>
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">15%</div>
+          <div class="metric-label">社区参与率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">月活用户中参与社区互动（发布见证/评论/配对）的比例</p>
+        </div>
+        <div class="glass card metric-card">
+          <div class="metric-value gradient-text">50%</div>
+          <div class="metric-label">分享转化率</div>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">收到分享链接的用户中，完成注册/体验的比例</p>
+        </div>
+      </div>
+
+      <h3>8.3 质量指标</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>指标名称</th><th>目标值</th><th>监控方式</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>首屏加载时间</strong></td>
+              <td>&lt; 2秒（3G网络）</td>
+              <td>前端性能监控（Web Vitals）</td>
+            </tr>
+            <tr>
+              <td><strong>核心交互响应时间</strong></td>
+              <td>&lt; 100ms</td>
+              <td>前端性能监控</td>
+            </tr>
+            <tr>
+              <td><strong>崩溃率</strong></td>
+              <td>&lt; 0.1%</td>
+              <td>异常上报系统（Sentry）</td>
+            </tr>
+            <tr>
+              <td><strong>离线功能可用率</strong></td>
+              <td>100%</td>
+              <td>自动化测试 + PWA审计</td>
+            </tr>
+            <tr>
+              <td><strong>数据安全事件</strong></td>
+              <td>0次</td>
+              <td>安全审计日志</td>
+            </tr>
+            <tr>
+              <td><strong>用户满意度 (CSAT)</strong></td>
+              <td>&gt; 4.5/5.0</td>
+              <td>应用内反馈收集</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <div class="footer glass" style="margin-top:3rem;">
+      <p style="font-family:var(--font-serif); font-size:1rem; margin-bottom:0.5rem;" class="gradient-text">「人生不是修行，而是绽放」</p>
+      <p>生命导航 · Life Navigation &nbsp;|&nbsp; 产品需求文档 v1.0</p>
+      <p style="margin-top:0.25rem;">望宏老师主内商学院 · 天国商业课程体系</p>
+      <p style="margin-top:0.5rem; font-size:0.8rem;">文档生成日期：2026年6月27日</p>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // Starfield
+    (function() {
+      const container = document.getElementById('stars');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(star);
+      }
+    })();
+
+    // Mermaid init
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#6366f1',
+        primaryTextColor: '#f1f5f9',
+        primaryBorderColor: '#a855f7',
+        lineColor: '#94a3b8',
+        secondaryColor: '#1e1b4b',
+        tertiaryColor: '#312e81',
+        background: '#0f172a',
+        mainBkg: '#1e1b4b',
+        nodeBorder: '#a855f7',
+        clusterBkg: 'rgba(99,102,241,0.15)',
+        clusterBorder: 'rgba(168,85,247,0.3)',
+        titleColor: '#c4b5fd',
+        edgeLabelBackground: '#1e1b4b',
+        fontSize: '14px'
+      },
+      timeline: {
+        disableMulticolor: false
+      }
+    });
+
+    // 7-dimension Radar Chart (ECharts)
+    (function() {
+      const chartDom = document.getElementById('radarChart');
+      if (!chartDom) return;
+      const chart = echarts.init(chartDom, null, { renderer: 'canvas' });
+
+      const option = {
+        backgroundColor: 'transparent',
+        radar: {
+          indicator: [
+            { name: '事业', max: 10 },
+            { name: '财务', max: 10 },
+            { name: '健康', max: 10 },
+            { name: '家庭', max: 10 },
+            { name: '社交', max: 10 },
+            { name: '成长', max: 10 },
+            { name: '信仰灵修', max: 10 }
+          ],
+          shape: 'circle',
+          splitNumber: 5,
+          axisName: {
+            color: '#cbd5e1',
+            fontSize: 13,
+            fontFamily: 'Noto Sans SC, sans-serif'
+          },
+          splitLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.08)' }
+          },
+          splitArea: {
+            areaStyle: {
+              color: ['rgba(99,102,241,0.02)', 'rgba(99,102,241,0.04)', 'rgba(99,102,241,0.06)', 'rgba(99,102,241,0.08)', 'rgba(99,102,241,0.1)']
+            }
+          },
+          axisLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.12)' }
+          }
+        },
+        series: [{
+          type: 'radar',
+          data: [
+            {
+              value: [7, 5, 6, 8, 6, 7, 5],
+              name: '当前状态',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: 'rgba(99,102,241,0.4)' },
+                  { offset: 1, color: 'rgba(236,72,153,0.1)' }
+                ])
+              },
+              lineStyle: {
+                color: '#6366f1',
+                width: 2
+              },
+              itemStyle: {
+                color: '#6366f1'
+              },
+              symbol: 'circle',
+              symbolSize: 6
+            },
+            {
+              value: [8, 7, 8, 9, 8, 8, 9],
+              name: '理想状态',
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  { offset: 0, color: 'rgba(168,85,247,0.2)' },
+                  { offset: 1, color: 'rgba(168,85,247,0.02)' }
+                ])
+              },
+              lineStyle: {
+                color: '#a855f7',
+                width: 2,
+                type: 'dashed'
+              },
+              itemStyle: {
+                color: '#a855f7'
+              },
+              symbol: 'diamond',
+              symbolSize: 6
+            }
+          ]
+        }],
+        legend: {
+          bottom: 10,
+          textStyle: { color: '#cbd5e1', fontSize: 12, fontFamily: 'Noto Sans SC, sans-serif' },
+          itemWidth: 20,
+          itemHeight: 10
+        },
+        tooltip: {
+          backgroundColor: 'rgba(15,23,42,0.9)',
+          borderColor: 'rgba(139,92,246,0.3)',
+          textStyle: { color: '#f1f5f9', fontSize: 13, fontFamily: 'Noto Sans SC, sans-serif' }
+        }
+      };
+
+      chart.setOption(option);
+      window.addEventListener('resize', () => chart.resize());
+    })();
+
+    // Scroll fade-in animation
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
