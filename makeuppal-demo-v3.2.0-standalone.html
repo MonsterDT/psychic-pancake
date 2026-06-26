@@ -2006,7 +2006,7 @@ body {
 .style-item.selected .style-check svg { opacity: 1; }
 
 .onboarding-btn {
-  width: 100%;
+  flex: 1;
   padding: 14px;
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   color: #fff;
@@ -2021,16 +2021,40 @@ body {
 }
 .onboarding-btn:active { transform: scale(0.98); }
 .onboarding-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.onboarding-btn-secondary {
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  box-shadow: none;
+  border: 1px solid var(--color-border-light);
+}
+.onboarding-btn-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 24px;
+}
 .onboarding-skip {
-  margin-top: 16px;
+  position: absolute;
+  top: calc(20px + var(--safe-top));
+  right: 20px;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   cursor: pointer;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.8);
+  border: none;
+  z-index: 10;
 }
 .onboarding-dots {
+  position: absolute;
+  bottom: calc(40px + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  margin-top: 24px;
+  z-index: 10;
 }
 .onboarding-dots span {
   width: 8px; height: 8px;
@@ -2042,6 +2066,194 @@ body {
   width: 24px;
   border-radius: 4px;
   background: var(--color-primary);
+}
+
+/* Onboarding Step 1 - Skin Type */
+.ob-skin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 20px;
+}
+.ob-skin-card {
+  padding: 20px 16px;
+  background: var(--color-bg-card);
+  border-radius: 16px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease);
+  box-shadow: var(--shadow-xs);
+}
+.ob-skin-card:active { transform: scale(0.97); }
+.ob-skin-card.selected {
+  border-color: var(--color-primary);
+  background: rgba(196, 149, 106, 0.08);
+}
+.ob-skin-emoji {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+.ob-skin-name {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.ob-skin-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* Onboarding Step 2 - Face Scan */
+.ob-scan-area {
+  width: 100%;
+  max-width: 280px;
+  margin-top: 20px;
+  text-align: center;
+}
+.ob-scan-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid rgba(196, 149, 106, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+  animation: obBreathe 3s ease-in-out infinite;
+}
+@keyframes obBreathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 149, 106, 0.2); }
+  50% { box-shadow: 0 0 0 15px rgba(196, 149, 106, 0); }
+}
+.ob-scan-ring::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 149, 106, 0.5);
+}
+.ob-scan-ring.scanning {
+  animation: obScan 1.5s linear;
+}
+@keyframes obScan {
+  0% { border-color: rgba(196, 149, 106, 0.3); }
+  50% { border-color: var(--color-primary); }
+  100% { border-color: var(--color-success); }
+}
+.ob-scan-inner {
+  font-size: 48px;
+}
+.ob-scan-status {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.ob-scan-status.scanning { color: var(--color-primary); }
+.ob-scan-status.done { color: var(--color-success); font-weight: 600; }
+
+/* Onboarding Step 3 - Style Preference */
+.ob-style-list {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob-style-item {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--color-bg-card);
+  border-radius: 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--duration-fast) var(--ease);
+  box-shadow: var(--shadow-xs);
+}
+.ob-style-item:active { transform: scale(0.98); }
+.ob-style-item.selected {
+  border-color: var(--color-primary);
+  background: rgba(196, 149, 106, 0.08);
+}
+.ob-style-emoji {
+  font-size: 28px;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+.ob-style-info { flex: 1; min-width: 0; }
+.ob-style-name {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+.ob-style-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+.ob-style-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #fff;
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+.ob-style-item.selected .ob-style-check {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Onboarding Step 4 - Reward */
+.ob-reward-card {
+  margin-top: 20px;
+  padding: 24px;
+  background: var(--color-bg-card);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border-light);
+}
+.ob-reward-gp {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+.ob-reward-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: 18px;
+}
+.ob-reward-list {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ob-reward-item {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ob-check {
+  color: var(--color-success);
+  font-weight: 700;
+  font-size: 14px;
 }
 
 .reward-card {
@@ -6018,6 +6230,7 @@ body {
 
   <!-- ===== Onboarding Overlay ===== -->
   <div class="onboarding-overlay" id="onboarding-overlay">
+    <!-- Step 0: Welcome -->
     <div class="onboarding-step active" data-step="0">
       <div class="onboarding-icon">
         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -6026,121 +6239,132 @@ body {
       </div>
       <h2>欢迎来到妆伴</h2>
       <p>你的专属 AI 美妆顾问，让每一次上妆都恰到好处</p>
+      <div class="onboarding-btn-row">
+        <button class="onboarding-btn" onclick="goToNextStep()">开始体验</button>
+      </div>
     </div>
 
+    <!-- Step 1: Skin Type -->
     <div class="onboarding-step" data-step="1">
       <div class="onboarding-icon" style="background: linear-gradient(135deg, #FFE4C4, #FFDAB9);">
         <span style="font-size: 40px;">🧴</span>
       </div>
       <h2>你的肤质是？</h2>
       <p>选择你的肤质，获取更精准的妆容推荐</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 300px; margin-top: 20px;">
-        <div class="skin-type-card" onclick="selectSkinType('dry')" style="padding: 20px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent; text-align: center;">
-          <div style="font-size: 32px; margin-bottom: 8px;">🌵</div>
-          <div style="font-weight: 600; margin-bottom: 4px;">干性</div>
-          <div style="font-size: 11px; color: var(--color-text-muted);">容易干燥起皮</div>
+      <div class="ob-skin-grid">
+        <div class="ob-skin-card" data-type="dry" onclick="pickSkinType(this, 'dry')">
+          <div class="ob-skin-emoji">🌵</div>
+          <div class="ob-skin-name">干性</div>
+          <div class="ob-skin-desc">容易干燥起皮</div>
         </div>
-        <div class="skin-type-card" onclick="selectSkinType('oily')" style="padding: 20px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent; text-align: center;">
-          <div style="font-size: 32px; margin-bottom: 8px;">💧</div>
-          <div style="font-weight: 600; margin-bottom: 4px;">油性</div>
-          <div style="font-size: 11px; color: var(--color-text-muted);">T区容易出油</div>
+        <div class="ob-skin-card" data-type="oily" onclick="pickSkinType(this, 'oily')">
+          <div class="ob-skin-emoji">💧</div>
+          <div class="ob-skin-name">油性</div>
+          <div class="ob-skin-desc">T区容易出油</div>
         </div>
-        <div class="skin-type-card" onclick="selectSkinType('combo')" style="padding: 20px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent; text-align: center;">
-          <div style="font-size: 32px; margin-bottom: 8px;">⚖️</div>
-          <div style="font-weight: 600; margin-bottom: 4px;">混合性</div>
-          <div style="font-size: 11px; color: var(--color-text-muted);">T油两颊干</div>
+        <div class="ob-skin-card" data-type="combo" onclick="pickSkinType(this, 'combo')">
+          <div class="ob-skin-emoji">⚖️</div>
+          <div class="ob-skin-name">混合性</div>
+          <div class="ob-skin-desc">T油两颊干</div>
         </div>
-        <div class="skin-type-card" onclick="selectSkinType('sensitive')" style="padding: 20px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent; text-align: center;">
-          <div style="font-size: 32px; margin-bottom: 8px;">🌸</div>
-          <div style="font-weight: 600; margin-bottom: 4px;">敏感性</div>
-          <div style="font-size: 11px; color: var(--color-text-muted);">容易泛红过敏</div>
+        <div class="ob-skin-card" data-type="sensitive" onclick="pickSkinType(this, 'sensitive')">
+          <div class="ob-skin-emoji">🌸</div>
+          <div class="ob-skin-name">敏感性</div>
+          <div class="ob-skin-desc">容易泛红过敏</div>
         </div>
+      </div>
+      <div class="onboarding-btn-row">
+        <button class="onboarding-btn onboarding-btn-secondary" onclick="goToPrevStep()">上一步</button>
+        <button class="onboarding-btn" id="ob-step1-next" onclick="goToNextStep()" disabled>下一步</button>
       </div>
     </div>
 
+    <!-- Step 2: Face Scan -->
     <div class="onboarding-step" data-step="2">
       <div class="onboarding-icon" style="background: linear-gradient(135deg, #E8D5C4, #C4956A);">
         <span style="font-size: 40px;">📸</span>
       </div>
       <h2>扫描你的面部</h2>
       <p>AI 智能分析骨相特征，找到最适合你的妆容风格</p>
-      <button class="onboarding-btn" onclick="startFaceScan()" style="margin-top: 20px;">
-        📸 开始扫脸分析
-      </button>
+      <div class="ob-scan-area" id="ob-scan-area">
+        <div class="ob-scan-ring">
+          <div class="ob-scan-inner">👤</div>
+        </div>
+        <div class="ob-scan-status" id="ob-scan-status">点击下方按钮开始</div>
+      </div>
+      <div class="onboarding-btn-row">
+        <button class="onboarding-btn onboarding-btn-secondary" onclick="goToPrevStep()">上一步</button>
+        <button class="onboarding-btn" id="ob-scan-btn" onclick="startObFaceScan()">📸 开始扫脸</button>
+      </div>
     </div>
 
+    <!-- Step 3: Style Preference -->
     <div class="onboarding-step" data-step="3">
       <div class="onboarding-icon" style="background: linear-gradient(135deg, #FFB6C1, #FF69B4);">
         <span style="font-size: 40px;">🎨</span>
       </div>
       <h2>你喜欢什么风格？</h2>
-      <p>选择你喜欢的风格，获取个性化推荐</p>
-      <div style="width: 100%; max-width: 320px; margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
-        <div class="style-option" onclick="toggleStyle('daily')" style="display: flex; align-items: center; padding: 14px 16px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent;">
-          <span style="font-size: 24px; margin-right: 12px;">🌿</span>
-          <div style="flex: 1;">
-            <div style="font-weight: 600;">日常清新</div>
-            <div style="font-size: 11px; color: var(--color-text-muted);">清透自然，适合日常通勤</div>
+      <p>可多选，获取个性化推荐</p>
+      <div class="ob-style-list">
+        <div class="ob-style-item" data-style="daily" onclick="toggleObStyle(this, 'daily')">
+          <span class="ob-style-emoji">🌿</span>
+          <div class="ob-style-info">
+            <div class="ob-style-name">日常清新</div>
+            <div class="ob-style-desc">清透自然，适合日常通勤</div>
           </div>
-          <div class="style-check" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center;">✓</div>
+          <div class="ob-style-check">✓</div>
         </div>
-        <div class="style-option" onclick="toggleStyle('dinner')" style="display: flex; align-items: center; padding: 14px 16px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent;">
-          <span style="font-size: 24px; margin-right: 12px;">💎</span>
-          <div style="flex: 1;">
-            <div style="font-weight: 600;">精致晚宴</div>
-            <div style="font-size: 11px; color: var(--color-text-muted);">高级感满满，适合正式场合</div>
+        <div class="ob-style-item" data-style="dinner" onclick="toggleObStyle(this, 'dinner')">
+          <span class="ob-style-emoji">💎</span>
+          <div class="ob-style-info">
+            <div class="ob-style-name">精致晚宴</div>
+            <div class="ob-style-desc">高级感满满，适合正式场合</div>
           </div>
-          <div class="style-check" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center;">✓</div>
+          <div class="ob-style-check">✓</div>
         </div>
-        <div class="style-option" onclick="toggleStyle('gufeng')" style="display: flex; align-items: center; padding: 14px 16px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent;">
-          <span style="font-size: 24px; margin-right: 12px;">🏮</span>
-          <div style="flex: 1;">
-            <div style="font-weight: 600;">国风古韵</div>
-            <div style="font-size: 11px; color: var(--color-text-muted);">传统美学，非遗文化创意</div>
+        <div class="ob-style-item" data-style="gufeng" onclick="toggleObStyle(this, 'gufeng')">
+          <span class="ob-style-emoji">🏮</span>
+          <div class="ob-style-info">
+            <div class="ob-style-name">国风古韵</div>
+            <div class="ob-style-desc">传统美学，非遗文化创意</div>
           </div>
-          <div class="style-check" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center;">✓</div>
+          <div class="ob-style-check">✓</div>
         </div>
-        <div class="style-option" onclick="toggleStyle('yinfa')" style="display: flex; align-items: center; padding: 14px 16px; background: var(--color-bg-card); border-radius: 12px; cursor: pointer; border: 2px solid transparent;">
-          <span style="font-size: 24px; margin-right: 12px;">👩‍🦳</span>
-          <div style="flex: 1;">
-            <div style="font-weight: 600;">优雅银发</div>
-            <div style="font-size: 11px; color: var(--color-text-muted);">智慧助老，优雅气质</div>
+        <div class="ob-style-item" data-style="yinfa" onclick="toggleObStyle(this, 'yinfa')">
+          <span class="ob-style-emoji">👩‍🦳</span>
+          <div class="ob-style-info">
+            <div class="ob-style-name">优雅银发</div>
+            <div class="ob-style-desc">智慧助老，优雅气质</div>
           </div>
-          <div class="style-check" style="width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center;">✓</div>
+          <div class="ob-style-check">✓</div>
         </div>
       </div>
-      <button class="onboarding-btn" onclick="nextOnboarding()" style="margin-top: 20px;">下一步</button>
+      <div class="onboarding-btn-row">
+        <button class="onboarding-btn onboarding-btn-secondary" onclick="goToPrevStep()">上一步</button>
+        <button class="onboarding-btn" onclick="goToNextStep()">下一步</button>
+      </div>
     </div>
 
+    <!-- Step 4: Reward -->
     <div class="onboarding-step" data-step="4">
       <div class="onboarding-icon" style="background: linear-gradient(135deg, #FFD700, #FFA500);">
         <span style="font-size: 40px;">🎁</span>
       </div>
       <h2>新人专享福利</h2>
       <p>完成注册，领取新人大礼包</p>
-      <div style="margin-top: 20px; padding: 20px; background: var(--color-bg-card); border-radius: 16px; width: 100%; max-width: 300px;">
-        <div style="text-align: center; margin-bottom: 16px;">
-          <div style="font-size: 36px; font-weight: 700; color: var(--color-primary);">+100 GP</div>
-          <div style="font-size: 12px; color: var(--color-text-muted);">新人专属焕新值</div>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: var(--color-text-secondary);">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--color-success);">✓</span>
-            5+ 免费妆容模板
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--color-success);">✓</span>
-            3 次成分扫描机会
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="color: var(--color-success);">✓</span>
-            7 天会员体验
-          </div>
+      <div class="ob-reward-card">
+        <div class="ob-reward-gp">+100 GP</div>
+        <div class="ob-reward-label">新人专属焕新值</div>
+        <div class="ob-reward-list">
+          <div class="ob-reward-item"><span class="ob-check">✓</span> 5+ 免费妆容模板</div>
+          <div class="ob-reward-item"><span class="ob-check">✓</span> 3 次成分扫描机会</div>
+          <div class="ob-reward-item"><span class="ob-check">✓</span> 7 天会员体验</div>
         </div>
       </div>
-      <button class="onboarding-btn" onclick="finishOnboarding()" style="margin-top: 20px;">
-        开启妆伴之旅
-      </button>
+      <div class="onboarding-btn-row">
+        <button class="onboarding-btn onboarding-btn-secondary" onclick="goToPrevStep()">上一步</button>
+        <button class="onboarding-btn" onclick="finishOnboarding()">开启妆伴之旅</button>
+      </div>
     </div>
 
     <button class="onboarding-skip" onclick="skipOnboarding()" id="onboarding-skip-btn">跳过</button>
@@ -6857,14 +7081,23 @@ body {
   }
 
   // ===== Onboarding =====
+  let obSelectedSkin = '';
+  let obSelectedStyles = [];
+  let obScanning = false;
+
   function showOnboarding() {
     const ob = document.getElementById('onboarding-overlay');
     if (ob) ob.classList.add('show');
     onboardingStep = 0;
+    obSelectedSkin = '';
+    obSelectedStyles = [];
+    obScanning = false;
     updateOnboardingStep();
+    console.log('Onboarding shown, step 0');
   }
 
-  function nextOnboarding() {
+  function goToNextStep() {
+    console.log('goToNextStep called, current step:', onboardingStep);
     if (onboardingStep < 4) {
       onboardingStep++;
       updateOnboardingStep();
@@ -6873,7 +7106,8 @@ body {
     }
   }
 
-  function prevOnboarding() {
+  function goToPrevStep() {
+    console.log('goToPrevStep called, current step:', onboardingStep);
     if (onboardingStep > 0) {
       onboardingStep--;
       updateOnboardingStep();
@@ -6881,37 +7115,76 @@ body {
   }
 
   function skipOnboarding() {
+    console.log('skipOnboarding called');
     finishOnboarding();
   }
 
   function updateOnboardingStep() {
-    document.querySelectorAll('.onboarding-step').forEach((s, i) => {
+    const steps = document.querySelectorAll('.onboarding-step');
+    steps.forEach((s, i) => {
       s.classList.toggle('active', i === onboardingStep);
     });
-    document.querySelectorAll('.onboarding-dots span').forEach((d, i) => {
+    const dots = document.querySelectorAll('.onboarding-dots span');
+    dots.forEach((d, i) => {
       d.classList.toggle('active', i === onboardingStep);
     });
+    console.log('updateOnboardingStep done, step =', onboardingStep);
   }
 
-  function selectSkinType(type) {
-    selectedSkinType = type;
-    document.querySelectorAll('.skin-type-card').forEach(c => c.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
-    setTimeout(nextOnboarding, 300);
+  function pickSkinType(el, type) {
+    obSelectedSkin = type;
+    document.querySelectorAll('.ob-skin-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const nextBtn = document.getElementById('ob-step1-next');
+    if (nextBtn) nextBtn.disabled = false;
+    console.log('Skin selected:', type);
   }
 
-  function toggleStyle(style) {
-    const idx = selectedStyles.indexOf(style);
-    if (idx > -1) {
-      selectedStyles.splice(idx, 1);
-      event.currentTarget.classList.remove('selected');
-    } else {
-      selectedStyles.push(style);
-      event.currentTarget.classList.add('selected');
+  function startObFaceScan() {
+    if (obScanning) return;
+    obScanning = true;
+    const ring = document.querySelector('.ob-scan-ring');
+    const status = document.getElementById('ob-scan-status');
+    const btn = document.getElementById('ob-scan-btn');
+
+    if (ring) ring.classList.add('scanning');
+    if (status) {
+      status.textContent = 'AI 分析中...';
+      status.classList.add('scanning');
     }
+    if (btn) btn.disabled = true;
+
+    console.log('Face scan started');
+
+    setTimeout(() => {
+      if (ring) ring.classList.remove('scanning');
+      if (status) {
+        status.textContent = '扫描完成！';
+        status.classList.remove('scanning');
+        status.classList.add('done');
+      }
+      obScanning = false;
+      console.log('Face scan done, going to next step');
+      setTimeout(() => {
+        goToNextStep();
+      }, 500);
+    }, 2000);
+  }
+
+  function toggleObStyle(el, style) {
+    const idx = obSelectedStyles.indexOf(style);
+    if (idx > -1) {
+      obSelectedStyles.splice(idx, 1);
+      el.classList.remove('selected');
+    } else {
+      obSelectedStyles.push(style);
+      el.classList.add('selected');
+    }
+    console.log('Style toggled:', style, 'selected:', obSelectedStyles);
   }
 
   function finishOnboarding() {
+    console.log('finishOnboarding called');
     gpBalance += 100;
     updateGpDisplay();
     const ob = document.getElementById('onboarding-overlay');
