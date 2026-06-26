@@ -77,7 +77,7 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .face-tag.primary { background: rgba(196, 149, 106, 0.12); color: var(--color-primary-dark); }
 
 /* ========== Feature 5-grid ========== */
-.features-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-4); }
+.features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-4); }
 .feature-card { padding: 12px 4px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all var(--duration-fast) var(--ease); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
 .feature-card:active { transform: scale(0.95); }
 .feature-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; }
@@ -149,27 +149,28 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .lib-cat-panel { display: block; }
 
 /* Xiaohongshu Waterfall */
-.xhs-waterfall { padding: var(--spacing-3) var(--spacing-3); column-count: 2; column-gap: var(--spacing-3); }
-.xhs-card { break-inside: avoid; margin-bottom: var(--spacing-3); background: var(--color-bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
-.xhs-card:active { transform: scale(0.97); }
-.xhs-card-img { width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.xhs-waterfall { padding: 12px 12px; column-count: 2; column-gap: 10px; }
+.xhs-card { break-inside: avoid; margin-bottom: 10px; background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s ease; }
+.xhs-card:active { transform: scale(0.96); opacity: 0.9; }
+.xhs-card-img { width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f5f5f5; }
 .xhs-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.xhs-card-emoji { font-size: 48px; position: absolute; }
-.xhs-card-tag { position: absolute; top: 8px; left: 8px; padding: 3px 8px; background: rgba(196, 149, 106, 0.9); color: #fff; border-radius: var(--radius-xs); font-size: 10px; font-weight: var(--font-weight-semibold); backdrop-filter: blur(4px); }
-.xhs-card-tag.xhs-tag-free { background: rgba(107, 158, 107, 0.9); }
-.xhs-card-tag.xhs-tag-l3 { background: rgba(187, 143, 206, 0.9); }
-.xhs-card-tag.xhs-tag-guofeng { background: rgba(212, 160, 60, 0.9); }
-.xhs-card-tag.xhs-tag-yinfa { background: rgba(107, 158, 107, 0.9); }
-.xhs-card-tag.xhs-tag-brand { background: rgba(26, 24, 22, 0.85); }
-.xhs-card-tag.xhs-tag-star { background: rgba(241, 148, 138, 0.9); }
-.xhs-brand-logo { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: 14px; position: absolute; z-index: 2; }
+.xhs-card-emoji { font-size: 52px; position: absolute; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1)); }
+.xhs-card-tag { position: absolute; top: 8px; left: 8px; padding: 3px 8px; background: rgba(255,255,255,0.92); color: #C4956A; border-radius: 4px; font-size: 10px; font-weight: 600; backdrop-filter: blur(10px); }
+.xhs-card-tag.xhs-tag-free { background: rgba(107, 158, 107, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-l3 { background: rgba(187, 143, 206, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-guofeng { background: rgba(212, 160, 60, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-yinfa { background: rgba(107, 158, 107, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-brand { background: rgba(26, 24, 22, 0.85); color: #fff; }
+.xhs-card-tag.xhs-tag-star { background: rgba(241, 148, 138, 0.9); color: #fff; }
+.xhs-card-video-tag { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; gap: 3px; padding: 3px 6px; background: rgba(0,0,0,0.5); color: #fff; border-radius: 4px; font-size: 10px; font-weight: 500; backdrop-filter: blur(4px); }
+.xhs-brand-logo { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; position: absolute; z-index: 2; }
 .xhs-card-info { padding: 8px 10px 10px; }
-.xhs-card-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; }
+.xhs-card-title { font-size: 13px; font-weight: 500; color: #333; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; letter-spacing: -0.2px; }
 .xhs-card-bottom { display: flex; align-items: center; justify-content: space-between; }
-.xhs-card-author { display: flex; align-items: center; gap: 4px; min-width: 0; flex: 1; }
-.xhs-avatar { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: var(--font-weight-semibold); flex-shrink: 0; }
-.xhs-card-author span { font-size: 10px; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.xhs-card-like { font-size: 10px; color: var(--color-text-muted); flex-shrink: 0; margin-left: 6px; }
+.xhs-card-author { display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; }
+.xhs-avatar { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 600; flex-shrink: 0; }
+.xhs-card-author span { font-size: 11px; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; }
+.xhs-card-like { font-size: 11px; color: #999; flex-shrink: 0; margin-left: 6px; display: flex; align-items: center; gap: 2px; }
 
 /* Hot Questions Chips */
 .hot-questions { display: flex; gap: var(--spacing-2); overflow-x: auto; padding: var(--spacing-2) 0; }
@@ -345,6 +346,24 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .profile-gp-amount { font-size: 26px; font-weight: var(--font-weight-bold); color: var(--color-primary); line-height: 1.1; }
 .profile-gp-arrow { font-size: 11px; color: var(--color-primary); margin-top: 4px; opacity: 0.8; }
 
+/* 化妆记录卡片 */
+.makeup-record-card { margin: 0 var(--spacing-4) var(--spacing-3); padding: 16px; background: linear-gradient(135deg, #FFF5EB 0%, #FFE8D6 100%); border-radius: 16px; cursor: pointer; transition: all var(--duration-fast) var(--ease); position: relative; overflow: hidden; }
+.makeup-record-card:active { transform: scale(0.98); }
+.makeup-record-card::before { content: ''; position: absolute; right: -20px; top: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(196,149,106,0.15) 0%, transparent 70%); border-radius: 50%; }
+.makeup-record-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; position: relative; z-index: 1; }
+.makeup-record-title { display: flex; align-items: center; gap: 8px; }
+.makeup-record-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(196,149,106,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.makeup-record-title h4 { font-size: 14px; font-weight: 600; color: #333; }
+.makeup-record-arrow { font-size: 12px; color: #C4956A; font-weight: 500; }
+.makeup-record-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+.makeup-stat-item { flex: 1; }
+.makeup-stat-num { font-size: 20px; font-weight: 700; color: #C4956A; line-height: 1.2; }
+.makeup-stat-label { font-size: 11px; color: #999; margin-top: 2px; }
+.makeup-record-today { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(196,149,106,0.15); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+.makeup-today-text { font-size: 12px; color: #666; }
+.makeup-today-text strong { color: #C4956A; font-weight: 600; }
+.makeup-today-btn { padding: 5px 12px; background: #C4956A; color: #fff; border-radius: 12px; font-size: 11px; font-weight: 500; }
+
 .profile-section-title { font-size: 13px; font-weight: var(--font-weight-semibold); color: var(--color-text-primary); padding: 0 var(--spacing-4) var(--spacing-2); margin-top: var(--spacing-2); }
 
 .profile-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-2); }
@@ -363,11 +382,40 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .hot-q-chip:active { transform: scale(0.95); }
 
 /* ========== Tab Bar ========== */
-.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: var(--tab-bar-height); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(18px); border-top: 1px solid var(--color-border-light); display: flex; align-items: center; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); }
-.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--color-text-muted); transition: color var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px; position: relative; }
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: calc(var(--tab-bar-height) + 10px); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--color-border-light); display: flex; align-items: flex-start; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); padding-top: 6px; }
+.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: var(--color-text-muted); transition: all var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px; position: relative; flex: 1; font-weight: 500; }
 .tab-btn.active { color: var(--color-primary); }
-.tab-btn svg { width: 20px; height: 20px; }
+.tab-btn.active svg { transform: translateY(-2px); }
+.tab-btn svg { width: 22px; height: 22px; transition: transform var(--duration-fast) var(--ease); }
 .tab-btn:active { opacity: 0.7; }
+.tab-btn.fab-placeholder { opacity: 0; pointer-events: none; }
+
+/* FAB Button */
+.fab-btn { position: fixed; bottom: calc(var(--tab-bar-height) - 18px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(180deg, #D4B896 0%, #C4956A 50%, #A67B52 100%); color: #fff; border: 2px solid rgba(255,255,255,0.3); box-shadow: 0 4px 20px rgba(196,149,106,0.4); z-index: calc(var(--z-tab) + 1); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--duration-fast) var(--ease); font-size: 24px; animation: fabIn 400ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both; }
+.fab-btn:active { transform: translateX(-50%) scale(0.92); }
+.fab-btn:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 24px rgba(196,149,106,0.5); }
+@keyframes fabIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* FAB Action Sheet */
+.fab-sheet-overlay { position: fixed; inset: 0; background: rgba(26, 24, 22, 0.5); z-index: 350; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(6px); animation: fadeIn 200ms ease; }
+.fab-sheet-overlay.show { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fab-sheet { width: 100%; max-width: var(--content-max-width); background: var(--color-bg); border-radius: 24px 24px 0 0; padding: 20px 20px calc(32px + var(--safe-bottom)); animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fab-sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--color-border); margin: 0 auto 16px; }
+.fab-sheet-title { font-size: 16px; font-weight: 600; color: var(--color-text); text-align: center; margin-bottom: 4px; }
+.fab-sheet-subtitle { font-size: 12px; color: var(--color-text-muted); text-align: center; margin-bottom: 20px; }
+.fab-sheet-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.fab-sheet-option { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.fab-sheet-option:active { background: var(--color-bg-alt); border-color: var(--color-primary); transform: scale(0.98); }
+.fab-sheet-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.fab-sheet-icon.chat { background: #FFF0F0; }
+.fab-sheet-icon.mirror { background: #FFF8F0; }
+.fab-sheet-icon.upload { background: #F0F7F0; }
+.fab-sheet-info { flex: 1; min-width: 0; }
+.fab-sheet-info h4 { font-size: 14px; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+.fab-sheet-info p { font-size: 12px; color: var(--color-text-muted); }
+.fab-sheet-cancel { width: 100%; padding: 14px; background: transparent; border: none; font-size: 14px; color: var(--color-text-secondary); cursor: pointer; border-radius: 12px; transition: background var(--duration-fast) var(--ease); font-family: var(--font-sans); font-weight: 500; }
+.fab-sheet-cancel:active { background: var(--color-bg-alt); }
 
 /* ========== Toast ========== */
 .toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: rgba(26, 24, 22, 0.85); color: #fff; padding: 12px 24px; border-radius: var(--radius-md); font-size: var(--font-size-sm); z-index: var(--z-toast); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: all var(--duration-fast) var(--ease); max-width: 280px; text-align: center; }
@@ -620,12 +668,11 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
       </div>
     </div>
 
-    <!-- 5-Grid Features -->
+    <!-- 4-Grid Features -->
     <div class="features-grid">
-      <div class="feature-card" onclick="switchTab('mirror')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg></div><div class="feature-text"><h3>镜面模式</h3><p>跟练妆容</p></div></div>
       <div class="feature-card" onclick="switchTab('library');scrollToQaSection()"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="feature-text"><h3>局部搜索</h3><p>问题解答</p></div></div>
-      <div class="feature-card" onclick="switchTab('mall')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><div class="feature-text"><h3>商城</h3><p>妆容模板</p></div></div>
       <div class="feature-card" onclick="openFullscreenModal('ingredientScanModal')"><div class="feature-icon" style="background:#F5E8E8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-danger);"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div class="feature-text"><h3>成分扫描</h3><p class="feature-new">NEW</p></div></div>
+      <div class="feature-card" onclick="showToast('风格测试')"><div class="feature-icon" style="background:#F0F0F8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#9B59B6;"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg></div><div class="feature-text"><h3>风格测试</h3><p>找到本命妆</p></div></div>
       <div class="feature-card" onclick="showToast('创作者中心')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="feature-text"><h3>创作者</h3><p>投稿模板</p></div></div>
     </div>
 
@@ -1679,6 +1726,35 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
       </div>
     </div>
 
+    <!-- 2.5 化妆记录入口卡片 -->
+    <div class="makeup-record-card" onclick="showToast('化妆记录详情')">
+      <div class="makeup-record-header">
+        <div class="makeup-record-title">
+          <div class="makeup-record-icon">📅</div>
+          <h4>化妆记录</h4>
+        </div>
+        <span class="makeup-record-arrow">查看全部 →</span>
+      </div>
+      <div class="makeup-record-stats">
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">28</div>
+          <div class="makeup-stat-label">本月化妆天数</div>
+        </div>
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">12</div>
+          <div class="makeup-stat-label">尝试妆容数</div>
+        </div>
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">86%</div>
+          <div class="makeup-stat-label">坚持率</div>
+        </div>
+      </div>
+      <div class="makeup-record-today">
+        <span class="makeup-today-text">今日还没化妆哦，<strong>快去试试吧</strong></span>
+        <span class="makeup-today-btn">去化妆</span>
+      </div>
+    </div>
+
     <!-- 3. 功能宫格 - 第一行（5个） -->
     <div class="profile-section-title">我的服务</div>
     <div class="profile-grid-5">
@@ -1767,10 +1843,46 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
   <nav class="tab-bar">
     <a class="tab-btn active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5L12 4l9 8.5"/><path d="M5 11v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>首页</span></a>
     <a class="tab-btn" data-tab="library" onclick="switchTab('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>颜库</span></a>
+    <a class="tab-btn fab-placeholder"><span>占位</span></a>
     <a class="tab-btn" data-tab="mall" onclick="switchTab('mall')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>商城</span></a>
-    <a class="tab-btn" data-tab="mirror" onclick="switchTab('mirror')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg><span>镜面</span></a>
     <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg><span>我的</span></a>
   </nav>
+
+  <!-- FAB Button -->
+  <button class="fab-btn" onclick="openFabSheet()">💄</button>
+
+  <!-- FAB Action Sheet -->
+  <div class="fab-sheet-overlay" id="fabSheetOverlay" onclick="closeFabSheet(event)">
+    <div class="fab-sheet" onclick="event.stopPropagation()">
+      <div class="fab-sheet-handle"></div>
+      <div class="fab-sheet-title">选择你的化妆方式</div>
+      <div class="fab-sheet-subtitle">开启专属美妆体验</div>
+      <div class="fab-sheet-options">
+        <div class="fab-sheet-option" onclick="switchTab('mirror');switchMirrorMode('chat');closeFabSheet()">
+          <div class="fab-sheet-icon chat">🤖</div>
+          <div class="fab-sheet-info">
+            <h4>AI 对话妆造</h4>
+            <p>和 AI 美妆教练聊天，获取个性化妆容方案</p>
+          </div>
+        </div>
+        <div class="fab-sheet-option" onclick="switchTab('mirror');switchMirrorMode('mirror');closeFabSheet()">
+          <div class="fab-sheet-icon mirror">🪞</div>
+          <div class="fab-sheet-info">
+            <h4>开始镜面化妆</h4>
+            <p>打开智能魔镜，边学边画</p>
+          </div>
+        </div>
+        <div class="fab-sheet-option" onclick="showToast('上传妆容功能开发中');closeFabSheet()">
+          <div class="fab-sheet-icon upload">📷</div>
+          <div class="fab-sheet-info">
+            <h4>上传我的妆容</h4>
+            <p>分享你的妆容，成为创作者</p>
+          </div>
+        </div>
+      </div>
+      <button class="fab-sheet-cancel" onclick="closeFabSheet()">取消</button>
+    </div>
+  </div>
 
   <!-- ============ Toast ============ -->
   <div class="toast" id="toast">提示信息</div>
@@ -1989,6 +2101,15 @@ function switchTab(tab){
   if(btn)btn.classList.add('active');
   currentTab=tab;
   window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* FAB Action Sheet */
+function openFabSheet(){
+  document.getElementById('fabSheetOverlay').classList.add('show');
+}
+function closeFabSheet(e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById('fabSheetOverlay').classList.remove('show');
 }
 
 function scrollToQaSection(){
