@@ -1862,11 +1862,19 @@ body {
   inset: 0;
   z-index: 9999;
   background: linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%);
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 24px;
+}
+.onboarding-overlay.show {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .onboarding-step {
   display: none;
