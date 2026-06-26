@@ -41,6 +41,23 @@ def encode_image_to_base64(image_bgr: np.ndarray) -> str:
     return img_base64
 
 
+def convert_numpy_types(obj):
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: convert_numpy_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    elif isinstance(obj, tuple):
+        return tuple(convert_numpy_types(item) for item in obj)
+    else:
+        return obj
+
+
 @app.get("/")
 async def root():
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
@@ -106,6 +123,8 @@ async def analyze_skin(file: UploadFile = File(...)):
             'report': result['report'],
             'result_image': f"data:image/jpeg;base64,{result_image_base64}"
         }
+
+        response = convert_numpy_types(response)
 
         return JSONResponse(content=response)
 
