@@ -1,7 +1,7 @@
-import base64, os, re
+import base64, os
 
-html_path = '/workspace/makeuppal-demo-v2.9.html'
-output_path = '/workspace/makeuppal-demo-v2.9-standalone.html'
+html_path = '/workspace/makeuppal-demo-v3.1.0.html'
+output_path = '/workspace/makeuppal-demo-v3.1.0-standalone.html'
 assets_dir = '/workspace/ui-design/assets'
 
 with open(html_path, 'r', encoding='utf-8') as f:
@@ -9,7 +9,8 @@ with open(html_path, 'r', encoding='utf-8') as f:
 
 img_files = ['hero-banner.jpg', 'feature-scan.jpg', 'feature-ai.jpg',
              'feed-card-1.jpg', 'feed-card-2.jpg', 'product-1.jpg',
-             'product-2.jpg', 'product-3.jpg', 'product-4.jpg']
+             'product-2.jpg', 'product-3.jpg', 'product-4.jpg',
+             'mirror-camera.jpg']
 
 for img_file in img_files:
     img_path = os.path.join(assets_dir, img_file)
