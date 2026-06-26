@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#FFFBEB">
+  <title>生命导航 · Life Navigator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1F2937;
+      overflow-x: hidden;
+    }
+    .font-serif-cn { font-family: 'Noto Serif SC', serif; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    }
+    .glass-card-strong {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    }
+    
+    .page { display: none; animation: fadeInUp 0.5s ease; }
+    .page.active { display: block; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .gradient-text-amber {
+      background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gradient-text-green {
+      background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(245, 158, 11, 0.5); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-secondary {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1.5px solid rgba(16, 185, 129, 0.3);
+      color: #059669;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover { background: rgba(16, 185, 129, 0.15); }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: #4B5563;
+      transition: all 0.3s ease;
+    }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.8); }
+    
+    .glow-amber { box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.1); }
+    .float-animation { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    
+    .pulse-ring { animation: pulseRing 2s ease-out infinite; }
+    @keyframes pulseRing {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom);
+      background: rgba(255, 251, 235, 0.9);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(245, 158, 11, 0.15);
+    }
+    .nav-item { transition: all 0.3s ease; color: #6B7280; }
+    .nav-item.active { color: #D97706; }
+    .nav-item.active .nav-icon { transform: translateY(-2px); }
+    
+    .card-flip { perspective: 1000px; }
+    .card-flip-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+      border-radius: 1rem;
+    }
+    .card-back { transform: rotateY(180deg); }
+    
+    .value-tag-high { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #92400E; }
+    .value-tag-mid { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #065F46; }
+    
+    .timeline-line { background: linear-gradient(to bottom, #F59E0B, #10B981, #6366F1); }
+    
+    .letter-paper {
+      background: linear-gradient(to bottom, #fefce8, #fffbeb);
+      background-image: linear-gradient(#fef3c7 1px, transparent 1px);
+      background-size: 100% 32px;
+      background-position: 0 32px;
+    }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.03); }
+    ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 3px; }
+    
+    .progress-step { transition: all 0.3s ease; }
+    .progress-step.active { transform: scale(1.2); }
+    .progress-step.completed { background: #10b981 !important; }
+    
+    .seed-dimension-card { transition: all 0.3s ease; cursor: pointer; }
+    .seed-dimension-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px -8px rgba(245, 158, 11, 0.2); }
+    .seed-dimension-card.active { border-color: rgba(245, 158, 11, 0.6); background: rgba(251, 191, 36, 0.2); }
+    
+    .option-card { transition: all 0.3s ease; cursor: pointer; }
+    .option-card:hover { border-color: rgba(245, 158, 11, 0.4); background: rgba(251, 191, 36, 0.08); }
+    .option-card.selected { border-color: #F59E0B; background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+    
+    .rating-btn { transition: all 0.2s ease; cursor: pointer; }
+    .rating-btn:hover { transform: scale(1.1); }
+    .rating-btn.selected { background: linear-gradient(135deg, #F59E0B, #D97706); border-color: transparent; color: white; }
+    
+    .draggable-item { cursor: grab; transition: all 0.2s ease; }
+    .draggable-item:active { cursor: grabbing; }
+    .draggable-item.dragging { opacity: 0.5; transform: scale(1.05); }
+    .drop-zone.drag-over { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.5); }
+    
+    .modal-backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+    
+    .chart-container { width: 100%; height: 320px; }
+    
+    @media (max-width: 640px) {
+      body { font-size: 14px; -webkit-tap-highlight-color: transparent; }
+      .pb-safe { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+      .pt-safe-top { padding-top: calc(1rem + env(safe-area-inset-top)); }
+      button { min-height: 44px; -webkit-tap-highlight-color: transparent; }
+      input, textarea { font-size: 16px !important; min-height: 44px; }
+      .chart-container { height: 280px; }
+    }
+    
+    @media (hover: none) and (pointer: coarse) {
+      button:active { transform: scale(0.97); opacity: 0.9; }
+      .draggable-item { touch-action: none; }
+    }
+    
+    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    
+    .dna-card {
+      position: relative; overflow: hidden;
+    }
+    .dna-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #F59E0B, #10B981, #6366F1);
+    }
+  </style>
+</head>
+<body>
+  <div class="stars-bg" id="starsBg"></div>
+  
+  <div class="relative z-10 min-h-screen pb-safe">
+    
+    <!-- ========== 首页 ========== -->
+    <div id="page-home" class="page active">
+      <div class="min-h-screen flex flex-col px-4 pt-12 pb-24">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <div class="mb-6 relative inline-block">
+            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center glow-amber float-animation">
+              <span class="text-3xl md:text-4xl">🧭</span>
+            </div>
+            <div class="absolute inset-0 w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-amber-400/30 pulse-ring"></div>
+          </div>
+          <p class="text-gray-500 text-sm mb-2">欢迎回来</p>
+          <h1 class="text-3xl md:text-4xl font-bold font-serif-cn text-gray-800 mb-2">你好，探索者</h1>
+          <p class="text-gray-500 text-sm md:text-base italic text-gray-500">人生不是盲目的奔跑，而是有方向的绽放</p>
+        </div>
+
+        <!-- 进度卡片 -->
+        <div class="max-w-2xl mx-auto w-full mb-6">
+          <div class="glass-card-strong rounded-2xl p-5 mb-5">
+            <div class="flex justify-between items-center mb-3">
+              <h3 class="font-serif-cn font-bold text-gray-800">我的探索之旅</h3>
+              <span id="homeProgressText" class="text-sm font-semibold text-amber-600">0/7 阶段</span>
+            </div>
+            <div class="bg-gray-100 rounded-full h-2.5 overflow-hidden mb-3">
+              <div id="homeProgressBar" class="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-600" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500">
+              <span id="homeCurrentPhase" class="font-medium text-amber-600">未开始</span>
+              <span>预计用时约20-30分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 每日智慧卡片 -->
+        <div class="max-w-2xl mx-auto w-full mb-6">
+          <div class="glass-card rounded-2xl p-5 cursor-pointer hover:shadow-lg transition-all" onclick="goToPage('wisdom')" style="background: linear-gradient(135deg, #FEF3C7, #FFFBEB);">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xl flex-shrink-0">
+                ✨
+              </div>
+              <div class="flex-1">
+                <p class="text-xs text-amber-700 mb-1 font-medium">每日智慧</p>
+                <p class="text-gray-700 text-sm font-serif-cn" id="dailyWisdomQuote">"认识你自己" — 苏格拉底</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 功能模块网格 -->
+        <div class="max-w-2xl mx-auto w-full">
+          <h3 class="font-serif-cn font-bold text-gray-800 mb-4 text-lg">探索模块</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('seed')">
+              <div class="text-3xl mb-2">🌱</div>
+              <div class="font-semibold text-gray-800 text-sm">种子发现</div>
+              <div class="text-xs text-gray-500">热情天赋价值</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('values')">
+              <div class="text-3xl mb-2">💎</div>
+              <div class="font-semibold text-gray-800 text-sm">价值观</div>
+              <div class="text-xs text-gray-500">发现核心价值</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('journey')">
+              <div class="text-3xl mb-2">🌈</div>
+              <div class="font-semibold text-gray-800 text-sm">生命旅程</div>
+              <div class="text-xs text-gray-500">人生回顾</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('roles')">
+              <div class="text-3xl mb-2">🧩</div>
+              <div class="font-semibold text-gray-800 text-sm">角色探索</div>
+              <div class="text-xs text-gray-500">求真尚美向善</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('vision')">
+              <div class="text-3xl mb-2">🎬</div>
+              <div class="font-semibold text-gray-800 text-sm">愿景冥想</div>
+              <div class="text-xs text-gray-500">理想终局</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('balance')">
+              <div class="text-3xl mb-2">⚖️</div>
+              <div class="font-semibold text-gray-800 text-sm">生命平衡</div>
+              <div class="text-xs text-gray-500">七维评估</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('dna')">
+              <div class="text-3xl mb-2">🧬</div>
+              <div class="font-semibold text-gray-800 text-sm">人生DNA</div>
+              <div class="text-xs text-gray-500">使命愿景价值</div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="goToPage('report')">
+              <div class="text-3xl mb-2">📊</div>
+              <div class="font-semibold text-gray-800 text-sm">我的报告</div>
+              <div class="text-xs text-gray-500">查看生成</div>
+            </div>
+          </div>
+
+          <button onclick="startFullJourney()" class="w-full btn-primary text-white font-semibold py-4 rounded-2xl w-full flex items-center justify-center gap-2">
+            <span>🚀</span> 开启完整探索之旅
+          </button>
+          <p class="text-center text-xs text-gray-500 mt-3">约需 20-30 分钟 · 建议在安静环境中进行</p>
+        </div>
+
+        <!-- 产品理念 -->
+        <div class="max-w-2xl mx-auto w-full mt-10 text-center">
+          <div class="glass-card rounded-2xl p-6">
+            <h3 class="font-serif-cn font-bold text-gray-800 text-lg mb-3">💫 关于生命导航</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              基于积极心理学、德鲁克管理学、东西方哲学等多元智慧，帮助每个人找到那颗属于你的人生种子，浇灌它、培育它，让生命从内而外地绽放。
+            </p>
+            <p class="text-gray-400 text-xs mt-3">科学的自我探索工具 · 发现真正的自己</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 每日智慧页 ========== -->
+    <div id="page-wisdom" class="page pt-20 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="fixed top-0 left-0 right-0 z-40 px-4 pt-safe-top pt-3 pb-3" style="background: rgba(255, 251, 235, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(245, 158, 11, 0.1);">
+          <div class="max-w-2xl mx-auto flex items-center gap-3">
+            <button onclick="goHome()" class="btn-ghost px-3 py-2 rounded-xl text-sm">← 返回</button>
+            <div class="flex-1 text-center">
+              <div class="text-sm font-medium text-gray-700">每日智慧</div>
+            </div>
+            <div class="w-16"></div>
+          </div>
+        </div>
+
+        <div class="text-center mb-8 mt-12">
+          <div class="text-5xl mb-4">✨</div>
+          <h2 class="text-2xl font-bold font-serif-cn text-gray-800 mb-2">今日智慧</h2>
+          <p class="text-gray-500 text-sm" id="wisdomDate">2026年6月27日</p>
+        </div>
+
+        <div class="glass-card-strong rounded-3xl p-8 mb-6 text-center" style="background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);">
+          <div class="text-6xl mb-6">📜</div>
+          <p id="wisdomQuote" class="text-xl md:text-2xl font-serif-cn text-gray-800 leading-relaxed mb-6">
+            "认识你自己"
+          </p>
+          <p id="wisdomAuthor" class="text-gray-600 text-sm">— 苏格拉底</p>
+          <p id="wisdomCategory" class="mt-4 inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">古希腊哲学</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-5 mb-6">
+          <h4 class="font-semibold text-gray-800 mb-3 text-sm">💭 我的感悟</h4>
+          <textarea placeholder="写下你对这句话的理解和感悟..." class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm h-28 resize-none focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <button class="btn-ghost flex-1 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+            ❤️ 收藏
+          </button>
+          <button class="btn-ghost flex-1 py-3 rounded-xl text-sm flex items-center justify-center gap-2" onclick="refreshWisdom()">
+            🔄 换一张
+          </button>
+          <button class="btn-ghost flex-1 py-3 rounded-xl text-sm flex items-center justify-center gap-2">
+            📤 分享
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 顶部进度条 ========== -->
+    <div id="topProgressBar" class="fixed top-0 left-0 right-0 z-40 hidden">
+      <div class="glass border-b border-white/10 pt-safe-top">
+        <div class="max-w-4xl mx-auto px-4 py-3">
+          <div class="flex items-center justify-between mb-2">
+            <button onclick="goHome()" class="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+              <span>返回</span>
+            </button>
+            <div class="text-sm text-white/80" id="progressTitle">探索之旅</div>
+            <div class="text-sm text-white/60" id="progressPercent">0%</div>
+          </div>
+          <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div id="progressFill" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 种子发现四维评估 ========== -->
+    <div id="page-seed" class="page pt-20 pb-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🌱</span>
+            <span>种子发现 · 四维评估</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">发现你的生命种子</h2>
+          <p class="text-gray-400 mt-2">从热情、天赋、社会需求、价值实现四个维度，找到你的人生方向</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div class="seed-dimension-card glass rounded-2xl p-4 text-center active" data-dim="passion" onclick="switchSeedDimension('passion')">
+            <div class="text-3xl mb-2">🔥</div>
+            <div class="text-sm font-medium">热情</div>
+            <div class="text-xs text-gray-400 mt-1" id="dim-passion-status">未开始</div>
+          </div>
+          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="talent" onclick="switchSeedDimension('talent')">
+            <div class="text-3xl mb-2">⭐</div>
+            <div class="text-sm font-medium">天赋</div>
+            <div class="text-xs text-gray-400 mt-1" id="dim-talent-status">未开始</div>
+          </div>
+          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="need" onclick="switchSeedDimension('need')">
+            <div class="text-3xl mb-2">🌍</div>
+            <div class="text-sm font-medium">社会需求</div>
+            <div class="text-xs text-gray-400 mt-1" id="dim-need-status">未开始</div>
+          </div>
+          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="value" onclick="switchSeedDimension('value')">
+            <div class="text-3xl mb-2">💎</div>
+            <div class="text-sm font-medium">价值实现</div>
+            <div class="text-xs text-gray-400 mt-1" id="dim-value-status">未开始</div>
+          </div>
+        </div>
+        
+        <div id="seedQuestionArea" class="glass rounded-3xl p-6 mb-6">
+          <div class="text-center mb-6">
+            <div class="text-sm text-gray-400 mb-2">第 <span id="seedCurrentQ">1</span> / <span id="seedTotalQ">6</span> 题</div>
+            <h3 class="text-xl font-serif-cn" id="seedQuestionText">加载中...</h3>
+          </div>
+          
+          <div id="seedOptions" class="space-y-3">
+          </div>
+          
+          <div class="flex justify-between mt-8">
+            <button onclick="prevSeedQuestion()" id="prevSeedBtn" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm disabled:opacity-50" disabled>
+              ← 上一题
+            </button>
+            <button onclick="nextSeedQuestion()" id="nextSeedBtn" class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm disabled:opacity-50" disabled>
+              下一题 →
+            </button>
+          </div>
+        </div>
+        
+        <div id="seedResultArea" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <h3 class="text-xl font-serif-cn text-center mb-4 gradient-text">四维雷达图</h3>
+            <div id="seedRadarChart" class="chart-container"></div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6 mb-6 text-center">
+            <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-4xl mb-4 glow-purple">
+              🌻
+            </div>
+            <h3 class="text-xl font-serif-cn mb-2">你的种子类型：<span class="gradient-text" id="seedType">综合型种子</span></h3>
+            <p class="text-gray-400 text-sm mb-4" id="seedTypeDesc"></p>
+            
+            <div class="grid grid-cols-2 gap-3 text-left mb-4">
+              <div class="glass-light rounded-xl p-4">
+                <div class="text-purple-300 text-sm font-medium mb-2">💡 核心优势</div>
+                <div class="text-gray-300 text-sm" id="seedStrength"></div>
+              </div>
+              <div class="glass-light rounded-xl p-4">
+                <div class="text-amber-300 text-sm font-medium mb-2">🌱 成长建议</div>
+                <div class="text-gray-300 text-sm" id="seedGrowth"></div>
+              </div>
+            </div>
+            
+            <div class="glass-light rounded-xl p-4 text-left">
+              <div class="text-emerald-300 text-sm font-medium mb-2">📖 名言勉励</div>
+              <div class="text-gray-300 text-sm font-serif-cn italic" id="seedBible">
+                「我晓得我所信的是谁，也深信他能保全我所交付他的，直到那日。」 — 提摩太后书 1:12
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="saveSeedResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              保存并继续 →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 价值观探索 ========== -->
+    <div id="page-values" class="page pt-20 pb-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>💎</span>
+            <span>价值观探索</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">生命价值观卡牌</h2>
+          <p class="text-gray-400 mt-2">选择你生命中最重要的价值观</p>
+        </div>
+        
+        <div id="valuesStep1">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-4">
+              请选择你认为最重要的 <span class="text-purple-300 font-medium">8 个</span> 价值观
+            </p>
+            <p class="text-center text-xs text-gray-500 mb-6">
+              已选 <span id="selectedValuesCount" class="text-purple-300">0</span> / 8
+            </p>
+            <div class="grid grid-cols-3 md:grid-cols-4 gap-2" id="valueCards">
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="goToValueSort()" id="valueNextBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+              下一步：排序 →
+            </button>
+          </div>
+        </div>
+        
+        <div id="valuesStep2" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">
+              请按重要性从高到低排序（拖拽调整顺序）
+            </p>
+            <div class="space-y-2" id="valueSortList">
+            </div>
+          </div>
+          
+          <div id="valueAnalysis" class="glass-light rounded-2xl p-5 mb-6 hidden">
+            <h4 class="font-serif-cn text-lg mb-3 gradient-text text-center">💎 你的核心价值观</h4>
+            <p class="text-sm text-gray-300 text-center mb-4">价值观是人生的指南针，指引你做出每一个重要决定</p>
+            <div class="text-sm text-gray-300 text-center" id="valueInsight"></div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="saveValuesResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              保存并继续 →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 生命旅程 ========== -->
+    <div id="page-journey" class="page pt-20 pb-8">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🌈</span>
+            <span>生命旅程地图</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">你的人生时间轴</h2>
+          <p class="text-gray-400 mt-2">回顾过往，那些塑造了今天的你的瞬间</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 md:p-8 mb-6">
+          <div class="flex justify-between items-center mb-6 overflow-x-auto pb-2 gap-2">
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm bg-amber-400/30 text-white whitespace-nowrap" data-period="childhood" onclick="switchPeriod('childhood')">
+              童年印记
+            </button>
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="youth" onclick="switchPeriod('youth')">
+              青春探索
+            </button>
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="adult" onclick="switchPeriod('adult')">
+              成年起步
+            </button>
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="mature" onclick="switchPeriod('mature')">
+              成熟沉淀
+            </button>
+          </div>
+          
+          <div class="relative">
+            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 timeline-line transform md:-translate-x-1/2"></div>
+            <div id="timelineEvents" class="space-y-6">
+            </div>
+            
+            <div class="flex justify-center mt-8">
+              <button onclick="showAddEventModal()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                添加里程碑事件
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div id="lifeThemeArea" class="hidden mb-6">
+          <div class="glass-light rounded-2xl p-6 text-center">
+            <div class="text-4xl mb-4">💡</div>
+            <h3 class="text-xl font-bold text-white mb-2">我发现了你的人生主题</h3>
+            <p class="text-purple-300 text-lg font-serif-cn mb-4" id="lifeThemeText"></p>
+            <p class="text-gray-400 text-sm mb-4" id="lifeThemeDesc"></p>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button onclick="saveJourneyResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            保存并继续 →
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 添加事件弹窗 -->
+    <div id="addEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+      <div class="glass-light rounded-2xl p-6 max-w-md w-full">
+        <h3 class="text-xl font-bold text-white mb-4">添加里程碑事件</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">事件名称</label>
+            <input type="text" id="eventName" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：第一次离家上大学"/>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">事件类型</label>
+            <div class="grid grid-cols-5 gap-2" id="eventTypeOptions">
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="achievement" onclick="selectEventType('achievement')">🌟</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="challenge" onclick="selectEventType('challenge')">💪</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="relationship" onclick="selectEventType('relationship')">💕</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="turning" onclick="selectEventType('turning')">🎯</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="awakening" onclick="selectEventType('awakening')">🌱</button>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">视角认知</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button class="p-3 rounded-xl bg-white/10 text-sm hover:bg-white/20 transition-all view-type-btn" data-view="field" onclick="selectEventView('field')">
+                🌱 成长视角
+              </button>
+              <button class="p-3 rounded-xl bg-white/10 text-sm hover:bg-white/20 transition-all view-type-btn" data-view="arena" onclick="selectEventView('arena')">
+                ⚔️ 挑战视角
+              </button>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">成长视角：困难是成长的机会；挑战视角：困难是对能力的考验</p>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">情绪强度（1-10）</label>
+            <input type="range" id="eventEmotion" min="1" max="10" value="5" class="w-full" oninput="updateEmotionDisplay()"/>
+            <div class="text-center text-purple-300 text-sm" id="emotionDisplay">5</div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">这个经历教会了你什么？</label>
+            <textarea id="eventDesc" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="从长远来看，这个困难教会了你什么？"></textarea>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="closeAddEventModal()" class="flex-1 btn-ghost py-2.5 rounded-xl text-white">
+            取消
+          </button>
+          <button onclick="saveEvent()" class="flex-1 btn-primary py-2.5 rounded-xl text-white">
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 角色探索 ========== -->
+    <div id="page-roles" class="page pt-20 pb-8">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🧩</span>
+            <span>角色探索</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">人生角色排序</h2>
+          <p class="text-gray-400 mt-2">看看你在生活中扮演的各种角色</p>
+        </div>
+        
+        <div id="roleStep1">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">请选择你生活中最重要的 5-6 个角色</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="roleOptions">
+            </div>
+          </div>
+          <div class="text-center">
+            <button onclick="startRoleSort()" id="startRoleSortBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+              开始排序 →
+            </button>
+            <p class="text-sm text-gray-500 mt-2" id="roleSelectHint">请选择 5-6 个角色</p>
+          </div>
+        </div>
+        
+        <div id="roleStep2" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">按你目前投入的时间从多到少排序（拖拽调整）</p>
+            <div class="space-y-2" id="roleSortList">
+            </div>
+          </div>
+          <div class="text-center">
+            <button onclick="showIdealRoleSort()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm">
+              下一步：理想状态 →
+            </button>
+          </div>
+        </div>
+        
+        <div id="roleStep3" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">如果一切皆有可能，你理想中的角色投入顺序是？</p>
+            <div class="space-y-2" id="roleIdealSortList">
+            </div>
+          </div>
+          
+          <div id="roleComparison" class="hidden glass-light rounded-2xl p-6 mb-6">
+            <h3 class="text-lg font-bold text-white text-center mb-4">现实 vs 理想 · 角色投入对比</h3>
+            <div id="roleRadarChart" class="chart-container"></div>
+            <p class="text-sm text-gray-400 text-center mt-4" id="roleInsight"></p>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="saveRolesResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              保存并继续 →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 愿景冥想 ========== -->
+    <div id="page-vision" class="page pt-20 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🎬</span>
+            <span>愿景冥想 · 人生终局</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">从未来回望当下</h2>
+          <p class="text-gray-400 mt-2">闭上眼睛，让我们一起进入未来</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 md:p-8">
+          <div id="visionScenes">
+            <div class="vision-scene" data-scene="0">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🌅</div>
+                <h3 class="text-xl font-bold text-white mb-2">清晨醒来</h3>
+                <p class="text-gray-400 text-sm">想象现在是10年后一个普通的早晨</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">你是被什么唤醒的？</label>
+                  <input type="text" id="visionMorning" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阳光、鸟鸣、爱人的亲吻..."/>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">醒来后的第一个念头是？</label>
+                  <input type="text" id="visionThought" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：今天又是美好的一天..."/>
+                </div>
+              </div>
+            </div>
+            
+            <div class="vision-scene hidden" data-scene="1">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">☀️</div>
+                <h3 class="text-xl font-bold text-white mb-2">白天的工作</h3>
+                <p class="text-gray-400 text-sm">你的一天是如何度过的？</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">你在做什么工作？</label>
+                  <textarea id="visionWork" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="描述你理想中的工作内容、环境、同事..."></textarea>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">工作中最让你感到满足的是？</label>
+                  <input type="text" id="visionJoy" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：创造价值、帮助他人、自由..."/>
+                </div>
+              </div>
+            </div>
+            
+            <div class="vision-scene hidden" data-scene="2">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🌙</div>
+                <h3 class="text-xl font-bold text-white mb-2">夜幕降临</h3>
+                <p class="text-gray-400 text-sm">你如何结束这一天？</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">睡前你在做什么？</label>
+                  <input type="text" id="visionNight" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阅读、和家人聊天、冥想..."/>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">睡前你最感激的是什么？</label>
+                  <input type="text" id="visionGratitude" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：健康、爱、成长..."/>
+                </div>
+              </div>
+            </div>
+            
+            <div class="vision-scene hidden" data-scene="3">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">✨</div>
+                <h3 class="text-xl font-bold text-white mb-2">人生终局</h3>
+                <p class="text-gray-400 text-sm">从人生终点回望当下的选择</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">在你的葬礼上，你希望人们如何评价你？</label>
+                  <textarea id="visionEpitaph" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="你的墓志铭..."></textarea>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">核心情绪（选1-3个）</label>
+                  <div class="flex flex-wrap gap-2 justify-center" id="emotionOptions">
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="平静" onclick="toggleEmotion('平静', this)">😌 平静</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="喜悦" onclick="toggleEmotion('喜悦', this)">😊 喜悦</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="充实" onclick="toggleEmotion('充实', this)">💪 充实</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="自由" onclick="toggleEmotion('自由', this)">🕊️ 自由</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="被爱" onclick="toggleEmotion('被爱', this)">💗 被爱</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="成就感" onclick="toggleEmotion('成就感', this)">🏆 成就感</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="平安" onclick="toggleEmotion('平安', this)">🕊️ 平安</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex justify-between mt-8">
+            <button id="prevSceneBtn" onclick="prevVisionScene()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm hidden">
+              ← 上一个
+            </button>
+            <div class="flex-1"></div>
+            <button id="nextSceneBtn" onclick="nextVisionScene()" class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm">
+              下一个 →
+            </button>
+          </div>
+          
+          <div class="flex justify-center gap-2 mt-6">
+            <div class="w-2 h-2 rounded-full bg-purple-500" data-dot="0"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="1"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="2"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="3"></div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-6">
+          <button onclick="saveVisionResult()" id="saveVisionBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium hidden">
+            保存愿景 →
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 生命DNA ========== -->
+    <div id="page-dna" class="page pt-20 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🧬</span>
+            <span>人生DNA · Being-Having-Doing</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">构建你的生命DNA</h2>
+          <p class="text-gray-400 mt-2">从自我、拥有、行动三个维度定位人生方向</p>
+        </div>
+        
+        <div id="dnaStep1">
+          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl">👤</div>
+              <div>
+                <h3 class="text-lg font-serif-cn font-semibold">Being · 我是谁</h3>
+                <p class="text-xs text-gray-400">自我身份认知</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我是...</label>
+                <textarea id="beingIdentity" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：终身学习者、创造者、帮助者..."></textarea>
+              </div>
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的核心品格是...</label>
+                <textarea id="beingCharacter" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：真诚、勇敢、坚韧、善良..."></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xl">💎</div>
+              <div>
+                <h3 class="text-lg font-serif-cn font-semibold">Having · 我有甚么</h3>
+                <p class="text-xs text-gray-400">神所赐的资源与恩赐</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的天赋优势是...</label>
+                <textarea id="havingGifts" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：创造力、同理心、领导力、分析力..."></textarea>
+              </div>
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的经验资产是...</label>
+                <textarea id="havingExperience" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="过去的经历、学到的功课..."></textarea>
+              </div>
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的人脉资源是...</label>
+                <textarea id="havingRelationships" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="良师益友、合作伙伴、人生导师..."></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl">🚀</div>
+              <div>
+                <h3 class="text-lg font-serif-cn font-semibold">Doing · 我要做什么</h3>
+                <p class="text-xs text-gray-400">基于身份和资源的行动方向</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的使命陈述是...</label>
+                <textarea id="doingMission" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：通过____帮助____，使____得福。"></textarea>
+              </div>
+              <div>
+                <label class="text-sm text-gray-300 mb-1 block">我的第一步行动是...</label>
+                <textarea id="doingFirstStep" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="具体、可执行的第一步..."></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="generateDNA()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              生成我的生命DNA →
+            </button>
+          </div>
+        </div>
+        
+        <div id="dnaStep2" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+            <h3 class="text-xl font-serif-cn text-center mb-6 gradient-text">我的生命DNA</h3>
+            
+            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #6366f1;">
+              <div class="text-indigo-300 text-sm font-medium mb-1">🎯 使命（方向）</div>
+              <div class="text-white" id="dnaMission"></div>
+            </div>
+            
+            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #a855f7;">
+              <div class="text-purple-300 text-sm font-medium mb-1">🌟 愿景（梦想）</div>
+              <div class="text-white" id="dnaVision"></div>
+            </div>
+            
+            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #ec4899;">
+              <div class="text-pink-300 text-sm font-medium mb-1">💎 价值观（方法）</div>
+              <div class="flex flex-wrap gap-2" id="dnaValues">
+              </div>
+            </div>
+            
+            <div class="glass-light rounded-xl p-4">
+              <div class="text-amber-300 text-sm font-medium mb-1">📖 生命名言</div>
+              <div class="text-white font-serif-cn italic text-sm" id="dnaBible">
+                「我知道我所信的是谁，也深信他能保全我所交付他的，直到那日。」 — 提摩太后书 1:12
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="saveDNAResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              保存DNA →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 生命平衡 ========== -->
+    <div id="page-balance" class="page pt-20 pb-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>⚖️</span>
+            <span>生命平衡自评</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">七维生命平衡</h2>
+          <p class="text-gray-400 mt-2">请为以下七个维度打分（1-10分）</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 mb-6" id="balanceRatings">
+        </div>
+        
+        <div class="text-center">
+          <button onclick="saveBalanceResult()" id="saveBalanceBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+            生成平衡报告 →
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 综合报告 ========== -->
+    <div id="page-report" class="page pt-20 pb-8">
+      <div class="max-w-3xl mx-auto px-4" id="reportContent">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>📊</span>
+            <span>生命导航报告</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn gradient-text">你的生命导航报告</h2>
+          <p class="text-gray-400 mt-2 text-sm" id="reportDate"></p>
+        </div>
+        
+        <div id="reportEmpty" class="glass rounded-3xl p-8 text-center">
+          <div class="text-5xl mb-4">📝</div>
+          <h3 class="text-xl font-serif-cn mb-2">还没有生成报告</h3>
+          <p class="text-gray-400 text-sm mb-6">完成各模块探索后，将生成你的专属生命导航报告</p>
+          <button onclick="startFullJourney()" class="btn-primary px-6 py-3 rounded-xl text-white text-sm">
+            开始探索 →
+          </button>
+        </div>
+        
+        <div id="reportContentInner" class="hidden space-y-6">
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🌱 种子画像</h3>
+            <div id="reportSeedArea">
+              <p class="text-gray-400 text-sm">未完成种子发现评估</p>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">💎 价值观光谱</h3>
+            <div id="reportValuesArea">
+              <p class="text-gray-400 text-sm">未完成价值观探索</p>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">⚖️ 七维生命平衡</h3>
+            <div id="reportBalanceArea">
+              <p class="text-gray-400 text-sm">未完成生命平衡评估</p>
+              <div id="reportBalanceChart" class="chart-container hidden"></div>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🧩 角色探索</h3>
+            <div id="reportRolesArea">
+              <p class="text-gray-400 text-sm">未完成角色探索</p>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🧬 生命DNA</h3>
+            <div id="reportDnaArea">
+              <p class="text-gray-400 text-sm">未生成生命DNA</p>
+            </div>
+          </div>
+          
+          <div class="glass rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🌈 生命旅程主题</h3>
+            <div id="reportJourneyArea">
+              <p class="text-gray-400 text-sm">未记录生命旅程</p>
+            </div>
+          </div>
+          
+          <div class="glass-light rounded-2xl p-6 text-center">
+            <div class="text-purple-300 text-sm mb-2">💫 生命勉励</div>
+            <p class="text-white font-serif-cn text-lg italic" id="reportEncouragement">
+              「认识你自己」
+            </p>
+            <p class="text-gray-400 text-sm mt-2">— 苏格拉底</p>
+          </div>
+        </div>
+        
+        <div id="reportActions" class="hidden mt-8 flex gap-3 justify-center flex-wrap">
+          <button onclick="exportPDF()" class="btn-primary px-6 py-3 rounded-xl text-white text-sm flex items-center gap-2">
+            <span>📄</span> 导出PDF
+          </button>
+          <button onclick="goHome()" class="btn-ghost px-6 py-3 rounded-xl text-white text-sm">
+            返回首页
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ========== 底部导航 ========== -->
+    <div id="bottomNav" class="bottom-nav glass border-t border-white/10 hidden">
+      <div class="max-w-md mx-auto flex justify-around py-2 px-4">
+        <button class="nav-item flex flex-col items-center gap-1 px-3 py-1 active" onclick="goHome()">
+          <span class="nav-icon text-xl">🏠</span>
+          <span class="text-xs">首页</span>
+        </button>
+        <button class="nav-item flex flex-col items-center gap-1 px-3 py-1" onclick="goToPage('seed')">
+          <span class="nav-icon text-xl">🌱</span>
+          <span class="text-xs">种子</span>
+        </button>
+        <button class="nav-item flex flex-col items-center gap-1 px-3 py-1" onclick="goToPage('dna')">
+          <span class="nav-icon text-xl">🧬</span>
+          <span class="text-xs">DNA</span>
+        </button>
+        <button class="nav-item flex flex-col items-center gap-1 px-3 py-1" onclick="goToPage('report')">
+          <span class="nav-icon text-xl">📊</span>
+          <span class="text-xs">报告</span>
+        </button>
+      </div>
+    </div>
+    
+  </div>
+  
+  <script>
+    // ========== 数据存储 ==========
+    const STORAGE_KEY = 'life_navigator_secular_data';
+    
+    function getData() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : {
+          seed: null,
+          values: null,
+          journey: [],
+          roles: null,
+          vision: null,
+          dna: null,
+          balance: null,
+          createdAt: null,
+          updatedAt: null
+        };
+      } catch (e) {
+        return { seed: null, values: null, journey: [], roles: null, vision: null, dna: null, balance: null };
+      }
+    }
+    
+    function saveData(partial) {
+      const data = getData();
+      Object.assign(data, partial);
+      data.updatedAt = new Date().toISOString();
+      if (!data.createdAt) data.createdAt = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    
+    // ========== 星空背景 ==========
+    (function initStars() {
+      const container = document.getElementById('starsBg');
+      for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(star);
+      }
+    })();
+    
+    // ========== 页面导航 ==========
+    let currentPage = 'home';
+    
+    function goToPage(pageName) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const page = document.getElementById('page-' + pageName);
+      if (page) {
+        page.classList.add('active');
+        currentPage = pageName;
+      }
+      
+      const showTopProgress = ['seed', 'values', 'journey', 'roles', 'vision', 'dna', 'balance'].includes(pageName);
+      document.getElementById('topProgressBar').classList.toggle('hidden', !showTopProgress);
+      
+      const showBottomNav = pageName !== 'home';
+      document.getElementById('bottomNav').classList.toggle('hidden', pageName === 'home');
+      
+      document.querySelectorAll('.nav-item').forEach((item, i) => {
+        item.classList.toggle('active', 
+          (pageName === 'home' && i === 0) ||
+          (pageName === 'seed' && i === 1) ||
+          (pageName === 'dna' && i === 2) ||
+          (pageName === 'report' && i === 3)
+        );
+      });
+      
+      window.scrollTo(0, 0);
+      
+      if (pageName === 'report') renderReport();
+      if (pageName === 'balance') initBalanceRatings();
+      if (pageName === 'values') initValueCards();
+      if (pageName === 'roles') initRoleOptions();
+      if (pageName === 'journey') renderTimeline();
+      if (pageName === 'seed') initSeedAssessment();
+      if (pageName === 'dna') initDnaPage();
+    }
+    
+    function goHome() {
+      goToPage('home');
+    }
+    
+    function updateProgress(title, percent) {
+      document.getElementById('progressTitle').textContent = title;
+      document.getElementById('progressPercent').textContent = percent + '%';
+      document.getElementById('progressFill').style.width = percent + '%';
+    }
+    
+    // ========== 完整探索流程 ==========
+    const fullJourneySteps = ['seed', 'values', 'journey', 'roles', 'vision', 'dna', 'balance', 'report'];
+    
+    function startFullJourney() {
+      goToPage('seed');
+      initSeedAssessment();
+      updateProgress('种子发现', 10);
+    }
+    
+    function startModule(module) {
+      const pageMap = {
+        seed: 'seed',
+        values: 'values',
+        journey: 'journey',
+        roles: 'roles',
+        vision: 'vision',
+        dna: 'dna',
+        balance: 'balance'
+      };
+      if (pageMap[module]) {
+        goToPage(pageMap[module]);
+        if (module === 'seed') initSeedAssessment();
+        if (module === 'values') initValueCards();
+        if (module === 'journey') renderTimeline();
+        if (module === 'roles') initRoleOptions();
+        if (module === 'balance') initBalanceRatings();
+      }
+    }
+    
+    // ========== 种子发现四维评估 ==========
+    const seedQuestions = {
+      passion: [
+        { q: '什么事情会让你忘记时间的流逝？', options: [
+          { text: '创作或设计类工作', score: 10 },
+          { text: '与人交流连接', score: 8 },
+          { text: '研究和解决问题', score: 9 },
+          { text: '户外或运动活动', score: 7 }
+        ]},
+        { q: '周末你最愿意投入时间的是？', options: [
+          { text: '学习新技能', score: 9 },
+          { text: '和朋友聚会', score: 8 },
+          { text: '阅读和思考', score: 9 },
+          { text: '动手制作东西', score: 7 }
+        ]},
+        { q: '哪种活动让你感到最充实？', options: [
+          { text: '创造出新东西', score: 10 },
+          { text: '帮助他人解决问题', score: 9 },
+          { text: '获得新的认知和洞见', score: 8 },
+          { text: '体验新的事物', score: 7 }
+        ]},
+        { q: '工作中你最享受的部分是？', options: [
+          { text: '创意发挥的过程', score: 9 },
+          { text: '团队合作', score: 7 },
+          { text: '攻克难题', score: 10 },
+          { text: '学习成长', score: 8 }
+        ]},
+        { q: '如果不用考虑钱，你最想做什么？', options: [
+          { text: '艺术创作', score: 9 },
+          { text: '公益事业', score: 10 },
+          { text: '研究学问', score: 8 },
+          { text: '创业', score: 7 }
+        ]},
+        { q: '别人说你做什么的时候眼睛会发光？', options: [
+          { text: '讲自己感兴趣的事', score: 9 },
+          { text: '帮助别人的时候', score: 8 },
+          { text: '讨论问题的时候', score: 9 },
+          { text: '做手工/动手的时候', score: 7 }
+        ]}
+      ],
+      talent: [
+        { q: '你天生最擅长什么？', options: [
+          { text: '表达和沟通', score: 9 },
+          { text: '分析和思考', score: 9 },
+          { text: '动手和实践', score: 8 },
+          { text: '组织和协调', score: 8 }
+        ]},
+        { q: '别人最常夸你什么？', options: [
+          { text: '口才好/会表达', score: 9 },
+          { text: '聪明/有想法', score: 9 },
+          { text: '手巧/能干', score: 8 },
+          { text: '靠谱/值得信赖', score: 8 }
+        ]},
+        { q: '学什么你学得最快？', options: [
+          { text: '语言类', score: 9 },
+          { text: '逻辑类', score: 9 },
+          { text: '技能类', score: 8 },
+          { text: '管理类', score: 7 }
+        ]},
+        { q: '你解决问题更靠什么？', options: [
+          { text: '直觉和灵感', score: 8 },
+          { text: '分析和推理', score: 9 },
+          { text: '经验和实践', score: 9 },
+          { text: '团队和资源', score: 7 }
+        ]},
+        { q: '哪种角色你做得最得心应手？', options: [
+          { text: '说服者', score: 8 },
+          { text: '思考者', score: 9 },
+          { text: '实干者', score: 9 },
+          { text: '协调者', score: 7 }
+        ]},
+        { q: '朋友遇到困难最先想到找你帮忙？', options: [
+          { text: '谈心倾诉', score: 8 },
+          { text: '出谋划策', score: 9 },
+          { text: '动手解决', score: 9 },
+          { text: '组织协调', score: 7 }
+        ]}
+      ],
+      need: [
+        { q: '你最想解决什么社会问题？', options: [
+          { text: '教育问题', score: 10 },
+          { text: '环境问题', score: 8 },
+          { text: '贫富差距', score: 9 },
+          { text: '心理健康', score: 9 }
+        ]},
+        { q: '什么事情让你最有感触？', options: [
+          { text: '孩子的成长', score: 9 },
+          { text: '自然的美好', score: 7 },
+          { text: '人的苦难', score: 10 },
+          { text: '文化的传承', score: 8 }
+        ]},
+        { q: '你最想为世界带来什么改变？', options: [
+          { text: '更多温暖与连接', score: 9 },
+          { text: '更多知识与智慧', score: 8 },
+          { text: '更多美丽与创造', score: 7 },
+          { text: '更多公平与正义', score: 10 }
+        ]},
+        { q: '哪种需求你觉得最被忽视？', options: [
+          { text: '人的情感需求', score: 10 },
+          { text: '精神需求', score: 9 },
+          { text: '实际生活需求', score: 7 },
+          { text: '社会公平需求', score: 8 }
+        ]},
+        { q: '你最想帮助什么样的人？', options: [
+          { text: '迷茫的年轻人', score: 10 },
+          { text: '弱势群体', score: 9 },
+          { text: '追求成长的人', score: 8 },
+          { text: '创业者', score: 7 }
+        ]},
+        { q: '什么领域你觉得有使命般的热情？', options: [
+          { text: '教育', score: 10 },
+          { text: '环保', score: 8 },
+          { text: '公益', score: 9 },
+          { text: '文化', score: 7 }
+        ]}
+      ],
+      value: [
+        { q: '你认为什么是真正的成功？', options: [
+          { text: '做自己热爱的事', score: 10 },
+          { text: '内心的平静与满足', score: 9 },
+          { text: '社会的认可和尊重', score: 7 },
+          { text: '财务自由', score: 6 }
+        ]},
+        { q: '什么样的回报对你最重要？', options: [
+          { text: '成就感', score: 9 },
+          { text: '成长感', score: 10 },
+          { text: '意义感', score: 9 },
+          { text: '安全感', score: 6 }
+        ]},
+        { q: '你理想的工作状态是？', options: [
+          { text: '创造型工作', score: 9 },
+          { text: '稳定型工作', score: 6 },
+          { text: '挑战型工作', score: 8 },
+          { text: '服务型工作', score: 10 }
+        ]},
+        { q: '你更看重工作的哪个方面？', options: [
+          { text: '热爱度', score: 9 },
+          { text: '成长性', score: 10 },
+          { text: '稳定性', score: 6 },
+          { text: '意义感', score: 9 }
+        ]},
+        { q: '什么让你觉得人生有价值？', options: [
+          { text: '创造了什么', score: 9 },
+          { text: '帮助了多少人', score: 10 },
+          { text: '获得了多少成长', score: 8 },
+          { text: '体验了多少', score: 7 }
+        ]},
+        { q: '你更愿意为什么付费？', options: [
+          { text: '成长学习', score: 9 },
+          { text: '体验经历', score: 7 },
+          { text: '帮助他人', score: 10 },
+          { text: '稳定安全', score: 6 }
+        ]}
+      ]
+    };
+    
+    let currentSeedDim = 'passion';
+    let seedAnswers = { passion: [], talent: [], need: [], value: [] };
+    let seedCurrentQIndex = 0;
+    let seedScores = { passion: 0, talent: 0, need: 0, value: 0 };
+    
+    function initSeedAssessment() {
+      const data = getData();
+      if (data.seed) {
+        seedScores = data.seed.scores;
+        updateSeedDimensionStatus();
+        showSeedResult();
+      } else {
+        seedAnswers = { passion: [], talent: [], need: [], value: [] };
+        seedScores = { passion: 0, talent: 0, need: 0, value: 0 };
+        currentSeedDim = 'passion';
+        seedCurrentQIndex = 0;
+        switchSeedDimension('passion');
+      }
+    }
+    
+    function switchSeedDimension(dim) {
+      currentSeedDim = dim;
+      seedCurrentQIndex = 0;
+      
+      document.querySelectorAll('.seed-dimension-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.dim === dim);
+      });
+      
+      document.getElementById('seedResultArea').classList.add('hidden');
+      document.getElementById('seedQuestionArea').classList.remove('hidden');
+      
+      renderSeedQuestion();
+      updateProgress('种子发现 · ' + getDimName(dim), getSeedProgress());
+    }
+    
+    function getDimName(dim) {
+      const names = { passion: '热情', talent: '天赋', need: '社会需求', value: '价值实现' };
+      return names[dim] || dim;
+    }
+    
+    function renderSeedQuestion() {
+      const questions = seedQuestions[currentSeedDim];
+      const q = questions[seedCurrentQIndex];
+      
+      document.getElementById('seedCurrentQ').textContent = seedCurrentQIndex + 1;
+      document.getElementById('seedTotalQ').textContent = questions.length;
+      document.getElementById('seedQuestionText').textContent = q.q;
+      
+      const optionsHtml = q.options.map((opt, i) => `
+        <div class="option-card glass-light rounded-xl p-4 ${seedAnswers[currentSeedDim][seedCurrentQIndex] === i ? 'selected' : ''}" 
+             onclick="selectSeedOption(${i})">
+          ${opt.text}
+        </div>
+      `).join('');
+      
+      document.getElementById('seedOptions').innerHTML = optionsHtml;
+      
+      document.getElementById('prevSeedBtn').disabled = seedCurrentQIndex === 0 && allPrevDimsDone();
+      document.getElementById('nextSeedBtn').disabled = seedAnswers[currentSeedDim][seedCurrentQIndex] === undefined;
+    }
+    
+    function selectSeedOption(index) {
+      seedAnswers[currentSeedDim][seedCurrentQIndex] = index;
+      renderSeedQuestion();
+    }
+    
+    function nextSeedQuestion() {
+      const questions = seedQuestions[currentSeedDim];
+      if (seedCurrentQIndex < questions.length - 1) {
+        seedCurrentQIndex++;
+        renderSeedQuestion();
+      } else {
+        calculateDimScore(currentSeedDim);
+        updateSeedDimensionStatus();
+        
+        const dims = ['passion', 'talent', 'need', 'value'];
+        const currentIndex = dims.indexOf(currentSeedDim);
+        if (currentIndex < dims.length - 1) {
+          switchSeedDimension(dims[currentIndex + 1]);
+        } else {
+          showSeedResult();
+        }
+      }
+      updateProgress('种子发现 · ' + getDimName(currentSeedDim), getSeedProgress());
+    }
+    
+    function prevSeedQuestion() {
+      if (seedCurrentQIndex > 0) {
+        seedCurrentQIndex--;
+        renderSeedQuestion();
+      } else {
+        const dims = ['passion', 'talent', 'need', 'value'];
+        const currentIndex = dims.indexOf(currentSeedDim);
+        if (currentIndex > 0) {
+          const prevDim = dims[currentIndex - 1];
+          switchSeedDimension(prevDim);
+          seedCurrentQIndex = seedQuestions[prevDim].length - 1;
+          renderSeedQuestion();
+        }
+      }
+      updateProgress('种子发现 · ' + getDimName(currentSeedDim), getSeedProgress());
+    }
+    
+    function allPrevDimsDone() {
+      const dims = ['passion', 'talent', 'need', 'value'];
+      const currentIndex = dims.indexOf(currentSeedDim);
+      return currentIndex === 0;
+    }
+    
+    function calculateDimScore(dim) {
+      const answers = seedAnswers[dim];
+      const questions = seedQuestions[dim];
+      let total = 0;
+      let maxScore = 0;
+      
+      answers.forEach((ansIdx, qIdx) => {
+        if (ansIdx !== undefined && questions[qIdx]) {
+          total += questions[qIdx].options[ansIdx].score;
+          maxScore += 10;
+        }
+      });
+      
+      seedScores[dim] = maxScore > 0 ? Math.round((total / maxScore) * 100) : 0;
+    }
+    
+    function updateSeedDimensionStatus() {
+      const dims = ['passion', 'talent', 'need', 'value'];
+      dims.forEach(dim => {
+        const statusEl = document.getElementById('dim-' + dim + '-status');
+        if (seedScores[dim] > 0) {
+          statusEl.textContent = seedScores[dim] + '分';
+          statusEl.style.color = '#86efac';
+        }
+      });
+    }
+    
+    function getSeedProgress() {
+      const dims = ['passion', 'talent', 'need', 'value'];
+      let totalQ = 0;
+      let answeredQ = 0;
+      dims.forEach(dim => {
+        totalQ += seedQuestions[dim].length;
+        seedAnswers[dim].forEach(a => { if (a !== undefined) answeredQ++; });
+      });
+      return Math.round((answeredQ / totalQ) * 100);
+    }
+    
+    function showSeedResult() {
+      document.getElementById('seedQuestionArea').classList.add('hidden');
+      document.getElementById('seedResultArea').classList.remove('hidden');
+      
+      const chartDom = document.getElementById('seedRadarChart');
+      const chart = echarts.init(chartDom);
+      
+      const option = {
+        radar: {
+          indicator: [
+            { name: '热情', max: 100 },
+            { name: '天赋', max: 100 },
+            { name: '社会需求', max: 100 },
+            { name: '价值实现', max: 100 }
+          ],
+          axisName: { color: '#c4b5fd', fontSize: 12 },
+          splitLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.2)' } },
+          splitArea: { areaStyle: { color: ['rgba(139, 92, 246, 0.05)', 'rgba(139, 92, 246, 0.1)'] } },
+          axisLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.3)' } }
+        },
+        series: [{
+          type: 'radar',
+          data: [{
+            value: [seedScores.passion, seedScores.talent, seedScores.need, seedScores.value],
+            name: '种子四维',
+            areaStyle: { color: 'rgba(168, 85, 247, 0.3)' },
+            lineStyle: { color: '#a855f7', width: 2 },
+            itemStyle: { color: '#ec4899' }
+          }]
+        }]
+      };
+      
+      chart.setOption(option);
+      
+      determineSeedType();
+      updateProgress('种子发现', 100);
+    }
+    
+    function determineSeedType() {
+      const scores = seedScores;
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const highest = sorted[0][0];
+      const second = sorted[1][0];
+      const diff = sorted[0][1] - sorted[sorted.length - 1][1];
+      
+      let type, desc, strength, growth, quote, emoji;
+      
+      if (diff < 15) {
+        type = '综合型种子';
+        emoji = '🌻';
+        desc = '你的四个维度发展比较均衡，是一颗全面发展的种子。';
+        strength = '均衡的发展让你有很强的适应能力和综合素质，能够在多个领域发挥影响力。';
+        growth = '可以在均衡的基础上，找到一个主攻方向深入发展，形成核心竞争力。';
+        quote = '「人生就像骑单车，想保持平衡就得往前走。」 — 爱因斯坦';
+      } else if (highest === 'need') {
+        type = '社会型种子';
+        emoji = '🌍';
+        desc = '你有强烈的社会责任感，是一颗以社会需求为驱动力的种子。';
+        strength = '关注社会问题、渴望创造价值是你最大的动力来源，让你能够在困难中坚持前行。';
+        growth = '建议在天赋和价值实现维度继续加强，让社会责任感有更扎实的落地载体。';
+        quote = '「不要问国家能为你做什么，要问你能为国家做什么。」 — 肯尼迪';
+      } else if (highest === 'passion') {
+        type = '热情型种子';
+        emoji = '🔥';
+        desc = '你充满热情和感染力，是一颗以热爱为驱动力的种子。';
+        strength = '你的热情能够感染他人，带动团队，是很好的发起者和推动者。';
+        growth = '建议在天赋维度深耕，让热爱有专业能力作为支撑，走得更稳更远。';
+        quote = '「我没有失败，我只是发现了10000种不能发明电灯的方法。」 — 爱迪生';
+      } else if (highest === 'talent') {
+        type = '天赋型种子';
+        emoji = '⭐';
+        desc = '你有突出的天赋能力，是一颗以天赋为优势的种子。';
+        strength = '出色的天赋让你在特定领域有竞争优势，能够快速成长和突破。';
+        growth = '建议在社会需求维度深入探索，让天赋找到更大的舞台和意义。';
+        quote = '「天才是1%的灵感加99%的汗水，但那1%的灵感最重要。」 — 爱迪生';
+      } else {
+        type = '价值型种子';
+        emoji = '💎';
+        desc = '你有很强的价值实现导向，是一颗善于将梦想落地的种子。';
+        strength = '你具备将愿景转化为现实的能力，有很强的执行力和务实精神。';
+        growth = '建议在社会需求和热情维度更多探索，让事业有更深厚的内在驱动力。';
+        quote = '「人生最大的快乐不在于占有什么，而在于追求什么的过程。」 — 班廷';
+      }
+      
+      document.getElementById('seedType').textContent = type;
+      document.getElementById('seedTypeDesc').textContent = desc;
+      document.getElementById('seedStrength').textContent = strength;
+      document.getElementById('seedGrowth').textContent = growth;
+      document.getElementById('seedBible').textContent = quote;
+    }
+    
+    function saveSeedResult() {
+      saveData({
+        seed: {
+          scores: seedScores,
+          answers: seedAnswers,
+          type: document.getElementById('seedType').textContent,
+          completedAt: new Date().toISOString()
+        }
+      });
+      goToPage('values');
+      initValueCards();
+      updateProgress('价值观探索', 0);
+    }
+    
+    // ========== 价值观探索 ==========
+    const valueList = [
+      { name: '爱', emoji: '❤️', category: 'high' },
+      { name: '自由', emoji: '🕊️', category: 'high' },
+      { name: '智慧', emoji: '💡', category: 'high' },
+      { name: '勇气', emoji: '🦁', category: 'high' },
+      { name: '诚信', emoji: '💎', category: 'high' },
+      { name: '成长', emoji: '📈', category: 'high' },
+      { name: '家庭', emoji: '👨‍👩‍👧‍👦', category: 'high' },
+      { name: '健康', emoji: '💪', category: 'high' },
+      { name: '友谊', emoji: '🤝', category: 'high' },
+      { name: '创造', emoji: '🎨', category: 'high' },
+      { name: '贡献', emoji: '🌟', category: 'high' },
+      { name: '平静', emoji: '🌿', category: 'high' },
+      { name: '快乐', emoji: '😊', category: 'mid' },
+      { name: '成功', emoji: '🏆', category: 'mid' },
+      { name: '财富', emoji: '💰', category: 'mid' },
+      { name: '地位', emoji: '👑', category: 'mid' },
+      { name: '权力', emoji: '⚡', category: 'mid' },
+      { name: '安全', emoji: '🛡️', category: 'mid' },
+      { name: '名誉', emoji: '🎖️', category: 'mid' },
+      { name: '享乐', emoji: '🎮', category: 'mid' },
+      { name: '安逸', emoji: '🏖️', category: 'mid' },
+      { name: '名声', emoji: '📢', category: 'mid' },
+      { name: '影响力', emoji: '🌍', category: 'mid' },
+      { name: '创新', emoji: '💫', category: 'mid' },
+      { name: '冒险', emoji: '🗺️', category: 'mid' },
+      { name: '独立', emoji: '🦅', category: 'mid' },
+      { name: '和谐', emoji: '☯️', category: 'mid' },
+      { name: '美丽', emoji: '🌸', category: 'mid' },
+      { name: '好奇', emoji: '🔍', category: 'mid' },
+      { name: '自律', emoji: '🎯', category: 'mid' }
+    ];
+    
+    let selectedValues = [];
+    let sortedValues = [];
+    let currentDraggedValue = null;
+    
+    function initValueCards() {
+      const data = getData();
+      if (data.values) {
+        sortedValues = data.values.sorted;
+        showValuesStep2();
+        return;
+      }
+      
+      selectedValues = [];
+      document.getElementById('valuesStep1').classList.remove('hidden');
+      document.getElementById('valuesStep2').classList.add('hidden');
+      
+      const container = document.getElementById('valueCards');
+      container.innerHTML = valueList.map((v, i) => `
+        <div class="option-card glass rounded-xl p-3 text-center text-sm ${selectedValues.includes(i) ? 'selected' : ''}" 
+             onclick="toggleValue(${i})">
+          <div class="text-xl mb-1">${v.emoji}</div>
+          <div>${v.name}</div>
+        </div>
+      `).join('');
+      
+      updateSelectedCount();
+    }
+    
+    function toggleValue(index) {
+      const idx = selectedValues.indexOf(index);
+      if (idx > -1) {
+        selectedValues.splice(idx, 1);
+      } else if (selectedValues.length < 8) {
+        selectedValues.push(index);
+      }
+      initValueCards();
+    }
+    
+    function updateSelectedCount() {
+      document.getElementById('selectedValuesCount').textContent = selectedValues.length;
+      document.getElementById('valueNextBtn').disabled = selectedValues.length !== 8;
+    }
+    
+    function goToValueSort() {
+      if (selectedValues.length !== 8) return;
+      
+      sortedValues = [...selectedValues];
+      showValuesStep2();
+    }
+    
+    function showValuesStep2() {
+      document.getElementById('valuesStep1').classList.add('hidden');
+      document.getElementById('valuesStep2').classList.remove('hidden');
+      
+      const container = document.getElementById('valueSortList');
+      container.innerHTML = sortedValues.map((valIdx, i) => {
+        const v = valueList[valIdx];
+        return `
+          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3" 
+               draggable="true" 
+               ondragstart="handleDragStart(event, ${i})"
+               ondragover="handleDragOverSort(event)"
+               ondrop="handleDropSort(event, ${i})"
+               ondragend="handleDragEnd(event)">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+              ${i + 1}
+            </div>
+            <div class="text-xl">${v.emoji}</div>
+            <div class="flex-1">${v.name}</div>
+            <span class="text-xs px-2 py-1 rounded-full ${v.category === 'high' ? 'value-tag-heaven' : 'value-tag-world'}">
+              ${v.category === 'high' ? '高层' : '中层'}
+            </span>
+          </div>
+        `;
+      }).join('');
+      
+      analyzeValues();
+      updateProgress('价值观探索', 80);
+    }
+    
+    function handleDragStart(e, index) {
+      currentDraggedValue = index;
+      e.target.classList.add('dragging');
+    }
+    
+    function handleDragOverSort(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+    
+    function handleDropSort(e, targetIndex) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      if (currentDraggedValue === null || currentDraggedValue === targetIndex) return;
+      
+      const item = sortedValues[currentDraggedValue];
+      sortedValues.splice(currentDraggedValue, 1);
+      sortedValues.splice(targetIndex, 0, item);
+      
+      showValuesStep2();
+    }
+    
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      currentDraggedValue = null;
+      document.querySelectorAll('.drop-zone, .draggable-item').forEach(el => {
+        el.classList.remove('drag-over');
+      });
+    }
+    
+    function analyzeValues() {
+      let high = 0, mid = 0;
+      sortedValues.forEach(valIdx => {
+        const v = valueList[valIdx];
+        if (v.category === 'high') high++;
+        else mid++;
+      });
+      
+      document.getElementById('valueAnalysis').classList.remove('hidden');
+      
+      let insight = '';
+      const top3 = sortedValues.slice(0, 3).map(i => valueList[i].name);
+      const topVal = valueList[sortedValues[0]];
+      
+      if (high >= 5) {
+        insight = `你的价值观以高层价值为核心，前三位是「${top3.join('、')}」。这反映了你对内在成长和意义感的重视，这样的价值观会带你走得更远。`;
+      } else if (mid >= 5) {
+        insight = `你的价值观中中层价值占比较高（${mid}个）。这很正常，现实生活中我们确实需要这些。重要的是找到它们与高层价值的连接点，让每一步都走得更有方向感。`;
+      } else {
+        insight = `你的价值观是高层与中层的平衡组合，前三位是「${top3.join('、')}」。这是一种很健康的状态——既仰望星空，又脚踏实地。`;
+      }
+      
+      insight += `\n\n你最看重的是「${topVal.name}」，它会成为你人生重要决策的指南针。`;
+      document.getElementById('valueInsight').textContent = insight;
+    }
+    
+    function saveValuesResult() {
+      saveData({
+        values: {
+          selected: selectedValues,
+          sorted: sortedValues,
+          completedAt: new Date().toISOString()
+        }
+      });
+      goToPage('journey');
+      renderTimeline();
+      updateProgress('生命旅程', 0);
+    }
+    
+    // ========== 生命旅程 ==========
+    let timelineEvents = [];
+    let currentPeriod = 'childhood';
+    let currentEventType = null;
+    let currentEventView = null;
+    
+    function renderTimeline() {
+      const data = getData();
+      if (data.journey && data.journey.length > 0) {
+        timelineEvents = data.journey;
+      }
+      
+      const periodEvents = timelineEvents.filter(e => e.period === currentPeriod);
+      const container = document.getElementById('timelineEvents');
+      
+      if (periodEvents.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-gray-500 ml-12 md:ml-0">
+            <div class="text-3xl mb-2">📝</div>
+            <p class="text-sm">还没有记录这个阶段的事件</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = periodEvents.map((event, i) => {
+        const isLeft = i % 2 === 0;
+        const typeEmojis = { achievement: '🌟', challenge: '💪', relationship: '💕', turning: '🎯', awakening: '🌱' };
+        const viewText = event.view === 'field' ? '训练场视角' : event.view === 'arena' ? '决斗场视角' : '';
+        
+        return `
+          <div class="relative pl-12 md:pl-0 ${isLeft ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'}">
+            <div class="absolute left-2 md:left-1/2 top-4 w-4 h-4 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 transform md:-translate-x-1/2 border-2 border-white/20 z-10">
+            </div>
+            <div class="glass-light rounded-xl p-4 ${isLeft ? 'md:mr-8' : 'md:ml-8'}">
+              <div class="flex items-center gap-2 mb-2 ${isLeft ? 'md:justify-end' : ''}">
+                <span class="text-xl">${typeEmojis[event.type] || '📌'}</span>
+                <span class="font-medium">${event.name}</span>
+              </div>
+              ${event.view ? `<div class="text-xs text-purple-300 mb-2">${viewText}</div>` : ''}
+              ${event.desc ? `<p class="text-sm text-gray-400">${event.desc}</p>` : ''}
+              <div class="text-xs text-gray-500 mt-2">情绪强度: ${'❤️'.repeat(event.emotion)}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      if (timelineEvents.length >= 3) {
+        analyzeLifeTheme();
+      }
+    }
+    
+    function switchPeriod(period) {
+      currentPeriod = period;
+      document.querySelectorAll('.timeline-period').forEach(btn => {
+        const isActive = btn.dataset.period === period;
+        btn.classList.toggle('bg-amber-400/30', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('text-gray-400', !isActive);
+      });
+      renderTimeline();
+    }
+    
+    function showAddEventModal() {
+      document.getElementById('addEventModal').classList.remove('hidden');
+      document.getElementById('addEventModal').classList.add('flex');
+      document.getElementById('eventName').value = '';
+      document.getElementById('eventDesc').value = '';
+      document.getElementById('eventEmotion').value = 5;
+      document.getElementById('emotionDisplay').textContent = '5';
+      currentEventType = null;
+      currentEventView = null;
+      
+      document.querySelectorAll('.event-type-btn').forEach(btn => btn.classList.remove('bg-purple-500/40', 'border-2', 'border-purple-400'));
+      document.querySelectorAll('.view-type-btn').forEach(btn => btn.classList.remove('bg-purple-500/40', 'border-2', 'border-purple-400'));
+    }
+    
+    function closeAddEventModal() {
+      document.getElementById('addEventModal').classList.add('hidden');
+      document.getElementById('addEventModal').classList.remove('flex');
+    }
+    
+    function selectEventType(type) {
+      currentEventType = type;
+      document.querySelectorAll('.event-type-btn').forEach(btn => {
+        btn.classList.toggle('bg-purple-500/40', btn.dataset.type === type);
+        btn.classList.toggle('border-2', btn.dataset.type === type);
+        btn.classList.toggle('border-purple-400', btn.dataset.type === type);
+      });
+    }
+    
+    function selectEventView(view) {
+      currentEventView = view;
+      document.querySelectorAll('.view-type-btn').forEach(btn => {
+        btn.classList.toggle('bg-purple-500/40', btn.dataset.view === view);
+        btn.classList.toggle('border-2', btn.dataset.view === view);
+        btn.classList.toggle('border-purple-400', btn.dataset.view === view);
+      });
+    }
+    
+    function updateEmotionDisplay() {
+      document.getElementById('emotionDisplay').textContent = document.getElementById('eventEmotion').value;
+    }
+    
+    function saveEvent() {
+      const name = document.getElementById('eventName').value.trim();
+      if (!name || !currentEventType) {
+        alert('请填写事件名称并选择事件类型');
+        return;
+      }
+      
+      timelineEvents.push({
+        name,
+        type: currentEventType,
+        view: currentEventView,
+        emotion: parseInt(document.getElementById('eventEmotion').value),
+        desc: document.getElementById('eventDesc').value.trim(),
+        period: currentPeriod,
+        createdAt: new Date().toISOString()
+      });
+      
+      closeAddEventModal();
+      renderTimeline();
+    }
+    
+    function analyzeLifeTheme() {
+      const typeCount = {};
+      timelineEvents.forEach(e => {
+        typeCount[e.type] = (typeCount[e.type] || 0) + 1;
+      });
+      
+      const sorted = Object.entries(typeCount).sort((a, b) => b[1] - a[1]);
+      const themes = {
+        achievement: { title: '成就导向型人生', desc: '你的人生充满了一个又一个的里程碑。愿你的每一个成就都能为世界留下有价值的痕迹。' },
+        challenge: { title: '成长型人生', desc: '你经历了许多挑战，但每一次都是化了妆的祝福。那些打不倒你的，终将使你更强大。' },
+        relationship: { title: '关系导向型人生', desc: '人与人的关系是你生命中最重要的主题。爱人如己，这就是律法的总纲。' },
+        turning: { title: '转折型人生', desc: '你的人生有许多关键的转折点。每一个决定，都在塑造今天的你。' },
+        awakening: { title: '觉醒型人生', desc: '你不断地在经历精生命的觉醒和成长。这是神在你生命中做工的美好印记。' }
+      };
+      
+      if (sorted.length > 0) {
+        const theme = themes[sorted[0][0]];
+        document.getElementById('lifeThemeText').textContent = theme.title;
+        document.getElementById('lifeThemeDesc').textContent = theme.desc;
+        document.getElementById('lifeThemeArea').classList.remove('hidden');
+      }
+    }
+    
+    function saveJourneyResult() {
+      saveData({ journey: timelineEvents });
+      goToPage('roles');
+      initRoleOptions();
+      updateProgress('角色探索', 0);
+    }
+    
+    // ========== 角色探索 ==========
+    const roleList = [
+      { name: '终身学习者', emoji: '📚', category: 'growth' },
+      { name: '伴侣/爱人', emoji: '💑', category: 'family' },
+      { name: '父母', emoji: '👨‍👩‍👧', category: 'family' },
+      { name: '子女', emoji: '👨‍👩', category: 'family' },
+      { name: '职场人', emoji: '💼', category: 'career' },
+      { name: '朋友', emoji: '🤝', category: 'social' },
+      { name: '创造者', emoji: '🎨', category: 'truth' },
+      { name: '思考者', emoji: '🧠', category: 'truth' },
+      { name: '艺术家', emoji: '🎭', category: 'beauty' },
+      { name: '美学生活家', emoji: '🌿', category: 'beauty' },
+      { name: '志愿者/公益人', emoji: '💝', category: 'goodness' },
+      { name: '导师/教练', emoji: '👨‍🏫', category: 'goodness' },
+      { name: '健康达人', emoji: '💪', category: 'health' },
+      { name: '旅行探索者', emoji: '✈️', category: 'growth' },
+      { name: '理财规划者', emoji: '💰', category: 'career' }
+    ];
+    
+    let selectedRoles = [];
+    let actualRoles = [];
+    let idealRoles = [];
+    let draggedRoleIndex = null;
+    
+    function initRoleOptions() {
+      const data = getData();
+      if (data.roles) {
+        actualRoles = data.roles.actual;
+        idealRoles = data.roles.ideal;
+        showRoleStep3();
+        return;
+      }
+      
+      selectedRoles = [];
+      document.getElementById('roleStep1').classList.remove('hidden');
+      document.getElementById('roleStep2').classList.add('hidden');
+      document.getElementById('roleStep3').classList.add('hidden');
+      
+      const container = document.getElementById('roleOptions');
+      container.innerHTML = roleList.map((role, i) => `
+        <div class="option-card glass rounded-xl p-4 text-center ${selectedRoles.includes(i) ? 'selected' : ''}"
+             onclick="toggleRole(${i})">
+          <div class="text-3xl mb-2">${role.emoji}</div>
+          <div class="text-sm">${role.name}</div>
+        </div>
+      `).join('');
+      
+      updateRoleSelectHint();
+    }
+    
+    function toggleRole(index) {
+      const idx = selectedRoles.indexOf(index);
+      if (idx > -1) {
+        selectedRoles.splice(idx, 1);
+      } else if (selectedRoles.length < 6) {
+        selectedRoles.push(index);
+      }
+      initRoleOptions();
+    }
+    
+    function updateRoleSelectHint() {
+      const count = selectedRoles.length;
+      const hint = document.getElementById('roleSelectHint');
+      const btn = document.getElementById('startRoleSortBtn');
+      
+      if (count < 5) {
+        hint.textContent = `请再选择 ${5 - count} 个角色`;
+        btn.disabled = true;
+      } else if (count <= 6) {
+        hint.textContent = `已选择 ${count} 个角色`;
+        btn.disabled = false;
+      }
+    }
+    
+    function startRoleSort() {
+      if (selectedRoles.length < 5) return;
+      actualRoles = [...selectedRoles];
+      showRoleStep2();
+    }
+    
+    function showRoleStep2() {
+      document.getElementById('roleStep1').classList.add('hidden');
+      document.getElementById('roleStep2').classList.remove('hidden');
+      
+      const container = document.getElementById('roleSortList');
+      container.innerHTML = actualRoles.map((roleIdx, i) => {
+        const role = roleList[roleIdx];
+        return `
+          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3"
+               draggable="true"
+               ondragstart="handleRoleDragStart(event, ${i}, 'actual')"
+               ondragover="handleRoleDragOver(event)"
+               ondrop="handleRoleDrop(event, ${i}, 'actual')"
+               ondragend="handleRoleDragEnd(event)">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+              ${i + 1}
+            </div>
+            <div class="text-2xl">${role.emoji}</div>
+            <div class="flex-1">${role.name}</div>
+            <div class="text-gray-400 text-xs">≡</div>
+          </div>
+        `;
+      }).join('');
+      
+      updateProgress('角色探索', 40);
+    }
+    
+    function showIdealRoleSort() {
+      idealRoles = [...actualRoles];
+      document.getElementById('roleStep2').classList.add('hidden');
+      document.getElementById('roleStep3').classList.remove('hidden');
+      
+      renderIdealRoleSort();
+      updateProgress('角色探索', 70);
+    }
+    
+    function renderIdealRoleSort() {
+      const container = document.getElementById('roleIdealSortList');
+      container.innerHTML = idealRoles.map((roleIdx, i) => {
+        const role = roleList[roleIdx];
+        return `
+          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3"
+               draggable="true"
+               ondragstart="handleRoleDragStart(event, ${i}, 'ideal')"
+               ondragover="handleRoleDragOver(event)"
+               ondrop="handleRoleDrop(event, ${i}, 'ideal')"
+               ondragend="handleRoleDragEnd(event)">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+              ${i + 1}
+            </div>
+            <div class="text-2xl">${role.emoji}</div>
+            <div class="flex-1">${role.name}</div>
+            <div class="text-gray-400 text-xs">≡</div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    let roleDragType = 'actual';
+    
+    function handleRoleDragStart(e, index, type) {
+      draggedRoleIndex = index;
+      roleDragType = type;
+      e.target.classList.add('dragging');
+    }
+    
+    function handleRoleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+    
+    function handleRoleDrop(e, targetIndex, type) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      if (draggedRoleIndex === null || draggedRoleIndex === targetIndex || roleDragType !== type) return;
+      
+      const arr = type === 'actual' ? actualRoles : idealRoles;
+      const item = arr[draggedRoleIndex];
+      arr.splice(draggedRoleIndex, 1);
+      arr.splice(targetIndex, 0, item);
+      
+      if (type === 'actual') showRoleStep2();
+      else renderIdealRoleSort();
+      
+      if (type === 'ideal') showRoleComparison();
+    }
+    
+    function handleRoleDragEnd(e) {
+      e.target.classList.remove('dragging');
+      draggedRoleIndex = null;
+      document.querySelectorAll('.draggable-item').forEach(el => el.classList.remove('drag-over'));
+    }
+    
+    function showRoleComparison() {
+      document.getElementById('roleComparison').classList.remove('hidden');
+      
+      const roleNames = idealRoles.map(idx => roleList[idx].name);
+      const actualRanks = actualRoles.map(idx => idealRoles.indexOf(idx) + 1);
+      const idealRanks = idealRoles.map((_, i) => i + 1);
+      
+      const chartDom = document.getElementById('roleRadarChart');
+      const chart = echarts.init(chartDom);
+      
+      const option = {
+        radar: {
+          indicator: roleNames.map(name => ({ name, max: idealRoles.length })),
+          inverse: true,
+          axisName: { color: '#c4b5fd', fontSize: 10 },
+          splitLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.2)' } },
+          splitArea: { areaStyle: { color: ['rgba(139, 92, 246, 0.05)', 'rgba(139, 92, 246, 0.1)'] } },
+          axisLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.3)' } }
+        },
+        legend: {
+          data: ['现实', '理想'],
+          textStyle: { color: '#cbd5e1', fontSize: 12 },
+          bottom: 0
+        },
+        series: [{
+          type: 'radar',
+          data: [
+            {
+              value: actualRanks.map(r => idealRoles.length - r + 1),
+              name: '现实',
+              areaStyle: { color: 'rgba(251, 191, 36, 0.2)' },
+              lineStyle: { color: '#fbbf24' },
+              itemStyle: { color: '#fbbf24' }
+            },
+            {
+              value: idealRanks.map(r => idealRoles.length - r + 1),
+              name: '理想',
+              areaStyle: { color: 'rgba(168, 85, 247, 0.3)' },
+              lineStyle: { color: '#a855f7' },
+              itemStyle: { color: '#ec4899' }
+            }
+          ]
+        }]
+      };
+      
+      chart.setOption(option);
+      
+      let diffCount = 0;
+      actualRoles.forEach((roleIdx, i) => {
+        if (idealRoles[i] !== roleIdx) diffCount++;
+      });
+      
+      let insight = '';
+      if (diffCount <= 1) {
+        insight = '你的现实与理想非常一致！这是非常难得的状态，说明你活在自己真正想要的生活里。继续保持！';
+      } else if (diffCount <= 3) {
+        insight = '你的现实与理想有一些差距，但整体方向是一致的。可以逐步调整时间分配，让生活更接近你想要的样子。';
+      } else {
+        insight = '你的现实与理想有较大差距。这很常见，不用焦虑。先从一个小的调整开始，慢慢让生活回到你想要的轨道。';
+      }
+      document.getElementById('roleInsight').textContent = insight;
+      
+      updateProgress('角色探索', 100);
+    }
+    
+    function saveRolesResult() {
+      saveData({
+        roles: {
+          selected: selectedRoles,
+          actual: actualRoles,
+          ideal: idealRoles,
+          completedAt: new Date().toISOString()
+        }
+      });
+      goToPage('vision');
+      updateProgress('愿景冥想', 0);
+    }
+    
+    // ========== 愿景冥想 ==========
+    let currentVisionScene = 0;
+    let selectedEmotions = [];
+    
+    function prevVisionScene() {
+      if (currentVisionScene > 0) {
+        currentVisionScene--;
+        updateVisionScene();
+      }
+    }
+    
+    function nextVisionScene() {
+      if (currentVisionScene < 3) {
+        currentVisionScene++;
+        updateVisionScene();
+      } else {
+        saveVisionResult();
+      }
+    }
+    
+    function updateVisionScene() {
+      document.querySelectorAll('.vision-scene').forEach((scene, i) => {
+        scene.classList.toggle('hidden', i !== currentVisionScene);
+      });
+      
+      document.querySelectorAll('[data-dot]').forEach((dot, i) => {
+        dot.classList.toggle('bg-purple-500', i <= currentVisionScene);
+        dot.classList.toggle('bg-white/20', i > currentVisionScene);
+      });
+      
+      document.getElementById('prevSceneBtn').classList.toggle('hidden', currentVisionScene === 0);
+      document.getElementById('nextSceneBtn').textContent = currentVisionScene === 3 ? '完成 →' : '下一个 →';
+      
+      updateProgress('愿景冥想', Math.round((currentVisionScene / 3) * 100));
+      
+      if (currentVisionScene === 3) {
+        document.getElementById('saveVisionBtn').classList.remove('hidden');
+      }
+    }
+    
+    function toggleEmotion(emotion, btn) {
+      const idx = selectedEmotions.indexOf(emotion);
+      if (idx > -1) {
+        selectedEmotions.splice(idx, 1);
+        btn.classList.remove('bg-purple-500/50', 'border-purple-400');
+      } else if (selectedEmotions.length < 3) {
+        selectedEmotions.push(emotion);
+        btn.classList.add('bg-purple-500/50');
+      }
+    }
+    
+    function saveVisionResult() {
+      const visionData = {
+        morning: document.getElementById('visionMorning')?.value || '',
+        thought: document.getElementById('visionThought')?.value || '',
+        work: document.getElementById('visionWork')?.value || '',
+        joy: document.getElementById('visionJoy')?.value || '',
+        night: document.getElementById('visionNight')?.value || '',
+        gratitude: document.getElementById('visionGratitude')?.value || '',
+        epitaph: document.getElementById('visionEpitaph')?.value || '',
+        emotions: selectedEmotions,
+        completedAt: new Date().toISOString()
+      };
+      
+      saveData({ vision: visionData });
+      goToPage('dna');
+      updateProgress('生命DNA', 0);
+    }
+    
+    // ========== 生命DNA ==========
+    function initDnaPage() {
+      const data = getData();
+      updateProgress('人生DNA', 0);
+      
+      if (data.dna) {
+        document.getElementById('dnaStep1').classList.add('hidden');
+        document.getElementById('dnaStep2').classList.remove('hidden');
+        
+        document.getElementById('dnaMission').textContent = data.dna.mission || '';
+        document.getElementById('dnaVision').textContent = data.dna.vision || '';
+        
+        if (data.values && data.values.sorted) {
+          const values = data.values.sorted.slice(0, 4).map(i => valueList[i]);
+          const valuesHtml = values.map(v => `
+            <span class="px-3 py-1 rounded-full text-xs bg-amber-400/30 border border-purple-400/30">
+              ${v.emoji} ${v.name}
+            </span>
+          `).join('');
+          document.getElementById('dnaValues').innerHTML = valuesHtml;
+        }
+        
+        updateProgress('人生DNA', 100);
+      } else {
+        document.getElementById('dnaStep1').classList.remove('hidden');
+        document.getElementById('dnaStep2').classList.add('hidden');
+      }
+    }
+    
+    function generateDNA() {
+      const beingIdentity = document.getElementById('beingIdentity').value.trim();
+      const havingGifts = document.getElementById('havingGifts').value.trim();
+      const doingMission = document.getElementById('doingMission').value.trim();
+      
+      let mission = doingMission || '活出生命的意义，成为他人的光';
+      let vision = '';
+      const data = getData();
+      
+      if (data.vision) {
+        vision = data.vision.work || '在热爱中创造价值，在世界上留下有意义的痕迹';
+      } else {
+        vision = '成为一个有影响力的人，帮助更多人成长';
+      }
+      
+      let values = [];
+      if (data.values && data.values.sorted) {
+        values = data.values.sorted.slice(0, 4).map(i => valueList[i]);
+      } else {
+        values = [
+          { name: '爱', emoji: '❤️' },
+          { name: '智慧', emoji: '💡' },
+          { name: '勇气', emoji: '🦁' },
+          { name: '成长', emoji: '📈' }
+        ];
+      }
+      
+      document.getElementById('dnaMission').textContent = mission;
+      document.getElementById('dnaVision').textContent = vision;
+      
+      const valuesHtml = values.map(v => `
+        <span class="px-3 py-1 rounded-full text-xs bg-amber-400/30 border border-purple-400/30">
+          ${v.emoji} ${v.name}
+        </span>
+      `).join('');
+      document.getElementById('dnaValues').innerHTML = valuesHtml;
+      
+      document.getElementById('dnaStep1').classList.add('hidden');
+      document.getElementById('dnaStep2').classList.remove('hidden');
+      
+      updateProgress('生命DNA', 100);
+    }
+    
+    function saveDNAResult() {
+      const dnaData = {
+        being: {
+          identity: document.getElementById('beingIdentity').value,
+          character: document.getElementById('beingCharacter').value
+        },
+        having: {
+          gifts: document.getElementById('havingGifts').value,
+          experience: document.getElementById('havingExperience').value,
+          relationships: document.getElementById('havingRelationships').value
+        },
+        doing: {
+          mission: document.getElementById('doingMission').value,
+          firstStep: document.getElementById('doingFirstStep').value
+        },
+        mission: document.getElementById('dnaMission').textContent,
+        vision: document.getElementById('dnaVision').textContent,
+        completedAt: new Date().toISOString()
+      };
+      
+      saveData({ dna: dnaData });
+      goToPage('balance');
+      initBalanceRatings();
+      updateProgress('生命平衡', 0);
+    }
+    
+    // ========== 生命平衡 ==========
+    const balanceDimensions = [
+      { key: 'career', name: '事业', emoji: '💼', desc: '工作满意度、职业发展方向' },
+      { key: 'finance', name: '财务', emoji: '💰', desc: '财务健康、经济独立程度' },
+      { key: 'health', name: '健康', emoji: '❤️', desc: '身体、情绪、心理健康' },
+      { key: 'family', name: '家庭', emoji: '👨‍👩‍👧‍👦', desc: '家庭关系、亲密关系' },
+      { key: 'social', name: '社交', emoji: '🤝', desc: '人际关系、社会连接' },
+      { key: 'growth', name: '成长', emoji: '📚', desc: '学习投入、认知提升' },
+      { key: 'innerPeace', name: '内心宁静', emoji: '🧘', desc: '内心平和、自我接纳' }
+    ];
+    
+    let balanceScores = {};
+    
+    function initBalanceRatings() {
+      const data = getData();
+      if (data.balance) {
+        balanceScores = data.balance.scores;
+      } else {
+        balanceScores = {};
+      }
+      
+      const container = document.getElementById('balanceRatings');
+      container.innerHTML = balanceDimensions.map(dim => `
+        <div class="mb-5 last:mb-0">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">${dim.emoji}</span>
+              <span class="text-sm font-medium ${dim.special ? 'text-purple-300' : 'text-white'}">${dim.name}</span>
+            </div>
+            <span class="text-sm text-gray-400">${dim.desc}</span>
+          </div>
+          <div class="flex gap-1 justify-center" data-dimension="${dim.key}">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+              <div class="rating-btn w-8 h-8 md:w-9 md:h-9 rounded-lg border border-white/20 flex items-center justify-center text-xs font-medium ${balanceScores[dim.key] === n ? 'selected' : ''}"
+                   onclick="setBalanceScore('${dim.key}', ${n})">
+                ${n}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+      
+      updateSaveBalanceBtn();
+    }
+    
+    function setBalanceScore(dimension, score) {
+      balanceScores[dimension] = score;
+      initBalanceRatings();
+      updateProgress('生命平衡', Math.round((Object.keys(balanceScores).length / 7) * 100));
+    }
+    
+    function updateSaveBalanceBtn() {
+      const allDone = balanceDimensions.every(dim => balanceScores[dim.key]);
+      document.getElementById('saveBalanceBtn').disabled = !allDone;
+    }
+    
+    function saveBalanceResult() {
+      if (balanceDimensions.some(dim => !balanceScores[dim.key])) {
+        alert('请完成所有七个维度的评分');
+        return;
+      }
+      
+      saveData({
+        balance: {
+          scores: balanceScores,
+          completedAt: new Date().toISOString()
+        }
+      });
+      
+      goToPage('report');
+      renderReport();
+    }
+    
+    // ========== 综合报告 ==========
+    function renderReport() {
+      const data = getData();
+      const hasAnyData = data.seed || data.values || data.balance || data.roles || data.dna || data.journey.length > 0;
+      
+      document.getElementById('reportEmpty').classList.toggle('hidden', hasAnyData);
+      document.getElementById('reportContentInner').classList.toggle('hidden', !hasAnyData);
+      document.getElementById('reportActions').classList.toggle('hidden', !hasAnyData);
+      
+      if (data.updatedAt) {
+        const date = new Date(data.updatedAt);
+        document.getElementById('reportDate').textContent = date.toLocaleDateString('zh-CN') + ' 生成';
+      }
+      
+      if (data.seed) {
+        document.getElementById('reportSeedArea').innerHTML = `
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-3xl glow-purple">
+              🌱
+            </div>
+            <div>
+              <div class="text-lg font-serif-cn font-semibold">${data.seed.type}</div>
+              <div class="text-sm text-gray-400">热情 ${data.seed.scores.passion}分 · 天赋 ${data.seed.scores.talent}分 · 社会需求 ${data.seed.scores.need}分 · 价值实现 ${data.seed.scores.value}分</div>
+            </div>
+          </div>
+          <div id="reportSeedChart" class="chart-container"></div>
+        `;
+        
+        setTimeout(() => {
+          const chartDom = document.getElementById('reportSeedChart');
+          if (chartDom) {
+            const chart = echarts.init(chartDom);
+            chart.setOption({
+              radar: {
+                indicator: [
+                  { name: '热情', max: 100 },
+                  { name: '天赋', max: 100 },
+                  { name: '社会需求', max: 100 },
+                  { name: '价值实现', max: 100 }
+                ],
+                axisName: { color: '#c4b5fd', fontSize: 11 },
+                splitLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.2)' } },
+                splitArea: { areaStyle: { color: ['rgba(139, 92, 246, 0.05)', 'rgba(139, 92, 246, 0.1)'] } },
+                axisLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.3)' } }
+              },
+              series: [{
+                type: 'radar',
+                data: [{
+                  value: [data.seed.scores.passion, data.seed.scores.talent, data.seed.scores.need, data.seed.scores.value],
+                  name: '种子四维',
+                  areaStyle: { color: 'rgba(168, 85, 247, 0.3)' },
+                  lineStyle: { color: '#a855f7', width: 2 },
+                  itemStyle: { color: '#ec4899' }
+                }]
+              }]
+            });
+          }
+        }, 100);
+      }
+      
+      if (data.values && data.values.sorted) {
+        const topValues = data.values.sorted.slice(0, 5).map(i => valueList[i]);
+        let highCount = 0, midCount = 0;
+        data.values.sorted.forEach(i => {
+          if (valueList[i].category === 'high') highCount++;
+          else midCount++;
+        });
+        document.getElementById('reportValuesArea').innerHTML = `
+          <div class="flex flex-wrap gap-2 mb-4">
+            ${topValues.map(v => `
+              <span class="px-3 py-1.5 rounded-full text-sm ${v.category === 'high' ? 'value-tag-heaven' : 'value-tag-world'}">
+                ${v.emoji} ${v.name}
+              </span>
+            `).join('')}
+          </div>
+          <div class="flex gap-4 text-sm">
+            <span class="text-purple-300">高层价值: ${highCount}个</span>
+            <span class="text-amber-300">中层价值: ${midCount}个</span>
+          </div>
+        `;
+      }
+      
+      if (data.balance) {
+        document.getElementById('reportBalanceArea').innerHTML = '';
+        document.getElementById('reportBalanceChart').classList.remove('hidden');
+        document.getElementById('reportBalanceArea').appendChild(document.getElementById('reportBalanceChart'));
+        
+        setTimeout(() => {
+          const chartDom = document.getElementById('reportBalanceChart');
+          if (chartDom) {
+            const chart = echarts.init(chartDom);
+            chart.setOption({
+              radar: {
+                indicator: balanceDimensions.map(d => ({ name: d.name, max: 10 })),
+                axisName: { color: '#c4b5fd', fontSize: 10 },
+                splitLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.2)' } },
+                splitArea: { areaStyle: { color: ['rgba(139, 92, 246, 0.05)', 'rgba(139, 92, 246, 0.1)'] } },
+                axisLine: { lineStyle: { color: 'rgba(139, 92, 246, 0.3)' } }
+              },
+              series: [{
+                type: 'radar',
+                data: [{
+                  value: balanceDimensions.map(d => data.balance.scores[d.key] || 0),
+                  name: '生命平衡',
+                  areaStyle: { color: 'rgba(168, 85, 247, 0.3)' },
+                  lineStyle: { color: '#a855f7', width: 2 },
+                  itemStyle: { color: '#ec4899' }
+                }]
+              }]
+            });
+          }
+        }, 100);
+      }
+      
+      if (data.roles && data.roles.actual) {
+        const actualNames = data.roles.actual.slice(0, 4).map(i => roleList[i].name);
+        const idealNames = data.roles.ideal.slice(0, 4).map(i => roleList[i].name);
+        document.getElementById('reportRolesArea').innerHTML = `
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <div class="text-gray-400 mb-2">现实排序前4</div>
+              <div class="space-y-1">
+                ${actualNames.map((n, i) => `<div class="text-amber-300">${i+1}. ${n}</div>`).join('')}
+              </div>
+            </div>
+            <div>
+              <div class="text-gray-400 mb-2">理想排序前4</div>
+              <div class="space-y-1">
+                ${idealNames.map((n, i) => `<div class="text-purple-300">${i+1}. ${n}</div>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      
+      if (data.dna) {
+        document.getElementById('reportDnaArea').innerHTML = `
+          <div class="space-y-3">
+            <div class="glass-light rounded-xl p-3" style="border-left: 3px solid #6366f1;">
+              <div class="text-indigo-300 text-xs font-medium mb-1">🎯 使命</div>
+              <div class="text-sm">${data.dna.mission || '正在探索中...'}</div>
+            </div>
+            <div class="glass-light rounded-xl p-3" style="border-left: 3px solid #a855f7;">
+              <div class="text-purple-300 text-xs font-medium mb-1">🌟 愿景</div>
+              <div class="text-sm">${data.dna.vision || '正在描绘中...'}</div>
+            </div>
+          </div>
+        `;
+      }
+      
+      if (data.journey && data.journey.length > 0) {
+        const typeCount = {};
+        data.journey.forEach(e => {
+          typeCount[e.type] = (typeCount[e.type] || 0) + 1;
+        });
+        const sorted = Object.entries(typeCount).sort((a, b) => b[1] - a[1]);
+        const themes = {
+          achievement: '成就导向',
+          challenge: '成长型',
+          relationship: '关系导向',
+          turning: '转折型',
+          awakening: '觉醒型'
+        };
+        const mainTheme = sorted[0] ? themes[sorted[0][0]] || '独特型' : '正在书写中';
+        
+        document.getElementById('reportJourneyArea').innerHTML = `
+          <div class="flex items-center gap-4">
+            <div class="text-4xl">🌈</div>
+            <div>
+              <div class="font-medium mb-1">人生主题：${mainTheme}</div>
+              <div class="text-sm text-gray-400">已记录 ${data.journey.length} 个里程碑事件</div>
+            </div>
+          </div>
+        `;
+      }
+    }
+    
+    // ========== PDF导出 ==========
+    async function exportPDF() {
+      const reportContent = document.getElementById('reportContent');
+      
+      const btn = event.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '生成中...';
+      btn.disabled = true;
+      
+      try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const canvas = await html2canvas(reportContent, {
+          backgroundColor: '#0f172a',
+          scale: 2,
+          useCORS: true
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        let heightLeft = imgHeight;
+        let position = 0;
+        
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= 297;
+        
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= 297;
+        }
+        
+        pdf.save('生命导航报告.pdf');
+      } catch (e) {
+        console.error('PDF导出失败:', e);
+        alert('PDF导出失败，请稍后重试');
+      }
+      
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }
+    
+    // ========== 初始化 ==========
+    window.addEventListener('resize', () => {
+      const charts = document.querySelectorAll('.chart-container');
+      charts.forEach(chartDom => {
+        const chart = echarts.getInstanceByDom(chartDom);
+        if (chart) chart.resize();
+      });
+    });
+  </script>
+</body>
+</html>
