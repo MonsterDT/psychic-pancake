@@ -25,7 +25,7 @@
 html, body { height: 100%; }
 body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-text); font-size: var(--font-size-base); line-height: 1.6; }
 .app-shell { max-width: var(--content-max-width); margin: 0 auto; min-height: 100vh; background: var(--color-bg); position: relative; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,0.08); }
-.page { display: none; padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom)); min-height: 100vh; overflow-y: auto; animation: pageIn var(--duration-normal) var(--ease); }
+.page { display: none; padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom) + 12px); min-height: 100vh; overflow-y: auto; animation: pageIn var(--duration-normal) var(--ease); }
 .page.active { display: block; }
 @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .app-header { position: sticky; top: 0; z-index: 50; background: rgba(255, 248, 240, 0.85); backdrop-filter: blur(18px); padding: 10px var(--spacing-4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(232, 221, 210, 0.5); }
@@ -270,12 +270,12 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .product-sales { font-size: var(--font-size-xs); color: var(--color-text-muted); }
 
 /* ========== Mirror Dual Mode ========== */
-.mirror-mode-toggle { display: flex; background: rgba(255,248,240,0.15); border-radius: var(--radius-full); padding: 4px; margin-bottom: var(--spacing-4); width: 180px; }
+.mirror-mode-toggle { position: absolute; top: calc(var(--safe-top, 0px) + 56px); left: 50%; transform: translateX(-50%); display: flex; background: rgba(255,248,240,0.15); border-radius: var(--radius-full); padding: 4px; width: 180px; z-index: 10; }
 .mirror-mode-btn { flex: 1; padding: 6px 0; text-align: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: rgba(255,248,240,0.6); cursor: pointer; border-radius: var(--radius-full); transition: all var(--duration-fast) var(--ease); }
 .mirror-mode-btn.active { background: var(--color-primary); color: #fff; }
 
-.mirror-hero { height: 58vh; min-height: 400px; background: linear-gradient(160deg, var(--color-hero-bg) 0%, #2A2622 100%); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-hero-text); overflow: hidden; }
-.mirror-hero.chat-mode { height: auto; min-height: auto; padding: var(--spacing-4); align-items: stretch; }
+.mirror-hero { height: 58vh; min-height: 400px; background: linear-gradient(160deg, var(--color-hero-bg) 0%, #2A2622 100%); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-hero-text); overflow: hidden; padding-top: 56px; }
+.mirror-hero.chat-mode { height: auto; min-height: auto; padding: var(--spacing-4); padding-top: 56px; align-items: stretch; }
 .mirror-face { width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle, rgba(196,149,106,0.25) 0%, rgba(196,149,106,0.08) 60%, transparent 100%); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-5); position: relative; }
 .mirror-face-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(196,149,106,0.4); animation: facePulse 2.5s ease-in-out infinite; }
 @keyframes facePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.6; } }
@@ -363,11 +363,50 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .hot-q-chip:active { transform: scale(0.95); }
 
 /* ========== Tab Bar ========== */
-.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: var(--tab-bar-height); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(18px); border-top: 1px solid var(--color-border-light); display: flex; align-items: center; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); }
-.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--color-text-muted); transition: color var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px; position: relative; }
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: calc(var(--tab-bar-height) + 8px); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(18px); border-top: 1px solid var(--color-border-light); display: flex; align-items: flex-end; justify-content: space-around; z-index: var(--z-tab); padding-bottom: calc(var(--safe-bottom) + 4px); }
+.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--color-text-muted); transition: color var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px 8px; position: relative; }
 .tab-btn.active { color: var(--color-primary); }
 .tab-btn svg { width: 20px; height: 20px; }
 .tab-btn:active { opacity: 0.7; }
+
+/* ========== GlowUp Center Button ========== */
+.tab-btn-glowup {
+  position: relative;
+  top: -18px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: #fff !important;
+  box-shadow: 0 6px 20px rgba(196, 149, 106, 0.45), 0 0 0 4px rgba(255, 248, 240, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  transition: all var(--duration-fast) var(--ease);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  z-index: 2;
+}
+.tab-btn-glowup svg {
+  width: 26px;
+  height: 26px;
+  stroke-width: 2;
+  stroke: #fff;
+}
+.tab-btn-glowup.active {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  color: #fff !important;
+  box-shadow: 0 6px 24px rgba(196, 149, 106, 0.55), 0 0 0 4px rgba(255, 248, 240, 0.95);
+}
+.tab-btn-glowup:active {
+  transform: scale(0.92);
+}
 
 /* ========== Toast ========== */
 .toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: rgba(26, 24, 22, 0.85); color: #fff; padding: 12px 24px; border-radius: var(--radius-md); font-size: var(--font-size-sm); z-index: var(--z-toast); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: all var(--duration-fast) var(--ease); max-width: 280px; text-align: center; }
@@ -1767,8 +1806,8 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
   <nav class="tab-bar">
     <a class="tab-btn active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5L12 4l9 8.5"/><path d="M5 11v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>首页</span></a>
     <a class="tab-btn" data-tab="library" onclick="switchTab('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>颜库</span></a>
+    <a class="tab-btn tab-btn-glowup" data-tab="mirror" onclick="switchTab('mirror')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg><span>焕新</span></a>
     <a class="tab-btn" data-tab="mall" onclick="switchTab('mall')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>商城</span></a>
-    <a class="tab-btn" data-tab="mirror" onclick="switchTab('mirror')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg><span>镜面</span></a>
     <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg><span>我的</span></a>
   </nav>
 
