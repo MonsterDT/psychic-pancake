@@ -1,0 +1,335 @@
+{
+  "data": [
+    {
+      "id": "page-home",
+      "title": "首页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1782335200000,
+      "canvasData": {
+        "x": 0,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/home.html",
+        "interactions": [
+          {
+            "domId": "tab-search",
+            "targetPageId": "page-search",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mall",
+            "targetPageId": "page-mall",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mirror",
+            "targetPageId": "page-mirror",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-profile",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-search",
+      "title": "搜索页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1782335200000,
+      "canvasData": {
+        "x": 420,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/search.html",
+        "interactions": [
+          {
+            "domId": "tab-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mall",
+            "targetPageId": "page-mall",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mirror",
+            "targetPageId": "page-mirror",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-profile",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-mall",
+      "title": "商城页",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1782335200000,
+      "canvasData": {
+        "x": 840,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/mall.html",
+        "interactions": [
+          {
+            "domId": "tab-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-search",
+            "targetPageId": "page-search",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mirror",
+            "targetPageId": "page-mirror",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-profile",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-mirror",
+      "title": "镜面教学",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1782335200000,
+      "canvasData": {
+        "x": 1260,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/mirror.html",
+        "interactions": [
+          {
+            "domId": "tab-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-search",
+            "targetPageId": "page-search",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mall",
+            "targetPageId": "page-mall",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-profile",
+            "targetPageId": "page-profile",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "page-profile",
+      "title": "我的",
+      "type": "page",
+      "version": 1,
+      "createdAt": 1782335200000,
+      "canvasData": {
+        "x": 1680,
+        "y": 0,
+        "group": 0
+      },
+      "devMetadata": {
+        "htmlSrc": "pages/profile.html",
+        "interactions": [
+          {
+            "domId": "tab-home",
+            "targetPageId": "page-home",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-search",
+            "targetPageId": "page-search",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mall",
+            "targetPageId": "page-mall",
+            "hideEdge": true
+          },
+          {
+            "domId": "tab-mirror",
+            "targetPageId": "page-mirror",
+            "hideEdge": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "image-001",
+      "title": "首页主横幅",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 0,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/hero-banner.jpg"
+      }
+    },
+    {
+      "id": "image-002",
+      "title": "面部扫描功能图",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 420,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/feature-scan.jpg"
+      }
+    },
+    {
+      "id": "image-003",
+      "title": "AI妆造功能图",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 840,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/feature-ai.jpg"
+      }
+    },
+    {
+      "id": "image-004",
+      "title": "妆造推荐卡片1",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 1260,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/feed-card-1.jpg"
+      }
+    },
+    {
+      "id": "image-005",
+      "title": "妆造推荐卡片2",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 1680,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/feed-card-2.jpg"
+      }
+    },
+    {
+      "id": "image-006",
+      "title": "商品图1-口红",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 2100,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/product-1.jpg"
+      }
+    },
+    {
+      "id": "image-007",
+      "title": "商品图2-粉底",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 2520,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/product-2.jpg"
+      }
+    },
+    {
+      "id": "image-008",
+      "title": "商品图3-眼影盘",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 2940,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/product-3.jpg"
+      }
+    },
+    {
+      "id": "image-009",
+      "title": "商品图4-精华",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 3360,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/product-4.jpg"
+      }
+    },
+    {
+      "id": "image-010",
+      "title": "镜面教学相机视图",
+      "type": "image",
+      "version": 1,
+      "createdAt": 1782335300000,
+      "canvasData": {
+        "x": 3780,
+        "y": 893
+      },
+      "devMetadata": {
+        "imageSrc": "assets/mirror-camera.jpg"
+      }
+    }
+  ],
+  "config": {
+    "autoLayout": true,
+    "deviceType": "mobile",
+    "projectName": "妆伴 MakeupPal",
+    "showEdge": true
+  }
+}
