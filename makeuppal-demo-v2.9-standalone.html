@@ -301,21 +301,33 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .profile-face-tags { display: flex; gap: 6px; margin-top: var(--spacing-3); position: relative; z-index: 1; flex-wrap: wrap; }
 .profile-face-tag { padding: 3px 10px; background: rgba(255,255,255,0.2); border-radius: var(--radius-full); font-size: 10px; font-weight: var(--font-weight-medium); }
 
-.profile-gp-entry { margin: 0 var(--spacing-4) var(--spacing-4); padding: var(--spacing-4); background: linear-gradient(135deg, #FFF 0%, #FFF8F0 100%); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; cursor: pointer; border: 1px solid var(--color-border-light); transition: all var(--duration-fast) var(--ease); }
-.profile-gp-entry:active { transform: scale(0.99); }
-.profile-gp-left { display: flex; align-items: center; gap: var(--spacing-3); }
-.profile-gp-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: #fff; }
-.profile-gp-info h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); }
-.profile-gp-info p { font-size: 11px; color: var(--color-text-secondary); }
-.profile-gp-amount { font-size: 22px; font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.profile-gp-card { margin: 0 var(--spacing-4) var(--spacing-5); padding: var(--spacing-4); background: linear-gradient(135deg, #FFFBF5 0%, #FFF3E6 100%); border-radius: var(--radius-lg); box-shadow: 0 4px 16px rgba(196,149,106,0.12); display: flex; align-items: center; justify-content: space-between; cursor: pointer; border: 1px solid rgba(196,149,106,0.2); transition: all var(--duration-fast) var(--ease); position: relative; overflow: hidden; }
+.profile-gp-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(196,149,106,0.15) 0%, transparent 70%); }
+.profile-gp-card:active { transform: scale(0.99); }
+.profile-gp-left { display: flex; align-items: center; gap: var(--spacing-3); position: relative; z-index: 1; }
+.profile-gp-icon-wrap { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 12px rgba(196,149,106,0.3); }
+.profile-gp-info h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-text-primary); }
+.profile-gp-info p { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.profile-gp-right { text-align: right; position: relative; z-index: 1; }
+.profile-gp-amount { font-size: 26px; font-weight: var(--font-weight-bold); color: var(--color-primary); line-height: 1.1; }
+.profile-gp-arrow { font-size: 11px; color: var(--color-primary); margin-top: 4px; opacity: 0.8; }
+
+.profile-section-title { font-size: 13px; font-weight: var(--font-weight-semibold); color: var(--color-text-primary); padding: 0 var(--spacing-4) var(--spacing-2); margin-top: var(--spacing-2); }
 
 .profile-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-2); }
 .profile-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-5); }
 .profile-grid-item { padding: 12px 4px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
 .profile-grid-item:active { transform: scale(0.95); }
-.profile-grid-icon { width: 32px; height: 32px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); }
-.profile-grid-icon svg { width: 16px; height: 16px; }
+.profile-grid-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); }
+.profile-grid-icon svg { width: 18px; height: 18px; }
 .profile-grid-text { font-size: 10px; color: var(--color-text-secondary); text-align: center; font-weight: var(--font-weight-medium); }
+
+/* ========== Q&A Section ========== */
+.qa-section { background: var(--color-bg-card); border-bottom: 8px solid var(--color-bg-page); }
+.hot-questions { display: flex; gap: var(--spacing-2); overflow-x: auto; margin-bottom: var(--spacing-2); }
+.hot-q-chip { flex-shrink: 0; padding: 6px 14px; background: var(--color-bg-alt); border-radius: 999px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; transition: all var(--duration-fast) var(--ease); border: 1px solid transparent; }
+.hot-q-chip.active { background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: #fff; border-color: transparent; }
+.hot-q-chip:active { transform: scale(0.95); }
 
 /* ========== Tab Bar ========== */
 .tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: var(--tab-bar-height); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(18px); border-top: 1px solid var(--color-border-light); display: flex; align-items: center; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); }
@@ -578,7 +590,7 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
     <!-- 5-Grid Features -->
     <div class="features-grid">
       <div class="feature-card" onclick="switchTab('mirror')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg></div><div class="feature-text"><h3>镜面模式</h3><p>跟练妆容</p></div></div>
-      <div class="feature-card" onclick="switchTab('search')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="feature-text"><h3>局部搜索</h3><p>问题解答</p></div></div>
+      <div class="feature-card" onclick="switchTab('library');scrollToQaSection()"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="feature-text"><h3>局部搜索</h3><p>问题解答</p></div></div>
       <div class="feature-card" onclick="switchTab('mall')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><div class="feature-text"><h3>商城</h3><p>妆容模板</p></div></div>
       <div class="feature-card" onclick="openFullscreenModal('ingredientScanModal')"><div class="feature-icon" style="background:#F5E8E8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-danger);"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div class="feature-text"><h3>成分扫描</h3><p class="feature-new">NEW</p></div></div>
       <div class="feature-card" onclick="showToast('创作者中心')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="feature-text"><h3>创作者</h3><p>投稿模板</p></div></div>
@@ -632,7 +644,104 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 
   <!-- ============ Library Page ============ -->
   <div class="page" id="page-library">
-    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">颜库</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('搜索模板')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">颜库</h2></div><div class="header-right"><button class="icon-btn" onclick="document.getElementById('libSearchInput').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
+
+    <!-- Search Bar -->
+    <div style="padding:0 var(--spacing-4) var(--spacing-3);">
+      <div class="search-bar" style="background:var(--color-bg-alt);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input id="libSearchInput" placeholder="搜索妆容、成分、美妆问题..." onclick="scrollToQaSection()">
+      </div>
+    </div>
+
+    <!-- F25: Q&A Solution Section -->
+    <div class="qa-section" id="qaSection">
+      <div class="section-sm">
+        <div class="section-header">
+          <div class="section-title" style="font-size:var(--font-size-md);display:flex;align-items:center;gap:6px;">
+            <span style="font-size:16px;">💡</span> 美妆问答
+          </div>
+          <a class="section-more" onclick="showToast('更多问答')">更多 →</a>
+        </div>
+      </div>
+
+      <!-- Hot Questions Chips -->
+      <div class="hot-questions no-scrollbar" style="padding:0 var(--spacing-4);">
+        <div class="hot-q-chip active">眼线晕妆</div>
+        <div class="hot-q-chip">卡粉怎么办</div>
+        <div class="hot-q-chip">油皮定妆</div>
+        <div class="hot-q-chip">新手画眉</div>
+        <div class="hot-q-chip">唇纹深</div>
+      </div>
+
+      <!-- Solution Cards (compact in library) -->
+      <div style="padding:var(--spacing-3) var(--spacing-4) var(--spacing-4);">
+        <div class="solution-header" style="padding:0 0 var(--spacing-3) 0;">
+          <h2 style="font-size:var(--font-size-md);">眼线晕妆怎么办？</h2>
+          <p style="font-size:11px;">4 种解决方案对比</p>
+        </div>
+
+        <div class="solution-card recommended" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
+          <div class="solution-top">
+            <h3 style="font-size:13px;">方案一：眼部打底膏 <span class="solution-badge" style="font-size:9px;padding:2px 6px;">最推荐</span></h3>
+          </div>
+          <div class="solution-metrics" style="gap:var(--spacing-3);">
+            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">95%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">简单</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
+            <div class="solution-metric"><div class="solution-metric-num warning" style="font-size:12px;">5分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
+          </div>
+          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
+            <span class="solution-suitable" style="font-size:10px;">适合：油皮 / 夏季</span>
+            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
+          </div>
+        </div>
+
+        <div class="solution-card" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
+          <div class="solution-top">
+            <h3 style="font-size:13px;">方案二：散粉定妆法</h3>
+          </div>
+          <div class="solution-metrics" style="gap:var(--spacing-3);">
+            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">80%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">中等</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
+            <div class="solution-metric"><div class="solution-metric-num warning" style="font-size:12px;">8分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
+          </div>
+          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
+            <span class="solution-suitable" style="font-size:10px;">适合：中油皮 / 通勤</span>
+            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
+          </div>
+        </div>
+
+        <div class="solution-card" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
+          <div class="solution-top">
+            <h3 style="font-size:13px;">方案三：防水眼线产品</h3>
+          </div>
+          <div class="solution-metrics" style="gap:var(--spacing-3);">
+            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">90%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">中等</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">3分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
+          </div>
+          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
+            <span class="solution-suitable" style="font-size:10px;">适合：运动 / 潮湿</span>
+            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
+          </div>
+        </div>
+
+        <div class="solution-card" style="padding:var(--spacing-3);" onclick="showF27Alert()">
+          <div class="solution-top">
+            <h3 style="font-size:13px;">方案四：睫毛膏晕染 <span style="color:var(--color-danger);font-size:10px;">⚠️ 致敏</span></h3>
+          </div>
+          <div class="solution-metrics" style="gap:var(--spacing-3);">
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:11px;color:var(--color-danger);">风险</div><div class="solution-metric-label" style="font-size:10px;">敏感肌</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">简单</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
+            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">2分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
+          </div>
+          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
+            <span class="solution-suitable" style="font-size:10px;color:var(--color-danger);">⚠️ 敏感肌慎用</span>
+            <button class="solution-btn" style="padding:4px 10px;font-size:11px;background:var(--color-danger);">查看风险</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 3 Tabs -->
     <div class="lib-tabs no-scrollbar">
@@ -884,7 +993,7 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
   <div class="page" id="page-profile">
     <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">我的</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('设置')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></header>
 
-    <!-- Face Info Card -->
+    <!-- 1. Face Info Card (顶部渐变卡) -->
     <div class="profile-face-card" onclick="showToast('面部档案详情')">
       <div class="profile-face-top">
         <div class="profile-face-avatar">👤</div>
@@ -892,49 +1001,107 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
           <h3>小美 · 鹅蛋脸</h3>
           <p>混合性肤质 · 暖色调 · 敏感肌</p>
         </div>
-        <span style="font-size:20px;opacity:0.7;">→</span>
+        <span style="font-size:18px;opacity:0.7;">→</span>
       </div>
       <div class="profile-face-tags">
-        <span class="profile-face-tag">✨ 骨相评分 86</span>
+        <span class="profile-face-tag">✨ 骨相 86</span>
         <span class="profile-face-tag">👁️ 双眼皮</span>
         <span class="profile-face-tag">👃 高鼻梁</span>
       </div>
     </div>
 
-    <!-- GP Entry -->
-    <div class="profile-gp-entry" onclick="openFullscreenModal('gpCenterModal')">
+    <!-- 2. GP 焕新值醒目入口 -->
+    <div class="profile-gp-card" onclick="openFullscreenModal('gpCenterModal')">
       <div class="profile-gp-left">
-        <div class="profile-gp-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div>
+        <div class="profile-gp-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>
+        </div>
         <div class="profile-gp-info">
-          <h4>焕新值中心</h4>
+          <h4>焕新值 GP</h4>
           <p>每日任务 · 成就奖励 · 兑换商城</p>
         </div>
       </div>
-      <div class="profile-gp-amount">328</div>
+      <div class="profile-gp-right">
+        <div class="profile-gp-amount" id="profileGpAmount">328</div>
+        <div class="profile-gp-arrow">去查看 →</div>
+      </div>
     </div>
 
-    <!-- Function Grid Row 1 (5 items) -->
+    <!-- 3. 功能宫格 - 第一行（5个） -->
+    <div class="profile-section-title">我的服务</div>
     <div class="profile-grid-5">
-      <div class="profile-grid-item" onclick="showToast('我的风格')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></div><div class="profile-grid-text">风格偏好</div></div>
-      <div class="profile-grid-item" onclick="showToast('我的模板')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="profile-grid-text">我的模板</div></div>
-      <div class="profile-grid-item" onclick="showToast('工具箱')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div class="profile-grid-text">工具箱</div></div>
-      <div class="profile-grid-item" onclick="showToast('国风专区')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div><div class="profile-grid-text">国风</div></div>
-      <div class="profile-grid-item" onclick="showToast('银发专区')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="profile-grid-text">银发</div></div>
+      <div class="profile-grid-item" onclick="showToast('风格偏好')">
+        <div class="profile-grid-icon" style="background:#FDF2E9;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#E67E22;"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></div>
+        <div class="profile-grid-text">风格偏好</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('我的模板')">
+        <div class="profile-grid-icon" style="background:#EBF5FB;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#3498DB;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="profile-grid-text">我的模板</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('工具箱')">
+        <div class="profile-grid-icon" style="background:#F4ECF7;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#8E44AD;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="profile-grid-text">工具箱</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('国风专区')">
+        <div class="profile-grid-icon" style="background:#FDEDEC;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#E74C3C;"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div>
+        <div class="profile-grid-text">国风</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('银发专区')">
+        <div class="profile-grid-icon" style="background:#E8F8F5;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#1ABC9C;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="profile-grid-text">银发</div>
+      </div>
     </div>
 
-    <!-- Function Grid Row 2 (3 items) -->
-    <div class="profile-grid-3">
-      <div class="profile-grid-item" onclick="openFullscreenModal('ingredientScanModal')"><div class="profile-grid-icon" style="background:#F5E8E8;color:var(--color-danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div class="profile-grid-text">成分扫描</div></div>
-      <div class="profile-grid-item" onclick="showToast('门店地图')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="profile-grid-text">门店地图</div></div>
-      <div class="profile-grid-item" onclick="switchTab('brand')"><div class="profile-grid-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="profile-grid-text">品牌合作</div></div>
+    <!-- 功能宫格 - 第二行（3个） -->
+    <div class="profile-grid-3" style="margin-bottom:var(--spacing-4);">
+      <div class="profile-grid-item" onclick="openFullscreenModal('ingredientScanModal')">
+        <div class="profile-grid-icon" style="background:#F5E8E8;color:var(--color-danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <div class="profile-grid-text">成分扫描</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('门店地图')">
+        <div class="profile-grid-icon" style="background:#FEF9E7;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#F39C12;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="profile-grid-text">门店地图</div>
+      </div>
+      <div class="profile-grid-item" onclick="switchTab('brand')">
+        <div class="profile-grid-icon" style="background:#EAFAF1;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#27AE60;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="profile-grid-text">品牌合作</div>
+      </div>
     </div>
 
-    <!-- Quick Menu -->
+    <!-- 4. 快捷菜单 -->
+    <div class="profile-section-title">更多服务</div>
     <div class="menu-card">
-      <div class="menu-item" onclick="showToast('面部资产库')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text"><h4>我的面部资产</h4></div><span class="menu-arrow">→</span></div>
-      <div class="menu-item" onclick="showToast('订单记录')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><div class="menu-text"><h4>购买记录</h4></div><span class="menu-arrow">→</span></div>
-      <div class="menu-item" onclick="showToast('设置')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="menu-text"><h4>设置</h4></div><span class="menu-arrow">→</span></div>
+      <div class="menu-item" onclick="showToast('面部资产库')">
+        <div class="menu-icon" style="background:#FDF2E9;color:#E67E22;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="menu-text"><h4>我的面部资产</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('订单记录')">
+        <div class="menu-icon" style="background:#EBF5FB;color:#3498DB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        </div>
+        <div class="menu-text"><h4>购买记录</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('帮助与反馈')">
+        <div class="menu-icon" style="background:#F4ECF7;color:#8E44AD;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="menu-text"><h4>帮助与反馈</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" style="border-bottom:none;" onclick="showToast('设置')">
+        <div class="menu-icon" style="background:#E8F8F5;color:#1ABC9C;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <div class="menu-text"><h4>设置</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
     </div>
+
+    <div style="height:20px;"></div>
   </div>
 
   <!-- ============ Brand Page ============ -->
@@ -944,11 +1111,10 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
     <div class="dashboard"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">数据看板</div><span class="badge badge-info badge-pill">B 端 SaaS</span></div><div class="dash-grid"><div class="dash-card"><div class="dash-num">12</div><div class="dash-label">在售模板</div></div><div class="dash-card"><div class="dash-num">2,340</div><div class="dash-label">累计解锁</div></div><div class="dash-card"><div class="dash-num">4.8</div><div class="dash-label">平均评分</div></div><div class="dash-card"><div class="dash-num">¥12,580</div><div class="dash-label">本月收益</div></div></div></div>
   </div>
 
-  <!-- ============ Tab Bar (6 Tabs) ============ -->
+  <!-- ============ Tab Bar (5 Tabs) ============ -->
   <nav class="tab-bar">
     <a class="tab-btn active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5L12 4l9 8.5"/><path d="M5 11v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>首页</span></a>
     <a class="tab-btn" data-tab="library" onclick="switchTab('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>颜库</span></a>
-    <a class="tab-btn" data-tab="search" onclick="switchTab('search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span>搜索</span></a>
     <a class="tab-btn" data-tab="mall" onclick="switchTab('mall')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>商城</span></a>
     <a class="tab-btn" data-tab="mirror" onclick="switchTab('mirror')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg><span>镜面</span></a>
     <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg><span>我的</span></a>
@@ -1173,6 +1339,20 @@ function switchTab(tab){
   window.scrollTo({top:0,behavior:'instant'});
 }
 
+function scrollToQaSection(){
+  setTimeout(()=>{
+    const el=document.getElementById('qaSection');
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function updateGPDisplay(){
+  const bal=gpBalance;
+  const gpH=document.getElementById('gp-balance'); if(gpH)gpH.textContent=bal;
+  const gpC=document.getElementById('gpCenterBalance'); if(gpC)gpC.textContent=bal;
+  const gpP=document.getElementById('profileGpAmount'); if(gpP)gpP.textContent=bal;
+}
+
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;
@@ -1184,9 +1364,7 @@ function showToast(msg){
 function claimTask(btn,amt){
   if(btn.disabled)return;
   gpBalance+=amt;
-  document.getElementById('gp-balance').textContent=gpBalance;
-  const cb=document.getElementById('gpCenterBalance');
-  if(cb)cb.textContent=gpBalance;
+  updateGPDisplay();
   btn.disabled=true;
   btn.textContent='已领取';
   btn.style.background='var(--color-bg-alt)';
@@ -1235,9 +1413,7 @@ function nextOnboardingStep(){
 function skipOnboarding(){completeOnboarding();}
 function completeOnboarding(){
   gpBalance+=100;
-  document.getElementById('gp-balance').textContent=gpBalance;
-  const cb=document.getElementById('gpCenterBalance');
-  if(cb)cb.textContent=gpBalance;
+  updateGPDisplay();
   document.getElementById('onboarding').classList.add('hidden');
   showToast('欢迎加入！+100 GP 已到账');
 }
