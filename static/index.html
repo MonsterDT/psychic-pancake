@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 拍照测肤 - 智能皮肤分析系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .upload-section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 3px dashed #ddd;
+            border-radius: 15px;
+            padding: 60px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #e8ebff;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .analyze-btn {
+            margin-top: 20px;
+        }
+
+        .results-section {
+            display: none;
+            padding: 30px;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .overall-score {
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .result-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .image-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .image-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .image-card img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .analysis-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .category-level {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .level-excellent {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .level-good {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .level-fair {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .level-poor {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .category-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .category-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .category-details p {
+            margin: 5px 0;
+        }
+
+        .suggestions-section {
+            background: #fffbe6;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .suggestions-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-category {
+            margin-bottom: 15px;
+        }
+
+        .suggestion-category h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .suggestion-category li {
+            padding: 5px 0 5px 25px;
+            position: relative;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .suggestion-category li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .report-overview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .report-overview h3 {
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .result-images {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 AI 拍照测肤</h1>
+            <p>智能皮肤分析系统 · 一键检测肌肤问题</p>
+        </div>
+
+        <div class="main-content">
+            <div id="uploadSection" class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📸</div>
+                    <div class="upload-text">点击或拖拽上传面部照片</div>
+                    <div class="upload-hint">支持 JPG、PNG 格式，建议正面清晰照</div>
+                </div>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/jpg">
+                <div id="previewContainer" style="display: none;">
+                    <img id="previewImage" class="preview-image" alt="预览图片">
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary analyze-btn" disabled>
+                    开始分析
+                </button>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+
+            <div id="loadingSection" class="loading">
+                <div class="spinner"></div>
+                <p>正在分析您的皮肤，请稍候...</p>
+            </div>
+
+            <div id="resultsSection" class="results-section">
+                <div class="results-header">
+                    <button id="backBtn" class="btn back-btn">← 重新检测</button>
+                    <div class="overall-score">
+                        <div class="score-circle" id="overallScore">--</div>
+                        <div class="score-label" id="overallLevel">综合评分</div>
+                    </div>
+                    <div style="width: 100px;"></div>
+                </div>
+
+                <div class="report-overview">
+                    <h3>📋 整体评价</h3>
+                    <p id="overallEvaluation">--</p>
+                </div>
+
+                <div class="result-images">
+                    <div class="image-card">
+                        <h3>分析结果图</h3>
+                        <img id="resultImage" alt="分析结果">
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 15px; color: #333;">🧴 各项指标</h3>
+                <div class="analysis-categories" id="categoriesContainer">
+                </div>
+
+                <div class="suggestions-section" id="suggestionsSection" style="display: none;">
+                    <h3>💡 护肤建议</h3>
+                    <div id="suggestionsContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const previewImage = document.getElementById('previewImage');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const uploadSection = document.getElementById('uploadSection');
+        const loadingSection = document.getElementById('loadingSection');
+        const resultsSection = document.getElementById('resultsSection');
+        const backBtn = document.getElementById('backBtn');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let selectedFile = null;
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.match('image.*')) {
+                showError('请上传图片文件');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showError('图片大小不能超过 10MB');
+                return;
+            }
+
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+                analyzeBtn.disabled = false;
+                hideError();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('active');
+        }
+
+        analyzeBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            uploadSection.style.display = 'none';
+            loadingSection.classList.add('active');
+            resultsSection.classList.remove('active');
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || '分析失败');
+                }
+
+                displayResults(data);
+            } catch (error) {
+                showError('分析失败：' + error.message);
+                uploadSection.style.display = 'block';
+                loadingSection.classList.remove('active');
+            }
+        });
+
+        backBtn.addEventListener('click', () => {
+            uploadSection.style.display = 'block';
+            resultsSection.classList.remove('active');
+            selectedFile = null;
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            analyzeBtn.disabled = true;
+        });
+
+        function displayResults(data) {
+            loadingSection.classList.remove('active');
+            resultsSection.classList.add('active');
+
+            document.getElementById('overallScore').textContent = data.overall_score;
+            document.getElementById('overallLevel').textContent = data.report.overall_level;
+            document.getElementById('overallEvaluation').textContent = data.report.overall_evaluation;
+
+            document.getElementById('resultImage').src = data.result_image;
+
+            const categories = [
+                { key: 'acne', name: '痘痘', icon: '🔴', details: ['count', '数量'] },
+                { key: 'dark_spots', name: '色斑', icon: '🟤', details: ['count', '数量'] },
+                { key: 'pores', name: '毛孔', icon: '⚫', details: ['density', '密度'] },
+                { key: 'wrinkles', name: '皱纹', icon: '〰️', details: ['count', '数量'] },
+                { key: 'texture', name: '肤质', icon: '✨', details: [] },
+                { key: 'skin_tone', name: '肤色', icon: '🎨', details: ['tone', '肤色类型'] }
+            ];
+
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            categoriesContainer.innerHTML = '';
+
+            categories.forEach(cat => {
+                const catData = data.report.category_scores[cat.key];
+                const levelClass = 'level-' + data[cat.key].level;
+                const levelText = catData.level;
+
+                let detailsHtml = '';
+                cat.details.forEach((detail, i) => {
+                    if (i % 2 === 0) {
+                        const value = catData[detail] !== undefined ? catData[detail] : data[cat.key][detail];
+                        const label = cat.details[i + 1];
+                        detailsHtml += `<p>${label}：${typeof value === 'number' ? value.toFixed(2) : value}</p>`;
+                    }
+                });
+
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.innerHTML = `
+                    <div class="category-header">
+                        <span class="category-name">${cat.icon} ${cat.name}</span>
+                        <span class="category-level ${levelClass}">${levelText}</span>
+                    </div>
+                    <div class="category-score">${catData.score}</div>
+                    <div class="category-details">${detailsHtml}</div>
+                `;
+                categoriesContainer.appendChild(card);
+            });
+
+            const suggestionsSection = document.getElementById('suggestionsSection');
+            const suggestionsContainer = document.getElementById('suggestionsContainer');
+
+            if (data.report.suggestions && data.report.suggestions.length > 0) {
+                suggestionsSection.style.display = 'block';
+                suggestionsContainer.innerHTML = '';
+
+                data.report.suggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-category';
+                    div.innerHTML = `
+                        <h4>${suggestion.category}</h4>
+                        <ul>
+                            ${suggestion.tips.map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    `;
+                    suggestionsContainer.appendChild(div);
+                });
+            } else {
+                suggestionsSection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
