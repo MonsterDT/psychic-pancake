@@ -128,20 +128,53 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 .trending-hot-info p { font-size: 10px; color: var(--color-text-muted); }
 .trending-hot-gp { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-primary); }
 
-/* ========== Library Page ========== */
-.lib-tabs { display: flex; gap: var(--spacing-2); padding: var(--spacing-3) var(--spacing-4); overflow-x: auto; }
-.lib-tab { padding: 8px 18px; background: var(--color-bg-card); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; }
-.lib-tab.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
-.lib-grid { padding: 0 var(--spacing-4) var(--spacing-6); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-3); }
-.lib-card { border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
-.lib-card:active { transform: scale(0.97); }
-.lib-card-cover { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--color-bg-alt), var(--color-accent)); display: flex; align-items: center; justify-content: center; position: relative; }
-.lib-card-emoji { font-size: 48px; }
-.lib-card-badge { position: absolute; top: 8px; left: 8px; }
-.lib-card-info { padding: 10px; }
-.lib-card-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.lib-card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); }
-.lib-card-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+/* ========== Library Page - Xiaohongshu Style ========== */
+.lib-search-bar { display: flex; align-items: center; gap: 8px; flex: 1; background: var(--color-bg-alt); border-radius: var(--radius-full); padding: 8px 16px; }
+.lib-search-bar input { flex: 1; background: transparent; border: none; outline: none; font-size: var(--font-size-sm); color: var(--color-text); font-family: var(--font-sans); }
+.lib-search-bar input::placeholder { color: var(--color-text-muted); }
+
+/* Level 1 Tabs - 子类目 */
+.lib-cat-tabs { display: flex; gap: 0; padding: 0 var(--spacing-4); overflow-x: auto; background: var(--color-bg); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 60px; z-index: 40; }
+.lib-cat-tab { padding: 12px 16px; font-size: var(--font-size-base); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; position: relative; }
+.lib-cat-tab.active { color: var(--color-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-md); }
+.lib-cat-tab.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: var(--color-primary); border-radius: 2px; }
+
+/* Level 2 Tabs - 孙类目 */
+.lib-sub-tabs { display: flex; gap: var(--spacing-2); padding: var(--spacing-3) var(--spacing-4); overflow-x: auto; background: var(--color-bg); position: sticky; top: 104px; z-index: 39; border-bottom: 1px solid var(--color-border-light); }
+.lib-sub-tab { padding: 6px 14px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; }
+.lib-sub-tab.active { background: var(--color-primary); color: #fff; font-weight: var(--font-weight-semibold); }
+
+/* Content Area */
+.lib-content-area { padding-bottom: var(--spacing-6); }
+.lib-cat-panel { display: block; }
+
+/* Xiaohongshu Waterfall */
+.xhs-waterfall { padding: var(--spacing-3) var(--spacing-3); column-count: 2; column-gap: var(--spacing-3); }
+.xhs-card { break-inside: avoid; margin-bottom: var(--spacing-3); background: var(--color-bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.xhs-card:active { transform: scale(0.97); }
+.xhs-card-img { width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.xhs-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.xhs-card-emoji { font-size: 48px; position: absolute; }
+.xhs-card-tag { position: absolute; top: 8px; left: 8px; padding: 3px 8px; background: rgba(196, 149, 106, 0.9); color: #fff; border-radius: var(--radius-xs); font-size: 10px; font-weight: var(--font-weight-semibold); backdrop-filter: blur(4px); }
+.xhs-card-tag.xhs-tag-free { background: rgba(107, 158, 107, 0.9); }
+.xhs-card-tag.xhs-tag-l3 { background: rgba(187, 143, 206, 0.9); }
+.xhs-card-tag.xhs-tag-guofeng { background: rgba(212, 160, 60, 0.9); }
+.xhs-card-tag.xhs-tag-yinfa { background: rgba(107, 158, 107, 0.9); }
+.xhs-card-tag.xhs-tag-brand { background: rgba(26, 24, 22, 0.85); }
+.xhs-card-tag.xhs-tag-star { background: rgba(241, 148, 138, 0.9); }
+.xhs-brand-logo { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: 14px; position: absolute; z-index: 2; }
+.xhs-card-info { padding: 8px 10px 10px; }
+.xhs-card-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; }
+.xhs-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.xhs-card-author { display: flex; align-items: center; gap: 4px; min-width: 0; flex: 1; }
+.xhs-avatar { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: var(--font-weight-semibold); flex-shrink: 0; }
+.xhs-card-author span { font-size: 10px; color: var(--color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.xhs-card-like { font-size: 10px; color: var(--color-text-muted); flex-shrink: 0; margin-left: 6px; }
+
+/* Hot Questions Chips */
+.hot-questions { display: flex; gap: var(--spacing-2); overflow-x: auto; padding: var(--spacing-2) 0; }
+.hot-q-chip { padding: 6px 14px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; }
+.hot-q-chip.active { background: rgba(196, 149, 106, 0.12); color: var(--color-primary-dark); font-weight: var(--font-weight-semibold); }
 
 /* Brand horizontal scroll */
 .brand-scroll { display: flex; gap: var(--spacing-3); padding: 0 var(--spacing-4) var(--spacing-4); overflow-x: auto; }
@@ -644,152 +677,771 @@ body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-te
 
   <!-- ============ Library Page ============ -->
   <div class="page" id="page-library">
-    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">颜库</h2></div><div class="header-right"><button class="icon-btn" onclick="document.getElementById('libSearchInput').focus()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
-
-    <!-- Search Bar -->
-    <div style="padding:0 var(--spacing-4) var(--spacing-3);">
-      <div class="search-bar" style="background:var(--color-bg-alt);">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input id="libSearchInput" placeholder="搜索妆容、成分、美妆问题..." onclick="scrollToQaSection()">
+    <header class="app-header" style="padding-bottom:0;">
+      <div class="header-left" style="flex:1;">
+        <div class="lib-search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input placeholder="搜索妆容、成分、美妆问题...">
+        </div>
       </div>
+      <div class="header-right"><button class="icon-btn" onclick="showToast('发布作品')" style="background:linear-gradient(135deg,var(--color-primary),var(--color-accent));color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    </header>
+
+    <!-- Level 1 Tabs: 子类目 -->
+    <div class="lib-cat-tabs no-scrollbar" id="libCatTabs">
+      <div class="lib-cat-tab active" data-cat="daren" onclick="switchLibCat(this,'daren')">达人精选</div>
+      <div class="lib-cat-tab" data-cat="jubu" onclick="switchLibCat(this,'jubu')">局部拆解</div>
+      <div class="lib-cat-tab" data-cat="qa" onclick="switchLibCat(this,'qa')">美妆问答</div>
+      <div class="lib-cat-tab" data-cat="guofeng" onclick="switchLibCat(this,'guofeng')">国风专区</div>
+      <div class="lib-cat-tab" data-cat="yinfa" onclick="switchLibCat(this,'yinfa')">银发专区</div>
+      <div class="lib-cat-tab" data-cat="dapai" onclick="switchLibCat(this,'dapai')">大牌精选</div>
+      <div class="lib-cat-tab" data-cat="star" onclick="switchLibCat(this,'star')">明星同款</div>
     </div>
 
-    <!-- F25: Q&A Solution Section -->
-    <div class="qa-section" id="qaSection">
-      <div class="section-sm">
-        <div class="section-header">
-          <div class="section-title" style="font-size:var(--font-size-md);display:flex;align-items:center;gap:6px;">
-            <span style="font-size:16px;">💡</span> 美妆问答
-          </div>
-          <a class="section-more" onclick="showToast('更多问答')">更多 →</a>
-        </div>
-      </div>
-
-      <!-- Hot Questions Chips -->
-      <div class="hot-questions no-scrollbar" style="padding:0 var(--spacing-4);">
-        <div class="hot-q-chip active">眼线晕妆</div>
-        <div class="hot-q-chip">卡粉怎么办</div>
-        <div class="hot-q-chip">油皮定妆</div>
-        <div class="hot-q-chip">新手画眉</div>
-        <div class="hot-q-chip">唇纹深</div>
-      </div>
-
-      <!-- Solution Cards (compact in library) -->
-      <div style="padding:var(--spacing-3) var(--spacing-4) var(--spacing-4);">
-        <div class="solution-header" style="padding:0 0 var(--spacing-3) 0;">
-          <h2 style="font-size:var(--font-size-md);">眼线晕妆怎么办？</h2>
-          <p style="font-size:11px;">4 种解决方案对比</p>
-        </div>
-
-        <div class="solution-card recommended" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
-          <div class="solution-top">
-            <h3 style="font-size:13px;">方案一：眼部打底膏 <span class="solution-badge" style="font-size:9px;padding:2px 6px;">最推荐</span></h3>
-          </div>
-          <div class="solution-metrics" style="gap:var(--spacing-3);">
-            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">95%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">简单</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
-            <div class="solution-metric"><div class="solution-metric-num warning" style="font-size:12px;">5分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
-          </div>
-          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
-            <span class="solution-suitable" style="font-size:10px;">适合：油皮 / 夏季</span>
-            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
-          </div>
-        </div>
-
-        <div class="solution-card" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
-          <div class="solution-top">
-            <h3 style="font-size:13px;">方案二：散粉定妆法</h3>
-          </div>
-          <div class="solution-metrics" style="gap:var(--spacing-3);">
-            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">80%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">中等</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
-            <div class="solution-metric"><div class="solution-metric-num warning" style="font-size:12px;">8分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
-          </div>
-          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
-            <span class="solution-suitable" style="font-size:10px;">适合：中油皮 / 通勤</span>
-            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
-          </div>
-        </div>
-
-        <div class="solution-card" style="padding:var(--spacing-3);margin-bottom:var(--spacing-2);" onclick="showToast('查看方案详情')">
-          <div class="solution-top">
-            <h3 style="font-size:13px;">方案三：防水眼线产品</h3>
-          </div>
-          <div class="solution-metrics" style="gap:var(--spacing-3);">
-            <div class="solution-metric"><div class="solution-metric-num success" style="font-size:13px;">90%</div><div class="solution-metric-label" style="font-size:10px;">效果</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">中等</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">3分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
-          </div>
-          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
-            <span class="solution-suitable" style="font-size:10px;">适合：运动 / 潮湿</span>
-            <button class="solution-btn" style="padding:4px 10px;font-size:11px;">查看</button>
-          </div>
-        </div>
-
-        <div class="solution-card" style="padding:var(--spacing-3);" onclick="showF27Alert()">
-          <div class="solution-top">
-            <h3 style="font-size:13px;">方案四：睫毛膏晕染 <span style="color:var(--color-danger);font-size:10px;">⚠️ 致敏</span></h3>
-          </div>
-          <div class="solution-metrics" style="gap:var(--spacing-3);">
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:11px;color:var(--color-danger);">风险</div><div class="solution-metric-label" style="font-size:10px;">敏感肌</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">简单</div><div class="solution-metric-label" style="font-size:10px;">难度</div></div>
-            <div class="solution-metric"><div class="solution-metric-num" style="font-size:12px;">2分钟</div><div class="solution-metric-label" style="font-size:10px;">耗时</div></div>
-          </div>
-          <div class="solution-bottom" style="margin-top:var(--spacing-2);">
-            <span class="solution-suitable" style="font-size:10px;color:var(--color-danger);">⚠️ 敏感肌慎用</span>
-            <button class="solution-btn" style="padding:4px 10px;font-size:11px;background:var(--color-danger);">查看风险</button>
-          </div>
-        </div>
-      </div>
+    <!-- Level 2 Tabs: 孙类目 -->
+    <div class="lib-sub-tabs no-scrollbar" id="libSubTabs">
+      <!-- 动态填充 -->
     </div>
 
-    <!-- 3 Tabs -->
-    <div class="lib-tabs no-scrollbar">
-      <div class="lib-tab active" onclick="switchLibTab(this)">全部</div>
-      <div class="lib-tab" onclick="switchLibTab(this)">L2精选</div>
-      <div class="lib-tab" onclick="switchLibTab(this)">L3大师</div>
-    </div>
+    <!-- Content Area: 瀑布流 -->
+    <div class="lib-content-area" id="libContentArea">
 
-    <!-- Brand Horizontal Scroll -->
-    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">品牌合作</div><a class="section-more" onclick="showToast('全部品牌')">全部 →</a></div></div>
-    <div class="brand-scroll no-scrollbar">
-      <div class="brand-scroll-card" onclick="showToast('YSL 品牌页')"><div class="brand-scroll-logo">Y</div><h4>YSL 圣罗兰</h4><p>12 个模板</p></div>
-      <div class="brand-scroll-card" onclick="showToast('兰蔻品牌页')"><div class="brand-scroll-logo" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary-light));">L</div><h4>LANCÔME</h4><p>8 个模板</p></div>
-      <div class="brand-scroll-card" onclick="showToast('完美日记')"><div class="brand-scroll-logo" style="background:linear-gradient(135deg,var(--color-primary-light),var(--color-primary));">完</div><h4>完美日记</h4><p>15 个模板</p></div>
-      <div class="brand-scroll-card" onclick="showToast('花西子')"><div class="brand-scroll-logo" style="background:#F5EDE4;color:var(--color-primary-dark);">花</div><h4>花西子</h4><p>6 个模板</p></div>
-      <div class="brand-scroll-card" onclick="showToast('毛戈平')"><div class="brand-scroll-logo" style="background:var(--color-bg-alt);color:var(--color-primary-dark);">毛</div><h4>毛戈平</h4><p>10 个模板</p></div>
-    </div>
-
-    <!-- Zone Cards -->
-    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">精选专区</div></div></div>
-    <div class="zone-cards">
-      <div class="zone-card guofeng" onclick="showToast('国风专区')">
-        <div class="zone-card-icon">🏮</div>
-        <div class="zone-card-info">
-          <h3>国风古韵专栏</h3>
-          <p>东方美学 · 古典妆容 · 28 个模板</p>
+      <!-- ===== 达人精选 ===== -->
+      <div class="lib-cat-panel" id="panel-daren">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">💄</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">氛围感拉满的法式红唇妆｜约会必备</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8A0A0,#C4956A);">L</div>
+                  <span>Luna美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#EBF5FB 0%,#B8D4E8 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">伪素颜天花板！5分钟出门的日常裸妆教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#FADADD,#FFB6C1);">妆</div>
+                  <span>小妆日记</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-l3">L3</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">派对C位妆｜闪亮亮片+截断式眼妆教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#B89AC8,#8E44AD);">P</div>
+                  <span>派对女王</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">💼</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">职场新人必看｜干练又不失温柔的通勤妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#D4A03C);">职</div>
+                  <span>职场美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 1.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#A3E4D7 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">森系少女妆｜清新自然又减龄</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#A3E4D7,#48C9B0);">森</div>
+                  <span>森林系</span>
+                </div>
+                <div class="xhs-card-like">❤️ 862</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC 0%,#F5B7B1 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">人间水蜜桃｜粉嫩约会妆容分享</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F5B7B1,#E74C3C);">桃</div>
+                  <span>桃子酱</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.2k</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="zone-card-arrow">→</div>
       </div>
-      <div class="zone-card yinfa" onclick="showToast('银发专区')">
-        <div class="zone-card-icon">👵</div>
-        <div class="zone-card-info">
-          <h3>银发焕新专区</h3>
-          <p>岁月优雅 · 成熟气质 · 15 个模板</p>
-        </div>
-        <div class="zone-card-arrow">→</div>
-      </div>
-    </div>
 
-    <!-- Grid -->
-    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">全部妆容</div></div></div>
-    <div class="lib-grid">
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover"><span class="lib-card-emoji">💄</span><span class="lib-card-badge badge badge-primary badge-pill">L2</span></div><div class="lib-card-info"><h4>晚宴精致妆容</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">50 GP</span></div></div></div>
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);"><span class="lib-card-emoji">🌸</span><span class="lib-card-badge badge badge-success badge-pill">免费</span></div><div class="lib-card-info"><h4>日常清新裸妆</h4><div class="lib-card-meta"><span>⭐ 4.8</span><span class="lib-card-price">免费</span></div></div></div>
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#B89AC8,#D4B896);"><span class="lib-card-emoji">✨</span><span class="lib-card-badge badge badge-info badge-pill">L3</span></div><div class="lib-card-info"><h4>派对闪耀妆</h4><div class="lib-card-meta"><span>⭐ 4.7</span><span class="lib-card-price">120 GP</span></div></div></div>
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#E8A0A0,#E8C9A8);"><span class="lib-card-emoji">🌹</span><span class="lib-card-badge badge badge-primary badge-pill">L2</span></div><div class="lib-card-info"><h4>职场干练妆</h4><div class="lib-card-meta"><span>⭐ 4.8</span><span class="lib-card-price">60 GP</span></div></div></div>
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#D4A03C,#C4956A);"><span class="lib-card-emoji">🏮</span><span class="lib-card-badge badge badge-warning badge-pill">国风</span></div><div class="lib-card-info"><h4>唐风贵妇妆</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">80 GP</span></div></div></div>
-      <div class="lib-card" onclick="openFullscreenModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#6B9E6B,#D4B896);"><span class="lib-card-emoji">👵</span><span class="lib-card-badge badge badge-success badge-pill">银发</span></div><div class="lib-card-info"><h4>银发优雅妆</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">40 GP</span></div></div></div>
+      <!-- ===== 局部拆解 ===== -->
+      <div class="lib-cat-panel" id="panel-jubu" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="showToast('眼妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#FDF2E9,#E8A0A0);">
+              <span class="xhs-card-emoji">👁️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">3种日常眼型调整｜肿眼泡必看</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#E8A0A0;">眼</div>
+                  <span>眼妆达人</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('唇妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDEDEC,#F1948A);">
+              <span class="xhs-card-emoji">💋</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">薄唇变厚！嘟嘟唇画法超详细教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F1948A;">唇</div>
+                  <span>唇妆控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('底妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7,#F9E79F);">
+              <span class="xhs-card-emoji">✨</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">服帖底妆大法｜油皮夏季不脱妆秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F9E79F;">底</div>
+                  <span>底妆专家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('修容教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#E8C9A8,#C4956A);">
+              <span class="xhs-card-emoji">🎨</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">新手修容｜三步get立体小V脸</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#C4956A;">修</div>
+                  <span>修容小能手</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('眉毛教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7,#D2B4DE);">
+              <span class="xhs-card-emoji">✏️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">手残党也能画好的野生眉</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#D2B4DE;">眉</div>
+                  <span>眉毛大师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('腮红教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🌸</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">6种腮红画法｜不同脸型怎么选</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F8BBD9;">腮</div>
+                  <span>腮红少女</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.5k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 美妆问答 ===== -->
+      <div class="lib-cat-panel" id="panel-qa" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="showToast('眼线晕妆怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(135deg,#FDF2E9,#E8C9A8);">
+              <span class="xhs-card-emoji">👁️</span>
+              <span class="xhs-card-tag">热门</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">眼线总是晕妆？4个方法告别熊猫眼</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#E8A0A0;">眼</div>
+                  <span>眼妆达人</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('卡粉怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7,#F9E79F);">
+              <span class="xhs-card-emoji">💆</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">底妆卡粉斑驳？救星来了！手把手教你服帖底妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F9E79F;">底</div>
+                  <span>底妆专家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('油皮定妆')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#E8F8F5,#A3E4D7);">
+              <span class="xhs-card-emoji">💧</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">油皮夏季定妆大法｜8小时不脱妆秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#48C9B0;">油</div>
+                  <span>油皮救星</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('新手画眉')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7,#D2B4DE);">
+              <span class="xhs-card-emoji">✏️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">手残党必看｜3步画出自然野生眉</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#BB8FCE;">眉</div>
+                  <span>眉毛大师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('唇纹深怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC,#F1948A);">
+              <span class="xhs-card-emoji">💋</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">唇纹深显老？5个护唇小妙招</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F1948A;">唇</div>
+                  <span>唇妆控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('敏感肌护肤')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F6F3,#82E0AA);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag">护肤</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">敏感肌必看｜泛红刺痛怎么修护</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#27AE60;">敏</div>
+                  <span>敏感肌研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('成分分析')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#EBF5FB,#85C1E9);">
+              <span class="xhs-card-emoji">🔬</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">烟酰胺不耐受？这些成分更适合你</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#2E86C1;">成</div>
+                  <span>成分党</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('化妆工具选择')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🖌️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">新手化妆刷推荐｜这5支就够了</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F8BBD9;">刷</div>
+                  <span>工具控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.9k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 国风专区 ===== -->
+      <div class="lib-cat-panel" id="panel-guofeng" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#D4A03C 100%);">
+              <span class="xhs-card-emoji">🏮</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">唐风贵妃妆｜雍容华贵的大唐气象</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D4A03C,#B7950B);">唐</div>
+                  <span>国风美妆社</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#A3E4D7 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">宋韵清雅妆｜淡雅素净的宋式美学</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#A3E4D7,#48C9B0);">宋</div>
+                  <span>宋韵雅集</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">明制端庄妆｜明代女子的温婉气质</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#BB8FCE,#8E44AD);">明</div>
+                  <span>明制汉服社</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FDEDEC 0%,#F5B7B1 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">日常汉元素｜通勤也能穿的国风妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F5B7B1,#E74C3C);">汉</div>
+                  <span>汉元素日常</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">🦋</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">敦煌飞天妆｜壁画走出来的神仙妆容</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#D4A03C);">敦</div>
+                  <span>敦煌研究院</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <span class="xhs-card-emoji">🌙</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">青花瓷灵感妆｜东方美学的高级感</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#85C1E9,#2E86C1);">青</div>
+                  <span>青花集</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.7k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 银发专区 ===== -->
+      <div class="lib-cat-panel" id="panel-yinfa" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#AED6F1 100%);">
+              <span class="xhs-card-emoji">👵</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">50+优雅日常妆｜好气色的秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#AED6F1,#5DADE2);">优</div>
+                  <span>优雅姐姐</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">💄</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">重要场合妆｜女儿婚礼妈妈妆容</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#C4956A);">婚</div>
+                  <span>婚礼美妆师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7 0%,#D7BDE2 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">抗老护肤+妆容｜熟龄肌的正确打开方式</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D7BDE2,#BB8FCE);">抗</div>
+                  <span>抗老研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 11.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">减龄10岁的腮红打法｜苹果肌回来了</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F8BBD9,#F1948A);">减</div>
+                  <span>减龄美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">👁️</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">下垂眼型调整｜阿姨变姐姐的眼妆技巧</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#F4D03F);">眼</div>
+                  <span>眼妆实验室</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#E8F6F3 0%,#82E0AA 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">更年期护肤指南｜内调外养一起变美</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#82E0AA,#27AE60);">更</div>
+                  <span>健康生活家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.1k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 大牌精选 ===== -->
+      <div class="lib-cat-panel" id="panel-dapai" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#C4956A 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#1a1a1a,#333);color:#D4AF37;">Y</div>
+              <span class="xhs-card-tag xhs-tag-brand">YSL</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">YSL 2024春夏限定｜不羁少女的法式妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#1a1a1a;color:#D4AF37;">Y</div>
+                  <span>YSL官方</span>
+                </div>
+                <div class="xhs-card-like">❤️ 15.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#333);color:#fff;">D</div>
+              <span class="xhs-card-tag xhs-tag-brand">Dior</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">Dior烈艳蓝金｜经典红唇永不过时</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#fff;">D</div>
+                  <span>Dior美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 21.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#222);color:#FFD700;">L</div>
+              <span class="xhs-card-tag xhs-tag-brand">兰蔻</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">兰蔻菁纯系列｜贵妇级底妆养肤又遮瑕</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#FFD700;">L</div>
+                  <span>兰蔻LANCOME</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7 0%,#D7BDE2 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#333);color:#fff;">E</div>
+              <span class="xhs-card-tag xhs-tag-brand">雅诗兰黛</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">雅诗兰黛DW｜油皮亲妈持妆测评</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#fff;">E</div>
+                  <span>EL雅诗兰黛</span>
+                </div>
+                <div class="xhs-card-like">❤️ 13.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDF2E9 0%,#D4A03C 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#D4A03C,#B7950B);color:#fff;">花</div>
+              <span class="xhs-card-tag xhs-tag-brand">花西子</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">花西子傣族印象｜东方美学新诠释</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D4A03C,#B7950B);color:#fff;">花</div>
+                  <span>花西子Florasis</span>
+                </div>
+                <div class="xhs-card-like">❤️ 18.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#333,#555);color:#fff;">毛</div>
+              <span class="xhs-card-tag xhs-tag-brand">毛戈平</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">毛戈平光影塑颜｜化妆大师的修容秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#333;color:#fff;">毛</div>
+                  <span>MAOGEPING</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.4k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 明星同款 ===== -->
+      <div class="lib-cat-panel" id="panel-star" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC 0%,#F1948A 100%);">
+              <span class="xhs-card-emoji">💃</span>
+              <span class="xhs-card-tag xhs-tag-star">红毯妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">复古港风红毯妆｜80年代女星的风情万种</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F1948A,#E74C3C);">港</div>
+                  <span>港风复刻</span>
+                </div>
+                <div class="xhs-card-like">❤️ 16.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">🎤</span>
+              <span class="xhs-card-tag xhs-tag-star">舞台妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">演唱会舞台妆｜镜头前也超上镜</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#BB8FCE,#8E44AD);">舞</div>
+                  <span>舞台美妆师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">📸</span>
+              <span class="xhs-card-tag xhs-tag-star">日常街拍</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">女星街拍妆容｜伪素颜的最高境界</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#F4D03F);">街</div>
+                  <span>街拍研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <span class="xhs-card-emoji">👑</span>
+              <span class="xhs-card-tag xhs-tag-star">红毯妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">金晨同款人鱼姬｜戛纳红毯妆容解析</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#85C1E9,#2E86C1);">鱼</div>
+                  <span>红毯美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 23.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">🎬</span>
+              <span class="xhs-card-tag xhs-tag-star">日常街拍</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">韩剧女主同款｜清透奶油肌妆教</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);">韩</div>
+                  <span>韩剧女主</span>
+                </div>
+                <div class="xhs-card-like">❤️ 19.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FADADD 0%,#F8BBD9 100%);">
+              <span class="xhs-card-emoji">💗</span>
+              <span class="xhs-card-tag xhs-tag-star">舞台妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">爱豆打歌服同款｜甜酷女团妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F8BBD9,#F1948A);">女</div>
+                  <span>女团制造机</span>
+                </div>
+                <div class="xhs-card-like">❤️ 14.8k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1388,6 +2040,55 @@ function switchLibTab(el){
   document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
 }
+
+/* ============== Library Category Switch ============== */
+const libSubCategories = {
+  daren: ['全部','日常通勤','约会妆容','派对晚宴','韩系妆容','日系妆容','欧美妆'],
+  jubu: ['全部','眼妆','唇妆','底妆','修容','眉毛','腮红','遮瑕'],
+  qa: ['全部','底妆问题','眼妆问题','唇妆问题','护肤问题','成分问题','工具选择'],
+  guofeng: ['全部','唐妆','宋妆','明妆','汉妆','古风发型','敦煌飞天'],
+  yinfa: ['全部','日常优雅','重要场合','减龄妆容','护肤保养','妈妈妆'],
+  dapai: ['全部','YSL','Dior','兰蔻','雅诗兰黛','花西子','毛戈平','Armani'],
+  star: ['全部','红毯造型','街拍日常','舞台妆容','颁奖典礼','韩剧女主','港风复古']
+};
+
+let currentLibCat = 'daren';
+let currentLibSub = '全部';
+
+function switchLibCat(el, cat) {
+  document.querySelectorAll('.lib-cat-tab').forEach(tab => tab.classList.remove('active'));
+  el.classList.add('active');
+  currentLibCat = cat;
+  currentLibSub = '全部';
+  
+  document.querySelectorAll('.lib-cat-panel').forEach(panel => panel.style.display = 'none');
+  const panel = document.getElementById('panel-' + cat);
+  if(panel) panel.style.display = 'block';
+  
+  updateSubTabs(cat);
+  document.getElementById('libContentArea').scrollTop = 0;
+}
+
+function updateSubTabs(cat) {
+  const subTabsContainer = document.getElementById('libSubTabs');
+  const subs = libSubCategories[cat] || ['全部'];
+  
+  subTabsContainer.innerHTML = subs.map((sub, i) => 
+    `<div class="lib-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchLibSubTab(this, '${sub}')">${sub}</div>`
+  ).join('');
+}
+
+function switchLibSubTab(el, sub) {
+  document.querySelectorAll('.lib-sub-tab').forEach(tab => tab.classList.remove('active'));
+  el.classList.add('active');
+  currentLibSub = sub;
+  showToast('切换到: ' + sub);
+}
+
+/* Init library sub tabs */
+document.addEventListener('DOMContentLoaded', function() {
+  updateSubTabs('daren');
+});
 
 function selectRecharge(el){
   el.parentElement.querySelectorAll('.recharge-item').forEach(i=>i.classList.remove('selected'));
