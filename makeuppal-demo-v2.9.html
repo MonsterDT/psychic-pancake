@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>妆伴 MakeupPal V2.9 Demo</title>
+    <style>
+:root {
+  --color-bg: #FFF8F0; --color-bg-alt: #FFF1E6; --color-bg-card: #FFFFFF;
+  --color-primary: #C4956A; --color-primary-light: #D4B896; --color-primary-dark: #A67B52;
+  --color-accent: #E8C9A8; --color-text: #2D2A26; --color-text-secondary: #6B6560; --color-text-muted: #9B9590;
+  --color-border: #E8DDD2; --color-border-light: #F5EDE4; --color-hero-bg: #1A1816; --color-hero-text: #FFF8F0;
+  --color-success: #6B9E6B; --color-warning: #D4A03C; --color-danger: #C45C5C; --color-info: #5B8EC4;
+  --font-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(45,42,38,0.08); --shadow-md: 0 4px 12px rgba(45,42,38,0.1);
+  --font-size-xs: 11px; --font-size-sm: 12px; --font-size-base: 14px; --font-size-md: 15px; --font-size-lg: 17px;
+  --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
+  --spacing-1: 4px; --spacing-2: 8px; --spacing-3: 12px; --spacing-4: 16px; --spacing-5: 20px; --spacing-6: 24px;
+  --tab-bar-height: 56px; --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px; --z-tab: 100; --z-modal: 300; --z-toast: 400;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); --duration-fast: 150ms; --duration-normal: 250ms; --duration-slow: 400ms;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-text); font-size: var(--font-size-base); line-height: 1.6; }
+.app-shell { max-width: var(--content-max-width); margin: 0 auto; min-height: 100vh; background: var(--color-bg); position: relative; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,0.08); }
+.page { display: none; padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom)); min-height: 100vh; overflow-y: auto; animation: pageIn var(--duration-normal) var(--ease); }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.app-header { position: sticky; top: 0; z-index: 50; background: rgba(255, 248, 240, 0.85); backdrop-filter: blur(18px); padding: 10px var(--spacing-4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(232, 221, 210, 0.5); }
+.header-left { display: flex; align-items: center; gap: var(--spacing-3); }
+.header-right { display: flex; align-items: center; gap: var(--spacing-2); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: var(--font-weight-semibold); font-size: 15px; }
+.avatar-sm { width: 24px; height: 24px; font-size: 10px; }
+.avatar-lg { width: 68px; height: 68px; font-size: 24px; }
+.avatar-ring { padding: 2px; background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-primary-light)); border-radius: 50%; }
+.avatar-ring .avatar { width: 100%; height: 100%; }
+.gp-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; border-radius: var(--radius-full); font-size: 11px; font-weight: var(--font-weight-semibold); cursor: pointer; }
+.gp-badge:active { transform: scale(0.95); }
+.icon-btn { position: relative; width: 36px; height: 36px; background: transparent; border: none; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); display: flex; align-items: center; justify-content: center; transition: all var(--duration-fast) var(--ease); }
+.icon-btn:active { transform: scale(0.92); background: var(--color-bg-alt); }
+.icon-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+.notif-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; background: var(--color-danger); border-radius: 50%; border: 1.5px solid var(--color-bg); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 22px; border-radius: var(--radius-full); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); border: none; cursor: pointer; transition: all var(--duration-fast) var(--ease); font-family: var(--font-sans); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; box-shadow: 0 2px 10px rgba(196, 149, 106, 0.3); }
+.btn-secondary { background: var(--color-bg-card); color: var(--color-primary); border: 1.5px solid var(--color-primary); }
+.btn-ghost { background: transparent; color: var(--color-text-secondary); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+.card { background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+.badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-xs); font-size: 10px; font-weight: var(--font-weight-semibold); }
+.badge-primary { background: #F5EDE4; color: var(--color-primary-dark); }
+.badge-success { background: #E8F0E8; color: var(--color-success); }
+.badge-warning { background: #FAF0E0; color: var(--color-warning); }
+.badge-danger { background: #F5E8E8; color: var(--color-danger); }
+.badge-info { background: #E8EEF5; color: var(--color-info); }
+.badge-pill { border-radius: var(--radius-full); }
+.section { padding: var(--spacing-5) var(--spacing-4); }
+.section-sm { padding: var(--spacing-3) var(--spacing-4); }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4); }
+.section-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text); }
+.section-more { font-size: var(--font-size-sm); color: var(--color-text-muted); cursor: pointer; }
+.hero-banner { margin: var(--spacing-4); border-radius: var(--radius-lg); overflow: hidden; position: relative; aspect-ratio: 16/9; box-shadow: var(--shadow-md); cursor: pointer; }
+.hero-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,24,22,0) 40%, rgba(26,24,22,0.65) 100%); }
+.hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; color: #fff; }
+.hero-content h1 { font-size: 24px; font-weight: var(--font-weight-bold); margin-bottom: 4px; }
+.hero-content p { font-size: var(--font-size-sm); color: rgba(255,248,240,0.8); }
+.hero-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+.hero-dots span { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,248,240,0.4); transition: all var(--duration-fast) var(--ease); }
+.hero-dots span.active { width: 16px; border-radius: 3px; background: #fff; }
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-3); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-4); }
+.feature-card { padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all var(--duration-fast) var(--ease); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.feature-card:active { transform: scale(0.97); }
+.feature-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; }
+.feature-icon svg { color: var(--color-primary); }
+.feature-text { text-align: center; }
+.feature-text h3 { font-size: 12px; font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 2px; }
+.feature-text p { font-size: 10px; color: var(--color-text-muted); }
+.feature-new { color: var(--color-danger) !important; font-weight: var(--font-weight-bold) !important; }
+.feed-list { padding: 0 var(--spacing-4); margin-bottom: var(--spacing-6); }
+.feed-item { display: flex; gap: var(--spacing-3); padding: 12px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.feed-item:active { transform: scale(0.98); }
+.feed-cover { width: 84px; height: 84px; border-radius: var(--radius-sm); overflow: hidden; flex-shrink: 0; background: var(--color-bg-alt); }
+.feed-cover img { width: 100%; height: 100%; object-fit: cover; }
+.feed-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+.feed-title { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 6px; }
+.feed-creator { display: flex; align-items: center; gap: 6px; }
+.feed-creator-name { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.feed-bottom { display: flex; align-items: center; justify-content: space-between; }
+.feed-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.scan-hero { padding: var(--spacing-6) var(--spacing-4) var(--spacing-5); text-align: center; background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%); }
+.scan-hero h2 { font-size: 26px; font-weight: var(--font-weight-bold); color: var(--color-text); margin-bottom: 8px; }
+.scan-hero p { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--spacing-5); padding: 0 var(--spacing-4); }
+.scan-camera { width: 180px; height: 180px; margin: 0 auto var(--spacing-5); position: relative; cursor: pointer; }
+.scan-camera-ring { position: absolute; inset: -8px; border-radius: 50%; border: 2px dashed var(--color-primary-light); animation: spin 12s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.scan-camera-inner { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, var(--color-bg-card), var(--color-bg-alt)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 10px 40px rgba(196, 149, 106, 0.2), inset 0 0 0 1px var(--color-border); color: var(--color-primary); }
+.scan-camera-inner span { font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: var(--font-weight-medium); }
+.scan-camera.scanning .scan-camera-ring { animation-duration: 2s; border-color: var(--color-primary); }
+.scan-camera.scanning .scan-camera-inner { box-shadow: 0 0 0 8px rgba(196, 149, 106, 0.1), 0 10px 40px rgba(196, 149, 106, 0.3); }
+.scan-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-6); }
+.scan-feat { text-align: center; padding: 16px 8px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.scan-feat-icon { width: 44px; height: 44px; margin: 0 auto 8px; border-radius: 50%; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; }
+.scan-feat h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 3px; }
+.scan-feat p { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.scan-history { padding: 0 var(--spacing-4) var(--spacing-6); }
+.history-item { display: flex; gap: var(--spacing-3); padding: 12px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.history-item:active { transform: scale(0.98); }
+.history-thumb { width: 56px; height: 56px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-primary-light); }
+.history-info { flex: 1; min-width: 0; }
+.history-info h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 4px; }
+.history-info p { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.risk-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.risk-bar { flex: 1; height: 5px; border-radius: 3px; background: var(--color-bg-alt); overflow: hidden; }
+.risk-fill { height: 100%; border-radius: 3px; transition: width var(--duration-slow) var(--ease); }
+.risk-fill.safe { background: var(--color-success); width: 18%; }
+.risk-fill.caution { background: var(--color-warning); width: 45%; }
+.risk-fill.danger { background: var(--color-danger); width: 75%; }
+.risk-label { font-size: 11px; font-weight: var(--font-weight-semibold); flex-shrink: 0; }
+.risk-label.safe { color: var(--color-success); }
+.risk-label.caution { color: var(--color-warning); }
+.risk-label.danger { color: var(--color-danger); }
+.mall-tabs { display: flex; gap: 0; padding: 0 var(--spacing-4); border-bottom: 1px solid var(--color-border-light); margin-bottom: var(--spacing-4); overflow-x: auto; }
+.mall-tab { padding: 14px 0; margin-right: var(--spacing-5); font-size: var(--font-size-md); color: var(--color-text-muted); cursor: pointer; position: relative; white-space: nowrap; font-weight: var(--font-weight-medium); transition: color var(--duration-fast) var(--ease); flex-shrink: 0; }
+.mall-tab.active { color: var(--color-text); font-weight: var(--font-weight-semibold); }
+.mall-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 24px; height: 3px; background: var(--color-primary); border-radius: 2px; }
+.brand-strip { padding: 0 var(--spacing-4) var(--spacing-4); }
+.brand-card { display: flex; align-items: center; gap: var(--spacing-3); padding: 14px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.brand-card:active { transform: scale(0.98); }
+.brand-logo { width: 50px; height: 50px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: var(--font-weight-bold); font-size: 18px; flex-shrink: 0; }
+.brand-info { flex: 1; min-width: 0; }
+.brand-info h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+.verified { font-size: 9px; padding: 2px 6px; background: #E8EEF5; color: var(--color-info); border-radius: var(--radius-xs); font-weight: var(--font-weight-semibold); }
+.brand-info p { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.product-grid { padding: 0 var(--spacing-4) var(--spacing-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-3); }
+.product-card { border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.product-card:active { transform: scale(0.97); }
+.product-img { width: 100%; aspect-ratio: 1; background: var(--color-bg-alt); position: relative; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-tag { position: absolute; top: 8px; left: 8px; }
+.product-text { padding: 10px; }
+.product-text h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-meta { display: flex; align-items: center; justify-content: space-between; }
+.product-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.product-sales { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+.mirror-hero { height: 58vh; min-height: 400px; background: linear-gradient(160deg, var(--color-hero-bg) 0%, #2A2622 100%); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-hero-text); overflow: hidden; }
+.mirror-face { width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle, rgba(196,149,106,0.25) 0%, rgba(196,149,106,0.08) 60%, transparent 100%); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-5); position: relative; }
+.mirror-face-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(196,149,106,0.4); animation: facePulse 2.5s ease-in-out infinite; }
+@keyframes facePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.6; } }
+.mirror-face svg { color: var(--color-primary-light); }
+.mirror-hero h2 { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: 6px; }
+.mirror-hero p { font-size: var(--font-size-sm); color: rgba(255,248,240,0.5); }
+.mirror-steps { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.mirror-steps span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,248,240,0.25); transition: all var(--duration-fast) var(--ease); }
+.mirror-steps span.active { width: 20px; border-radius: 3px; background: var(--color-primary); }
+.mirror-controls { position: absolute; top: calc(var(--safe-top, 0px) + 16px); right: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mirror-ctrl-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,248,240,0.15); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: var(--color-hero-text); cursor: pointer; transition: background var(--duration-fast) var(--ease); }
+.mirror-ctrl-btn:active { background: rgba(255,248,240,0.25); }
+.tutorial-list { padding: var(--spacing-4); }
+.tutorial-item { display: flex; gap: var(--spacing-3); padding: 14px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); transition: all var(--duration-fast) var(--ease); }
+.tutorial-item.done { opacity: 0.7; }
+.tutorial-item.active { background: linear-gradient(135deg, rgba(196,149,106,0.08), rgba(196,149,106,0.02)); border: 1.5px solid var(--color-primary); box-shadow: 0 2px 12px rgba(196,149,106,0.15); }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: 14px; color: var(--color-primary-dark); flex-shrink: 0; }
+.tutorial-item.done .step-num { background: var(--color-success); color: #fff; }
+.tutorial-item.active .step-num { background: var(--color-primary); color: #fff; }
+.tutorial-text { flex: 1; }
+.tutorial-text h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 3px; }
+.tutorial-text p { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.physics-tag { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; padding: 3px 8px; background: rgba(107, 158, 107, 0.12); border-radius: var(--radius-xs); font-size: 10px; color: var(--color-success); font-weight: var(--font-weight-semibold); }
+.lib-tabs { display: flex; gap: var(--spacing-3); padding: var(--spacing-4); overflow-x: auto; }
+.lib-tab { padding: 8px 16px; background: var(--color-bg-card); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); }
+.lib-tab.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.lib-grid { padding: 0 var(--spacing-4) var(--spacing-6); display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-3); }
+.lib-card { border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.lib-card:active { transform: scale(0.97); }
+.lib-card-cover { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--color-bg-alt), var(--color-accent)); display: flex; align-items: center; justify-content: center; position: relative; }
+.lib-card-emoji { font-size: 48px; }
+.lib-card-badge { position: absolute; top: 8px; left: 8px; }
+.lib-card-info { padding: 10px; }
+.lib-card-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lib-card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); }
+.lib-card-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.profile-banner { padding: var(--spacing-6) var(--spacing-5) var(--spacing-6); background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 60%, var(--color-accent) 100%); color: #fff; position: relative; overflow: hidden; }
+.profile-banner::before { content: ''; position: absolute; top: -60%; right: -30%; width: 280px; height: 280px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); }
+.profile-banner::after { content: ''; position: absolute; bottom: -40%; left: -20%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); }
+.profile-top { display: flex; align-items: center; gap: var(--spacing-4); position: relative; z-index: 1; margin-bottom: var(--spacing-5); }
+.profile-name { flex: 1; }
+.profile-name h2 { font-size: 20px; font-weight: var(--font-weight-bold); margin-bottom: 6px; }
+.level-tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); border-radius: var(--radius-full); font-size: 11px; font-weight: var(--font-weight-semibold); }
+.profile-stats { display: flex; justify-content: space-around; position: relative; z-index: 1; padding-top: var(--spacing-4); border-top: 1px solid rgba(255,255,255,0.2); }
+.stat { text-align: center; }
+.stat-num { font-size: 20px; font-weight: var(--font-weight-bold); margin-bottom: 2px; }
+.stat-label { font-size: 11px; opacity: 0.85; }
+.task-section { padding: var(--spacing-4); }
+.task-card { padding: var(--spacing-4); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.task-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4); }
+.task-header h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-text); }
+.task-tabs { display: flex; gap: 3px; background: var(--color-bg-alt); border-radius: var(--radius-full); padding: 3px; }
+.task-tab { padding: 4px 12px; font-size: 11px; color: var(--color-text-muted); border-radius: var(--radius-full); cursor: pointer; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); }
+.task-tab.active { background: var(--color-primary); color: #fff; }
+.task-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 12px 0; border-bottom: 1px solid var(--color-border-light); }
+.task-item:last-child { border-bottom: none; }
+.task-icon { width: 38px; height: 38px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
+.task-info { flex: 1; min-width: 0; }
+.task-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 5px; }
+.task-progress { height: 4px; background: var(--color-bg-alt); border-radius: 2px; overflow: hidden; }
+.task-prog-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light)); border-radius: 2px; transition: width var(--duration-normal) var(--ease); }
+.task-reward { text-align: right; flex-shrink: 0; min-width: 60px; }
+.task-gp { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 6px; }
+.claim-btn { padding: 4px 12px; font-size: 11px; font-weight: var(--font-weight-semibold); background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; border: none; border-radius: var(--radius-full); cursor: pointer; font-family: var(--font-sans); transition: all var(--duration-fast) var(--ease); }
+.claim-btn:disabled { background: var(--color-bg-alt); color: var(--color-text-muted); cursor: not-allowed; }
+.level-section { padding: 0 var(--spacing-4) var(--spacing-5); }
+.level-card { padding: var(--spacing-5); background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-bg-alt) 100%); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
+.level-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 180px; height: 180px; background: radial-gradient(circle, rgba(196,149,106,0.08) 0%, transparent 60%); }
+.level-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-3); position: relative; z-index: 1; }
+.level-name { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text); display: flex; align-items: center; gap: 8px; }
+.level-next { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.level-bar { height: 10px; background: var(--color-border-light); border-radius: 5px; overflow: hidden; margin-bottom: 8px; position: relative; z-index: 1; }
+.level-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light), var(--color-accent)); border-radius: 5px; position: relative; transition: width var(--duration-slow) var(--ease); }
+.level-bar-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite; }
+@keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+.level-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); position: relative; z-index: 1; }
+.level-perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-3); margin-top: var(--spacing-4); padding-top: var(--spacing-4); border-top: 1px solid var(--color-border-light); position: relative; z-index: 1; }
+.perk { text-align: center; }
+.perk-icon { width: 36px; height: 36px; margin: 0 auto 6px; border-radius: 50%; background: var(--color-bg-card); display: flex; align-items: center; justify-content: center; color: var(--color-primary); box-shadow: 0 1px 2px rgba(45,42,38,0.04); }
+.perk p { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-3); }
+.shop-item { border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.shop-item:active { transform: scale(0.97); }
+.shop-item-img { width: 100%; aspect-ratio: 1; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary-light); position: relative; }
+.shop-tag { position: absolute; top: 8px; right: 8px; }
+.shop-item-text { padding: 10px; }
+.shop-item-text h4 { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; }
+.shop-item-price { display: flex; align-items: center; justify-content: space-between; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.stock-tag { font-size: 10px; color: var(--color-danger); font-weight: var(--font-weight-semibold); }
+.menu-card { margin: 0 var(--spacing-4) var(--spacing-5); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+.menu-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 14px var(--spacing-4); border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--duration-fast) var(--ease); }
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: var(--color-bg-alt); }
+.menu-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
+.menu-text { flex: 1; }
+.menu-text h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); color: var(--color-text); }
+.menu-arrow { color: var(--color-text-muted); }
+.brand-hero { padding: var(--spacing-6) var(--spacing-4); text-align: center; background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%); }
+.brand-hero h2 { font-size: 24px; font-weight: var(--font-weight-bold); color: var(--color-text); margin-bottom: 8px; }
+.brand-hero p { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--spacing-5); padding: 0 var(--spacing-4); }
+.brand-hero-btns { display: flex; gap: var(--spacing-3); justify-content: center; }
+.dashboard { padding: var(--spacing-4); }
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-3); margin-bottom: var(--spacing-5); }
+.dash-card { padding: var(--spacing-4); text-align: center; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.dash-num { font-size: 22px; font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 3px; }
+.dash-label { font-size: 11px; color: var(--color-text-muted); }
+.chart-card { padding: var(--spacing-4); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-4); }
+.chart-card h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: var(--spacing-4); }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 110px; padding: 0 4px; }
+.chart-bar { flex: 1; background: linear-gradient(180deg, var(--color-primary-light), var(--color-accent)); border-radius: 4px 4px 0 0; transition: height var(--duration-slow) var(--ease); }
+.chart-bar.active { background: linear-gradient(180deg, var(--color-primary), var(--color-primary-light)); }
+.chart-labels { display: flex; gap: 6px; margin-top: 8px; }
+.chart-labels div { flex: 1; text-align: center; font-size: 10px; color: var(--color-text-muted); }
+.brand-list { padding: 0 var(--spacing-4) var(--spacing-6); }
+.brand-list-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 14px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); }
+.brand-status { padding: 3px 10px; border-radius: var(--radius-full); font-size: 10px; font-weight: var(--font-weight-semibold); flex-shrink: 0; }
+.brand-status.approved { background: #E8F0E8; color: var(--color-success); }
+.brand-status.pending { background: #FAF0E0; color: var(--color-warning); }
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: var(--tab-bar-height); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(18px); border-top: 1px solid var(--color-border-light); display: flex; align-items: center; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); }
+.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--color-text-muted); transition: color var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px; position: relative; }
+.tab-btn.active { color: var(--color-primary); }
+.tab-btn svg { width: 20px; height: 20px; }
+.tab-btn:active { opacity: 0.7; }
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: rgba(26, 24, 22, 0.85); color: #fff; padding: 12px 24px; border-radius: var(--radius-md); font-size: var(--font-size-sm); z-index: var(--z-toast); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: all var(--duration-fast) var(--ease); max-width: 280px; text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.modal-overlay { position: fixed; inset: 0; background: rgba(26, 24, 22, 0.5); z-index: var(--z-modal); display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay.show { display: flex; }
+.modal { width: 100%; max-width: var(--content-max-width); background: var(--color-bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: var(--spacing-3) var(--spacing-4) var(--spacing-5); max-height: 82vh; overflow-y: auto; animation: slideUp var(--duration-normal) var(--ease); padding-bottom: calc(var(--spacing-5) + var(--safe-bottom)); }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--color-border); margin: 0 auto var(--spacing-4); }
+.modal-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text); text-align: center; margin-bottom: var(--spacing-5); }
+.result-header { text-align: center; padding: var(--spacing-5) var(--spacing-4); background: linear-gradient(135deg, rgba(196,149,106,0.08), rgba(196,149,106,0.02)); border-radius: var(--radius-md); margin-bottom: var(--spacing-5); }
+.result-score { font-size: 52px; font-weight: var(--font-weight-bold); line-height: 1; margin-bottom: 6px; color: var(--color-warning); }
+.result-label { font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-bottom: var(--spacing-3); }
+.result-summary { display: flex; justify-content: space-around; padding-top: var(--spacing-4); border-top: 1px solid var(--color-border-light); }
+.result-summary-item { text-align: center; }
+.result-summary-num { font-size: 20px; font-weight: var(--font-weight-bold); margin-bottom: 3px; }
+.result-summary-label { font-size: 10px; color: var(--color-text-muted); }
+.ingredient-section h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: var(--spacing-3); }
+.ingredient-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-border-light); }
+.ingredient-item:last-child { border-bottom: none; }
+.ingredient-name { font-size: var(--font-size-sm); color: var(--color-text); }
+.ingredient-meta { display: flex; align-items: center; gap: 10px; }
+.ingredient-function { font-size: 11px; color: var(--color-text-muted); }
+.risk-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.risk-dot.safe { background: var(--color-success); }
+.risk-dot.caution { background: var(--color-warning); }
+.risk-dot.danger { background: var(--color-danger); }
+.regulation-note { margin-top: var(--spacing-4); padding: 12px; background: #F5EDE4; border-radius: var(--radius-sm); border-left: 3px solid var(--color-primary); }
+.regulation-note p { font-size: 11px; color: var(--color-primary-dark); line-height: 1.6; }
+.gp-center-tabs { display: flex; gap: 3px; background: var(--color-bg-alt); border-radius: var(--radius-full); padding: 3px; margin-bottom: var(--spacing-5); }
+.gp-center-tab { flex: 1; padding: 8px; text-align: center; font-size: var(--font-size-sm); color: var(--color-text-muted); border-radius: var(--radius-full); cursor: pointer; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); }
+.gp-center-tab.active { background: var(--color-bg-card); color: var(--color-text); box-shadow: 0 1px 2px rgba(45,42,38,0.04); }
+.gp-level-card { padding: var(--spacing-5); background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); border-radius: var(--radius-lg); color: #fff; margin-bottom: var(--spacing-4); }
+.gp-level-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4); }
+.gp-level-name { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); display: flex; align-items: center; gap: 8px; }
+.gp-level-next { font-size: var(--font-size-xs); opacity: 0.8; }
+.gp-level-bar { height: 8px; background: rgba(255,255,255,0.3); border-radius: 4px; overflow: hidden; margin-bottom: var(--spacing-2); }
+.gp-level-bar-fill { height: 100%; background: #fff; border-radius: 4px; transition: width var(--duration-slow) var(--ease); }
+.gp-level-meta { display: flex; justify-content: space-between; font-size: 11px; opacity: 0.8; }
+.gp-task-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 14px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); }
+.gp-task-item.done { opacity: 0.6; }
+.gp-task-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
+.gp-task-info { flex: 1; }
+.gp-task-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 4px; }
+.gp-task-progress { height: 4px; background: var(--color-bg-alt); border-radius: 2px; overflow: hidden; }
+.gp-task-prog-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light)); border-radius: 2px; }
+.gp-task-reward { text-align: right; flex-shrink: 0; }
+.gp-task-gp { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 4px; }
+.exchange-tabs { display: flex; gap: var(--spacing-2); padding: 0 0 var(--spacing-4); overflow-x: auto; }
+.exchange-tab { padding: 8px 16px; background: var(--color-bg-card); border: 1.5px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); }
+.exchange-tab.active { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.exchange-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-3); }
+.exchange-item { background: var(--color-bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.exchange-item:active { transform: scale(0.97); }
+.exchange-item-img { width: 100%; aspect-ratio: 1; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; position: relative; }
+.exchange-item-badge { position: absolute; top: 6px; left: 6px; }
+.exchange-item-info { padding: 10px; }
+.exchange-item-info h4 { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; }
+.exchange-item-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.recharge-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-3); margin-bottom: var(--spacing-5); }
+.recharge-item { padding: var(--spacing-4); background: var(--color-bg-card); border: 2px solid var(--color-border); border-radius: var(--radius-md); text-align: center; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.recharge-item:active { transform: scale(0.97); }
+.recharge-item.selected { border-color: var(--color-primary); background: rgba(196,149,106,0.05); }
+.recharge-amount { font-size: 24px; font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 4px; }
+.recharge-price { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.recharge-item.popular { position: relative; }
+.recharge-item.popular::before { content: '最受欢迎'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); padding: 2px 8px; background: var(--color-danger); color: #fff; font-size: 9px; border-radius: var(--radius-xs); font-weight: var(--font-weight-semibold); }
+.trending-list { padding: 0; }
+.trending-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 14px var(--spacing-4); background: var(--color-bg-card); border-bottom: 1px solid var(--color-border-light); cursor: pointer; transition: background var(--duration-fast) var(--ease); }
+.trending-item:active { background: var(--color-bg-alt); }
+.trending-rank { width: 24px; font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text-muted); text-align: center; }
+.trending-rank.top3 { color: var(--color-primary); }
+.trending-cover { width: 50px; height: 50px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.trending-info { flex: 1; }
+.trending-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 4px; }
+.trending-info p { font-size: 11px; color: var(--color-text-muted); }
+.trending-gp { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.hidden { display: none !important; }
+@media (max-width: 414px) { .app-shell { box-shadow: none; } }
+    </style>
+</head>
+<body>
+<div class="app-shell" id="app">
+
+  <!-- Home Page V2.9 -->
+  <div class="page active" id="page-home">
+    <header class="app-header">
+      <div class="header-left">
+        <div class="avatar-ring" style="width:42px;height:42px;"><div class="avatar">美</div></div>
+        <div><div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text);">小美</div><div style="font-size: 10px; color: var(--color-text-muted);">金妆 Lv.3</div></div>
+        <div class="gp-badge" onclick="openModal('gpCenterModal')" style="margin-left:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg><span id="gp-balance">328</span></div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('消息中心')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="notif-dot"></span></button>
+        <button class="btn btn-secondary btn-sm" onclick="openModal('rechargeModal')">充值</button>
+      </div>
+    </header>
+    <div class="features-grid" style="margin-top:var(--spacing-4);">
+      <div class="feature-card" onclick="switchTab('mirror')"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg></div><div class="feature-text"><h3>镜面模式</h3><p>跟练妆容</p></div></div>
+      <div class="feature-card" onclick="switchTab('search')"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="feature-text"><h3>局部搜索</h3><p>问题解答</p></div></div>
+      <div class="feature-card" onclick="switchTab('mall')"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><div class="feature-text"><h3>商城</h3><p>妆容模板</p></div></div>
+      <div class="feature-card" onclick="openModal('ingredientScanModal')"><div class="feature-icon" style="background:#F5E8E8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-danger);"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div class="feature-text"><h3>成分扫描</h3><p class="feature-new">NEW</p></div></div>
+      <div class="feature-card" onclick="openModal('creatorModal')"><div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="feature-text"><h3>创作者</h3><p>投稿模板</p></div></div>
+    </div>
+    <div class="hero-banner" onclick="switchTab('mirror')"><img src="ui-design/assets/hero-banner.jpg" alt="AI焕新妆造"><div class="hero-gradient"></div><div class="hero-content"><h1>AI 焕新妆造</h1><p>发现最适合你的专属妆容</p></div><div class="hero-dots"><span class="active"></span><span></span><span></span></div></div>
+    <div class="section-sm"><div class="section-header"><div class="section-title">为你推荐</div><a class="section-more" onclick="openModal('trendingModal')">热度榜 →</a></div></div>
+    <div class="feed-list">
+      <div class="feed-item" onclick="switchTab('mirror')"><div class="feed-cover"><img src="ui-design/assets/feed-card-1.jpg" alt="晚宴精致妆容"></div><div class="feed-info"><div><div class="feed-title">晚宴精致妆容</div><div class="feed-creator"><div class="avatar avatar-sm">L</div><span class="feed-creator-name">美妆师 Luna</span></div></div><div class="feed-bottom"><span class="feed-price">50 GP</span><span class="badge badge-primary badge-pill">鹅蛋脸</span></div></div></div>
+      <div class="feed-item" onclick="switchTab('mirror')"><div class="feed-cover"><img src="ui-design/assets/feed-card-2.jpg" alt="日常清新裸妆"></div><div class="feed-info"><div><div class="feed-title">日常清新裸妆</div><div class="feed-creator"><div class="avatar avatar-sm" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary-light));">妆</div><span class="feed-creator-name">小妆日记</span></div></div><div class="feed-bottom"><span class="feed-price">30 GP</span><span class="badge badge-primary badge-pill">圆脸</span></div></div></div>
+      <div class="feed-item" onclick="openModal('guofengModal')"><div class="feed-cover"><img src="ui-design/assets/product-1.jpg" alt="国风古韵妆"></div><div class="feed-info"><div><div class="feed-title">国风古韵妆</div><div class="feed-creator"><div class="avatar avatar-sm" style="background:linear-gradient(135deg,var(--color-primary-dark),var(--color-primary));">风</div><span class="feed-creator-name">国风美妆社</span></div></div><div class="feed-bottom"><span class="feed-price">80 GP</span><span class="badge badge-warning badge-pill">国风专栏</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- Library Page (颜库) V2.9 -->
+  <div class="page" id="page-library">
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">颜库</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('搜索模板')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
+    <div class="lib-tabs"><div class="lib-tab active">推荐</div><div class="lib-tab">国风</div><div class="lib-tab">银发</div><div class="lib-tab">职场</div><div class="lib-tab">约会</div></div>
+    <div class="lib-grid">
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover"><span class="lib-card-emoji">💄</span><span class="lib-card-badge badge badge-primary badge-pill">L2</span></div><div class="lib-card-info"><h4>晚宴精致妆容</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">50 GP</span></div></div></div>
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);"><span class="lib-card-emoji">🌸</span><span class="lib-card-badge badge badge-primary badge-pill">L1</span></div><div class="lib-card-info"><h4>日常清新裸妆</h4><div class="lib-card-meta"><span>⭐ 4.8</span><span class="lib-card-price">免费</span></div></div></div>
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#D4A03C,#C4956A);"><span class="lib-card-emoji">🏮</span><span class="lib-card-badge badge badge-warning badge-pill">国风</span></div><div class="lib-card-info"><h4>唐风贵妇妆</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">80 GP</span></div></div></div>
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#B89AC8,#D4B896);"><span class="lib-card-emoji">✨</span><span class="lib-card-badge badge badge-info badge-pill">L3</span></div><div class="lib-card-info"><h4>派对闪耀妆</h4><div class="lib-card-meta"><span>⭐ 4.7</span><span class="lib-card-price">120 GP</span></div></div></div>
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#E8A0A0,#E8C9A8);"><span class="lib-card-emoji">🌹</span><span class="lib-card-badge badge badge-primary badge-pill">L2</span></div><div class="lib-card-info"><h4>职场干练妆</h4><div class="lib-card-meta"><span>⭐ 4.8</span><span class="lib-card-price">60 GP</span></div></div></div>
+      <div class="lib-card" onclick="openModal('templateDetailModal')"><div class="lib-card-cover" style="background:linear-gradient(135deg,#6B9E6B,#D4B896);"><span class="lib-card-emoji">👵</span><span class="lib-card-badge badge badge-success badge-pill">银发</span></div><div class="lib-card-info"><h4>银发优雅妆</h4><div class="lib-card-meta"><span>⭐ 4.9</span><span class="lib-card-price">40 GP</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- Search Page -->
+  <div class="page" id="page-search">
+    <header class="app-header"><div class="header-left" style="flex:1;"><div style="flex:1;background:var(--color-bg-alt);border-radius:var(--radius-full);padding:8px 16px;display:flex;align-items:center;gap:8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span style="font-size:var(--font-size-sm);color:var(--color-text-muted);">搜索妆容、成分、问题...</span></div></div><div class="header-right"><button class="btn btn-ghost btn-sm" onclick="showToast('取消')">取消</button></div></header>
+    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">局部问题</div></div></div>
+    <div class="feed-list">
+      <div class="feed-item" onclick="openModal('problemModal')"><div class="feed-cover" style="background:#F5E8E8;display:flex;align-items:center;justify-content:center;font-size:32px;">👁️</div><div class="feed-info"><div><div class="feed-title">眼妆晕染怎么办</div><div class="feed-creator"><span class="feed-creator-name">常见问题 · 3 种解法</span></div></div><div class="feed-bottom"><span class="badge badge-primary badge-pill">点击查看</span></div></div></div>
+      <div class="feed-item" onclick="openModal('problemModal')"><div class="feed-cover" style="background:#FAF0E0;display:flex;align-items:center;justify-content:center;font-size:32px;">💋</div><div class="feed-info"><div><div class="feed-title">唇纹明显如何遮盖</div><div class="feed-creator"><span class="feed-creator-name">常见问题 · 2 种解法</span></div></div><div class="feed-bottom"><span class="badge badge-primary badge-pill">点击查看</span></div></div></div>
+    </div>
+    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">避雷榜单</div><span class="badge badge-danger badge-pill">危险成分</span></div></div>
+    <div class="feed-list" style="margin-top:0;">
+      <div class="feed-item" onclick="openModal('problemModal')"><div class="feed-cover" style="background:#F5E8E8;display:flex;align-items:center;justify-content:center;font-size:28px;">⚠️</div><div class="feed-info"><div><div class="feed-title">某品牌口红含禁用成分</div><div class="feed-creator"><span class="feed-creator-name">被点名 · 328 人已避雷</span></div></div><div class="feed-bottom"><span class="badge badge-danger badge-pill">查看详情</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- Scan Page -->
+  <div class="page" id="page-scan">
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">成分合规检测</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('历史记录')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></button></div></header>
+    <div class="scan-hero"><h2>拍照检测成分安全</h2><p>AI 智能识别成分表，检测违禁成分，评估敏感肌风险</p>
+      <div class="scan-camera" id="scanCamera" onclick="startScan()"><div class="scan-camera-ring"></div><div class="scan-camera-inner"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>点击拍摄成分表</span></div></div>
+      <button class="btn btn-primary" onclick="startScan()">开始扫描</button>
+    </div>
+    <div class="scan-features">
+      <div class="scan-feat"><div class="scan-feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h4>OCR 识别</h4><p>智能识别成分文字</p></div>
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:#F5E8E8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-danger);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><h4>违禁检测</h4><p>中欧美三方法规</p></div>
+      <div class="scan-feat"><div class="scan-feat-icon" style="background:#FAF0E0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-warning);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><h4>肤质评估</h4><p>敏感肌风险预警</p></div>
+    </div>
+    <div class="scan-history">
+      <div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">最近扫描</div><a class="section-more" onclick="showToast('全部历史')">全部</a></div>
+      <div class="history-item" onclick="showScanResult()"><div class="history-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div class="history-info"><h4>某品牌精华液</h4><p>2026-06-25 · OCR 识别</p><div class="risk-row"><div class="risk-bar"><div class="risk-fill safe"></div></div><span class="risk-label safe">低风险</span></div></div></div>
+      <div class="history-item" onclick="showScanResult()"><div class="history-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div class="history-info"><h4>某品牌口红</h4><p>2026-06-24 · 相册上传</p><div class="risk-row"><div class="risk-bar"><div class="risk-fill caution"></div></div><span class="risk-label caution">中风险</span></div></div></div>
+      <div class="history-item" onclick="showScanResult()"><div class="history-thumb"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div class="history-info"><h4>某品牌面膜</h4><p>2026-06-23 · OCR 识别</p><div class="risk-row"><div class="risk-bar"><div class="risk-fill danger"></div></div><span class="risk-label danger">高风险</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- Mall Page -->
+  <div class="page" id="page-mall">
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">妆容商城</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('搜索')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
+    <div class="mall-tabs no-scrollbar"><div class="mall-tab active">全部</div><div class="mall-tab">官方品牌</div><div class="mall-tab">热门推荐</div><div class="mall-tab">国风专栏</div><div class="mall-tab">银发焕新</div></div>
+    <div class="brand-strip"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">品牌官方</div><a class="section-more" onclick="switchTab('brand')">品牌合作 →</a></div>
+      <div class="brand-card" onclick="showToast('进入品牌页')"><div class="brand-logo">Y</div><div class="brand-info"><h4>YSL 圣罗兰 <span class="verified">官方认证</span></h4><p>官方妆容模板 12 个 · 评分 4.9</p></div><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();showToast('进店');">进店</button></div>
+      <div class="brand-card" onclick="showToast('进入品牌页')"><div class="brand-logo" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary-light));">L</div><div class="brand-info"><h4>LANCÔME <span class="verified">官方</span></h4><p>官方妆容模板 8 个 · 评分 4.8</p></div><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();showToast('进店');">进店</button></div>
+    </div>
+    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">热门妆容</div></div></div>
+    <div class="product-grid">
+      <div class="product-card" onclick="switchTab('mirror')"><div class="product-img"><img src="ui-design/assets/product-2.jpg" alt="法式红唇妆"><span class="badge badge-danger badge-pill product-tag">热销</span></div><div class="product-text"><h4>法式红唇妆</h4><div class="product-meta"><span class="product-price">60 GP</span><span class="product-sales">2.3万</span></div></div></div>
+      <div class="product-card" onclick="switchTab('mirror')"><div class="product-img"><img src="ui-design/assets/product-3.jpg" alt="元气腮红妆"></div><div class="product-text"><h4>元气腮红妆</h4><div class="product-meta"><span class="product-price">40 GP</span><span class="product-sales">1.8万</span></div></div></div>
+      <div class="product-card" onclick="switchTab('mirror')"><div class="product-img"><img src="ui-design/assets/product-4.jpg" alt="烟熏晚宴妆"><span class="badge badge-primary badge-pill product-tag">新品</span></div><div class="product-text"><h4>烟熏晚宴妆</h4><div class="product-meta"><span class="product-price">80 GP</span><span class="product-sales">5千</span></div></div></div>
+      <div class="product-card" onclick="switchTab('mirror')"><div class="product-img"><img src="ui-design/assets/product-1.jpg" alt="自然眉妆"></div><div class="product-text"><h4>自然眉妆</h4><div class="product-meta"><span class="product-price">20 GP</span><span class="product-sales">3.1万</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- Mirror Page -->
+  <div class="page" id="page-mirror">
+    <div class="mirror-hero">
+      <div class="mirror-controls">
+        <div class="mirror-ctrl-btn" onclick="showToast('切换摄像头')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l-4.64 4.36A9 9 0 0 1 20.49 15"/></svg></div>
+        <div class="mirror-ctrl-btn" onclick="showToast('设置')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+      </div>
+      <div class="mirror-face"><div class="mirror-face-ring"></div><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <h2>镜面跟练模式</h2><p>对准面部，开始跟练</p>
+      <div class="mirror-steps"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div class="tutorial-list">
+      <div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">今日跟练步骤</div><span class="badge badge-primary badge-pill">5 / 10 步</span></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>打底妆</h4><p>均匀涂抹粉底液，打造无瑕底妆</p></div></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>定妆</h4><p>散粉轻按定妆，持久持妆</p></div></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>画眉</h4><p>顺着眉形填充，自然过渡</p><div class="physics-tag"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>物理量已采集</div></div></div>
+      <div class="tutorial-item active"><div class="step-num">4</div><div class="tutorial-text"><h4 style="color:var(--color-primary);">画眼影 <span class="badge badge-primary badge-pill" style="margin-left:6px;">进行中</span></h4><p>浅色系打底，深色系晕染眼尾</p></div></div>
+      <div class="tutorial-item"><div class="step-num">5</div><div class="tutorial-text"><h4>画眼线</h4><p>沿着睫毛根部描绘，眼尾微微上扬</p></div></div>
+      <div class="tutorial-item"><div class="step-num">6</div><div class="tutorial-text"><h4>涂睫毛膏</h4><p>从根部向上刷，纤长浓密</p></div></div>
+    </div>
+  </div>
+
+  <!-- Profile Page -->
+  <div class="page" id="page-profile">
+    <div class="profile-banner"><div class="profile-top"><div class="avatar avatar-lg">美</div><div class="profile-name"><h2>小美</h2><div class="level-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>金妆 Lv.3</div></div><button class="btn btn-sm" style="background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);" onclick="showToast('编辑资料')">编辑</button></div><div class="profile-stats"><div class="stat"><div class="stat-num">328</div><div class="stat-label">焕新值</div></div><div class="stat"><div class="stat-num">28</div><div class="stat-label">收藏</div></div><div class="stat"><div class="stat-num">12</div><div class="stat-label">关注</div></div><div class="stat"><div class="stat-num">156</div><div class="stat-label">粉丝</div></div></div></div>
+    <div class="task-section"><div class="task-card"><div class="task-header"><h3>每日任务</h3><div class="task-tabs"><div class="task-tab active" onclick="switchTaskTab(this)">每日</div><div class="task-tab" onclick="switchTaskTab(this)">成就</div></div></div>
+      <div class="task-item"><div class="task-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="task-info"><h4>每日签到</h4><div class="task-progress"><div class="task-prog-fill" style="width:100%;"></div></div></div><div class="task-reward"><div class="task-gp">+10 GP</div><button class="claim-btn" onclick="claimTask(this,10)">领取</button></div></div>
+      <div class="task-item"><div class="task-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div class="task-info"><h4>浏览 3 个妆容模板</h4><div class="task-progress"><div class="task-prog-fill" style="width:66%;"></div></div></div><div class="task-reward"><div class="task-gp">+15 GP</div><button class="claim-btn" disabled>2/3</button></div></div>
+      <div class="task-item"><div class="task-icon" style="background:#E8F0E8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-success);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="task-info"><h4>成分扫描 1 次</h4><div class="task-progress"><div class="task-prog-fill" style="width:0%;"></div></div></div><div class="task-reward"><div class="task-gp">+20 GP</div><button class="claim-btn" onclick="openModal('ingredientScanModal')">去完成</button></div></div>
+      <div class="task-item" style="border-bottom:none;"><div class="task-icon" style="background:#FAF0E0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-warning);"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="task-info"><h4>收藏 1 个妆容</h4><div class="task-progress"><div class="task-prog-fill" style="width:100%;"></div></div></div><div class="task-reward"><div class="task-gp">+10 GP</div><button class="claim-btn" onclick="claimTask(this,10)">领取</button></div></div>
+    </div></div>
+    <div class="level-section"><div class="level-card"><div class="level-row"><div class="level-name"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--color-primary)"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>金妆 Lv.3</div><div class="level-next">距 Lv.4 钻妆 172 GP</div></div><div class="level-bar"><div class="level-bar-fill" style="width:65%;"></div></div><div class="level-meta"><span>已消耗 1,828 GP</span><span>2,000 GP 升级</span></div><div class="level-perks"><div class="perk"><div class="perk-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div><p>+10% GP 加成</p></div><div class="perk"><div class="perk-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><p>每月 1 次免费渲染</p></div><div class="perk"><div class="perk-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><p>专属客服</p></div></div></div></div>
+    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">兑换商城</div><a class="section-more" onclick="openModal('exchangeMallModal')">更多 →</a></div></div>
+    <div class="section" style="padding-top:0;"><div class="shop-grid">
+      <div class="shop-item" onclick="exchangeItem('AI 渲染 +1 次',200)"><div class="shop-item-img"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="shop-item-text"><h4>AI 渲染 +1 次</h4><div class="shop-item-price"><span>200 GP</span></div></div></div>
+      <div class="shop-item" onclick="exchangeItem('成分扫描 +3 次',150)"><div class="shop-item-img"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="shop-item-text"><h4>成分扫描 +3 次</h4><div class="shop-item-price"><span>150 GP</span></div></div></div>
+      <div class="shop-item" onclick="exchangeItem('口红小样',500)"><div class="shop-item-img"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span class="badge badge-danger badge-pill shop-tag">限量</span></div><div class="shop-item-text"><h4>口红小样</h4><div class="shop-item-price"><span>500 GP</span></div></div></div>
+      <div class="shop-item" onclick="exchangeItem('化妆刷套装',3000)"><div class="shop-item-img"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="shop-item-text"><h4>化妆刷套装</h4><div class="shop-item-price"><span>3000 GP</span></div></div></div>
+    </div></div>
+    <div class="menu-card">
+      <div class="menu-item" onclick="switchTab('brand')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="menu-text"><h4>品牌合作中心</h4></div><span class="menu-arrow">→</span></div>
+      <div class="menu-item" onclick="openModal('gpCenterModal')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div><div class="menu-text"><h4>焕新值中心</h4></div><span class="menu-arrow">→</span></div>
+      <div class="menu-item" onclick="showToast('面部资产库')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="menu-text"><h4>我的面部资产</h4></div><span class="menu-arrow">→</span></div>
+      <div class="menu-item" onclick="openModal('toolboxModal')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div class="menu-text"><h4>美妆工具箱</h4></div><span class="menu-arrow">→</span></div>
+      <div class="menu-item" onclick="showToast('设置')"><div class="menu-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="menu-text"><h4>设置</h4></div><span class="menu-arrow">→</span></div>
+    </div>
+  </div>
+
+  <!-- Brand Center Page -->
+  <div class="page" id="page-brand">
+    <header class="app-header"><div class="header-left"><button class="icon-btn" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">品牌合作中心</h2></div></header>
+    <div class="brand-hero"><h2>品牌方合作入口</h2><p>入驻妆伴，共建美妆 AI 生态</p><div class="brand-hero-btns"><button class="btn btn-primary" onclick="openModal('brandCoopModal')">立即入驻</button><button class="btn btn-secondary" onclick="showToast('了解更多')">了解更多</button></div></div>
+    <div class="dashboard"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">数据看板</div><span class="badge badge-info badge-pill">B 端 SaaS</span></div><div class="dash-grid"><div class="dash-card"><div class="dash-num">12</div><div class="dash-label">在售模板</div></div><div class="dash-card"><div class="dash-num">2,340</div><div class="dash-label">累计解锁</div></div><div class="dash-card"><div class="dash-num">4.8</div><div class="dash-label">平均评分</div></div><div class="dash-card"><div class="dash-num">¥12,580</div><div class="dash-label">本月收益</div></div></div><div class="chart-card"><h3>近 7 天解锁趋势</h3><div class="chart-bars"><div class="chart-bar" style="height:40%;"></div><div class="chart-bar" style="height:65%;"></div><div class="chart-bar" style="height:50%;"></div><div class="chart-bar active" style="height:80%;"></div><div class="chart-bar" style="height:60%;"></div><div class="chart-bar" style="height:90%;"></div><div class="chart-bar" style="height:75%;"></div></div><div class="chart-labels"><div>周一</div><div>周二</div><div>周三</div><div>周四</div><div>周五</div><div>周六</div><div>周日</div></div></div></div>
+    <div class="brand-list"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">合作品牌</div><span style="font-size:12px;color:var(--color-text-muted);">共 5 家</span></div>
+      <div class="brand-list-item"><div class="brand-logo">Y</div><div style="flex:1;"><h4 style="font-size:15px;font-weight:600;color:var(--color-text);margin-bottom:4px;">YSL 圣罗兰</h4><p style="font-size:11px;color:var(--color-text-muted);">Premium 品牌 · 联合实验室</p></div><span class="brand-status approved">已签约</span></div>
+      <div class="brand-list-item"><div class="brand-logo" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary-light));">L</div><div style="flex:1;"><h4 style="font-size:15px;font-weight:600;color:var(--color-text);margin-bottom:4px;">LANCÔME</h4><p style="font-size:11px;color:var(--color-text-muted);">Premium 品牌 · 白标模板</p></div><span class="brand-status approved">已签约</span></div>
+      <div class="brand-list-item"><div class="brand-logo" style="background:linear-gradient(135deg,var(--color-primary-light),var(--color-primary));">完</div><div style="flex:1;"><h4 style="font-size:15px;font-weight:600;color:var(--color-text);margin-bottom:4px;">完美日记</h4><p style="font-size:11px;color:var(--color-text-muted);">Standard 品牌</p></div><span class="brand-status approved">已签约</span></div>
+      <div class="brand-list-item"><div class="brand-logo" style="background:#F5EDE4;color:var(--color-primary-dark);">花</div><div style="flex:1;"><h4 style="font-size:15px;font-weight:600;color:var(--color-text);margin-bottom:4px;">花西子</h4><p style="font-size:11px;color:var(--color-text-muted);">国风联名 · 审核中</p></div><span class="brand-status pending">审核中</span></div>
+      <div class="brand-list-item"><div class="brand-logo" style="background:var(--color-bg-alt);color:var(--color-primary-dark);">毛</div><div style="flex:1;"><h4 style="font-size:15px;font-weight:600;color:var(--color-text);margin-bottom:4px;">毛戈平</h4><p style="font-size:11px;color:var(--color-text-muted);">联合实验室意向</p></div><span class="brand-status pending">意向中</span></div>
+    </div>
+  </div>
+
+  <!-- Tab Bar V2.9 (7Tab: 首页/颜库/搜索/检测/商城/镜面/我的) -->
+  <nav class="tab-bar">
+    <a class="tab-btn active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5L12 4l9 8.5"/><path d="M5 11v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>首页</span></a>
+    <a class="tab-btn" data-tab="library" onclick="switchTab('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>颜库</span></a>
+    <a class="tab-btn" data-tab="search" onclick="switchTab('search')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span>搜索</span></a>
+    <a class="tab-btn" data-tab="scan" onclick="switchTab('scan')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>检测</span></a>
+    <a class="tab-btn" data-tab="mall" onclick="switchTab('mall')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>商城</span></a>
+    <a class="tab-btn" data-tab="mirror" onclick="switchTab('mirror')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/><path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/></svg><span>镜面</span></a>
+    <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg><span>我的</span></a>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">提示信息</div>
+
+  <!-- Ingredient Scan Modal -->
+  <div class="modal-overlay" id="ingredientScanModal" onclick="closeModal('ingredientScanModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">成分检测报告</h3>
+      <div class="result-header"><div class="result-score" style="color:var(--color-warning);">65</div><div class="result-label">综合安全评分</div><div class="result-summary"><div class="result-summary-item"><div class="result-summary-num" style="color:var(--color-success);">0</div><div class="result-summary-label">禁用成分</div></div><div class="result-summary-item"><div class="result-summary-num" style="color:var(--color-warning);">2</div><div class="result-summary-label">限用成分</div></div><div class="result-summary-item"><div class="result-summary-num" style="color:var(--color-danger);">1</div><div class="result-summary-label">敏感风险</div></div></div></div>
+      <div class="ingredient-section"><h4>检测成分列表</h4><div class="ingredient-item"><span class="ingredient-name">烟酰胺</span><div class="ingredient-meta"><span class="ingredient-function">提亮</span><div class="risk-dot safe"></div></div></div><div class="ingredient-item"><span class="ingredient-name">透明质酸钠</span><div class="ingredient-meta"><span class="ingredient-function">保湿</span><div class="risk-dot safe"></div></div></div><div class="ingredient-item"><span class="ingredient-name">视黄醇</span><div class="ingredient-meta"><span class="ingredient-function" style="color:var(--color-warning);">孕妇慎用</span><div class="risk-dot caution"></div></div></div><div class="ingredient-item"><span class="ingredient-name">香精</span><div class="ingredient-meta"><span class="ingredient-function" style="color:var(--color-danger);">敏感肌风险</span><div class="risk-dot danger"></div></div></div></div>
+      <div class="regulation-note"><p><strong>法规依据：</strong>《化妆品安全技术规范》2022 年版 · 欧盟 CPNP 备案要求 · 结果仅供参考，具体请以专业机构检测为准</p></div>
+      <div style="margin-top:var(--spacing-5);display:flex;gap:var(--spacing-3);"><button class="btn btn-secondary btn-block" onclick="showToast('分享报告')">分享</button><button class="btn btn-primary btn-block" onclick="showToast('报告已保存 +30GP');closeModal('ingredientScanModal')">保存报告</button></div>
+    </div>
+  </div>
+
+  <!-- GP Center Modal -->
+  <div class="modal-overlay" id="gpCenterModal" onclick="closeModal('gpCenterModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">焕新值中心</h3>
+      <div class="gp-center-tabs"><div class="gp-center-tab active" onclick="switchGpTab(this)">进行中</div><div class="gp-center-tab" onclick="switchGpTab(this)">已完成</div><div class="gp-center-tab" onclick="switchGpTab(this)">成就</div></div>
+      <div class="gp-level-card"><div class="gp-level-header"><div class="gp-level-name"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>金妆 Lv.3</div><div class="gp-level-next">距 Lv.4 钻妆 172 GP</div></div><div class="gp-level-bar"><div class="gp-level-bar-fill" style="width:65%;"></div></div><div class="gp-level-meta"><span>328 GP</span><span>500 GP</span></div></div>
+      <div class="gp-task-item"><div class="gp-task-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div class="gp-task-info"><h4>浏览 3 个妆容模板</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:66%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+15 GP</div><button class="claim-btn" disabled>2/3</button></div></div>
+      <div class="gp-task-item"><div class="gp-task-icon" style="background:#E8F0E8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-success);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="gp-task-info"><h4>成分扫描 1 次</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:0%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+20 GP</div><button class="claim-btn" onclick="closeModal('gpCenterModal');openModal('ingredientScanModal')">去完成</button></div></div>
+      <div style="margin-top:var(--spacing-5);"><button class="btn btn-primary btn-block" onclick="openModal('exchangeMallModal')">🛍️ 兑换商城</button></div>
+    </div>
+  </div>
+
+  <!-- Exchange Mall Modal -->
+  <div class="modal-overlay" id="exchangeMallModal" onclick="closeModal('exchangeMallModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">兑换商城</h3>
+      <div class="exchange-tabs"><div class="exchange-tab active">虚拟道具</div><div class="exchange-tab">功能权益</div><div class="exchange-tab">品牌小样</div><div class="exchange-tab">实物奖品</div></div>
+      <div class="exchange-grid">
+        <div class="exchange-item" onclick="exchangeItem('专属头像框',100)"><div class="exchange-item-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg></div><div class="exchange-item-info"><h4>专属头像框</h4><div class="exchange-item-price">100 GP</div></div></div>
+        <div class="exchange-item" onclick="exchangeItem('金妆徽章皮肤',200)"><div class="exchange-item-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div><div class="exchange-item-info"><h4>金妆徽章皮肤</h4><div class="exchange-item-price">200 GP</div></div></div>
+        <div class="exchange-item" onclick="exchangeItem('AI 渲染 ×5 次',500)"><div class="exchange-item-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span class="exchange-item-badge badge badge-warning badge-pill">热卖</span></div><div class="exchange-item-info"><h4>AI 渲染 ×5 次</h4><div class="exchange-item-price">500 GP</div></div></div>
+        <div class="exchange-item" onclick="exchangeItem('口红小样',500)"><div class="exchange-item-img"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span class="exchange-item-badge badge badge-danger badge-pill">限量</span></div><div class="exchange-item-info"><h4>口红小样</h4><div class="exchange-item-price">500 GP</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recharge Modal -->
+  <div class="modal-overlay" id="rechargeModal" onclick="closeModal('rechargeModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">充值焕新值</h3>
+      <div class="recharge-grid">
+        <div class="recharge-item" onclick="selectRecharge(this)"><div class="recharge-amount">60</div><div class="recharge-price">¥6.9</div></div>
+        <div class="recharge-item popular selected" onclick="selectRecharge(this)"><div class="recharge-amount">360</div><div class="recharge-price">¥39</div></div>
+        <div class="recharge-item" onclick="selectRecharge(this)"><div class="recharge-amount">1200</div><div class="recharge-price">¥99</div></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="showToast('充值成功 +360 GP');closeModal('rechargeModal')">立即充值</button>
+    </div>
+  </div>
+
+  <!-- Trending Modal -->
+  <div class="modal-overlay" id="trendingModal" onclick="closeModal('trendingModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">🔥 今日热度榜</h3>
+      <div class="trending-list">
+        <div class="trending-item"><div class="trending-rank top3">1</div><div class="trending-cover">💄</div><div class="trending-info"><h4>晚宴精致妆容</h4><p>美妆师 Luna · 2,341 热度</p></div><div class="trending-gp">50 GP</div></div>
+        <div class="trending-item"><div class="trending-rank top3">2</div><div class="trending-cover" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);">🌸</div><div class="trending-info"><h4>日常清新裸妆</h4><p>小妆日记 · 1,892 热度</p></div><div class="trending-gp">30 GP</div></div>
+        <div class="trending-item"><div class="trending-rank top3">3</div><div class="trending-cover" style="background:linear-gradient(135deg,#D4A03C,#C4956A);">🏮</div><div class="trending-info"><h4>国风古韵妆</h4><p>国风美妆社 · 1,654 热度</p></div><div class="trending-gp">80 GP</div></div>
+        <div class="trending-item"><div class="trending-rank">4</div><div class="trending-cover">🌹</div><div class="trending-info"><h4>职场干练妆</h4><p>职场丽人 · 1,203 热度</p></div><div class="trending-gp">60 GP</div></div>
+        <div class="trending-item"><div class="trending-rank">5</div><div class="trending-cover">✨</div><div class="trending-info"><h4>派对闪耀妆</h4><p>美妆师 Luna · 986 热度</p></div><div class="trending-gp">120 GP</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem Modal -->
+  <div class="modal-overlay" id="problemModal" onclick="closeModal('problemModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">💡 问题解决方案</h3>
+      <div style="padding:var(--spacing-4) 0;">
+        <div class="card" style="margin-bottom:var(--spacing-3);padding:var(--spacing-4);"><h4 style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);margin-bottom:var(--spacing-2);">方案一：使用眼影打底膏</h4><p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--spacing-3);">在上眼影前使用专门的眼部打底膏，可以有效防止眼影晕染，延长妆容持久度。</p><button class="btn btn-secondary btn-sm" onclick="showToast('已解锁方案')">解锁详情 (-10GP)</button></div>
+        <div class="card" style="margin-bottom:var(--spacing-3);padding:var(--spacing-4);"><h4 style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);margin-bottom:var(--spacing-2);">方案二：散粉定妆法</h4><p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--spacing-3);">画眼妆前在眼下区域轻拍散粉，收集多余的眼影晕染色，保持眼周干净。</p><button class="btn btn-secondary btn-sm" onclick="showToast('已解锁方案')">解锁详情 (-10GP)</button></div>
+        <div class="card" style="padding:var(--spacing-4);"><h4 style="font-size:var(--font-size-md);font-weight:var(--font-weight-semibold);margin-bottom:var(--spacing-2);">方案三：防水眼影产品</h4><p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);margin-bottom:var(--spacing-3);">选择防水配方的眼影产品，尤其在潮湿环境中更为重要。</p><button class="btn btn-secondary btn-sm" onclick="showToast('已解锁方案')">解锁详情 (-10GP)</button></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let currentTab='home',gpBalance=328;
+function switchTab(tab){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById('page-'+tab);if(page)page.classList.add('active');document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));const btn=document.querySelector('.tab-btn[data-tab="'+tab+'"]');if(btn)btn.classList.add('active');currentTab=tab;window.scrollTo({top:0,behavior:'instant'});}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(showToast._t);showToast._t=setTimeout(()=>{t.classList.remove('show')},2000);}
+function claimTask(btn,amt){if(btn.disabled)return;gpBalance+=amt;document.getElementById('gp-balance').textContent=gpBalance;btn.disabled=true;btn.textContent='已领取';btn.style.background='var(--color-bg-alt)';btn.style.color='var(--color-text-muted)';showToast('+'+amt+' GP 已领取');}
+function exchangeItem(name,cost){if(gpBalance<cost){showToast('焕新值不足，请先充值');openModal('rechargeModal');return;}gpBalance-=cost;document.getElementById('gp-balance').textContent=gpBalance;showToast('兑换成功: '+name);closeModal('exchangeMallModal');}
+let scanAnimating=false;
+function startScan(){if(scanAnimating)return;scanAnimating=true;const c=document.getElementById('scanCamera');c.classList.add('scanning');showToast('正在识别成分...');setTimeout(()=>{c.classList.remove('scanning');scanAnimating=false;showScanResult();},1800);}
+function showScanResult(){document.getElementById('ingredientScanModal').classList.add('show');}
+function closeModal(id,e){if(e&&e.target!==e.currentTarget)return;document.getElementById(id).classList.remove('show');}
+function openModal(id){document.getElementById(id).classList.add('show');}
+function switchTaskTab(el){el.parentElement.querySelectorAll('.task-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function switchGpTab(el){el.parentElement.querySelectorAll('.gp-center-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function selectRecharge(el){el.parentElement.querySelectorAll('.recharge-item').forEach(i=>i.classList.remove('selected'));el.classList.add('selected');}
+document.querySelectorAll('.mall-tab').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.mall-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
+document.querySelectorAll('.lib-tab').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.lib-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
+document.querySelectorAll('.exchange-tab').forEach(t=>t.addEventListener('click',function(){document.querySelectorAll('.exchange-tab').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
+document.querySelectorAll('.hero-dots span').forEach((dot,i,dots)=>dot.addEventListener('click',()=>{dots.forEach(d=>d.classList.remove('active'));dot.classList.add('active')}));
+</script>
+</body>
+</html>
