@@ -926,6 +926,123 @@ body {
   color: var(--color-text-muted);
 }
 
+/* ===== Report Detail ===== */
+.report-hero {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  padding: calc(var(--spacing-5) + var(--safe-top)) var(--spacing-4) var(--spacing-5);
+  text-align: center;
+  color: #fff;
+}
+.report-score {
+  font-size: 48px;
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.report-score-label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+.report-section {
+  margin-bottom: var(--spacing-4);
+}
+.report-section-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-3);
+}
+.report-big-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+}
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+.report-dim {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+}
+.dim-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+.dim-bar {
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.dim-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 3px;
+  transition: width 0.3s;
+}
+.dim-val {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+.report-tips {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-3);
+}
+.tip-item {
+  display: flex;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) 0;
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+.tip-item:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-light);
+}
+.tip-icon {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+.ingredient-list {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--color-border-light);
+}
+.ingredient-item:last-child { border-bottom: none; }
+.ing-icon { font-size: 20px; }
+.ing-info { flex: 1; min-width: 0; }
+.ing-name {
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+.ing-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+.ing-score {
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+}
+.ing-score.good { color: #52c41a; }
+.ing-score.warn { color: var(--color-warning); }
+
 /* ===== Toolbox ===== */
 .tool-section-title {
   font-size: var(--font-size-sm);
@@ -1329,6 +1446,165 @@ body {
 .product-sales {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+}
+
+/* ===== Product Detail ===== */
+.product-detail-hero {
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-bg-alt);
+}
+.product-detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-detail-body {
+  padding: var(--spacing-4);
+  background: var(--color-bg-card);
+}
+.product-detail-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-2);
+}
+.product-detail-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-3);
+}
+.pdf-price {
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+.pdf-price span { font-size: 14px; }
+.pdf-sales {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+.product-detail-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-4);
+}
+.pdf-tag {
+  padding: 3px 8px;
+  background: var(--color-bg);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+.product-author {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) 0;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+}
+.author-info { flex: 1; }
+.author-name {
+  font-size: 14px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+.author-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.product-detail-section {
+  padding: var(--spacing-4);
+  background: var(--color-bg-card);
+  margin-top: var(--spacing-2);
+}
+.pdf-section-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-3);
+}
+.pdf-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+.pdf-steps {
+  margin-top: var(--spacing-3);
+}
+.pdf-step {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-3);
+}
+.pdf-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pdf-step-text {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  padding-top: 3px;
+}
+.product-detail-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-bg-card);
+  border-top: 1px solid var(--color-border-light);
+  padding: var(--spacing-2) var(--spacing-4);
+  padding-bottom: calc(var(--spacing-2) + var(--safe-bottom));
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  z-index: 100;
+}
+.pdf-footer-left {
+  display: flex;
+  gap: var(--spacing-3);
+}
+.pdf-footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+.pdf-footer-right {
+  flex: 1;
+  display: flex;
+  gap: var(--spacing-2);
 }
 
 /* ============ Mirror Page ============ */
@@ -6292,7 +6568,7 @@ body {
           </svg>
           <input type="text" placeholder="搜索妆容、成分、美妆问题..." id="librarySearch">
         </div>
-        <button class="library-publish-btn" onclick="showToast('发布作品')">发布</button>
+        <button class="library-publish-btn" onclick="openCreatorCenter()">发布</button>
       </div>
       <div class="library-cat-tabs" id="libraryCatTabs">
         <span class="library-cat-tab active" onclick="switchLibraryCat(this, 'daren')">达人精选</span>
@@ -6605,56 +6881,59 @@ body {
       </div>
     </div>
 
-    <div class="product-grid">
-      <div class="product-card" onclick="showToast('查看详情')">
-        <div class="product-img">
-          <img src="ui-design/assets/product-2.jpg" alt="法式红唇妆">
-          <span class="badge badge-danger badge-pill product-tag">热销</span>
+    <div class="product-grid" id="marketProductGrid">
+    </div>
+    <div style="height: 80px;"></div>
+  </div>
+
+  <!-- ===== Product Detail Page ===== -->
+  <div class="page" id="page-product-detail">
+    <header class="app-header" style="position: absolute; top: 0; left: 0; right: 0; background: transparent; z-index: 20;">
+      <div class="header-left">
+        <button class="icon-btn" style="background: rgba(0,0,0,0.3); color: #fff;" onclick="switchTab('mall')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" style="background: rgba(0,0,0,0.3); color: #fff; margin-right: 8px;" onclick="showToast('分享')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </button>
+        <button class="icon-btn" style="background: rgba(0,0,0,0.3); color: #fff;" onclick="toggleProductFav(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="productDetailContent">
+    </div>
+
+    <div class="product-detail-footer">
+      <div class="pdf-footer-left">
+        <div class="pdf-footer-item" onclick="switchTab('mall')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>市集</span>
         </div>
-        <div class="product-text">
-          <h4>法式红唇妆</h4>
-          <div class="product-meta">
-            <span class="product-price">60 GP</span>
-            <span class="product-sales">2.3万</span>
-          </div>
+        <div class="pdf-footer-item" onclick="showToast('客服')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>客服</span>
         </div>
       </div>
-      <div class="product-card" onclick="showToast('查看详情')">
-        <div class="product-img">
-          <img src="ui-design/assets/product-3.jpg" alt="元气腮红妆">
-        </div>
-        <div class="product-text">
-          <h4>元气腮红妆</h4>
-          <div class="product-meta">
-            <span class="product-price">40 GP</span>
-            <span class="product-sales">1.8万</span>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" onclick="showToast('查看详情')">
-        <div class="product-img">
-          <img src="ui-design/assets/product-4.jpg" alt="烟熏晚宴妆">
-          <span class="badge badge-primary badge-pill product-tag">新品</span>
-        </div>
-        <div class="product-text">
-          <h4>烟熏晚宴妆</h4>
-          <div class="product-meta">
-            <span class="product-price">80 GP</span>
-            <span class="product-sales">5千</span>
-          </div>
-        </div>
-      </div>
-      <div class="product-card" onclick="showToast('查看详情')">
-        <div class="product-img">
-          <img src="ui-design/assets/product-1.jpg" alt="自然眉妆">
-        </div>
-        <div class="product-text">
-          <h4>自然眉妆</h4>
-          <div class="product-meta">
-            <span class="product-price">20 GP</span>
-            <span class="product-sales">3.1万</span>
-          </div>
-        </div>
+      <div class="pdf-footer-right">
+        <button class="btn btn-outline btn-sm" style="flex:1;" onclick="showToast('试妆')">一键试妆</button>
+        <button class="btn btn-primary btn-sm" style="flex:1;" onclick="showToast('立即购买')">立即购买</button>
       </div>
     </div>
   </div>
@@ -7030,17 +7309,12 @@ body {
         </button>
         <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">我的模板</h2>
       </div>
-      <div class="header-right">
-        <button class="btn btn-sm btn-outline" onclick="showToast('上传模板')">上传</button>
-      </div>
     </header>
     <div class="template-tabs">
-      <span class="template-tab active">已收藏</span>
-      <span class="template-tab">已购买</span>
-      <span class="template-tab">我创建的</span>
-      <span class="template-tab">历史记录</span>
+      <span class="template-tab active" onclick="switchTemplateTab(this, 'fav')">已收藏</span>
+      <span class="template-tab" onclick="switchTemplateTab(this, 'purchased')">已购买</span>
     </div>
-    <div class="waterfall-grid" style="padding: var(--spacing-3);">
+    <div class="waterfall-grid" style="padding: var(--spacing-3);" id="templateList">
       <div class="template-card">
         <div class="template-img"><img src="ui-design/assets/look-1.jpg" alt=""></div>
         <div class="template-info"><h4>法式慵懒妆</h4><div class="template-meta"><span>达人 · 小A</span><span>❤️ 2.3k</span></div></div>
@@ -7074,7 +7348,7 @@ body {
       </div>
     </header>
     <div style="padding: var(--spacing-4);">
-      <div class="report-card">
+      <div class="report-card" onclick="openReportDetail('skin')">
         <div class="report-icon">🧬</div>
         <div class="report-info">
           <div class="report-title">肤质检测报告</div>
@@ -7082,7 +7356,7 @@ body {
           <div class="report-meta">2024-01-15 · 点击查看详情</div>
         </div>
       </div>
-      <div class="report-card">
+      <div class="report-card" onclick="openReportDetail('face')">
         <div class="report-icon">👤</div>
         <div class="report-info">
           <div class="report-title">面部分析报告</div>
@@ -7090,7 +7364,7 @@ body {
           <div class="report-meta">2024-01-10 · 点击查看详情</div>
         </div>
       </div>
-      <div class="report-card">
+      <div class="report-card" onclick="openReportDetail('makeup')">
         <div class="report-icon">💄</div>
         <div class="report-info">
           <div class="report-title">妆容适配报告</div>
@@ -7098,7 +7372,7 @@ body {
           <div class="report-meta">2024-01-08 · 点击查看详情</div>
         </div>
       </div>
-      <div class="report-card">
+      <div class="report-card" onclick="openReportDetail('ingredient')">
         <div class="report-icon">🔬</div>
         <div class="report-info">
           <div class="report-title">成分检测报告</div>
@@ -7107,6 +7381,32 @@ body {
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ===== Report Detail Page ===== -->
+  <div class="page" id="page-report-detail">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('my-reports')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);" id="reportDetailTitle">报告详情</h2>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('分享报告')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <div id="reportDetailContent">
+    </div>
+    <div style="height: 40px;"></div>
   </div>
 
   <!-- ===== Toolbox Page ===== -->
@@ -7183,30 +7483,30 @@ body {
       <div class="pref-section">
         <div class="pref-title">日常风格</div>
         <div class="style-chips">
-          <span class="style-chip active">日常通勤</span>
-          <span class="style-chip active">清透自然</span>
-          <span class="style-chip">复古港风</span>
-          <span class="style-chip">法式慵懒</span>
-          <span class="style-chip active">日系甜美</span>
-          <span class="style-chip">韩系精致</span>
-          <span class="style-chip">欧美性感</span>
-          <span class="style-chip">国风古典</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">日常通勤</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">清透自然</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">复古港风</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">法式慵懒</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">日系甜美</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">韩系精致</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">欧美性感</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">国风古典</span>
         </div>
       </div>
       <div class="pref-section">
         <div class="pref-title">色系偏好</div>
         <div class="color-pref">
-          <div class="color-opt active"><div class="color-dot" style="background:#D4A574;"></div>暖棕</div>
-          <div class="color-opt"><div class="color-dot" style="background:#A67B5B;"></div>大地</div>
-          <div class="color-opt active"><div class="color-dot" style="background:#E8B4B8;"></div>玫瑰</div>
-          <div class="color-opt"><div class="color-dot" style="background:#8B7E74;"></div>灰调</div>
-          <div class="color-opt"><div class="color-dot" style="background:#CD5C5C;"></div>红棕</div>
-          <div class="color-opt active"><div class="color-dot" style="background:#DEB887;"></div>杏色</div>
+          <div class="color-opt active" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#D4A574;"></div>暖棕</div>
+          <div class="color-opt" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#A67B5B;"></div>大地</div>
+          <div class="color-opt active" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#E8B4B8;"></div>玫瑰</div>
+          <div class="color-opt" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#8B7E74;"></div>灰调</div>
+          <div class="color-opt" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#CD5C5C;"></div>红棕</div>
+          <div class="color-opt active" onclick="toggleColorOpt(this)"><div class="color-dot" style="background:#DEB887;"></div>杏色</div>
         </div>
       </div>
       <div class="pref-section">
         <div class="pref-title">妆容浓淡</div>
-        <input type="range" class="settings-slider" min="0" max="100" value="40">
+        <input type="range" class="settings-slider" min="0" max="100" value="40" oninput="showToast('妆容浓度：' + this.value + '%')">
         <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">
           <span>伪素颜</span><span>日常妆</span><span>浓妆</span>
         </div>
@@ -7214,12 +7514,12 @@ body {
       <div class="pref-section">
         <div class="pref-title">场景偏好</div>
         <div class="style-chips">
-          <span class="style-chip active">上班</span>
-          <span class="style-chip active">约会</span>
-          <span class="style-chip">派对</span>
-          <span class="style-chip">旅行</span>
-          <span class="style-chip active">逛街</span>
-          <span class="style-chip">婚礼</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">上班</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">约会</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">派对</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">旅行</span>
+          <span class="style-chip active" onclick="toggleStyleChip(this)">逛街</span>
+          <span class="style-chip" onclick="toggleStyleChip(this)">婚礼</span>
         </div>
       </div>
       <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-4);" onclick="showToast('偏好已保存')">保存偏好</button>
@@ -7520,7 +7820,7 @@ body {
         <line x1="3" y1="6" x2="21" y2="6"/>
         <path d="M16 10a4 4 0 0 1-8 0"/>
       </svg>
-      <span>商城</span>
+      <span>市集</span>
     </a>
     <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')">
       <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -7930,11 +8230,11 @@ body {
           <div class="settings-sub-title">滤镜强度</div>
           <input type="range" class="settings-slider" min="0" max="100" value="60" oninput="showToast('滤镜强度：' + this.value + '%')">
           <div class="filter-presets">
-            <div class="filter-preset active">自然</div>
-            <div class="filter-preset">清透</div>
-            <div class="filter-preset">冷白</div>
-            <div class="filter-preset">暖肤</div>
-            <div class="filter-preset">胶片</div>
+            <div class="filter-preset active" onclick="selectFilterPreset(this)">自然</div>
+            <div class="filter-preset" onclick="selectFilterPreset(this)">清透</div>
+            <div class="filter-preset" onclick="selectFilterPreset(this)">冷白</div>
+            <div class="filter-preset" onclick="selectFilterPreset(this)">暖肤</div>
+            <div class="filter-preset" onclick="selectFilterPreset(this)">胶片</div>
           </div>
         </div>
       </div>
@@ -7957,9 +8257,9 @@ body {
           <input type="range" class="settings-slider" min="0" max="100" value="50" oninput="showToast('补光强度：' + this.value + '%')">
           <div class="settings-sub-title" style="margin-top: 12px;">色温</div>
           <div class="light-presets">
-            <div class="light-preset active">冷光</div>
-            <div class="light-preset">自然光</div>
-            <div class="light-preset">暖光</div>
+            <div class="light-preset active" onclick="selectLightPreset(this)">冷光</div>
+            <div class="light-preset" onclick="selectLightPreset(this)">自然光</div>
+            <div class="light-preset" onclick="selectLightPreset(this)">暖光</div>
           </div>
         </div>
       </div>
@@ -7973,7 +8273,7 @@ body {
               <div class="settings-desc">切换前后置</div>
             </div>
           </div>
-          <button class="btn btn-outline btn-sm" onclick="showToast('切换摄像头')">切换</button>
+          <button class="btn btn-outline btn-sm" onclick="flipCamera()">切换</button>
         </div>
       </div>
 
@@ -8320,6 +8620,204 @@ body {
   function openStoreMap() { switchTab('store-map'); }
   function openCreatorCenter() { switchTab('creator'); }
 
+  function switchTemplateTab(el, type) {
+    document.querySelectorAll('.template-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    showToast(type === 'fav' ? '已收藏的模板' : '已购买的模板');
+  }
+
+  function toggleStyleChip(el) {
+    el.classList.toggle('active');
+  }
+
+  function toggleColorOpt(el) {
+    el.classList.toggle('active');
+  }
+
+  const reportData = {
+    skin: {
+      title: '肤质检测报告',
+      html: `
+        <div class="report-hero">
+          <div class="report-score">82<span style="font-size: 14px;">分</span></div>
+          <div class="report-score-label">综合肤质健康度</div>
+        </div>
+        <div style="padding: var(--spacing-4);">
+          <div class="report-section">
+            <div class="report-section-title">肤质类型</div>
+            <div class="report-big-card">
+              <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px;">混合性肤质</div>
+              <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">T区偏油，两颊偏干。属于最常见的肤质类型，护肤需分区护理，T区注重控油清洁，两颊侧重保湿滋润。</div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">肌肤维度</div>
+            <div class="report-grid">
+              <div class="report-dim">
+                <div class="dim-label">水润度</div>
+                <div class="dim-bar"><div class="dim-fill" style="width: 65%;"></div></div>
+                <div class="dim-val">65%</div>
+              </div>
+              <div class="report-dim">
+                <div class="dim-label">油分度</div>
+                <div class="dim-bar"><div class="dim-fill" style="width: 72%; background: var(--color-warning);"></div></div>
+                <div class="dim-val">72%</div>
+              </div>
+              <div class="report-dim">
+                <div class="dim-label">弹性度</div>
+                <div class="dim-bar"><div class="dim-fill" style="width: 80%; background: #52c41a;"></div></div>
+                <div class="dim-val">80%</div>
+              </div>
+              <div class="report-dim">
+                <div class="dim-label">敏感度</div>
+                <div class="dim-bar"><div class="dim-fill" style="width: 55%; background: var(--color-danger);"></div></div>
+                <div class="dim-val">55%</div>
+              </div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">护肤建议</div>
+            <div class="report-tips">
+              <div class="tip-item"><div class="tip-icon">💧</div><div>早晚分区护肤，T区用清爽型，两颊用滋润型</div></div>
+              <div class="tip-item"><div class="tip-icon">☀️</div><div>一年四季都要做好防晒，紫外线会加重出油和敏感</div></div>
+              <div class="tip-item"><div class="tip-icon">🧴</div><div>每周1-2次清洁面膜，重点清洁T区黑头</div></div>
+              <div class="tip-item"><div class="tip-icon">😴</div><div>规律作息，减少熬夜，饮食少辛辣油腻</div></div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    face: {
+      title: '面部分析报告',
+      html: `
+        <div class="report-hero">
+          <div class="report-score">86<span style="font-size: 14px;">分</span></div>
+          <div class="report-score-label">骨相美学评分</div>
+        </div>
+        <div style="padding: var(--spacing-4);">
+          <div class="report-section">
+            <div class="report-section-title">脸型分析</div>
+            <div class="report-big-card">
+              <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px;">鹅蛋脸</div>
+              <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">脸部轮廓流畅，额头饱满，下颌线清晰，长宽比例协调。是最百搭的脸型，大部分妆容风格都能驾驭。</div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">五官比例</div>
+            <div class="report-grid">
+              <div class="report-dim"><div class="dim-label">眼距</div><div class="dim-bar"><div class="dim-fill" style="width: 85%;"></div></div><div class="dim-val">标准</div></div>
+              <div class="report-dim"><div class="dim-label">鼻型</div><div class="dim-bar"><div class="dim-fill" style="width: 88%;"></div></div><div class="dim-val">高挺</div></div>
+              <div class="report-dim"><div class="dim-label">唇形</div><div class="dim-bar"><div class="dim-fill" style="width: 78%;"></div></div><div class="dim-val">饱满</div></div>
+              <div class="report-dim"><div class="dim-label">三庭五眼</div><div class="dim-bar"><div class="dim-fill" style="width: 82%;"></div></div><div class="dim-val">协调</div></div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">妆容建议</div>
+            <div class="report-tips">
+              <div class="tip-item"><div class="tip-icon">💄</div><div>适合大部分口红颜色，尤其推荐红棕、豆沙、玫红色系</div></div>
+              <div class="tip-item"><div class="tip-icon">👁️</div><div>眼妆发挥空间大，可尝试各种眼线和眼影画法</div></div>
+              <div class="tip-item"><div class="tip-icon">✨</div><div>高光打在颧骨、鼻梁、眉骨，立体感更强</div></div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    makeup: {
+      title: '妆容适配报告',
+      html: `
+        <div class="report-hero" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);">
+          <div class="report-score" style="color: #fff;">92<span style="font-size: 14px;">分</span></div>
+          <div class="report-score-label" style="color: rgba(255,255,255,0.9);">妆容适配指数</div>
+        </div>
+        <div style="padding: var(--spacing-4);">
+          <div class="report-section">
+            <div class="report-section-title">推荐风格</div>
+            <div style="display: flex; gap: var(--spacing-2); flex-wrap: wrap;">
+              <span class="style-chip active">日常通勤</span>
+              <span class="style-chip active">法式慵懒</span>
+              <span class="style-chip active">清透自然</span>
+              <span class="style-chip">日系甜美</span>
+              <span class="style-chip">复古港风</span>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">推荐色系</div>
+            <div class="color-pref">
+              <div class="color-opt active"><div class="color-dot" style="background:#D4A574;"></div>暖棕</div>
+              <div class="color-opt active"><div class="color-dot" style="background:#E8B4B8;"></div>玫瑰</div>
+              <div class="color-opt active"><div class="color-dot" style="background:#DEB887;"></div>杏色</div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">避坑提醒</div>
+            <div class="report-tips">
+              <div class="tip-item"><div class="tip-icon">⚠️</div><div>避免过于夸张的欧美浓妆，会显得年龄感重</div></div>
+              <div class="tip-item"><div class="tip-icon">🚫</div><div>冷调蓝色系眼影容易显脏，建议选暖棕调</div></div>
+              <div class="tip-item"><div class="tip-icon">💡</div><div>重点突出眼妆或唇妆一个部位，不要全脸都浓</div></div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    ingredient: {
+      title: '成分检测报告',
+      html: `
+        <div class="report-hero" style="background: linear-gradient(135deg, #a8edea, #fed6e3);">
+          <div class="report-score" style="color: #fff;">65<span style="font-size: 14px;">分</span></div>
+          <div class="report-score-label" style="color: rgba(255,255,255,0.9);">产品安全指数</div>
+        </div>
+        <div style="padding: var(--spacing-4);">
+          <div class="report-section">
+            <div class="report-section-title">已检测产品</div>
+            <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: var(--spacing-3);">共检测 12 款产品，3 款需注意</div>
+            <div class="ingredient-list">
+              <div class="ingredient-item good">
+                <div class="ing-icon">✅</div>
+                <div class="ing-info">
+                  <div class="ing-name">YSL 恒久粉底液</div>
+                  <div class="ing-desc">成分安全，无风险成分</div>
+                </div>
+                <div class="ing-score good">92</div>
+              </div>
+              <div class="ing-item warn">
+                <div class="ing-icon">⚠️</div>
+                <div class="ing-info">
+                  <div class="ing-name">某品牌精华水</div>
+                  <div class="ing-desc">含香精、酒精，敏感肌慎用</div>
+                </div>
+                <div class="ing-score warn">58</div>
+              </div>
+              <div class="ing-item warn">
+                <div class="ing-icon">⚠️</div>
+                <div class="ing-info">
+                  <div class="ing-name">某网红面膜</div>
+                  <div class="ing-desc">含防腐剂较多，不建议频繁使用</div>
+                </div>
+                <div class="ing-score warn">62</div>
+              </div>
+            </div>
+          </div>
+          <div class="report-section">
+            <div class="report-section-title">成分小贴士</div>
+            <div class="report-tips">
+              <div class="tip-item"><div class="tip-icon">🔬</div><div>敏感肌避开：酒精、香精、防腐剂（甲基异噻唑啉酮等）</div></div>
+              <div class="tip-item"><div class="tip-icon">🌿</div><div>孕妇慎用：维A醇、水杨酸、高浓度维C</div></div>
+              <div class="tip-item"><div class="tip-icon">📋</div><div>护肤看成分不看品牌，适合自己最重要</div></div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  };
+
+  function openReportDetail(type) {
+    const data = reportData[type];
+    if (!data) return;
+    document.getElementById('reportDetailTitle').textContent = data.title;
+    document.getElementById('reportDetailContent').innerHTML = data.html;
+    switchTab('report-detail');
+  }
+
   // ===== Mirror Settings & Modes =====
   let mirrorMode = 'photo'; // photo | video
   let isRecording = false;
@@ -8393,6 +8891,28 @@ body {
     }
   }
 
+  function selectFilterPreset(el) {
+    document.querySelectorAll('.filter-preset').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    showToast('滤镜：' + el.textContent);
+  }
+
+  function selectLightPreset(el) {
+    document.querySelectorAll('.light-preset').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    showToast('色温：' + el.textContent);
+  }
+
+  let isCameraFlipped = false;
+  function flipCamera() {
+    isCameraFlipped = !isCameraFlipped;
+    const faceArea = document.querySelector('.mirror-face-ring-v2');
+    if (faceArea) {
+      faceArea.style.transform = isCameraFlipped ? 'scaleX(-1)' : 'scaleX(1)';
+    }
+    showToast(isCameraFlipped ? '后置摄像头' : '前置摄像头');
+  }
+
   // ===== Market (Mall) =====
   const marketSubCats = {
     daren: ['全部', '新品上市', '达人同款', '口碑好物', '限时特惠', '礼盒套装'],
@@ -8403,7 +8923,177 @@ body {
     star: ['全部', '日常同款', '红毯同款', '杂志同款', '舞台同款', '古装同款']
   };
 
+  const marketProducts = {
+    daren: {
+      all: [
+        { id: 'p1', name: '法式慵懒日常妆', price: 60, sales: '2.3万', img: 'product-2.jpg', tag: '热销', author: '美妆达人Luna' },
+        { id: 'p2', name: '元气少女腮红妆', price: 40, sales: '1.8万', img: 'product-3.jpg', tag: '', author: '小甜甜' },
+        { id: 'p3', name: '通勤大地色系', price: 35, sales: '3.1万', img: 'product-1.jpg', tag: '', author: '职场博主Amy' },
+        { id: 'p4', name: '复古港风红唇妆', price: 80, sales: '5千', img: 'product-4.jpg', tag: '新品', author: '复古美人' },
+      ],
+      '新品上市': [
+        { id: 'p4', name: '复古港风红唇妆', price: 80, sales: '5千', img: 'product-4.jpg', tag: '新品', author: '复古美人' },
+        { id: 'p5', name: '春日樱花妆', price: 55, sales: '1千', img: 'product-3.jpg', tag: '新品', author: '小樱' },
+      ],
+      '达人同款': [
+        { id: 'p1', name: '法式慵懒日常妆', price: 60, sales: '2.3万', img: 'product-2.jpg', tag: '热销', author: '美妆达人Luna' },
+        { id: 'p2', name: '元气少女腮红妆', price: 40, sales: '1.8万', img: 'product-3.jpg', tag: '', author: '小甜甜' },
+      ],
+      '口碑好物': [
+        { id: 'p3', name: '通勤大地色系', price: 35, sales: '3.1万', img: 'product-1.jpg', tag: '', author: '职场博主Amy' },
+        { id: 'p1', name: '法式慵懒日常妆', price: 60, sales: '2.3万', img: 'product-2.jpg', tag: '热销', author: '美妆达人Luna' },
+      ],
+      '限时特惠': [
+        { id: 'p2', name: '元气少女腮红妆', price: 29, sales: '1.8万', img: 'product-3.jpg', tag: '特惠', author: '小甜甜' },
+        { id: 'p3', name: '通勤大地色系', price: 25, sales: '3.1万', img: 'product-1.jpg', tag: '特惠', author: '职场博主Amy' },
+      ],
+      '礼盒套装': [
+        { id: 'p6', name: '新手入门妆教礼盒', price: 128, sales: '8千', img: 'product-2.jpg', tag: '礼盒', author: '美妆达人Luna' },
+      ],
+    },
+    ziying: {
+      all: [
+        { id: 'p10', name: 'YSL 红唇派对妆', price: 99, sales: '4.5万', img: 'product-2.jpg', tag: '热销', author: 'YSL 圣罗兰' },
+        { id: 'p11', name: 'Dior 迪奥花漾妆', price: 108, sales: '3.2万', img: 'product-3.jpg', tag: '', author: 'Dior 迪奥' },
+        { id: 'p12', name: 'Chanel 香奈儿山茶花', price: 128, sales: '2.8万', img: 'product-4.jpg', tag: '新品', author: 'Chanel 香奈儿' },
+      ],
+      'YSL': [
+        { id: 'p10', name: 'YSL 红唇派对妆', price: 99, sales: '4.5万', img: 'product-2.jpg', tag: '热销', author: 'YSL 圣罗兰' },
+      ],
+      'Dior': [
+        { id: 'p11', name: 'Dior 迪奥花漾妆', price: 108, sales: '3.2万', img: 'product-3.jpg', tag: '', author: 'Dior 迪奥' },
+      ],
+      'Chanel': [
+        { id: 'p12', name: 'Chanel 香奈儿山茶花', price: 128, sales: '2.8万', img: 'product-4.jpg', tag: '新品', author: 'Chanel 香奈儿' },
+      ],
+      'Armani': [
+        { id: 'p13', name: 'Armani 权力底妆', price: 88, sales: '1.5万', img: 'product-1.jpg', tag: '', author: 'Armani 阿玛尼' },
+      ],
+      '雅诗兰黛': [
+        { id: 'p14', name: '雅诗兰黛 持妆无瑕', price: 78, sales: '2.1万', img: 'product-1.jpg', tag: '', author: 'Estee Lauder' },
+      ],
+      '兰蔻': [
+        { id: 'p15', name: '兰蔻 菁纯玫瑰妆', price: 118, sales: '1.9万', img: 'product-3.jpg', tag: '', author: 'LANCÔME 兰蔻' },
+      ],
+    },
+    hot: {
+      all: [
+        { id: 'p20', name: '热卖TOP1 法式红唇', price: 60, sales: '10万+', img: 'product-2.jpg', tag: 'TOP1', author: '美妆达人' },
+        { id: 'p21', name: '热卖TOP2 通勤大地', price: 35, sales: '8.5万', img: 'product-1.jpg', tag: 'TOP2', author: '职场博主' },
+        { id: 'p22', name: '热卖TOP3 日系裸妆', price: 45, sales: '7.2万', img: 'product-3.jpg', tag: 'TOP3', author: '日系达人' },
+      ],
+      '热卖TOP10': [
+        { id: 'p20', name: '热卖TOP1 法式红唇', price: 60, sales: '10万+', img: 'product-2.jpg', tag: 'TOP1', author: '美妆达人' },
+        { id: 'p21', name: '热卖TOP2 通勤大地', price: 35, sales: '8.5万', img: 'product-1.jpg', tag: 'TOP2', author: '职场博主' },
+        { id: 'p22', name: '热卖TOP3 日系裸妆', price: 45, sales: '7.2万', img: 'product-3.jpg', tag: 'TOP3', author: '日系达人' },
+      ],
+      '新品榜': [
+        { id: 'p23', name: '新品 夏日清透妆', price: 55, sales: '5千', img: 'product-4.jpg', tag: '新品', author: '夏日限定' },
+      ],
+      '好评榜': [
+        { id: 'p20', name: '好评TOP1 法式红唇', price: 60, sales: '10万+', img: 'product-2.jpg', tag: '好评', author: '美妆达人' },
+      ],
+      '回购榜': [
+        { id: 'p21', name: '回购王 通勤大地', price: 35, sales: '8.5万', img: 'product-1.jpg', tag: '回购', author: '职场博主' },
+      ],
+      '性价比榜': [
+        { id: 'p21', name: '性价比王 通勤妆', price: 29, sales: '8.5万', img: 'product-1.jpg', tag: '超值', author: '职场博主' },
+      ],
+    },
+    gufeng: {
+      all: [
+        { id: 'p30', name: '大唐盛世妆', price: 99, sales: '1.2万', img: 'product-4.jpg', tag: '热卖', author: '花西子' },
+        { id: 'p31', name: '宋代素雅妆', price: 79, sales: '8千', img: 'product-3.jpg', tag: '', author: '国风大师' },
+      ],
+      '唐妆系列': [
+        { id: 'p30', name: '大唐盛世妆', price: 99, sales: '1.2万', img: 'product-4.jpg', tag: '热卖', author: '花西子' },
+      ],
+      '宋妆系列': [
+        { id: 'p31', name: '宋代素雅妆', price: 79, sales: '8千', img: 'product-3.jpg', tag: '', author: '国风大师' },
+      ],
+      '明妆系列': [
+        { id: 'p32', name: '明代端庄妆', price: 89, sales: '6千', img: 'product-2.jpg', tag: '', author: '国风大师' },
+      ],
+      '汉妆系列': [
+        { id: 'p33', name: '汉代典雅妆', price: 85, sales: '5千', img: 'product-1.jpg', tag: '', author: '汉服博主' },
+      ],
+      '戏曲妆': [
+        { id: 'p34', name: '京剧旦角妆', price: 128, sales: '3千', img: 'product-4.jpg', tag: '精品', author: '戏曲大师' },
+      ],
+    },
+    yinfa: {
+      all: [
+        { id: 'p40', name: '减龄气质淡妆', price: 55, sales: '2.1万', img: 'product-1.jpg', tag: '热销', author: '优雅妈妈' },
+        { id: 'p41', name: '日常通勤气质妆', price: 45, sales: '1.8万', img: 'product-2.jpg', tag: '', author: '银发达人' },
+      ],
+      '减龄淡妆': [
+        { id: 'p40', name: '减龄气质淡妆', price: 55, sales: '2.1万', img: 'product-1.jpg', tag: '热销', author: '优雅妈妈' },
+      ],
+      '气质日常': [
+        { id: 'p41', name: '日常通勤气质妆', price: 45, sales: '1.8万', img: 'product-2.jpg', tag: '', author: '银发达人' },
+      ],
+      '婚礼妆容': [
+        { id: 'p42', name: '优雅妈妈婚礼妆', price: 99, sales: '5千', img: 'product-3.jpg', tag: '婚礼', author: '婚礼造型师' },
+      ],
+      '聚会妆': [
+        { id: 'p43', name: '同学聚会精致妆', price: 65, sales: '8千', img: 'product-4.jpg', tag: '', author: '优雅妈妈' },
+      ],
+      '护肤保养': [
+        { id: 'p44', name: '抗老护肤套装', price: 128, sales: '1.5万', img: 'product-1.jpg', tag: '套装', author: '皮肤科推荐' },
+      ],
+    },
+    star: {
+      all: [
+        { id: 'p50', name: '鞠婧祎同款日常妆', price: 78, sales: '3.5万', img: 'product-2.jpg', tag: '热销', author: '明星同款' },
+        { id: 'p51', name: '杨幂红毯女王妆', price: 99, sales: '2.8万', img: 'product-4.jpg', tag: '', author: '明星同款' },
+      ],
+      '日常同款': [
+        { id: 'p50', name: '鞠婧祎同款日常妆', price: 78, sales: '3.5万', img: 'product-2.jpg', tag: '热销', author: '明星同款' },
+      ],
+      '红毯同款': [
+        { id: 'p51', name: '杨幂红毯女王妆', price: 99, sales: '2.8万', img: 'product-4.jpg', tag: '', author: '明星同款' },
+      ],
+      '杂志同款': [
+        { id: 'p52', name: '时尚芭莎封面妆', price: 88, sales: '1.2万', img: 'product-3.jpg', tag: '杂志', author: '时尚杂志' },
+      ],
+      '舞台同款': [
+        { id: 'p53', name: '舞台C位闪耀妆', price: 108, sales: '9千', img: 'product-4.jpg', tag: '舞台', author: '明星造型师' },
+      ],
+      '古装同款': [
+        { id: 'p54', name: '长相思 小夭妆', price: 95, sales: '2.5万', img: 'product-3.jpg', tag: '古装', author: '影视剧同款' },
+      ],
+    }
+  };
+
+  let currentMarketCat = 'daren';
+  let currentMarketSub = 'all';
+  let currentProduct = null;
+
+  function renderMarketProducts() {
+    const grid = document.getElementById('marketProductGrid');
+    if (!grid) return;
+    const catData = marketProducts[currentMarketCat];
+    const list = (catData && (catData[currentMarketSub] || catData.all)) || [];
+    grid.innerHTML = list.map(p => `
+      <div class="product-card" onclick="openProductDetail('${p.id}')">
+        <div class="product-img">
+          <img src="ui-design/assets/${p.img}" alt="${p.name}">
+          ${p.tag ? `<span class="badge badge-danger badge-pill product-tag">${p.tag}</span>` : ''}
+        </div>
+        <div class="product-text">
+          <h4>${p.name}</h4>
+          <div class="product-meta">
+            <span class="product-price">${p.price} GP</span>
+            <span class="product-sales">${p.sales}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
   function switchMarketCat(el, cat) {
+    currentMarketCat = cat;
+    currentMarketSub = 'all';
     document.querySelectorAll('#marketCatTabs .mall-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
     const subTabs = document.getElementById('marketSubTabs');
@@ -8413,12 +9103,110 @@ body {
         `<span class="mall-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchMarketSub(this)">${s}</span>`
       ).join('');
     }
+    renderMarketProducts();
     el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
   function switchMarketSub(el) {
     document.querySelectorAll('.mall-sub-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
+    const text = el.textContent.trim();
+    currentMarketSub = (text === '全部') ? 'all' : text;
+    renderMarketProducts();
+  }
+
+  function findProductById(id) {
+    for (const cat of Object.values(marketProducts)) {
+      for (const list of Object.values(cat)) {
+        const found = list.find(p => p.id === id);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  function openProductDetail(id) {
+    const p = findProductById(id);
+    if (!p) return;
+    currentProduct = p;
+    const content = document.getElementById('productDetailContent');
+    content.innerHTML = `
+      <div class="product-detail-hero">
+        <img src="ui-design/assets/${p.img}" alt="${p.name}">
+      </div>
+      <div class="product-detail-body">
+        <div class="product-detail-title">${p.name}</div>
+        <div class="product-detail-price">
+          <div class="pdf-price"><span>¥</span>${p.price}</div>
+          <div class="pdf-sales">${p.sales} 人已解锁</div>
+        </div>
+        <div class="product-detail-tags">
+          <span class="pdf-tag">AI 试妆</span>
+          <span class="pdf-tag">步骤教学</span>
+          <span class="pdf-tag">产品清单</span>
+          <span class="pdf-tag">永久有效</span>
+        </div>
+        <div class="product-author">
+          <div class="author-avatar">${p.author.charAt(0)}</div>
+          <div class="author-info">
+            <div class="author-name">${p.author}</div>
+            <div class="author-desc">官方认证创作者 · 4.9分</div>
+          </div>
+          <button class="btn btn-primary btn-sm">关注</button>
+        </div>
+      </div>
+      <div class="product-detail-section">
+        <div class="pdf-section-title">妆容介绍</div>
+        <div class="pdf-desc">
+          这款妆容融合了当代流行元素与经典美学，适合各种场合。无论是日常通勤还是约会聚会，都能让你展现最佳状态。妆容重点突出眼部轮廓，搭配自然的唇色，整体呈现出高级又不失亲和力的感觉。
+        </div>
+      </div>
+      <div class="product-detail-section">
+        <div class="pdf-section-title">妆容步骤</div>
+        <div class="pdf-steps">
+          <div class="pdf-step">
+            <div class="pdf-step-num">1</div>
+            <div class="pdf-step-text">底妆：取适量粉底液均匀点涂于面部，用湿美妆蛋轻轻拍开，打造无瑕通透的底妆效果。</div>
+          </div>
+          <div class="pdf-step">
+            <div class="pdf-step-num">2</div>
+            <div class="pdf-step-text">眼妆：先用浅棕色眼影大面积打底，再用深棕色加深眼尾和下眼睑，最后画上自然眼线。</div>
+          </div>
+          <div class="pdf-step">
+            <div class="pdf-step-num">3</div>
+            <div class="pdf-step-text">腮红：用腮红刷沾取适量腮红，从苹果肌向太阳穴方向轻轻扫开，营造自然好气色。</div>
+          </div>
+          <div class="pdf-step">
+            <div class="pdf-step-num">4</div>
+            <div class="pdf-step-text">唇妆：先用唇线笔勾勒唇形，再填充口红，最后用纸巾轻按一下，让妆效更持久。</div>
+          </div>
+        </div>
+      </div>
+      <div class="product-detail-section">
+        <div class="pdf-section-title">产品清单</div>
+        <div class="pdf-desc" style="font-size: 13px; color: var(--color-text-secondary);">
+          粉底液 × 1、眼影盘 × 1、腮红 × 1、口红 × 1、眉笔 × 1、睫毛膏 × 1
+        </div>
+      </div>
+      <div style="height: 80px;"></div>
+    `;
+    switchTab('product-detail');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  let productFav = false;
+  function toggleProductFav(btn) {
+    productFav = !productFav;
+    const svg = btn.querySelector('svg');
+    if (productFav) {
+      svg.setAttribute('fill', '#ff4757');
+      svg.style.stroke = '#ff4757';
+      showToast('已收藏');
+    } else {
+      svg.setAttribute('fill', 'none');
+      svg.style.stroke = 'currentColor';
+      showToast('已取消收藏');
+    }
   }
 
   function openCategoryPanel() {
@@ -8765,6 +9553,7 @@ body {
 
   // Auto-show onboarding on first load
   window.addEventListener('load', function() {
+    renderMarketProducts();
     setTimeout(showOnboarding, 500);
   });
 </script>
