@@ -23,7 +23,7 @@ app.add_middleware(
 
 pipeline = SkinAnalysisPipeline()
 
-STATIC_DIR = os.path.join(os.path.dirname(__file__), "..", "static")
+STATIC_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "static"))
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
