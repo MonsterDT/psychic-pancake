@@ -164,11 +164,11 @@
         }
 
         .iphone-frame {
-            width: 310px;
-            height: 650px;
+            width: 300px;
+            height: 648px;
             background: #1C1C1E;
-            border-radius: 50px;
-            padding: 10px;
+            border-radius: 52px;
+            padding: 9px;
             box-shadow: 
                 0 0 0 2px #2C2C2E,
                 0 25px 80px rgba(0, 0, 0, 0.25),
@@ -180,29 +180,30 @@
             width: 100%;
             height: 100%;
             background: var(--bg);
-            border-radius: 40px;
+            border-radius: 42px;
             overflow: hidden;
             position: relative;
         }
 
         .iphone-notch {
             position: absolute;
-            top: 10px;
+            top: 11px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95px;
-            height: 30px;
+            width: 105px;
+            height: 32px;
             background: #000;
-            border-radius: 20px;
-            z-index: 10;
+            border-radius: 22px;
+            z-index: 20;
             transition: all 0.3s ease;
+            pointer-events: none;
         }
 
         .iphone-notch::before {
             content: '';
             position: absolute;
-            top: 9px;
-            left: 15px;
+            top: 10px;
+            left: 16px;
             width: 7px;
             height: 7px;
             background: #1C1C1E;
@@ -212,10 +213,10 @@
         .iphone-notch::after {
             content: '';
             position: absolute;
-            top: 8px;
-            right: 12px;
-            width: 9px;
-            height: 9px;
+            top: 9px;
+            right: 14px;
+            width: 10px;
+            height: 10px;
             background: #0a0a0a;
             border-radius: 50%;
             box-shadow: inset 0 0 2px rgba(100, 100, 100, 0.3);
@@ -226,6 +227,8 @@
             height: 100%;
             border: none;
             display: block;
+            transform: scale(1);
+            transform-origin: top left;
         }
 
         .iphone-side-btn {
@@ -697,7 +700,7 @@
                         <iframe id="demoFrame" src="demo-dist/index.html" title="MakeupPal Demo"></iframe>
                     </div>
                 </div>
-                <div class="iphone-label">iPhone 14 Pro · Demo Preview</div>
+                <div class="iphone-label">iPhone 17 Pro · Demo Showcase</div>
             </div>
 
             <!-- Feature Panel -->
@@ -974,8 +977,41 @@
                 try {
                     const doc = frame.contentDocument;
                     if (doc) {
-                        doc.documentElement.style.setProperty('--safe-top', '44px');
-                        doc.documentElement.style.setProperty('--safe-bottom', '34px');
+                        doc.documentElement.style.setProperty('--safe-top', '52px');
+                        doc.documentElement.style.setProperty('--safe-bottom', '30px');
+                        const styleEl = doc.createElement('style');
+                        styleEl.textContent = `
+                            :root {
+                                --font-size-xs: 10px;
+                                --font-size-sm: 11px;
+                                --font-size-md: 13px;
+                                --font-size-lg: 15px;
+                                --font-size-xl: 17px;
+                                --font-size-2xl: 20px;
+                                --font-size-3xl: 24px;
+                                --spacing-1: 4px;
+                                --spacing-2: 6px;
+                                --spacing-3: 8px;
+                                --spacing-4: 10px;
+                                --spacing-5: 14px;
+                                --spacing-6: 18px;
+                                --spacing-7: 24px;
+                                --spacing-8: 32px;
+                            }
+                            .tab-bar { height: calc(56px + var(--safe-bottom)) !important; }
+                            .mirror-bottom-bar { padding: 10px 16px !important; padding-bottom: calc(10px + var(--safe-bottom)) !important; }
+                            .mirror-shutter-btn { width: 56px !important; height: 56px !important; }
+                            .mirror-face-ring-v2 { width: 130px !important; height: 130px !important; margin-bottom: 12px !important; }
+                            .mirror-face-inner { width: 64px !important; height: 64px !important; }
+                            .mirror-mode-switch-v2 { margin-top: calc(16px + var(--safe-top)) !important; }
+                            .mirror-settings-btn { top: calc(14px + var(--safe-top)) !important; }
+                            .home-header { padding-top: calc(12px + var(--safe-top)) !important; }
+                            .section-header { padding: 14px 16px 10px !important; }
+                            .library-cat-bar { padding-top: calc(8px + var(--safe-top)) !important; }
+                            .mall-header { padding-top: calc(10px + var(--safe-top)) !important; }
+                            .profile-header { padding-top: calc(12px + var(--safe-top)) !important; }
+                        `;
+                        doc.head.appendChild(styleEl);
                     }
                 } catch (e) {
                     console.log('Inject safe-area failed:', e);
