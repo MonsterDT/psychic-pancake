@@ -38,6 +38,18 @@
       border: 1px solid rgba(245, 158, 11, 0.2);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
     }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
     
     .page { display: none; animation: fadeInUp 0.5s ease; }
     .page.active { display: block; }
@@ -73,12 +85,12 @@
     }
     .btn-secondary:hover { background: rgba(16, 185, 129, 0.15); }
     .btn-ghost {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       color: #fff;
       transition: all 0.3s ease;
     }
-    .btn-ghost:hover { background: rgba(255, 255, 255, 0.2); }
+    .btn-ghost:hover { background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.5); }
     .glass-card .btn-ghost { background: rgba(0, 0, 0, 0.05); color: #4B5563; border: 1px solid rgba(0, 0, 0, 0.08); }
     .glass-card .btn-ghost:hover { background: rgba(0, 0, 0, 0.08); }
     
@@ -1148,6 +1160,7 @@
       if (pageName === 'journey') renderTimeline();
       if (pageName === 'seed') initSeedAssessment();
       if (pageName === 'dna') initDnaPage();
+      if (pageName === 'vision') initVisionPage();
     }
     
     function goHome() {
@@ -2070,6 +2083,49 @@
         `;
       }).join('');
     }
+
+    function showRoleStep3() {
+      document.getElementById('roleStep1').classList.add('hidden');
+      document.getElementById('roleStep2').classList.add('hidden');
+      document.getElementById('roleStep3').classList.remove('hidden');
+
+      renderIdealRoleSort();
+
+      // 显示对比图
+      document.getElementById('roleComparison').classList.remove('hidden');
+      renderRoleComparison();
+
+      updateProgress('角色探索', 100);
+    }
+
+    function renderRoleComparison() {
+      const chartContainer = document.getElementById('roleRadarChart');
+      if (!chartContainer || actualRoles.length === 0) return;
+
+      // 获取角色名称
+      const actualLabels = actualRoles.map(idx => roleList[idx].name);
+      const idealLabels = idealRoles.map(idx => roleList[idx].name);
+
+      // 计算现实和理想的最大长度
+      const maxLen = Math.max(actualLabels.length, idealLabels.length);
+
+      // 补齐标签
+      while (actualLabels.length < maxLen) actualLabels.push('');
+      while (idealLabels.length < maxLen) idealLabels.push('');
+
+      // 生成差距分析
+      const insight = [];
+      for (let i = 0; i < Math.min(actualRoles.length, idealRoles.length); i++) {
+        if (actualRoles[i] !== idealRoles[i]) {
+          const roleName = roleList[actualRoles[i]].name;
+          insight.push(`<span class="text-amber-300">${roleName}</span> 在现实中排第${i+1}位，理想中应排第${idealRoles.indexOf(actualRoles[i])+1}位`);
+        }
+      }
+
+      document.getElementById('roleInsight').innerHTML = insight.length > 0
+        ? `💡 ${insight.join('<br>💡 ')}`
+        : '🌟 你的现实与理想状态高度一致，继续保持！';
+    }
     
     let roleDragType = 'actual';
     
@@ -2187,7 +2243,29 @@
     // ========== 愿景冥想 ==========
     let currentVisionScene = 0;
     let selectedEmotions = [];
-    
+
+    function initVisionPage() {
+      // 重置场景
+      currentVisionScene = 0;
+      selectedEmotions = [];
+
+      // 显示第一个场景
+      document.querySelectorAll('.vision-scene').forEach((scene, i) => {
+        scene.classList.toggle('hidden', i !== 0);
+      });
+
+      // 重置导航按钮
+      document.getElementById('prevSceneBtn').classList.add('hidden');
+      document.getElementById('nextSceneBtn').textContent = '下一个 →';
+
+      // 重置输入框
+      const inputs = ['visionMorning', 'visionThought', 'visionWork', 'visionRelation', 'visionEvening', 'visionLegacy'];
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+    }
+
     function prevVisionScene() {
       if (currentVisionScene > 0) {
         currentVisionScene--;
