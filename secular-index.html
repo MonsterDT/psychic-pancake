@@ -91,6 +91,7 @@
     }
     
     /* 渐变文字替换为品牌色 */
+    .ln-text { color: var(--ln-color-text); }
     .ln-text-primary { color: var(--ln-color-primary); }
     .ln-text-secondary { color: var(--ln-color-text-secondary); }
     .ln-text-tertiary { color: var(--ln-color-text-tertiary); }
@@ -334,9 +335,9 @@
             </div>
             <div class="absolute inset-0 w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full bg-amber-400/30 pulse-ring"></div>
           </div>
-          <p class="text-gray-500 text-sm mb-2">欢迎回来</p>
-          <h1 class="text-3xl md:text-4xl font-bold font-serif-cn text-gray-800 mb-2">你好，探索者</h1>
-          <p class="text-gray-500 text-sm md:text-base italic text-gray-500">人生不是盲目的奔跑，而是有方向的绽放</p>
+          <p class="ln-text-secondary text-sm mb-2">欢迎回来</p>
+          <h1 class="text-3xl md:text-4xl font-bold font-serif-cn ln-text mb-2">你好，探索者</h1>
+          <p class="ln-text-secondary text-sm md:text-base italic ln-text-secondary">人生不是盲目的奔跑，而是有方向的绽放</p>
         </div>
 
         <!-- 进度卡片 -->
@@ -513,29 +514,29 @@
             <span>种子发现 · 四维评估</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">发现你的生命种子</h2>
-          <p class="text-gray-400 mt-2">从热情、天赋、社会需求、价值实现四个维度，找到你的人生方向</p>
+          <p class="ln-text-tertiary mt-2">从热情、天赋、社会需求、价值实现四个维度，找到你的人生方向</p>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           <div class="seed-dimension-card rounded-2xl p-4 text-center active" data-dim="passion" onclick="switchSeedDimension('passion')">
             <div class="text-3xl mb-2">🔥</div>
             <div class="text-sm font-medium">热情</div>
-            <div class="text-xs text-gray-400 mt-1" id="dim-passion-status">未开始</div>
+            <div class="text-xs ln-text-tertiary mt-1" id="dim-passion-status">未开始</div>
           </div>
           <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="talent" onclick="switchSeedDimension('talent')">
             <div class="text-3xl mb-2">⭐</div>
             <div class="text-sm font-medium">天赋</div>
-            <div class="text-xs text-gray-400 mt-1" id="dim-talent-status">未开始</div>
+            <div class="text-xs ln-text-tertiary mt-1" id="dim-talent-status">未开始</div>
           </div>
           <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="need" onclick="switchSeedDimension('need')">
             <div class="text-3xl mb-2">🌍</div>
             <div class="text-sm font-medium">社会需求</div>
-            <div class="text-xs text-gray-400 mt-1" id="dim-need-status">未开始</div>
+            <div class="text-xs ln-text-tertiary mt-1" id="dim-need-status">未开始</div>
           </div>
           <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="value" onclick="switchSeedDimension('value')">
             <div class="text-3xl mb-2">💎</div>
             <div class="text-sm font-medium">价值实现</div>
-            <div class="text-xs text-gray-400 mt-1" id="dim-value-status">未开始</div>
+            <div class="text-xs ln-text-tertiary mt-1" id="dim-value-status">未开始</div>
           </div>
         </div>
         
@@ -608,7 +609,7 @@
             <span>价值观探索</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">生命价值观卡牌</h2>
-          <p class="text-gray-400 mt-2">选择你生命中最重要的价值观</p>
+          <p class="ln-text-tertiary mt-2">选择你生命中最重要的价值观</p>
         </div>
         
         <div id="valuesStep1">
@@ -663,7 +664,7 @@
             <span>生命旅程地图</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">你的人生时间轴</h2>
-          <p class="text-gray-400 mt-2">回顾过往，那些塑造了今天的你的瞬间</p>
+          <p class="ln-text-tertiary mt-2">回顾过往，那些塑造了今天的你的瞬间</p>
         </div>
         
         <div class="ln-card rounded-3xl p-6 md:p-8 mb-6">
@@ -776,7 +777,7 @@
             <span>角色探索</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">人生角色排序</h2>
-          <p class="text-gray-400 mt-2">看看你在生活中扮演的各种角色</p>
+          <p class="ln-text-tertiary mt-2">看看你在生活中扮演的各种角色</p>
         </div>
         
         <div id="roleStep1">
@@ -837,7 +838,7 @@
             <span>愿景冥想 · 人生终局</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">从未来回望当下</h2>
-          <p class="text-gray-400 mt-2">闭上眼睛，让我们一起进入未来</p>
+          <p class="ln-text-tertiary mt-2">闭上眼睛，让我们一起进入未来</p>
         </div>
         
         <div class="ln-card rounded-3xl p-6 md:p-8">
@@ -958,7 +959,7 @@
             <span>人生DNA · Being-Having-Doing</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">构建你的生命DNA</h2>
-          <p class="text-gray-400 mt-2">从自我、拥有、行动三个维度定位人生方向</p>
+          <p class="ln-text-tertiary mt-2">从自我、拥有、行动三个维度定位人生方向</p>
         </div>
         
         <div id="dnaStep1">
@@ -1079,7 +1080,7 @@
             <span>生命平衡自评</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">七维生命平衡</h2>
-          <p class="text-gray-400 mt-2">请为以下七个维度打分（1-10分）</p>
+          <p class="ln-text-tertiary mt-2">请为以下七个维度打分（1-10分）</p>
         </div>
         
         <div class="ln-card rounded-3xl p-6 mb-6" id="balanceRatings">
@@ -1102,7 +1103,7 @@
             <span>生命导航报告</span>
           </div>
           <h2 class="text-2xl md:text-3xl font-bold font-serif-cn ln-text-gradient">你的生命导航报告</h2>
-          <p class="text-gray-400 mt-2 text-sm" id="reportDate"></p>
+          <p class="ln-text-tertiary mt-2 text-sm" id="reportDate"></p>
         </div>
         
         <div id="reportEmpty" class="ln-card rounded-3xl p-8 text-center">
@@ -1932,7 +1933,7 @@
       
       if (periodEvents.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-8 text-gray-500 ml-12 md:ml-0">
+          <div class="text-center py-8 ln-text-secondary ml-12 md:ml-0">
             <div class="text-3xl mb-2">📝</div>
             <p class="text-sm">还没有记录这个阶段的事件</p>
           </div>
