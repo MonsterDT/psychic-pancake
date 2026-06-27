@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Search, Clock, Sparkles } from 'lucide-react';
+import { Search, Sparkles } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import RecipeCard from '@/components/home/RecipeCard';
 import { recipes } from '@/data/recipes';
@@ -41,21 +41,21 @@ export default function SearchPage() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-6 py-8 animate-fade-in">
-        <form onSubmit={handleSearch} className="mb-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 animate-fade-in">
+        <form onSubmit={handleSearch} className="mb-6 sm:mb-8">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-warm-400" />
+            <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-warm-400" />
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="搜索食谱名称、食材..."
-              className="w-full pl-12 pr-24 py-4 text-lg rounded-container border border-warm-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+              className="w-full pl-10 sm:pl-12 pr-20 sm:pr-24 py-3 sm:py-4 text-sm sm:text-lg rounded-lg sm:rounded-container border border-warm-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
               autoFocus
             />
             <button
               type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 btn-primary !py-2.5 !px-6"
+              className="absolute right-2 top-1/2 -translate-y-1/2 btn-primary !py-2 !px-4 sm:!py-2.5 sm:!px-6 text-sm"
             >
               搜索
             </button>
@@ -63,15 +63,15 @@ export default function SearchPage() {
         </form>
 
         {!query && (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             <div>
-              <h3 className="font-semibold text-warm-900 mb-4">热门搜索</h3>
+              <h3 className="font-semibold text-warm-900 mb-3 sm:mb-4 text-sm sm:text-base">热门搜索</h3>
               <div className="flex flex-wrap gap-2">
                 {hotSearches.map((term) => (
                   <button
                     key={term}
                     onClick={() => handleQuickSearch(term)}
-                    className="px-4 py-2 bg-white border border-warm-100 rounded-full text-sm text-warm-700 hover:border-primary hover:text-primary transition-colors"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white border border-warm-100 rounded-full text-xs sm:text-sm text-warm-700 hover:border-primary hover:text-primary transition-colors"
                   >
                     {term}
                   </button>
@@ -80,13 +80,13 @@ export default function SearchPage() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-warm-900 mb-4">搜索历史</h3>
+              <h3 className="font-semibold text-warm-900 mb-3 sm:mb-4 text-sm sm:text-base">搜索历史</h3>
               <div className="flex flex-wrap gap-2">
                 {searchHistory.map((term) => (
                   <button
                     key={term}
                     onClick={() => handleQuickSearch(term)}
-                    className="px-4 py-2 bg-warm-50 rounded-full text-sm text-warm-600 hover:bg-warm-100 transition-colors"
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 bg-warm-50 rounded-full text-xs sm:text-sm text-warm-600 hover:bg-warm-100 transition-colors"
                   >
                     {term}
                   </button>
@@ -94,15 +94,15 @@ export default function SearchPage() {
               </div>
             </div>
 
-            <div className="bg-warm-50 rounded-container p-6 text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8 text-primary" />
+            <div className="bg-warm-50 rounded-lg sm:rounded-container p-5 sm:p-6 text-center">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
-              <h3 className="font-semibold text-warm-900 mb-2">找不到想要的？</h3>
-              <p className="text-sm text-warm-500 mb-4">让 AI 为你量身定制专属配方</p>
+              <h3 className="font-semibold text-warm-900 mb-1 sm:mb-2 text-sm sm:text-base">找不到想要的？</h3>
+              <p className="text-xs sm:text-sm text-warm-500 mb-3 sm:mb-4">让 AI 为你量身定制专属配方</p>
               <button
                 onClick={() => navigate('/ai-chat')}
-                className="btn-primary"
+                className="btn-primary !py-2 !px-4 sm:!py-3 sm:!px-6 text-sm"
               >
                 开始 AI 定制
               </button>
@@ -112,26 +112,26 @@ export default function SearchPage() {
 
         {query && (
           <div>
-            <p className="text-warm-500 mb-6">
+            <p className="text-warm-500 mb-4 sm:mb-6 text-sm">
               找到 <span className="font-semibold text-warm-900">{filteredRecipes.length}</span> 个相关结果
             </p>
 
             {filteredRecipes.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredRecipes.map((recipe, index) => (
                   <RecipeCard key={recipe.id} recipe={recipe} index={index} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20">
-                <div className="w-20 h-20 bg-warm-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-10 h-10 text-warm-400" />
+              <div className="text-center py-16 sm:py-20">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-warm-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Search className="w-8 h-8 sm:w-10 sm:h-10 text-warm-400" />
                 </div>
-                <h3 className="text-lg font-medium text-warm-900 mb-2">没有找到匹配的食谱</h3>
-                <p className="text-warm-500 text-sm mb-4">试试其他关键词，或者让AI帮你定制</p>
+                <h3 className="text-base sm:text-lg font-medium text-warm-900 mb-2">没有找到匹配的食谱</h3>
+                <p className="text-xs sm:text-sm text-warm-500 mb-3 sm:mb-4">试试其他关键词，或者让AI帮你定制</p>
                 <button
                   onClick={() => navigate('/ai-chat')}
-                  className="btn-primary"
+                  className="btn-primary !py-2 !px-4 sm:!py-3 sm:!px-6 text-sm"
                 >
                   让 AI 帮我定制
                 </button>

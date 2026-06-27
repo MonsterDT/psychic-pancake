@@ -2,10 +2,10 @@ import { ChefHat } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-warm-900 text-warm-200 mt-20">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
+    <footer className="bg-warm-900 text-warm-200 mt-16 md:mt-20 pb-24 md:pb-0">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="sm:col-span-2 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
                 <ChefHat className="w-5 h-5 text-white" />
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-warm-800 mt-10 pt-8 text-center text-sm text-warm-500">
+        <div className="border-t border-warm-800 mt-8 md:mt-10 pt-6 md:pt-8 text-center text-sm text-warm-500">
           <p>© 2026 烘焙AI宝典. 用AI点亮你的烘焙生活.</p>
         </div>
       </div>

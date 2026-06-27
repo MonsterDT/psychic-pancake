@@ -14,9 +14,9 @@ interface Msg {
 
 const quickPrompts = [
   { icon: Cake, text: '我想做一个生日蛋糕' },
-  { icon: Cookie, text: '我有面粉鸡蛋牛奶，能做什么？' },
-  { icon: Apple, text: '低糖低脂的烘焙推荐' },
-  { icon: Clock, text: '30分钟内能完成的' },
+  { icon: Cookie, text: '我有面粉鸡蛋牛奶' },
+  { icon: Apple, text: '低糖低脂推荐' },
+  { icon: Clock, text: '30分钟内完成' },
 ];
 
 export default function AIChatPage() {
@@ -128,18 +128,18 @@ export default function AIChatPage() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto px-4 py-6 h-[calc(100vh-64px)] flex flex-col">
-        <div className="text-center mb-6">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 h-[calc(100vh-64px)] flex flex-col pb-20 md:pb-0">
+        <div className="text-center mb-4 sm:mb-6">
           <div className="inline-flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
-              <ChefHat className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center">
+              <ChefHat className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <h1 className="font-display text-2xl font-bold text-warm-900">AI 烘焙助手</h1>
+            <h1 className="font-display text-xl sm:text-2xl font-bold text-warm-900">AI 烘焙助手</h1>
           </div>
-          <p className="text-sm text-warm-500">说出你的想法，为你定制专属烘焙方案</p>
+          <p className="text-xs sm:text-sm text-warm-500">说出你的想法，为你定制专属烘焙方案</p>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-2 space-y-4 mb-4 scroll-smooth">
+        <div className="flex-1 overflow-y-auto px-1 sm:px-2 space-y-3 sm:space-y-4 mb-4 scroll-smooth">
           {messages.map((msg) => (
             <ChatMessage
               key={msg.id}
@@ -151,14 +151,14 @@ export default function AIChatPage() {
 
           {isLoading && (
             <div className="flex gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div className="bg-white border border-warm-100 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
                 <div className="flex gap-1.5">
-                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
@@ -167,16 +167,16 @@ export default function AIChatPage() {
 
         {messages.length <= 1 && (
           <div className="mb-4">
-            <p className="text-xs text-warm-500 mb-3 px-2">试试这些：</p>
+            <p className="text-xs text-warm-500 mb-2 sm:mb-3 px-1 sm:px-2">试试这些：</p>
             <div className="grid grid-cols-2 gap-2">
               {quickPrompts.map((prompt, i) => (
                 <button
                   key={i}
                   onClick={() => handleSend(prompt.text)}
                   disabled={isLoading}
-                  className="flex items-center gap-2 px-4 py-3 bg-white border border-warm-100 rounded-card text-sm text-warm-700 hover:border-primary hover:bg-warm-50 transition-colors text-left disabled:opacity-50"
+                  className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-white border border-warm-100 rounded-lg sm:rounded-card text-xs sm:text-sm text-warm-700 hover:border-primary hover:bg-warm-50 transition-colors text-left disabled:opacity-50"
                 >
-                  <prompt.icon className="w-4 h-4 text-primary flex-shrink-0" />
+                  <prompt.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
                   <span className="truncate">{prompt.text}</span>
                 </button>
               ))}
@@ -184,7 +184,7 @@ export default function AIChatPage() {
           </div>
         )}
 
-        <div className="bg-white rounded-2xl border border-warm-100 shadow-sm p-2">
+        <div className="bg-white rounded-xl sm:rounded-2xl border border-warm-100 shadow-sm p-1.5 sm:p-2">
           <div className="flex items-end gap-2">
             <textarea
               value={input}
@@ -197,14 +197,14 @@ export default function AIChatPage() {
             <button
               onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
-              className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
+              className="w-10 h-10 rounded-lg sm:rounded-xl bg-primary text-white flex items-center justify-center hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex-shrink-0"
             >
               <Send className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        <p className="text-center text-xs text-warm-400 mt-3">
+        <p className="text-center text-[10px] sm:text-xs text-warm-400 mt-2 sm:mt-3">
           免费用户每日 3 次 AI 生成 · 今日剩余 3 次
         </p>
       </div>

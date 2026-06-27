@@ -46,6 +46,63 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile responsive utilities */
+@layer utilities {
+  /* Safe area for notch devices */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Horizontal scroll container */
+  .scroll-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-container > * {
+    scroll-snap-align: start;
+  }
+}
+
+/* Slide in from right animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+  /* Prevent pull-to-refresh on main content */
+  main {
+    overscroll-behavior-y: contain;
+  }
+
+  /* Better touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Focus styles */
 :focus-visible {
   @apply outline-none ring-2 ring-primary ring-offset-2;
