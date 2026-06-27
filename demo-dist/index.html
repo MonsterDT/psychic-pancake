@@ -11105,7 +11105,46 @@ body {
   // Auto-show onboarding on first load
   window.addEventListener('load', function() {
     renderMarketProducts();
-    setTimeout(showOnboarding, 500);
+    // 默认不自动显示 onboarding，由父页面控制
+    // setTimeout(showOnboarding, 500);
+  });
+
+  // ===== 响应父页面（showcase）的消息 =====
+  window.addEventListener('message', function(e) {
+    var data = e.data;
+    if (!data || !data.type) return;
+    
+    switch(data.type) {
+      case 'switchTab':
+        switchTab(data.tab);
+        break;
+      case 'showOnboarding':
+        showOnboarding();
+        break;
+      case 'openShare':
+        document.querySelectorAll('.share-btn').forEach(btn => btn.click());
+        break;
+      case 'openGPCenter':
+        document.querySelector('.gp-center-btn')?.click();
+        break;
+      case 'openReport':
+        switchTab('my-reports');
+        break;
+      case 'openSearch':
+        switchTab('search');
+        break;
+      case 'openMirrorSettings':
+        switchTab('mirror');
+        setTimeout(() => {
+          document.querySelector('.mirror-settings-btn')?.click();
+        }, 300);
+        break;
+    }
+    
+    // 通知父页面当前 Tab 变化
+    if (typeof currentTab !== 'undefined') {
+      parent.postMessage({ type: 'tabChanged', tab: currentTab }, '*');
+    }
   });
 </script>
 

@@ -631,43 +631,241 @@
             }
         }
 
-        /* ===== Responsive ===== */
-        @media (max-width: 1024px) {
+        /* ===== Responsive - 电脑端展示页 ===== */
+        @media (min-width: 769px) {
+            /* 电脑端：完整展示页 */
+            .showcase-container {
+                padding: 40px 32px;
+            }
+            
+            .showcase-header {
+                margin-bottom: 48px;
+            }
+            
+            .showcase-title {
+                font-size: 42px;
+            }
+            
             .showcase-main {
-                flex-direction: column;
-                align-items: center;
+                display: flex;
+                gap: 48px;
+                align-items: flex-start;
+                justify-content: center;
             }
-
+            
             .iphone-wrapper {
-                position: static;
+                flex-shrink: 0;
+                animation: fadeInUp 0.8s ease 0.2s both;
+                position: sticky;
+                top: 40px;
             }
-
+            
+            .iphone-frame {
+                width: 300px;
+                height: 648px;
+                border-radius: 52px;
+                padding: 9px;
+            }
+            
+            .iphone-screen {
+                border-radius: 42px;
+            }
+            
             .feature-panel {
-                max-width: 500px;
-                width: 100%;
+                width: 420px;
+                max-width: none;
+            }
+            
+            .quick-demo-bar {
+                display: flex;
+            }
+            
+            /* 隐藏手机端专属元素 */
+            .mobile-header,
+            .mobile-nav,
+            .mobile-footer {
+                display: none !important;
             }
         }
 
-        @media (max-width: 640px) {
+        /* ===== Responsive - 手机端直接展示 Demo ===== */
+        @media (max-width: 768px) {
+            /* 重置所有容器 */
+            body {
+                overflow: auto;
+            }
+            
+            body::before,
+            body::after {
+                display: none;
+            }
+            
             .showcase-container {
-                padding: 24px 16px;
+                padding: 0;
+                max-width: 100%;
             }
-
-            .showcase-title {
-                font-size: 28px;
+            
+            /* 隐藏电脑端专属元素 */
+            .showcase-header,
+            .showcase-main,
+            .quick-demo-bar,
+            .showcase-footer {
+                display: none !important;
             }
-
-            .iphone-frame {
-                width: 280px;
-                height: 580px;
-                border-radius: 42px;
+            
+            /* 手机端专属布局 */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 16px;
+                background: var(--bg-card);
+                border-bottom: 1px solid var(--border);
+                position: sticky;
+                top: 0;
+                z-index: 100;
             }
-
-            .iphone-screen {
-                border-radius: 32px;
+            
+            .mobile-brand {
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--text);
+                display: flex;
+                align-items: center;
+                gap: 8px;
             }
+            
+            .mobile-brand-dot {
+                width: 8px;
+                height: 8px;
+                background: var(--primary);
+                border-radius: 50%;
+            }
+            
+            .mobile-version {
+                font-size: 11px;
+                color: var(--text-muted);
+                padding: 2px 8px;
+                background: var(--bg);
+                border-radius: 4px;
+            }
+            
+            /* iPhone 外壳在手机端隐藏 */
+            .iphone-wrapper {
+                display: none !important;
+            }
+            
+            /* 直接显示 Demo iframe */
+            .mobile-demo {
+                display: block;
+                width: 100%;
+                min-height: calc(100vh - 120px);
+                padding-bottom: 80px;
+            }
+            
+            .mobile-demo iframe {
+                width: 100%;
+                height: calc(100vh - 120px);
+                border: none;
+                display: block;
+            }
+            
+            /* 手机端底部导航 */
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--bg-card);
+                border-top: 1px solid var(--border);
+                padding: 8px 0;
+                padding-bottom: max(8px, env(safe-area-inset-bottom));
+                z-index: 1000;
+                justify-content: space-around;
+            }
+            
+            .mobile-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                padding: 6px 12px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: var(--text-secondary);
+                font-size: 10px;
+                transition: all 0.2s;
+                min-width: 60px;
+            }
+            
+            .mobile-nav-item.active {
+                color: var(--primary);
+            }
+            
+            .mobile-nav-item-icon {
+                font-size: 20px;
+                line-height: 1;
+            }
+            
+            .mobile-nav-item-label {
+                font-size: 10px;
+                white-space: nowrap;
+            }
+            
+            /* 手机端功能入口 */
+            .mobile-features {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+                padding: 16px;
+                background: var(--bg-card);
+                border-top: 1px solid var(--border);
+            }
+            
+            .mobile-feature-btn {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                padding: 12px 8px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                cursor: pointer;
+                color: var(--text);
+                font-size: 11px;
+                transition: all 0.2s;
+            }
+            
+            .mobile-feature-btn:hover,
+            .mobile-feature-btn:active {
+                background: var(--primary-lightest);
+                border-color: var(--primary-light);
+            }
+            
+            .mobile-feature-icon {
+                font-size: 18px;
+            }
+        }
 
-            .stats-row {
+        /* ===== Responsive - 小屏幕手机（≤ 375px）===== */
+        @media (max-width: 375px) {
+            .mobile-nav-item {
+                padding: 4px 8px;
+                min-width: 50px;
+            }
+            
+            .mobile-nav-item-icon {
+                font-size: 18px;
+            }
+            
+            .mobile-nav-item-label {
+                font-size: 9px;
+            }
+            
+            .mobile-features {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
@@ -1113,6 +1311,171 @@
                 setTimeout(() => toast.remove(), 300);
             }, 2000);
         }
+    </script>
+    <!-- ===================== 手机端专属元素 ===================== -->
+    <!-- 手机端顶部导航 -->
+    <header class="mobile-header">
+        <div class="mobile-brand">
+            <span class="mobile-brand-dot"></span>
+            妆伴 MakeupPal
+        </div>
+        <div class="mobile-version">v3.2.0</div>
+    </header>
+
+    <!-- 手机端 Demo 展示 -->
+    <div class="mobile-demo">
+        <iframe id="demoFrameMobile" src="demo-dist/index.html" title="MakeupPal Demo"></iframe>
+    </div>
+
+    <!-- 手机端功能入口 -->
+    <div class="mobile-features">
+        <button class="mobile-feature-btn" onclick="openOnboardingDemo()">
+            <span class="mobile-feature-icon">🎯</span>
+            <span>引导介绍</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openMirrorDemo()">
+            <span class="mobile-feature-icon">💄</span>
+            <span>AI 试妆</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openMarketDemo()">
+            <span class="mobile-feature-icon">🛍️</span>
+            <span>商城</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openProfileDemo()">
+            <span class="mobile-feature-icon">👤</span>
+            <span>我的</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openShareDemo()">
+            <span class="mobile-feature-icon">📤</span>
+            <span>分享</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openGPDemo()">
+            <span class="mobile-feature-icon">💎</span>
+            <span>焕新值</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openReportDemo()">
+            <span class="mobile-feature-icon">📊</span>
+            <span>报告</span>
+        </button>
+        <button class="mobile-feature-btn" onclick="openSearchDemo()">
+            <span class="mobile-feature-icon">🔍</span>
+            <span>搜索</span>
+        </button>
+    </div>
+
+    <!-- 手机端底部导航 -->
+    <nav class="mobile-nav">
+        <button class="mobile-nav-item active" onclick="switchDemoPage('home', this)">
+            <span class="mobile-nav-item-icon">🏠</span>
+            <span class="mobile-nav-item-label">首页</span>
+        </button>
+        <button class="mobile-nav-item" onclick="switchDemoPage('library', this)">
+            <span class="mobile-nav-item-icon">🎨</span>
+            <span class="mobile-nav-item-label">颜库</span>
+        </button>
+        <button class="mobile-nav-item" onclick="switchDemoPage('mirror', this)">
+            <span class="mobile-nav-item-icon">💄</span>
+            <span class="mobile-nav-item-label">焕新</span>
+        </button>
+        <button class="mobile-nav-item" onclick="switchDemoPage('market', this)">
+            <span class="mobile-nav-item-icon">🛍️</span>
+            <span class="mobile-nav-item-label">市集</span>
+        </button>
+        <button class="mobile-nav-item" onclick="switchDemoPage('profile', this)">
+            <span class="mobile-nav-item-icon">👤</span>
+            <span class="mobile-nav-item-label">我的</span>
+        </button>
+    </nav>
+
+    <script>
+        // 手机端 Demo 页面切换
+        function switchDemoPage(page, btn) {
+            // 更新导航状态
+            document.querySelectorAll('.mobile-nav-item').forEach(item => item.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            
+            // 向 iframe 发送消息切换页面
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'switchTab', tab: page }, '*');
+            }
+        }
+
+        // 手机端功能演示
+        function openOnboardingDemo() {
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'showOnboarding' }, '*');
+            }
+        }
+
+        function openMirrorDemo() {
+            switchDemoPage('mirror', null);
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                setTimeout(() => {
+                    iframe.contentWindow.postMessage({ type: 'openMirrorSettings' }, '*');
+                }, 300);
+            }
+        }
+
+        function openMarketDemo() {
+            switchDemoPage('market', null);
+        }
+
+        function openProfileDemo() {
+            switchDemoPage('profile', null);
+        }
+
+        function openShareDemo() {
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'openShare' }, '*');
+            }
+        }
+
+        function openGPDemo() {
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'openGPCenter' }, '*');
+            }
+        }
+
+        function openReportDemo() {
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'openReport' }, '*');
+            }
+        }
+
+        function openSearchDemo() {
+            var iframe = document.getElementById('demoFrameMobile');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({ type: 'openSearch' }, '*');
+            }
+        }
+
+        // 监听来自 iframe 的消息
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'tabChanged') {
+                // 同步手机端导航状态
+                var tab = e.data.tab;
+                var navItems = document.querySelectorAll('.mobile-nav-item');
+                navItems.forEach(item => {
+                    var icon = item.querySelector('.mobile-nav-item-icon').textContent;
+                    var isActive = false;
+                    switch(tab) {
+                        case 'home': isActive = icon === '🏠'; break;
+                        case 'library': isActive = icon === '🎨'; break;
+                        case 'mirror': isActive = icon === '💄'; break;
+                        case 'market': isActive = icon === '🛍️'; break;
+                        case 'profile': isActive = icon === '👤'; break;
+                    }
+                    if (isActive) item.classList.add('active');
+                    else item.classList.remove('active');
+                });
+            }
+        });
     </script>
 </body>
 </html>

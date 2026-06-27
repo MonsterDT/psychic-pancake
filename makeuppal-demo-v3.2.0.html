@@ -11102,10 +11102,28 @@ body {
     }
   });
 
-  // Auto-show onboarding on first load
+  // Auto-show onboarding on first load (disabled - controlled by parent page)
   window.addEventListener('load', function() {
     renderMarketProducts();
-    setTimeout(showOnboarding, 500);
+    // setTimeout(showOnboarding, 500);
+  });
+
+  // 消息监听：接收父页面指令
+  window.addEventListener('message', function(e) {
+    var data = e.data;
+    if (!data || !data.type) return;
+    switch(data.type) {
+      case 'switchTab': switchTab(data.tab); break;
+      case 'showOnboarding': showOnboarding(); break;
+      case 'openShare': document.querySelectorAll('.share-btn').forEach(function(btn) { btn.click(); }); break;
+      case 'openGPCenter': document.querySelector('.gp-center-btn')?.click(); break;
+      case 'openReport': switchTab('my-reports'); break;
+      case 'openSearch': switchTab('search'); break;
+      case 'openMirrorSettings': switchTab('mirror'); setTimeout(function() { document.querySelector('.mirror-settings-btn')?.click(); }, 300); break;
+    }
+    if (typeof currentTab !== 'undefined') {
+      parent.postMessage({ type: 'tabChanged', tab: currentTab }, '*');
+    }
   });
 </script>
 
