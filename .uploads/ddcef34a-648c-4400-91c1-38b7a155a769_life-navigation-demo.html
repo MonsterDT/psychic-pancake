@@ -1,0 +1,3586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e1b4b">
+  <title>生命导航 · 人生探索之旅</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #312e81 50%, #1e1b4b 75%, #0f172a 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+    .font-serif-cn {
+      font-family: 'Noto Serif SC', serif;
+    }
+    
+    /* 星空背景 */
+    .stars-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+    
+    /* 玻璃态 */
+    .glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .glass-light {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    
+    /* 页面切换 */
+    .page {
+      display: none;
+      animation: fadeInUp 0.6s ease;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* 打字机效果 */
+    .typing-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: currentColor;
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: typingBounce 1.4s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes typingBounce {
+      0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    /* 按钮 */
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      background-size: 200% 200%;
+      transition: all 0.4s ease;
+    }
+    .btn-primary:hover {
+      background-position: right center;
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.6);
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+    
+    /* 卡牌翻转 */
+    .card-flip {
+      perspective: 1000px;
+    }
+    .card-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .card-flip.flipped .card-flip-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 1rem;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+    
+    /* 渐变文字 */
+    .gradient-text {
+      background: linear-gradient(135deg, #c4b5fd 0%, #f0abfc 50%, #fda4af 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* 发光效果 */
+    .glow-purple {
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.4),
+                  0 0 60px rgba(139, 92, 246, 0.2);
+    }
+    .glow-pink {
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.4),
+                  0 0 60px rgba(236, 72, 153, 0.2);
+    }
+    
+    /* 拖拽排序 */
+    .draggable-item {
+      cursor: grab;
+      transition: all 0.2s ease;
+    }
+    .draggable-item:active {
+      cursor: grabbing;
+    }
+    .draggable-item.dragging {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+    .drop-zone {
+      transition: all 0.3s ease;
+    }
+    .drop-zone.drag-over {
+      background: rgba(139, 92, 246, 0.2);
+      border-color: rgba(139, 92, 246, 0.6);
+    }
+    .drop-zone-pool {
+      transition: all 0.3s ease;
+    }
+    .drop-zone-pool.drag-over {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+    
+    /* 信纸 */
+    .letter-paper {
+      background: linear-gradient(to bottom, #fefce8, #fffbeb);
+      background-image: 
+        linear-gradient(#fef3c7 1px, transparent 1px);
+      background-size: 100% 32px;
+      background-position: 0 32px;
+    }
+    
+    /* 时间轴 */
+    .timeline-line {
+      background: linear-gradient(to bottom, #6366f1, #a855f7, #ec4899);
+    }
+    
+    /* 滚动条 */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* 选项卡 */
+    .phase-dot {
+      transition: all 0.3s ease;
+    }
+    .phase-dot.active {
+      transform: scale(1.3);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+    }
+    .phase-dot.completed {
+      background: #10b981 !important;
+    }
+    
+    /* 浮动动画 */
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    /* 脉冲 */
+    .pulse-ring {
+      animation: pulseRing 2s ease-out infinite;
+    }
+    @keyframes pulseRing {
+      0% {
+        transform: scale(0.8);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+    
+    /* 雷达图容器 */
+    #radarChart, #roleRadarChart {
+      width: 100%;
+      height: 350px;
+    }
+    
+    /* 响应式 */
+    @media (max-width: 640px) {
+      body {
+        font-size: 14px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .card-flip {
+        min-height: 180px;
+      }
+      
+      /* 首页移动端 */
+      #page-home h1 {
+        font-size: 2rem !important;
+      }
+      #page-home .text-xl {
+        font-size: 1.1rem !important;
+      }
+      #page-home .text-base {
+        font-size: 0.85rem !important;
+      }
+      
+      /* 进度条移动端 */
+      #progressBar .phase-dot {
+        width: 6px !important;
+        height: 6px !important;
+      }
+      #progressBar .text-sm {
+        font-size: 0.7rem !important;
+      }
+      
+      /* 对话移动端 */
+      #chatContainer {
+        min-height: 300px !important;
+        max-height: 50vh !important;
+        padding: 1rem !important;
+      }
+      
+      /* 按钮移动端优化 - 确保触摸友好 */
+      button {
+        min-height: 44px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      /* 输入框移动端 */
+      input[type="text"], textarea {
+        font-size: 16px !important;
+      }
+      
+      /* 雷达图移动端 */
+      #reportRadarChart,
+      #reportRoleRadar,
+      #roleRadarChart {
+        height: 280px !important;
+      }
+      
+      /* 卡牌移动端 */
+      .w-36 { width: 120px !important; }
+      .h-52 { height: 170px !important; }
+      .md\:w-44 { width: 120px !important; }
+      .md\:h-64 { height: 170px !important; }
+      
+      /* 角色选项移动端 */
+      #roleOptions {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      
+      /* 价值观归类移动端 */
+      #valueSortArea .grid-cols-3 {
+        gap: 0.5rem !important;
+      }
+      #valueSortArea .drop-zone {
+        padding: 0.5rem !important;
+        min-height: 150px !important;
+      }
+      
+      /* 时间轴移动端 */
+      #timelineEvents .md\:flex {
+        display: block !important;
+      }
+      #timelineEvents .md\:w-1\/2 {
+        width: 100% !important;
+        padding-left: 2.5rem !important;
+        padding-right: 0 !important;
+        text-align: left !important;
+      }
+      
+      /* 信件移动端 */
+      .letter-paper {
+        padding: 1.5rem 1rem !important;
+      }
+      .letter-paper input {
+        width: 100% !important;
+        min-width: 80px !important;
+      }
+      
+      /* 报告移动端 */
+      #page-report .glass,
+      #page-report .glass-light {
+        padding: 1rem !important;
+        border-radius: 1.25rem !important;
+      }
+      #page-report h1 {
+        font-size: 1.5rem !important;
+      }
+      #page-report h2 {
+        font-size: 1.25rem !important;
+      }
+      #page-report h3 {
+        font-size: 1rem !important;
+      }
+      
+      /* 平衡评分移动端 */
+      #balanceRatings .flex {
+        gap: 0.25rem !important;
+      }
+      #balanceRatings .w-20 {
+        width: 60px !important;
+        font-size: 0.75rem !important;
+      }
+      
+      /* 愿景场景移动端 */
+      .vision-scene .text-5xl {
+        font-size: 2.5rem !important;
+      }
+      
+      /* 底部安全区域 */
+      .pb-8 {
+        padding-bottom: calc(2rem + env(safe-area-inset-bottom)) !important;
+      }
+      .pb-16 {
+        padding-bottom: calc(4rem + env(safe-area-inset-bottom)) !important;
+      }
+      
+      /* 顶部安全区域 */
+      .pt-24 {
+        padding-top: calc(6rem + env(safe-area-inset-top)) !important;
+      }
+      .pt-12 {
+        padding-top: calc(3rem + env(safe-area-inset-top)) !important;
+      }
+    }
+    
+    /* 小屏手机适配 */
+    @media (max-width: 380px) {
+      #page-home h1 {
+        font-size: 1.75rem !important;
+      }
+      .grid-cols-2 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    
+    /* 触摸优化 */
+    @media (hover: none) and (pointer: coarse) {
+      button:active {
+        transform: scale(0.97);
+        opacity: 0.9;
+      }
+      .draggable-item {
+        touch-action: none;
+      }
+    }
+    
+    /* 防止iOS输入框自动缩放 */
+    @supports (-webkit-touch-callout: none) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+    
+    /* 移动端主按钮优化 */
+    @media (max-width: 640px) {
+      .btn-primary {
+        min-height: 52px !important;
+        font-size: 1rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+      }
+      
+      /* 移动端所有可点击元素优化 */
+      .role-option,
+      .emotion-btn,
+      .event-type-btn,
+      .timeline-period,
+      .letter-tab {
+        min-height: 44px !important;
+      }
+      
+      /* 输入框高度优化 */
+      input[type="text"], textarea {
+        min-height: 48px !important;
+      }
+      
+      /* 卡片内边距移动端优化 */
+      .glass:not(#progressBar *) {
+        padding: 1rem !important;
+      }
+      
+      /* 滚动优化 */
+      * {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 星空背景 -->
+  <div class="stars-bg" id="starsBg"></div>
+  
+  <!-- 主容器 -->
+  <div class="relative z-10 min-h-screen">
+    
+    <!-- 首页 -->
+    <div id="page-home" class="page active">
+      <div class="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+        <div class="text-center max-w-3xl mx-auto">
+          <!-- Logo -->
+          <div class="mb-8 relative inline-block">
+            <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center glow-purple float-animation">
+              <span class="text-4xl md:text-5xl">🧭</span>
+            </div>
+            <div class="absolute inset-0 w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-purple-500/30 pulse-ring"></div>
+          </div>
+          
+          <!-- 标题 -->
+          <h1 class="text-4xl md:text-6xl font-bold mb-4 font-serif-cn">
+            <span class="gradient-text">生命导航</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-purple-200 mb-2 font-serif-cn">
+            发现你的人生使命
+          </p>
+          <p class="text-base md:text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
+            通过卡牌投射、角色排序、愿景冥想、时间旅行等多种互动形式，
+            <br class="hidden md:block" />
+            带你进行一次深刻的自我探索之旅
+          </p>
+          
+          <!-- 特色功能预览 -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12 max-w-3xl mx-auto">
+            <div class="glass rounded-xl p-4 hover:bg-white/15 transition-all cursor-pointer hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20" onclick="startJourney('cards')">
+              <div class="text-3xl mb-2">🎴</div>
+              <div class="text-sm font-medium text-white">投射卡牌</div>
+              <div class="text-xs text-gray-400 mt-1">潜意识探索</div>
+            </div>
+            <div class="glass rounded-xl p-4 hover:bg-white/15 transition-all cursor-pointer hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20" onclick="startJourney('roles')">
+              <div class="text-3xl mb-2">🧩</div>
+              <div class="text-sm font-medium text-white">角色排序</div>
+              <div class="text-xs text-gray-400 mt-1">人生平衡</div>
+            </div>
+            <div class="glass rounded-xl p-4 hover:bg-white/15 transition-all cursor-pointer hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/20" onclick="startJourney('timeline')">
+              <div class="text-3xl mb-2">🌈</div>
+              <div class="text-sm font-medium text-white">旅程地图</div>
+              <div class="text-xs text-gray-400 mt-1">人生回顾</div>
+            </div>
+            <div class="glass rounded-xl p-4 hover:bg-white/15 transition-all cursor-pointer hover:scale-105 hover:shadow-lg hover:shadow-amber-500/20" onclick="startJourney('vision')">
+              <div class="text-3xl mb-2">📝</div>
+              <div class="text-sm font-medium text-white">未来之信</div>
+              <div class="text-xs text-gray-400 mt-1">时间对话</div>
+            </div>
+          </div>
+          
+          <!-- 开始按钮 -->
+          <button onclick="startJourney()" class="btn-primary px-10 py-4 rounded-2xl text-white font-semibold text-lg shadow-2xl inline-flex items-center gap-3">
+            <span>开启探索之旅</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </button>
+          <p class="text-sm text-gray-500 mt-4">约需 15-20 分钟 · 建议在安静环境中进行</p>
+        </div>
+        
+        <!-- 底部 -->
+        <div class="mt-16 text-center text-gray-600 text-xs">
+          <p>💫 每一次探索，都是向更好的自己走近一步</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 进度导航条 -->
+    <div id="progressBar" class="fixed top-0 left-0 right-0 z-50 hidden">
+      <div class="glass border-b border-white/10">
+        <div class="max-w-4xl mx-auto px-4 py-3">
+          <div class="flex items-center justify-between mb-2">
+            <button onclick="goHome()" class="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              <span class="hidden sm:inline">首页</span>
+            </button>
+            <div class="text-sm text-white/80" id="phaseLabel">准备开始</div>
+            <div class="text-sm text-white/60" id="progressText">0%</div>
+          </div>
+          <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
+            <div id="progressFill" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+          <!-- 阶段指示点 -->
+          <div class="flex justify-between mt-3 px-1">
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30 active" data-phase="0"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="1"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="2"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="3"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="4"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="5"></div>
+            <div class="phase-dot w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-white/30" data-phase="6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段1：破冰对话 -->
+    <div id="page-icebreaker" class="page pt-24 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>✨</span>
+            <span>第一站 · 温暖相遇</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">让我们先认识一下</h2>
+        </div>
+        
+        <!-- 对话区域 -->
+        <div id="chatContainer" class="glass rounded-3xl p-6 mb-6 min-h-[400px] max-h-[60vh] overflow-y-auto space-y-4">
+          <!-- 消息会动态添加 -->
+        </div>
+        
+        <!-- 输入区域 -->
+        <div id="chatInputArea" class="space-y-3">
+          <div class="relative">
+            <input type="text" id="chatInput" 
+              class="w-full px-5 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-500/20 transition-all"
+              placeholder="输入你的回答..."
+              onkeypress="handleChatEnter(event)"
+            />
+            <button onclick="sendChatMessage()" class="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:shadow-lg transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段2：价值观卡牌 -->
+    <div id="page-cards" class="page pt-24 pb-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🎴</span>
+            <span>第二站 · 价值探索</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">生命能量卡牌</h2>
+          <p class="text-gray-400 mt-2">抽取卡牌，看看你的潜意识在说什么</p>
+        </div>
+        
+        <!-- 卡牌抽选区 -->
+        <div id="cardDeckArea" class="text-center mb-10">
+          <p class="text-gray-300 mb-6" id="cardDeckInstruction">点击卡牌堆，抽取你的第一张生命能量卡</p>
+          <div class="flex justify-center gap-4">
+            <!-- 卡牌堆 -->
+            <div id="cardStack" class="relative cursor-pointer" onclick="drawCard()">
+              <div class="w-36 h-52 md:w-44 md:h-64 rounded-2xl bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-700 shadow-2xl relative overflow-hidden">
+                <div class="absolute inset-2 rounded-xl border-2 border-white/20"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="text-5xl mb-2">✨</div>
+                </div>
+                <div class="absolute bottom-4 left-0 right-0 text-center">
+                  <div class="text-white/80 text-sm">生命卡牌</div>
+                </div>
+                <!-- 装饰纹理 -->
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
+              </div>
+              <!-- 第二层卡牌 -->
+              <div class="absolute top-1 left-2 w-36 h-52 md:w-44 md:h-64 rounded-2xl bg-gradient-to-br from-purple-700 to-indigo-700 -z-10"></div>
+              <div class="absolute top-2 left-4 w-36 h-52 md:w-44 md:h-64 rounded-2xl bg-gradient-to-br from-indigo-800 to-purple-800 -z-20"></div>
+            </div>
+            
+            <!-- 已抽取卡牌展示区 -->
+            <div id="drawnCardsContainer" class="flex-1">
+              <div id="drawnCards" class="flex gap-3 justify-center flex-wrap">
+                <!-- 已抽取的卡牌会放在这里 -->
+              </div>
+              <p id="cardsDrawnCount" class="text-sm text-gray-400 mt-4">已抽取 0 / 3 张</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 卡牌翻转动画区域 -->
+        <div id="cardRevealArea" class="hidden text-center mb-8">
+          <div class="card-flip w-48 h-64 md:w-56 md:h-72 mx-auto mb-6" id="flipCard">
+            <div class="card-flip-inner">
+              <div class="card-front bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-700 flex items-center justify-center">
+                <div class="text-5xl">✨</div>
+              </div>
+              <div class="card-back glass-light flex flex-col items-center justify-center p-6" id="cardRevealContent">
+                <!-- 卡牌内容动态填充 -->
+              </div>
+            </div>
+          </div>
+          <p class="text-lg text-white mb-2" id="cardName"></p>
+          <p class="text-sm text-purple-300 mb-6" id="cardMeaning"></p>
+          
+          <!-- 联想选择 -->
+          <div id="associationArea" class="hidden">
+            <p class="text-sm text-gray-300 mb-3">这张卡让你联想到什么？</p>
+            <div class="flex flex-wrap gap-2 justify-center mb-4" id="associationOptions">
+              <!-- 联想词按钮 -->
+            </div>
+            <button onclick="confirmCardAssociation()" class="btn-primary px-6 py-2.5 rounded-xl text-white font-medium text-sm">
+              确认并继续
+            </button>
+          </div>
+        </div>
+        
+        <!-- 价值观归类区 -->
+        <div id="valueSortArea" class="hidden">
+          <p class="text-center text-gray-300 mb-6">请将这些价值观卡片拖放到对应的圆圈中</p>
+          
+          <div class="grid grid-cols-3 gap-4 mb-8">
+            <div class="drop-zone glass rounded-2xl p-4 min-h-[200px] border-2 border-dashed border-emerald-500/50" 
+                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'core')"
+                 id="zone-core">
+              <div class="text-center mb-3">
+                <div class="text-xs text-emerald-400 font-medium">核心价值</div>
+                <div class="text-xs text-gray-400">3-4个 · 不可替代</div>
+              </div>
+              <div class="space-y-2" id="coreValues"></div>
+            </div>
+            
+            <div class="drop-zone glass rounded-2xl p-4 min-h-[200px] border-2 border-dashed border-blue-500/50"
+                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'important')"
+                 id="zone-important">
+              <div class="text-center mb-3">
+                <div class="text-xs text-blue-400 font-medium">重要价值</div>
+                <div class="text-xs text-gray-400">3-4个 · 很在乎</div>
+              </div>
+              <div class="space-y-2" id="importantValues"></div>
+            </div>
+            
+            <div class="drop-zone glass rounded-2xl p-4 min-h-[200px] border-2 border-dashed border-gray-500/50"
+                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'support')"
+                 id="zone-support">
+              <div class="text-center mb-3">
+                <div class="text-xs text-gray-400 font-medium">支撑价值</div>
+                <div class="text-xs text-gray-500">补充 · 锦上添花</div>
+              </div>
+              <div class="space-y-2" id="supportValues"></div>
+            </div>
+          </div>
+          
+          <!-- 待分类卡片池 -->
+          <div class="glass rounded-2xl p-4 mb-6 drop-zone-pool" 
+               ondragover="handlePoolDragOver(event)" 
+               ondragleave="handlePoolDragLeave(event)"
+               ondrop="handlePoolDrop(event)">
+            <p class="text-sm text-gray-400 mb-3">待分类的价值观（可拖回这里）</p>
+            <div class="flex flex-wrap gap-2 min-h-[60px]" id="valuePool">
+              <!-- 待分类卡片 -->
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button onclick="confirmValueSort()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              完成价值观探索
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段3：人生旅程地图 -->
+    <div id="page-timeline" class="page pt-24 pb-8">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🌈</span>
+            <span>第三站 · 生命旅程</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">你的人生时间轴</h2>
+          <p class="text-gray-400 mt-2">回顾过往，那些塑造了今天的你的瞬间</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 md:p-8">
+          <!-- 时间轴导航 -->
+          <div class="flex justify-between items-center mb-8 overflow-x-auto pb-2">
+            <button class="timeline-period px-3 py-1.5 rounded-lg text-sm bg-purple-500/30 text-white whitespace-nowrap" data-period="childhood" onclick="switchPeriod('childhood')">
+              童年印记
+            </button>
+            <button class="timeline-period px-3 py-1.5 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="youth" onclick="switchPeriod('youth')">
+              青春探索
+            </button>
+            <button class="timeline-period px-3 py-1.5 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="adult" onclick="switchPeriod('adult')">
+              成年起步
+            </button>
+            <button class="timeline-period px-3 py-1.5 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="mature" onclick="switchPeriod('mature')">
+              成熟沉淀
+            </button>
+            <button class="timeline-period px-3 py-1.5 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="wisdom" onclick="switchPeriod('wisdom')">
+              智慧绽放
+            </button>
+          </div>
+          
+          <!-- 时间轴主体 -->
+          <div class="relative">
+            <!-- 竖线 -->
+            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 timeline-line transform md:-translate-x-1/2"></div>
+            
+            <div id="timelineEvents" class="space-y-6">
+              <!-- 事件会动态添加 -->
+            </div>
+            
+            <!-- 添加事件按钮 -->
+            <div class="flex justify-center mt-8">
+              <button onclick="showAddEventModal()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                添加里程碑事件
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 人生主题发现 -->
+        <div id="lifeThemeArea" class="hidden mt-8">
+          <div class="glass-light rounded-2xl p-6 text-center">
+            <div class="text-4xl mb-4">💡</div>
+            <h3 class="text-xl font-bold text-white mb-2">我发现了你的人生主题</h3>
+            <p class="text-purple-300 text-lg font-serif-cn mb-4" id="lifeThemeText"></p>
+            <p class="text-gray-400 text-sm mb-6" id="lifeThemeDesc"></p>
+            <button onclick="goToNextPhase('roleSort')" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              继续探索 →
+            </button>
+          </div>
+        </div>
+        
+        <div class="text-center mt-6">
+          <button onclick="skipTimeline()" class="text-gray-400 hover:text-white text-sm transition-colors">
+            暂时跳过此环节 →
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 添加事件弹窗 -->
+    <div id="addEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div class="glass-light rounded-2xl p-6 max-w-md w-full">
+        <h3 class="text-xl font-bold text-white mb-4">添加里程碑事件</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">事件名称</label>
+            <input type="text" id="eventName" class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：第一次离家上大学"/>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">事件类型</label>
+            <div class="grid grid-cols-5 gap-2" id="eventTypeOptions">
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="achievement" onclick="selectEventType('achievement')">🌟</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="challenge" onclick="selectEventType('challenge')">💪</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="relationship" onclick="selectEventType('relationship')">💕</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="turning" onclick="selectEventType('turning')">🎯</button>
+              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="awakening" onclick="selectEventType('awakening')">🌱</button>
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">情绪强度（1-10）</label>
+            <input type="range" id="eventEmotion" min="1" max="10" value="5" class="w-full" oninput="updateEmotionDisplay()"/>
+            <div class="text-center text-purple-300 text-sm" id="emotionDisplay">5</div>
+          </div>
+          <div>
+            <label class="text-sm text-gray-300 mb-1 block">简短描述（可选）</label>
+            <textarea id="eventDesc" rows="2" class="w-full px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="这个事件如何改变了你？"></textarea>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button onclick="closeAddEventModal()" class="flex-1 btn-ghost py-2.5 rounded-xl text-white">
+            取消
+          </button>
+          <button onclick="saveEvent()" class="flex-1 btn-primary py-2.5 rounded-xl text-white">
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段4：人生角色排序 -->
+    <div id="page-roles" class="page pt-24 pb-8">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🧩</span>
+            <span>第四站 · 角色探索</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">人生角色排序</h2>
+          <p class="text-gray-400 mt-2">看看你在生活中扮演的各种角色</p>
+        </div>
+        
+        <!-- 第一步：选择重要角色 -->
+        <div id="roleSelectStep">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">请选择你生活中最重要的 5-6 个角色</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="roleOptions">
+              <!-- 角色选项 -->
+            </div>
+          </div>
+          <div class="text-center">
+            <button onclick="startRoleSort()" id="startRoleSortBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+              开始排序
+            </button>
+            <p class="text-sm text-gray-500 mt-2" id="roleSelectHint">请选择 5-6 个角色</p>
+          </div>
+        </div>
+        
+        <!-- 第二步：拖拽排序 -->
+        <div id="roleSortStep" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">按你目前投入的时间从多到少排序（拖拽调整顺序）</p>
+            <div class="space-y-2" id="roleSortList">
+              <!-- 可拖拽的角色列表 -->
+            </div>
+          </div>
+          
+          <div class="glass-light rounded-2xl p-6 mb-6">
+            <p class="text-center text-purple-300 mb-4">💭 这是你目前的角色投入顺序</p>
+            <div class="text-center">
+              <button onclick="showIdealRoleSort()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm">
+                下一步：看看理想状态 →
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 第三步：理想排序 -->
+        <div id="roleIdealStep" class="hidden">
+          <div class="glass rounded-3xl p-6 mb-6">
+            <p class="text-center text-gray-300 mb-6">如果一切皆有可能，你理想中的角色投入顺序是？</p>
+            <div class="space-y-2" id="roleIdealSortList">
+              <!-- 可拖拽的理想角色列表 -->
+            </div>
+          </div>
+          
+          <!-- 对比可视化 -->
+          <div id="roleComparison" class="hidden glass-light rounded-2xl p-6">
+            <h3 class="text-lg font-bold text-white text-center mb-6">现实 vs 理想 · 角色投入对比</h3>
+            <div id="roleRadarChart"></div>
+            <p class="text-sm text-gray-400 text-center mt-4" id="roleInsight"></p>
+          </div>
+          
+          <div class="text-center mt-6">
+            <button onclick="confirmRoleSort()" id="confirmRoleBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+              完成角色探索
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段5：愿景冥想 -->
+    <div id="page-vision" class="page pt-24 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>🎬</span>
+            <span>第五站 · 愿景电影</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">理想的一天</h2>
+          <p class="text-gray-400 mt-2">闭上眼睛，让我们一起进入未来</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 md:p-8">
+          <!-- 场景引导 -->
+          <div id="visionScenes">
+            <!-- 场景1：早晨 -->
+            <div class="vision-scene" data-scene="0">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🌅</div>
+                <h3 class="text-xl font-bold text-white mb-2">清晨醒来</h3>
+                <p class="text-gray-400 text-sm">想象现在是5年后一个普通的早晨</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">你是被什么唤醒的？</label>
+                  <input type="text" id="visionMorning" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阳光、鸟鸣、爱人的亲吻..."/>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">醒来后的第一个念头是？</label>
+                  <input type="text" id="visionThought" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：今天又是美好的一天..."/>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 场景2：白天 -->
+            <div class="vision-scene hidden" data-scene="1">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">☀️</div>
+                <h3 class="text-xl font-bold text-white mb-2">白天的工作</h3>
+                <p class="text-gray-400 text-sm">你的一天是如何度过的？</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">你在做什么工作？</label>
+                  <textarea id="visionWork" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="描述你理想中的工作内容、环境、同事..."></textarea>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">工作中最让你感到满足的是？</label>
+                  <input type="text" id="visionJoy" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：创造价值、帮助他人、自由..."/>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 场景3：夜晚 -->
+            <div class="vision-scene hidden" data-scene="2">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">🌙</div>
+                <h3 class="text-xl font-bold text-white mb-2">夜幕降临</h3>
+                <p class="text-gray-400 text-sm">你如何结束这一天？</p>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">睡前你在做什么？</label>
+                  <input type="text" id="visionNight" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阅读、和家人聊天、冥想..."/>
+                </div>
+                <div>
+                  <label class="text-sm text-gray-300 mb-2 block">睡前你最感激的是什么？</label>
+                  <input type="text" id="visionGratitude" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：健康、爱、成长..."/>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 场景4：核心情绪 -->
+            <div class="vision-scene hidden" data-scene="3">
+              <div class="text-center mb-6">
+                <div class="text-5xl mb-4">💖</div>
+                <h3 class="text-xl font-bold text-white mb-2">核心情绪</h3>
+                <p class="text-gray-400 text-sm">在这理想的一天中，你感受到最多的情绪是？</p>
+              </div>
+              <div class="flex flex-wrap gap-2 justify-center mb-6" id="emotionOptions">
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="平静" onclick="toggleEmotion('平静', this)">😌 平静</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="喜悦" onclick="toggleEmotion('喜悦', this)">😊 喜悦</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="充实" onclick="toggleEmotion('充实', this)">💪 充实</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="自由" onclick="toggleEmotion('自由', this)">🕊️ 自由</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="被爱" onclick="toggleEmotion('被爱', this)">💗 被爱</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="成就感" onclick="toggleEmotion('成就感', this)">🏆 成就感</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="安全感" onclick="toggleEmotion('安全感', this)">🛡️ 安全感</button>
+                <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all" data-emotion="活力" onclick="toggleEmotion('活力', this)">⚡ 活力</button>
+              </div>
+              <p class="text-center text-sm text-gray-400">选择 1-3 个最核心的情绪</p>
+            </div>
+          </div>
+          
+          <!-- 导航按钮 -->
+          <div class="flex justify-between mt-8">
+            <button id="prevSceneBtn" onclick="prevVisionScene()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm hidden">
+              ← 上一个
+            </button>
+            <div class="flex-1"></div>
+            <button id="nextSceneBtn" onclick="nextVisionScene()" class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm">
+              下一个 →
+            </button>
+          </div>
+          
+          <!-- 场景指示器 -->
+          <div class="flex justify-center gap-2 mt-6">
+            <div class="w-2 h-2 rounded-full bg-purple-500" data-dot="0"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="1"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="2"></div>
+            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段6：给未来的信 -->
+    <div id="page-letter" class="page pt-24 pb-8">
+      <div class="max-w-2xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>📝</span>
+            <span>第六站 · 时间对话</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">给未来的一封信</h2>
+          <p class="text-gray-400 mt-2">穿越时空，和未来的自己对话</p>
+        </div>
+        
+        <!-- 信件选择 -->
+        <div class="flex justify-center gap-4 mb-6">
+          <button class="letter-tab px-4 py-2 rounded-xl bg-purple-500/30 text-white text-sm" data-letter="1year" onclick="switchLetter('1year')">
+            致1年后的自己
+          </button>
+          <button class="letter-tab px-4 py-2 rounded-xl bg-white/10 text-gray-400 text-sm" data-letter="5year" onclick="switchLetter('5year')">
+            致5年后的自己
+          </button>
+        </div>
+        
+        <!-- 信纸 -->
+        <div class="letter-paper rounded-2xl p-6 md:p-10 shadow-2xl mb-6">
+          <div id="letter1Year">
+            <p class="text-amber-800 mb-4 font-serif-cn">亲爱的我：</p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              当你读到这封信时，一年已经过去了。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              这一年里，我最骄傲的是
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter1Proud" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              我最感激的是
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter1Grateful" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              我想告诉你，别忘了
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter1Remember" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 font-serif-cn leading-relaxed text-right mt-8">
+              来自一年前的你
+            </p>
+          </div>
+          
+          <div id="letter5Year" class="hidden">
+            <p class="text-amber-800 mb-4 font-serif-cn">亲爱的[名字]（现在的我）：</p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              你好呀！我是5年后的你。
+              这一路走来，经历了很多很多。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              我想告诉你，我为你骄傲的是
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter5Proud" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              我想提醒你的是
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter5Remind" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 mb-4 font-serif-cn leading-relaxed">
+              最重要的一件事是
+              <span class="inline-block min-w-[100px] border-b border-amber-400 px-1">
+                <input type="text" class="bg-transparent border-none outline-none w-40 text-amber-900 font-serif-cn" id="letter5Important" placeholder="（在这里填写）"/>
+              </span>
+              。
+            </p>
+            <p class="text-amber-800 font-serif-cn leading-relaxed text-right mt-8">
+              爱你的，5年后的自己
+            </p>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button onclick="completeLetter()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            完成时间对话 →
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 阶段7：生命平衡 + 报告 -->
+    <div id="page-balance" class="page pt-24 pb-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+            <span>⚖️</span>
+            <span>第七站 · 生命平衡</span>
+          </div>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn">生命平衡自评</h2>
+          <p class="text-gray-400 mt-2">最后，让我们看看你当下的生命状态</p>
+        </div>
+        
+        <div class="glass rounded-3xl p-6 mb-8">
+          <p class="text-center text-gray-300 mb-6">请为以下六个维度打分（1-10分）</p>
+          
+          <div class="space-y-5" id="balanceRatings">
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">事业成就</span>
+              <div class="flex-1 flex gap-1" data-dimension="career">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="career">5</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">财务状况</span>
+              <div class="flex-1 flex gap-1" data-dimension="finance">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="finance">5</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">健康活力</span>
+              <div class="flex-1 flex gap-1" data-dimension="health">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="health">5</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">家庭关系</span>
+              <div class="flex-1 flex gap-1" data-dimension="family">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="family">5</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">人际社交</span>
+              <div class="flex-1 flex gap-1" data-dimension="social">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="social">5</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="w-20 text-sm text-white/80">个人成长</span>
+              <div class="flex-1 flex gap-1" data-dimension="growth">
+                <!-- 动态生成 -->
+              </div>
+              <span class="w-8 text-center text-purple-300 font-medium balance-value" data-dimension="growth">5</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button onclick="generateReport()" class="btn-primary px-10 py-4 rounded-xl text-white font-medium text-lg glow-purple">
+            ✨ 生成我的生命导航报告 ✨
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 最终报告页 -->
+    <div id="page-report" class="page pt-12 pb-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <!-- 报告封面 -->
+        <div class="text-center mb-12">
+          <div class="inline-block mb-6">
+            <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center glow-purple">
+              <span class="text-3xl">🧭</span>
+            </div>
+          </div>
+          <h1 class="text-3xl md:text-4xl font-bold font-serif-cn gradient-text mb-2">
+            <span id="reportName">你的</span>生命导航图
+          </h1>
+          <p class="text-gray-400">探索日期：<span id="reportDate"></span></p>
+        </div>
+        
+        <!-- 个人品牌卡 -->
+        <div class="glass-light rounded-3xl p-8 mb-8 text-center">
+          <div class="text-5xl mb-4" id="reportAvatar">✨</div>
+          <h2 class="text-2xl font-bold text-white mb-2 font-serif-cn" id="reportTitle">生命探索者</h2>
+          <p class="text-purple-300 text-lg mb-6" id="reportSubtitle"></p>
+          
+          <!-- 核心价值观标签 -->
+          <div class="flex flex-wrap gap-2 justify-center mb-6" id="reportCoreValues">
+            <!-- 动态添加 -->
+          </div>
+          
+          <div class="text-sm text-gray-400">
+            你的人生主题是：<span class="text-white font-medium" id="reportLifeTheme">自我成长</span>
+          </div>
+        </div>
+        
+        <!-- 生命平衡雷达图 -->
+        <div class="glass rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">📊 生命平衡雷达图</h3>
+          <div id="reportRadarChart"></div>
+          <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mt-6" id="balanceScoreDisplay">
+            <!-- 动态显示 -->
+          </div>
+        </div>
+        
+        <!-- 人生旅程时间轴（简化版） -->
+        <div class="glass rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">🌈 你的人生里程碑</h3>
+          <div id="reportTimeline" class="space-y-4">
+            <!-- 动态显示 -->
+          </div>
+        </div>
+        
+        <!-- 愿景关键词 -->
+        <div class="glass rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">💫 你的理想生活关键词</h3>
+          <div class="flex flex-wrap gap-3 justify-center" id="reportVisionKeywords">
+            <!-- 动态添加 -->
+          </div>
+        </div>
+        
+        <!-- 角色平衡对比 -->
+        <div class="glass rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">🧩 人生角色平衡</h3>
+          <div id="reportRoleRadar"></div>
+        </div>
+        
+        <!-- 未来的信精选 -->
+        <div class="glass rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">📝 给未来的信</h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="letter-paper rounded-xl p-5">
+              <h4 class="text-amber-800 font-bold mb-3 font-serif-cn">致1年后的自己</h4>
+              <div class="text-amber-700 text-sm space-y-2 font-serif-cn" id="reportLetter1">
+                <!-- 动态显示 -->
+              </div>
+            </div>
+            <div class="letter-paper rounded-xl p-5">
+              <h4 class="text-amber-800 font-bold mb-3 font-serif-cn">致5年后的自己</h4>
+              <div class="text-amber-700 text-sm space-y-2 font-serif-cn" id="reportLetter5">
+                <!-- 动态显示 -->
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 行动建议 -->
+        <div class="glass-light rounded-3xl p-6 mb-8">
+          <h3 class="text-xl font-bold text-white mb-6 text-center">🎯 下一步行动建议</h3>
+          <div class="space-y-3" id="actionSuggestions">
+            <!-- 动态添加 -->
+          </div>
+        </div>
+        
+        <!-- 探索者寄语 -->
+        <div class="glass rounded-3xl p-6 md:p-8 mb-8 text-center">
+          <div class="text-4xl mb-4">🌟</div>
+          <h3 class="text-xl font-bold text-white mb-4 font-serif-cn">写给你的话</h3>
+          <div class="space-y-3 text-purple-200 leading-relaxed" id="closingMessage">
+            <!-- 动态添加 -->
+          </div>
+          <div class="mt-6 pt-6 border-t border-white/10">
+            <p class="text-lg font-serif-cn gradient-text font-bold" id="blessingText"></p>
+          </div>
+        </div>
+        
+        <!-- 温馨提示 -->
+        <div class="text-center mb-8 px-4">
+          <div class="inline-flex flex-wrap gap-3 justify-center text-xs text-gray-500" id="reminderList">
+            <!-- 动态添加 -->
+          </div>
+        </div>
+        
+        <!-- 底部操作 -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button onclick="restartJourney()" class="btn-ghost px-8 py-3 rounded-xl text-white flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            重新探索
+          </button>
+          <button onclick="shareReport()" class="btn-primary px-8 py-3 rounded-xl text-white flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+            分享报告
+          </button>
+        </div>
+        
+        <div class="text-center mt-10 text-gray-500 text-sm">
+          <p>💡 建议保存此报告，定期回顾你的目标和愿景</p>
+          <p class="mt-1">生命导航 · 陪你走过每一段人生旅程</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <script>
+    // ========== 数据存储 ==========
+    const appData = {
+      userName: '',
+      lifeStage: '',
+      expectations: '',
+      
+      valueCards: [],
+      drawnCards: [],
+      coreValues: [],
+      importantValues: [],
+      supportValues: [],
+      
+      lifeEvents: [],
+      currentPeriod: 'childhood',
+      selectedEventType: '',
+      
+      selectedRoles: [],
+      roleCurrentOrder: [],
+      roleIdealOrder: [],
+      
+      visionMorning: '',
+      visionThought: '',
+      visionWork: '',
+      visionJoy: '',
+      visionNight: '',
+      visionGratitude: '',
+      selectedEmotions: [],
+      
+      letter1Proud: '',
+      letter1Grateful: '',
+      letter1Remember: '',
+      letter5Proud: '',
+      letter5Remind: '',
+      letter5Important: '',
+      
+      balance: {
+        career: 5,
+        finance: 5,
+        health: 5,
+        family: 5,
+        social: 5,
+        growth: 5
+      }
+    };
+    
+    // ========== 配置数据 ==========
+    const valueCardsData = [
+      { id: 'ocean', emoji: '🌊', name: '海洋', meaning: '流动·包容·深度', associations: ['自由', '平静', '深度', '包容', '神秘'] },
+      { id: 'mountain', emoji: '🏔️', name: '高山', meaning: '挑战·成就·视野', associations: ['成就', '挑战', '高度', '坚韧', '目标'] },
+      { id: 'forest', emoji: '🌲', name: '森林', meaning: '成长·生机·宁静', associations: ['成长', '平静', '生命', '自然', '疗愈'] },
+      { id: 'fire', emoji: '🔥', name: '火焰', meaning: '热情·转化·能量', associations: ['热情', '力量', '创造', '温暖', '激情'] },
+      { id: 'moon', emoji: '🌙', name: '月亮', meaning: '阴柔·直觉·周期', associations: ['直觉', '温柔', '循环', '梦想', '内省'] },
+      { id: 'sun', emoji: '☀️', name: '太阳', meaning: '阳刚·活力·照耀', associations: ['活力', '光明', '希望', '能量', '自信'] },
+      { id: 'flower', emoji: '🌸', name: '花朵', meaning: '绽放·爱·美好', associations: ['美', '爱', '绽放', '温柔', '感恩'] },
+      { id: 'crystal', emoji: '💎', name: '水晶', meaning: '纯粹·清晰·永恒', associations: ['纯粹', '清晰', '珍贵', '永恒', '真实'] },
+      { id: 'butterfly', emoji: '🦋', name: '蝴蝶', meaning: '蜕变·自由·美丽', associations: ['自由', '蜕变', '美丽', '轻盈', '变化'] },
+      { id: 'turtle', emoji: '🐢', name: '海龟', meaning: '耐心·智慧·长寿', associations: ['智慧', '耐心', '稳定', '长寿', '坚持'] },
+      { id: 'rainbow', emoji: '🌈', name: '彩虹', meaning: '希望·多元·连接', associations: ['希望', '多彩', '连接', '喜悦', '奇迹'] },
+      { id: 'star', emoji: '⭐', name: '星星', meaning: '指引·梦想·远见', associations: ['梦想', '指引', '远见', '闪耀', '信念'] }
+    ];
+    
+    const rolesData = [
+      { id: 'self', emoji: '🧘', name: '自我', desc: '你的身心健康、内心成长' },
+      { id: 'partner', emoji: '💑', name: '伴侣', desc: '亲密关系、情感支持' },
+      { id: 'parent', emoji: '👨‍👩‍👧', name: '父母', desc: '赡养义务、家庭责任' },
+      { id: 'child', emoji: '👶', name: '子女', desc: '抚养教育、陪伴成长' },
+      { id: 'professional', emoji: '💼', name: '职业者', desc: '事业发展、职业技能' },
+      { id: 'entrepreneur', emoji: '🚀', name: '创业者', desc: '商业创新、价值创造' },
+      { id: 'learner', emoji: '📚', name: '学习者', desc: '知识获取、技能提升' },
+      { id: 'friend', emoji: '👥', name: '朋友', desc: '社交关系、友谊维护' },
+      { id: 'citizen', emoji: '🏛️', name: '公民', desc: '社会责任、公益参与' },
+      { id: 'creator', emoji: '🎨', name: '创作者', desc: '艺术表达、灵感实现' }
+    ];
+    
+    const lifeThemes = [
+      { title: '成长探索者', desc: '你的人生似乎一直在追求新的体验和自我突破，每一个阶段都在探索更多的可能性。' },
+      { title: '关系建造者', desc: '你人生中最重要的线索似乎是人与人之间的连接，爱与被爱是你最深的渴望。' },
+      { title: '使命追寻者', desc: '你一直在寻找某种更深层的意义，渴望将自己的生命投入到更宏大的事业中。' },
+      { title: '平衡整合者', desc: '你的人生主题是在多个领域间寻找平衡，追求完整而非偏颇的生命状态。' },
+      { title: '创造表达者', desc: '创造和表达是你生命的核心驱动力，你渴望将内在的世界显化出来。' },
+      { title: '自由追寻者', desc: '自由是你最深的渴望，你一直在寻找能够全然做自己的生活方式。' }
+    ];
+
+    // ========== 语料库：通用话术 ==========
+    const universalCorpus = {
+      encouragement: [
+        '很真实的感受，谢谢你愿意分享。',
+        '这个回答很有深度，说明你在认真思考。',
+        '嗯，我听到了。',
+        '这很有意义。',
+        '你说得很好。',
+        '我能感受到你的真诚。',
+        '能这样坦诚地面对自己，很勇敢。',
+        '真实的就是最好的。'
+      ],
+      validation: [
+        '这种感受是很正常的。',
+        '很多人都有类似的困惑，你不是一个人。',
+        '允许自己有这样的感受。',
+        '没关系，这样想很真实。',
+        '我能理解你的感受。',
+        '听起来你经历了很多。'
+      ],
+      curiosity: [
+        '可以多说一点吗？',
+        '为什么这对你这么重要？',
+        '这个想法是怎么来的？',
+        '你觉得背后的原因是什么？',
+        '如果再深挖一层，会是什么？',
+        '还有呢？',
+        '你是怎么知道的？'
+      ],
+      transition: [
+        '好，我们继续往下探索～',
+        '有意思，让我们再来看看...',
+        '很好，接下来我们试试...',
+        '这一部分完成了，我们进入下一段旅程。',
+        '感谢你的分享，让我们继续前进。'
+      ],
+      beforeDeepQuestion: [
+        '接下来这个问题，可以稍微慢一点回答...',
+        '这可能是一个需要想一想的问题...',
+        '不用急，你可以慢慢想...',
+        '凭直觉回答就好，没有对错。'
+      ]
+    };
+
+    // 从数组中随机选取一条
+    function pickRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // 发送多条消息，带延迟
+    function sendBotMessages(messages, callback) {
+      let i = 0;
+      function next() {
+        if (i >= messages.length) {
+          if (callback) callback();
+          return;
+        }
+        showTypingIndicator();
+        setTimeout(() => {
+          hideTypingIndicator();
+          addBotMessage(messages[i]);
+          i++;
+          setTimeout(next, 600);
+        }, 800 + Math.random() * 400);
+      }
+      next();
+    }
+
+    // ========== 语料库：破冰阶段 ==========
+    const icebreakerCorpus = {
+      openings: [
+        {
+          text: '你好！很高兴和你一起探索人生导航图 ✨',
+          type: 'greeting'
+        },
+        {
+          text: '我是你的生命导航伙伴，接下来我们会用一种特别的方式，一起探索你内心深处的渴望与方向。',
+          type: 'intro'
+        },
+        {
+          text: '这个过程没有对错，也没有标准答案。你只需要如实分享你当下的感受就好。',
+          type: 'safety'
+        }
+      ],
+      stageResponses: {
+        student: [
+          '学生时代是人生中最有可能性的阶段，充满了各种探索的机会～',
+          '这个阶段的迷茫和困惑都是正常的，说明你在认真思考未来。'
+        ],
+        newcomer: [
+          '初入职场往往是理想与现实碰撞最激烈的时候，这个阶段的探索特别有价值。',
+          '从校园到社会的过渡期，确实需要一些时间来找到自己的节奏。'
+        ],
+        advancing: [
+          '职场进阶阶段往往伴随着"接下来要往哪走"的深层思考，你的探索非常及时。',
+          '这个阶段既有了一些积累，又有更多可能性，是人生的关键十字路口。'
+        ],
+        entrepreneur: [
+          '创业是一场与自己对话的旅程，你愿意来做这次探索，说明你在认真对待这件事。',
+          '创业者往往面临多重角色的平衡，这次探索可能会帮你找到更清晰的方向。'
+        ],
+        freelancer: [
+          '自由职业的核心课题是"如何定义自己的价值"，这次探索会帮你更看清这一点。',
+          '选择自由职业的人，通常内心都有很清晰的向往，我们一起来找到它。'
+        ],
+        transition: [
+          '转型期虽然让人不安，但也是最接近真实自己的时候。',
+          '愿意在转型期停下来思考，这本身就是一种智慧。'
+        ]
+      },
+      expectationResponses: {
+        clear: [
+          '带着这个期待，我们的探索会更有方向感。',
+          '很好，这个意图会成为我们探索的指南针。'
+        ],
+        vague: [
+          '没关系，即使不太清晰也没关系，探索本身就是在找答案。',
+          '模糊本身就是一种信号，说明你准备好做一些新的思考了。'
+        ]
+      }
+    };
+
+    // ========== 语料库：价值观卡牌阶段 ==========
+    const valueCardsCorpus = {
+      intro: [
+        '这一站，我们来玩一个卡牌游戏 🎴',
+        '这里有一套生命能量卡牌，每张卡都有不同的图案和能量。',
+        '你不需要"想太多"，凭直觉抽取就好。有时候，直觉比思考更接近真相。'
+      ],
+      drawInstructions: [
+        '点击牌堆，抽取你的第一张卡牌～',
+        '再抽一张？还有 {remaining} 张',
+        '最后一张啦～'
+      ],
+      afterReveal: [
+        '看到这张卡，你第一个联想到的词是什么？',
+        '不用想太多，第一个冒出来的词往往最有意义。'
+      ],
+      sortingIntro: [
+        '现在，请把这些价值观词拖到不同的区域，看看它们在你心中的位置：',
+        '核心价值 — 失去它们，人生就失去了意义',
+        '重要价值 — 很重要，但可以为核心价值让步',
+        '支撑价值 — 锦上添花，让生活更美好'
+      ],
+      afterSorting: [
+        '你把哪些放在了核心？为什么是它们？',
+        '有没有哪个词，你犹豫了很久才决定放在哪里？',
+        '如果只能保留一个核心价值，你会选哪个？'
+      ],
+      transition: [
+        '有意思～通过这些卡牌，我们看到了你内心深处珍视的东西。',
+        '接下来，让我们回到过去，看看你的人生轨迹是如何走到今天的 🌈'
+      ]
+    };
+
+    // ========== 语料库：时间轴阶段 ==========
+    const timelineCorpus = {
+      intro: [
+        '接下来，我们来做一个回顾练习 📖',
+        '想象你的人生是一条河流，从出生一直流到现在。',
+        '这条河经过了哪些地方？有过哪些转弯、瀑布、平静的湖面？',
+        '我们来把人生中的关键节点标记出来。'
+      ],
+      periodPrompts: {
+        childhood: [
+          '小时候的你，是什么样子的？',
+          '你最早的记忆是什么？',
+          '那时候的你，有什么样的梦想？'
+        ],
+        youth: [
+          '青春期的你，在探索什么？',
+          '这个阶段你印象最深的是什么？',
+          '那时候你最在乎什么？'
+        ],
+        youngAdulthood: [
+          '步入社会后，你经历了什么？',
+          '第一份工作对你来说意味着什么？',
+          '这个阶段的你，在寻找什么？'
+        ],
+        mature: [
+          '这些年，你沉淀了什么？',
+          '你最大的收获是什么？',
+          '你对人生的理解有什么变化？'
+        ],
+        wisdom: [
+          '人生下半场，你想怎么活？',
+          '你最想留给世界的是什么？',
+          '什么是你现在才明白的道理？'
+        ]
+      },
+      afterEvent: [
+        '记录这个事件的时候，你有什么感受？',
+        '如果用一个词来形容这段经历，会是什么？',
+        '这个事件，和你现在的人生有什么关联吗？'
+      ],
+      themeDiscovery: [
+        '从这些故事里，我好像看到了一个主题...',
+        '你的人生似乎一直在围绕着某个东西在转...',
+        '有没有发现，这些事件背后有一条共同的线？'
+      ],
+      transition: [
+        '感谢你分享这些故事。每一个经历，都在塑造今天的你。',
+        '接下来，让我们看看你在人生中扮演的那些角色 🧩'
+      ]
+    };
+
+    // ========== 语料库：角色探索阶段 ==========
+    const roleCorpus = {
+      intro: [
+        '人生就像一个舞台，我们每个人同时扮演着很多角色 🎭',
+        '有时候我们在某个角色上投入太多，却忘了其他角色也需要关照。',
+        '我们来看看，你目前的"角色阵容"是什么样的？'
+      ],
+      selection: [
+        '请选择 5-6 个对你最重要的人生角色：',
+        '不用想太多，凭直觉选就好。'
+      ],
+      currentSort: [
+        '请按照你目前实际投入的时间/精力，把这些角色排序：',
+        '投入最多的排在上面。诚实面对就好，没有对错。'
+      ],
+      afterCurrentSort: [
+        '排完后，你有什么发现吗？',
+        '哪个位置让你感到意外？'
+      ],
+      idealSort: [
+        '现在，想象一切都可以重新安排。你理想中的角色优先级是什么样的？',
+        '最看重的排在上面。不用考虑"现实不现实"，想象你理想中的状态。'
+      ],
+      afterIdealSort: [
+        '理想和现实相比，变化最大的是什么？为什么？',
+        '是什么阻碍了你达到理想状态？'
+      ],
+      insight: {
+        gap: '你目前投入最多的是「{current}」，但你内心最看重的是「{ideal}」角色。',
+        balanced: '你的现实与理想相当一致，这是很难得的状态！'
+      },
+      transition: [
+        '有意思～通过这个排序，我们看清了你内心真正的优先级。',
+        '接下来，让我们进入未来，看看你理想中的生活是什么样子的 🎬'
+      ]
+    };
+
+    // ========== 语料库：愿景阶段 ==========
+    const visionCorpus = {
+      intro: [
+        '现在，让我们来做一个特别的练习 ✨',
+        '请找一个舒服的姿势，闭上眼睛，做几次深呼吸。',
+        '吸气... 呼气... 再吸气... 呼气...',
+        '我们要一起进入5年后的未来，看看你理想中的生活...'
+      ],
+      scenes: {
+        morning: {
+          title: '理想的早晨',
+          prompts: [
+            '想象现在是5年后的一个普通早晨...',
+            '阳光透过窗帘洒进来，你慢慢睁开眼睛。',
+            '你闻到了什么味道？听到了什么声音？',
+            '起床后的第一件事，你会做什么？'
+          ],
+          question: '在这个早晨里，你感受到的情绪是什么？'
+        },
+        daytime: {
+          title: '白天的你',
+          prompts: [
+            '起床后，你开始了一天的生活。',
+            '你今天要去做什么？',
+            '你的工作/事情让你有什么感觉？',
+            '你和谁在一起？'
+          ],
+          question: '这一天中，让你最有"活着的感觉"的时刻是什么？'
+        },
+        evening: {
+          title: '夜幕降临',
+          prompts: [
+            '夜幕降临，一天即将结束。',
+            '你会怎么度过傍晚？',
+            '睡前，你在想些什么？',
+            '你对这一天满意吗？'
+          ],
+          question: '晚上躺在床上时，你心里的感受是？'
+        }
+      },
+      transition: [
+        '很美～你在心中描绘的这幅图景，就是你潜意识里真正向往的生活。',
+        '接下来，让我们写一封信给未来的自己 📝'
+      ]
+    };
+
+    // ========== 语料库：信件阶段 ==========
+    const letterCorpus = {
+      intro: [
+        '接下来，让我们做一个很特别的练习 💌',
+        '想象一年后的你，正在读这封来自今天的信。',
+        '你想对未来的自己说些什么呢？'
+      ],
+      prompts1Year: {
+        proud: '这一年里，你最骄傲的是什么？',
+        grateful: '你最感激的是什么？',
+        remember: '你希望自己永远记住的是什么？'
+      },
+      prompts5Year: {
+        proud: '5年后的你，会为现在的你感到骄傲的是什么？',
+        remind: '未来的你想提醒你什么？',
+        important: '最重要的一件事是什么？'
+      },
+      afterLetter: [
+        '写这封信的时候，你有什么感受？',
+        '有没有哪一句话，让你特别有触动？'
+      ],
+      transition: [
+        '这两封信，就是你与未来的约定。',
+        '最后，让我们用一张生命平衡图，来看看你目前的状态 ⚖️'
+      ]
+    };
+
+    // ========== 语料库：平衡阶段 ==========
+    const balanceCorpus = {
+      intro: [
+        '最后一站，我们来看看你目前的生命状态 📊',
+        '人生有很多维度，就像一个轮子，如果某个维度太低，轮子就转不顺畅。',
+        '请根据你目前的真实状态，为每个维度打分（1-10分）。',
+        '诚实面对就好，没有"应该"打几分。'
+      ],
+      dimensionDescriptions: {
+        career: '事业成就：职业发展、工作满意度、成就感',
+        finance: '财务状况：收入水平、财务安全感、财富管理',
+        health: '健康活力：身体状态、精力水平、运动习惯',
+        family: '家庭关系：亲密关系、家庭和谐、亲情连接',
+        social: '人际社交：友谊质量、社交网络、归属感',
+        growth: '个人成长：学习成长、自我认知、人生意义'
+      },
+      afterRating: [
+        '在{high}方面，你做得很棒！这是你的优势领域。',
+        '{low}是你目前最想改善的方面，这也是你成长的方向。',
+        '别急，低分只是说明这里有很大的成长空间。'
+      ]
+    };
+
+    // ========== 语料库：报告结束语 ==========
+    const reportCorpus = {
+      opening: [
+        '好了，我们的探索之旅到这里就告一段落了。',
+        '感谢你如此坦诚地面对自己。',
+        '现在，让我们一起来看看你的生命导航图...'
+      ],
+      closing: [
+        '感谢你完成这次深度的自我探索。这不是结束，而是一个新的开始。',
+        '你已经迈出了最重要的一步——愿意诚实地面对自己。',
+        '记住，生命是一场持续的旅程，不是一个终点。',
+        '愿你永远保持好奇，勇敢地活出真实的自己。'
+      ],
+      reminders: [
+        '建议你1个月后再做一次这个探索，看看有什么变化。',
+        '把你的报告保存下来，一年后再对照，会很有收获。',
+        '和你信任的人分享你的发现，可能会带来新的启发。'
+      ],
+      blessings: [
+        '愿你活成自己喜欢的样子 ✨',
+        '人生海海，祝你有帆有岸。',
+        '你的人生，你说了算。'
+      ]
+    };
+    
+    // ========== 初始化 ==========
+    document.addEventListener('DOMContentLoaded', function() {
+      createStars();
+      initChat();
+      initRoleOptions();
+      initBalanceRatings();
+    });
+    
+    function createStars() {
+      const bg = document.getElementById('starsBg');
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = (Math.random() * 2 + 1) + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 3 + 's';
+        bg.appendChild(star);
+      }
+    }
+    
+    // ========== 页面导航 ==========
+    const phases = ['icebreaker', 'cards', 'timeline', 'roles', 'vision', 'letter', 'balance'];
+    const phaseNames = ['温暖相遇', '价值探索', '生命旅程', '角色探索', '愿景电影', '时间对话', '生命平衡'];
+    let currentPhaseIndex = 0;
+    
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+    
+    // ========== 多路径模式配置 ==========
+    const journeyModes = {
+      cards: {
+        name: '🎴 投射卡牌',
+        subtitle: '潜意识探索',
+        startPhase: 'cards',
+        intro: '在这段探索中，我们将通过投射卡牌，帮助你触碰潜意识深处那些被忽略的声音。',
+        phases: ['cards', 'timeline', 'roles', 'vision', 'letter', 'balance']
+      },
+      roles: {
+        name: '🧩 角色排序',
+        subtitle: '人生平衡',
+        startPhase: 'roles',
+        intro: '在这段探索中，我们将通过角色排序，帮助你厘清人生中各个角色的投入与期望。',
+        phases: ['roles', 'cards', 'timeline', 'vision', 'letter', 'balance']
+      },
+      timeline: {
+        name: '🌈 旅程地图',
+        subtitle: '人生回顾',
+        startPhase: 'timeline',
+        intro: '在这段探索中，我们将带你回顾人生旅程，发现那些塑造你的关键时刻。',
+        phases: ['timeline', 'cards', 'roles', 'vision', 'letter', 'balance']
+      },
+      vision: {
+        name: '📝 未来之信',
+        subtitle: '时间对话',
+        startPhase: 'vision',
+        intro: '在这段探索中，我们将带你与未来的自己对话，写下给未来的信。',
+        phases: ['vision', 'letter', 'roles', 'timeline', 'cards', 'balance']
+      }
+    };
+    
+    function getNextPhase(currentPhase) {
+      const mode = appData.journeyMode || 'cards';
+      const modeConfig = journeyModes[mode];
+      const phaseList = modeConfig.phases;
+      const currentIndex = phaseList.indexOf(currentPhase);
+      
+      if (currentIndex === -1 || currentIndex >= phaseList.length - 1) {
+        // 如果当前阶段不在列表中，或者已经是最后一个，返回下一个标准阶段
+        const nextPhases = { cards: 'timeline', timeline: 'roles', roles: 'vision', vision: 'letter', letter: 'balance' };
+        return nextPhases[currentPhase] || 'balance';
+      }
+      
+      return phaseList[currentIndex + 1];
+    }
+    
+    function startJourney(mode = 'cards') {
+      appData.journeyMode = mode;
+      const modeConfig = journeyModes[mode] || journeyModes.cards;
+      
+      document.getElementById('progressBar').classList.remove('hidden');
+      
+      // 更新进度条标题
+      document.getElementById('phaseLabel').textContent = modeConfig.name;
+      
+      // 显示破冰阶段，但传入模式信息
+      showPage('page-icebreaker');
+      setTimeout(() => {
+        startIcebreaker(modeConfig);
+      }, 500);
+    }
+    
+    function goHome() {
+      appData.journeyMode = null;
+      document.getElementById('progressBar').classList.add('hidden');
+      showPage('page-home');
+    }
+    
+    function updateProgress() {
+      const percent = Math.round(((currentPhaseIndex + 1) / phases.length) * 100);
+      document.getElementById('progressFill').style.width = percent + '%';
+      document.getElementById('progressText').textContent = percent + '%';
+      document.getElementById('phaseLabel').textContent = phaseNames[currentPhaseIndex];
+      
+      document.querySelectorAll('.phase-dot').forEach((dot, i) => {
+        dot.classList.remove('active', 'completed');
+        if (i < currentPhaseIndex) dot.classList.add('completed');
+        if (i === currentPhaseIndex) dot.classList.add('active');
+      });
+    }
+    
+    function goToNextPhase(phase) {
+      const idx = phases.indexOf(phase);
+      if (idx > -1) {
+        currentPhaseIndex = idx;
+        updateProgress();
+        showPage('page-' + phase);
+        
+        if (phase === 'cards') {
+          resetCardDeck();
+          playCardsIntro();
+        }
+        if (phase === 'timeline') {
+          playTimelineIntro();
+        }
+        if (phase === 'roles') {
+          resetRolePhase();
+          playRolesIntro();
+        }
+        if (phase === 'vision') {
+          resetVisionPhase();
+          playVisionIntro();
+        }
+        if (phase === 'letter') {
+          playLetterIntro();
+        }
+        if (phase === 'balance') {
+          playBalanceIntro();
+        }
+      }
+    }
+    
+    // ========== 阶段1：破冰对话 ==========
+    let chatStep = 0;
+    let isBotTyping = false;
+    let currentLifeStage = '';
+
+    function initChat() {
+      chatStep = 0;
+      currentLifeStage = '';
+    }
+
+    // 阶段映射（用于语料库匹配）
+    const stageKeyMap = {
+      '学生时代': 'student',
+      '初入职场': 'newcomer',
+      '职场进阶': 'advancing',
+      '创业探索': 'entrepreneur',
+      '自由职业': 'freelancer',
+      '转型期': 'transition'
+    };
+
+    // 启动破冰对话
+    function startIcebreaker(modeConfig) {
+      // 清空聊天区域
+      const container = document.getElementById('chatContainer');
+      container.innerHTML = '';
+      
+      // 根据模式选择开场白
+      const modeIntros = {
+        cards: '欢迎来到潜意识探索之旅。今天我想通过几张特别的卡牌，帮你触碰内心深处的声音。',
+        roles: '欢迎来到人生角色探索。在这里，我们会一起思考你在生活中扮演的各种角色。',
+        timeline: '欢迎回到你的生命旅程。每段人生都有独特的风景，让我们一起回顾那些重要的时刻。',
+        vision: '欢迎来到与未来对话的旅程。今天，我们会邀请未来的你给现在的你写一封信。'
+      };
+      
+      const introText = modeConfig ? modeConfig.intro : modeIntros.cards;
+      
+      const messages = [
+        pickRandom(icebreakerCorpus.openings.map(o => o.text)),
+        introText,
+        pickRandom(universalCorpus.beforeDeepQuestion),
+        '首先，请告诉我你的名字？'
+      ];
+      
+      // 显示模式名称
+      if (modeConfig) {
+        const modeLabel = document.getElementById('phaseLabel');
+        if (modeLabel) {
+          modeLabel.textContent = modeConfig.name;
+        }
+      }
+      
+      sendBotMessages(messages.slice(0, 2), () => {
+        setTimeout(() => {
+          showTypingIndicator();
+          setTimeout(() => {
+            hideTypingIndicator();
+            addBotMessage(messages[2]);
+            setTimeout(() => {
+              showTypingIndicator();
+              setTimeout(() => {
+                hideTypingIndicator();
+                addBotMessage(messages[3]);
+              }, 800);
+            }, 500);
+          }, 1000);
+        }, 500);
+      });
+    }
+    
+    function addBotMessage(text) {
+      const container = document.getElementById('chatContainer');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex justify-start';
+      msgDiv.innerHTML = `
+        <div class="max-w-[85%] glass-light rounded-2xl rounded-bl-md px-5 py-4" style="animation: slideInLeft 0.4s ease">
+          <div class="flex items-center gap-2 mb-2 text-purple-300 text-sm font-medium">
+            <span>🧭</span>
+            <span>生命导航助手</span>
+          </div>
+          <div class="text-gray-100 leading-relaxed">${text}</div>
+        </div>
+      `;
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+    
+    function addUserMessage(text) {
+      const container = document.getElementById('chatContainer');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex justify-end';
+      msgDiv.innerHTML = `
+        <div class="max-w-[85%] rounded-2xl rounded-br-md px-5 py-4 bg-gradient-to-br from-indigo-500 to-purple-600 text-white" style="animation: slideInRight 0.4s ease">
+          <div class="leading-relaxed">${text}</div>
+        </div>
+      `;
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+    
+    function showTypingIndicator() {
+      const container = document.getElementById('chatContainer');
+      const typingDiv = document.createElement('div');
+      typingDiv.id = 'typingIndicator';
+      typingDiv.className = 'flex justify-start';
+      typingDiv.innerHTML = `
+        <div class="glass-light rounded-2xl rounded-bl-md px-5 py-4">
+          <div class="typing-dots text-purple-400">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      `;
+      container.appendChild(typingDiv);
+      container.scrollTop = container.scrollHeight;
+    }
+    
+    function hideTypingIndicator() {
+      const el = document.getElementById('typingIndicator');
+      if (el) el.remove();
+    }
+    
+    function handleChatEnter(e) {
+      if (e.key === 'Enter') sendChatMessage();
+    }
+    
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const value = input.value.trim();
+      if (!value) return;
+      
+      addUserMessage(value);
+      input.value = '';
+      
+      showTypingIndicator();
+      
+      setTimeout(() => {
+        hideTypingIndicator();
+        
+        if (chatStep === 0) {
+          appData.userName = value;
+          chatStep = 1;
+          const nameResponses = [
+            `亲爱的${value}，这个名字真好听！✨`,
+            `${value}，很高兴认识你～`,
+            `好的${value}，接下来我们一起慢慢探索`,
+            `哇，${value}～我记住你的名字了！`
+          ];
+          addBotMessage(pickRandom(nameResponses));
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              hideTypingIndicator();
+              addBotMessage('你现在处于人生的哪个阶段呢？');
+              showLifeStageOptions();
+            }, 1200);
+          }, 800);
+        } else if (chatStep === 1) {
+          appData.lifeStage = value;
+          currentLifeStage = value;
+          chatStep = 2;
+          
+          // 个性化阶段回应
+          const stageKey = stageKeyMap[value] || 'transition';
+          const stageResponse = pickRandom(icebreakerCorpus.stageResponses[stageKey] || icebreakerCorpus.stageResponses.transition);
+          addBotMessage(stageResponse);
+          
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              hideTypingIndicator();
+              addBotMessage('这次探索，你最想解决什么问题，或者达成什么目标呢？');
+            }, 1000);
+          }, 800);
+        } else if (chatStep === 2) {
+          appData.expectations = value;
+          chatStep = 3;
+          
+          // 判断回答的清晰程度
+          const isClear = value.length > 15 && (value.includes('想') || value.includes('希望') || value.includes('找') || value.includes('解决'));
+          const responseKey = isClear ? 'clear' : 'vague';
+          const expectationResponse = pickRandom(icebreakerCorpus.expectationResponses[responseKey]);
+          
+          addBotMessage(expectationResponse);
+          
+          // 根据模式选择第一个互动阶段的引导语
+          const mode = appData.journeyMode || 'cards';
+          const modeIntros = {
+            cards: {
+              intro: pickRandom(valueCardsCorpus.intro),
+              followUp: '通过抽取卡牌，你可能会发现一些连自己都未曾意识到的内心真相～准备好了吗？',
+              phase: 'cards'
+            },
+            roles: {
+              intro: '接下来，我想和你一起探索你在人生中扮演的各种角色。',
+              followUp: '每个角色都有它的重量，我们来看看现实与理想之间有什么不同～',
+              phase: 'roles'
+            },
+            timeline: {
+              intro: '首先，让我们一起回顾你的人生旅程，看看那些塑造了你的关键时刻。',
+              followUp: '每一段经历都在你身上留下了印记，我们一起来发现它们的意义～',
+              phase: 'timeline'
+            },
+            vision: {
+              intro: '首先，让我们来一场跨越时空的对话——写给未来的自己。',
+              followUp: '闭上眼睛，想象一下未来的你会是什么样子～准备好了吗？',
+              phase: 'vision'
+            }
+          };
+          
+          const introConfig = modeIntros[mode] || modeIntros.cards;
+          
+          setTimeout(() => {
+            showTypingIndicator();
+            setTimeout(() => {
+              hideTypingIndicator();
+              addBotMessage(introConfig.intro);
+              setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                  hideTypingIndicator();
+                  addBotMessage(introConfig.followUp);
+                  setTimeout(() => {
+                    goToNextPhase(introConfig.phase);
+                  }, 1500);
+                }, 1000);
+              }, 800);
+            }, 1200);
+          }, 800);
+        }
+      }, 800);
+    }
+    
+    function showLifeStageOptions() {
+      const inputArea = document.getElementById('chatInputArea');
+      inputArea.innerHTML = `
+        <div class="flex flex-wrap gap-2 justify-center">
+          <button onclick="selectLifeStage('学生时代')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">🎓 学生时代</button>
+          <button onclick="selectLifeStage('初入职场')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">🧑‍💼 初入职场</button>
+          <button onclick="selectLifeStage('职场进阶')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">📈 职场进阶</button>
+          <button onclick="selectLifeStage('创业探索')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">🚀 创业探索</button>
+          <button onclick="selectLifeStage('自由职业')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">🎨 自由职业</button>
+          <button onclick="selectLifeStage('转型期')" class="px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm hover:bg-purple-500/30 transition-all">🌱 转型期</button>
+        </div>
+      `;
+    }
+    
+    function selectLifeStage(stage) {
+      document.getElementById('chatInputArea').innerHTML = `
+        <div class="relative">
+          <input type="text" id="chatInput" 
+            class="w-full px-5 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 focus:ring-4 focus:ring-purple-500/20 transition-all"
+            placeholder="输入你的回答..."
+            onkeypress="handleChatEnter(event)"
+          />
+          <button onclick="sendChatMessage()" class="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:shadow-lg transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </button>
+        </div>
+      `;
+      
+      addUserMessage(stage);
+      
+      showTypingIndicator();
+      setTimeout(() => {
+        hideTypingIndicator();
+        appData.lifeStage = stage;
+        chatStep = 2;
+        addBotMessage('了解啦！每个阶段都有独特的风景和课题～');
+        setTimeout(() => {
+          showTypingIndicator();
+          setTimeout(() => {
+            hideTypingIndicator();
+            addBotMessage('这次探索，你最想解决什么问题，或者达成什么目标呢？');
+          }, 1000);
+        }, 800);
+      }, 800);
+    }
+    
+    // ========== 阶段2：价值观卡牌 ==========
+    let drawnCardCount = 0;
+    let currentDrawnCard = null;
+    let shuffledCards = [];
+    let cardsChatStep = 0;
+    
+    function resetCardDeck() {
+      drawnCardCount = 0;
+      cardsChatStep = 0;
+      appData.drawnCards = [];
+      shuffledCards = [...valueCardsData].sort(() => Math.random() - 0.5);
+      document.getElementById('cardDeckArea').classList.remove('hidden');
+      document.getElementById('cardRevealArea').classList.add('hidden');
+      document.getElementById('valueSortArea').classList.add('hidden');
+      document.getElementById('cardsDrawnCount').textContent = '已抽取 0 / 3 张';
+      document.getElementById('drawnCards').innerHTML = '';
+      document.getElementById('cardDeckInstruction').textContent = valueCardsCorpus.drawInstructions[0];
+    }
+    
+    function playCardsIntro() {
+      const messages = valueCardsCorpus.intro;
+      setTimeout(() => {
+        showCardsToast(messages[0]);
+      }, 500);
+    }
+    
+    function showCardsToast(text) {
+      const instruction = document.getElementById('cardDeckInstruction');
+      if (instruction) {
+        instruction.style.animation = 'none';
+        instruction.offsetHeight;
+        instruction.style.animation = 'fadeInUp 0.5s ease';
+        instruction.textContent = text;
+      }
+    }
+    
+    function drawCard() {
+      if (drawnCardCount >= 3) return;
+      if (currentDrawnCard) return;
+      
+      const card = shuffledCards[drawnCardCount];
+      currentDrawnCard = card;
+      appData.drawnCards.push(card);
+      
+      document.getElementById('cardDeckArea').classList.add('hidden');
+      document.getElementById('cardRevealArea').classList.remove('hidden');
+      
+      const flipCard = document.getElementById('flipCard');
+      flipCard.classList.remove('flipped');
+      
+      document.getElementById('cardName').textContent = '';
+      document.getElementById('cardMeaning').textContent = '';
+      document.getElementById('associationArea').classList.add('hidden');
+      
+      document.getElementById('cardRevealContent').innerHTML = `
+        <div class="text-6xl mb-4">${card.emoji}</div>
+        <div class="text-xl font-bold text-white mb-2">${card.name}</div>
+        <div class="text-sm text-purple-300">${card.meaning}</div>
+      `;
+      
+      setTimeout(() => {
+        flipCard.classList.add('flipped');
+        setTimeout(() => {
+          document.getElementById('cardName').textContent = card.name;
+          document.getElementById('cardMeaning').textContent = card.meaning;
+          
+          const optionsHtml = card.associations.map(a => 
+            `<button onclick="selectAssociation('${a}', this)" class="px-3 py-1.5 rounded-full bg-white/10 text-white text-sm hover:bg-purple-500/30 transition-all">${a}</button>`
+          ).join('');
+          document.getElementById('associationOptions').innerHTML = optionsHtml;
+          document.getElementById('associationArea').classList.remove('hidden');
+          document.getElementById('associationArea').style.animation = 'fadeIn 0.5s ease';
+        }, 800);
+      }, 300);
+    }
+    
+    let selectedAssociation = '';
+    function selectAssociation(word, el) {
+      selectedAssociation = word;
+      document.querySelectorAll('#associationOptions button').forEach(b => {
+        b.classList.remove('bg-gradient-to-r', 'from-purple-500', 'to-indigo-500', 'ring-2', 'ring-purple-300', 'scale-105', 'shadow-lg', 'shadow-purple-500/30');
+        b.classList.add('bg-white/10');
+      });
+      el.classList.remove('bg-white/10');
+      el.classList.add('bg-gradient-to-r', 'from-purple-500', 'to-indigo-500', 'ring-2', 'ring-purple-300', 'scale-105', 'shadow-lg', 'shadow-purple-500/30');
+    }
+    
+    function confirmCardAssociation() {
+      drawnCardCount++;
+      currentDrawnCard.association = selectedAssociation;
+      selectedAssociation = '';
+      
+      const drawnContainer = document.getElementById('drawnCards');
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'w-20 h-28 rounded-xl glass-light flex flex-col items-center justify-center p-2';
+      cardDiv.style.animation = 'fadeInUp 0.5s ease';
+      cardDiv.innerHTML = `
+        <div class="text-3xl mb-1">${currentDrawnCard.emoji}</div>
+        <div class="text-xs text-white text-center">${currentDrawnCard.name}</div>
+      `;
+      drawnContainer.appendChild(cardDiv);
+      
+      document.getElementById('cardsDrawnCount').textContent = `已抽取 ${drawnCardCount} / 3 张`;
+      
+      if (drawnCardCount < 3) {
+        document.getElementById('cardRevealArea').classList.add('hidden');
+        document.getElementById('cardDeckArea').classList.remove('hidden');
+        const remaining = 3 - drawnCardCount;
+        const instruction = remaining === 1 
+          ? valueCardsCorpus.drawInstructions[2]
+          : valueCardsCorpus.drawInstructions[1].replace('{remaining}', remaining);
+        document.getElementById('cardDeckInstruction').textContent = instruction;
+        currentDrawnCard = null;
+      } else {
+        setTimeout(() => {
+          showValueSortArea();
+        }, 800);
+      }
+    }
+    
+    function showValueSortArea() {
+      document.getElementById('cardRevealArea').classList.add('hidden');
+      document.getElementById('valueSortArea').classList.remove('hidden');
+      
+      const sortIntro = valueCardsCorpus.sortingIntro;
+      const sortArea = document.getElementById('valueSortArea');
+      const existingHint = document.getElementById('sortHintText');
+      if (!existingHint) {
+        const hintDiv = document.createElement('div');
+        hintDiv.id = 'sortHintText';
+        hintDiv.className = 'text-center text-purple-300 text-sm mb-4';
+        hintDiv.style.animation = 'fadeInUp 0.5s ease';
+        hintDiv.innerHTML = `
+          <p class="mb-1">💡 ${sortIntro[1]}</p>
+          <p class="text-gray-400 text-xs">${sortIntro[2]}</p>
+        `;
+        sortArea.insertBefore(hintDiv, sortArea.firstChild);
+      }
+      
+      // 收集所有价值观词
+      const allValues = new Set();
+      appData.drawnCards.forEach(card => {
+        card.associations.forEach(a => allValues.add(a));
+      });
+      // 补充一些常见价值观
+      ['自由', '创造', '爱', '成就', '安全', '成长', '健康', '家庭', '平静', '冒险'].forEach(v => allValues.add(v));
+      
+      const pool = document.getElementById('valuePool');
+      pool.innerHTML = '';
+      Array.from(allValues).forEach((v, i) => {
+        const chip = document.createElement('div');
+        chip.className = 'draggable-item px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/50 to-purple-500/50 text-white text-sm cursor-grab';
+        chip.draggable = true;
+        chip.dataset.value = v;
+        chip.textContent = v;
+        chip.id = 'value-' + i;
+        chip.addEventListener('dragstart', handleDragStart);
+        chip.addEventListener('dragend', handleDragEnd);
+        pool.appendChild(chip);
+      });
+      
+      setTimeout(() => {
+        initTouchDrag();
+      }, 100);
+    }
+    
+    let draggedElement = null;
+    let touchDragElement = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchClone = null;
+    
+    function handleDragStart(e) {
+      draggedElement = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      
+      try {
+        const dragImage = e.target.cloneNode(true);
+        dragImage.style.opacity = '0.8';
+        dragImage.style.position = 'absolute';
+        dragImage.style.top = '-1000px';
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(dragImage, 20, 20);
+        setTimeout(() => dragImage.remove(), 0);
+      } catch(err) {}
+    }
+    
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      e.currentTarget.classList.add('drag-over');
+    }
+    
+    function handleDragLeave(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+        e.currentTarget.classList.remove('drag-over');
+      }
+    }
+    
+    function handleDragEnd(e) {
+      if (draggedElement) {
+        draggedElement.classList.remove('dragging');
+        draggedElement = null;
+      }
+      document.querySelectorAll('.drop-zone, .drop-zone-pool').forEach(z => z.classList.remove('drag-over'));
+    }
+    
+    function handleDrop(e, zone) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (!draggedElement) return;
+      
+      const targetContainer = e.currentTarget.querySelector('.space-y-2');
+      if (targetContainer && draggedElement.parentNode !== targetContainer) {
+        targetContainer.appendChild(draggedElement);
+      }
+      
+      draggedElement.classList.remove('dragging');
+      draggedElement = null;
+      
+      document.querySelectorAll('.drop-zone, .drop-zone-pool').forEach(z => z.classList.remove('drag-over'));
+    }
+    
+    function handlePoolDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      e.currentTarget.classList.add('drag-over');
+    }
+    
+    function handlePoolDragLeave(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX;
+      const y = e.clientY;
+      
+      if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+        e.currentTarget.classList.remove('drag-over');
+      }
+    }
+    
+    function handlePoolDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (!draggedElement) return;
+      
+      const targetContainer = e.currentTarget.querySelector('#valuePool');
+      if (targetContainer && draggedElement.parentNode !== targetContainer) {
+        targetContainer.appendChild(draggedElement);
+      }
+      
+      draggedElement.classList.remove('dragging');
+      draggedElement = null;
+      
+      document.querySelectorAll('.drop-zone, .drop-zone-pool').forEach(z => z.classList.remove('drag-over'));
+    }
+    
+    function initTouchDrag() {
+      const draggables = document.querySelectorAll('#valueSortArea .draggable-item');
+      
+      draggables.forEach(el => {
+        el.addEventListener('touchstart', handleTouchStart, { passive: false });
+        el.addEventListener('touchmove', handleTouchMove, { passive: false });
+        el.addEventListener('touchend', handleTouchEnd, { passive: false });
+      });
+    }
+    
+    function handleTouchStart(e) {
+      if (e.touches.length !== 1) return;
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      touchDragElement = e.currentTarget;
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      
+      touchClone = touchDragElement.cloneNode(true);
+      touchClone.style.position = 'fixed';
+      touchClone.style.zIndex = '9999';
+      touchClone.style.pointerEvents = 'none';
+      touchClone.style.opacity = '0.9';
+      touchClone.style.transform = 'scale(1.05)';
+      touchClone.classList.add('dragging');
+      
+      const rect = touchDragElement.getBoundingClientRect();
+      touchClone.style.left = rect.left + 'px';
+      touchClone.style.top = rect.top + 'px';
+      touchClone.style.width = rect.width + 'px';
+      
+      document.body.appendChild(touchClone);
+      touchDragElement.style.opacity = '0.4';
+    }
+    
+    function handleTouchMove(e) {
+      if (!touchDragElement || !touchClone) return;
+      if (e.touches.length !== 1) return;
+      e.preventDefault();
+      
+      const touch = e.touches[0];
+      const rect = touchDragElement.getBoundingClientRect();
+      
+      touchClone.style.left = (touch.clientX - rect.width / 2) + 'px';
+      touchClone.style.top = (touch.clientY - rect.height / 2) + 'px';
+      
+      document.querySelectorAll('#valueSortArea .drop-zone, #valueSortArea .drop-zone-pool').forEach(zone => {
+        const zoneRect = zone.getBoundingClientRect();
+        if (touch.clientX >= zoneRect.left && touch.clientX <= zoneRect.right &&
+            touch.clientY >= zoneRect.top && touch.clientY <= zoneRect.bottom) {
+          zone.classList.add('drag-over');
+        } else {
+          zone.classList.remove('drag-over');
+        }
+      });
+    }
+    
+    function handleTouchEnd(e) {
+      if (!touchDragElement || !touchClone) return;
+      e.preventDefault();
+      
+      const touch = e.changedTouches[0];
+      
+      document.querySelectorAll('#valueSortArea .drop-zone, #valueSortArea .drop-zone-pool').forEach(zone => {
+        const zoneRect = zone.getBoundingClientRect();
+        if (touch.clientX >= zoneRect.left && touch.clientX <= zoneRect.right &&
+            touch.clientY >= zoneRect.top && touch.clientY <= zoneRect.bottom) {
+          const targetContainer = zone.classList.contains('drop-zone-pool') 
+            ? zone.querySelector('#valuePool')
+            : zone.querySelector('.space-y-2');
+          if (targetContainer && touchDragElement.parentNode !== targetContainer) {
+            targetContainer.appendChild(touchDragElement);
+          }
+        }
+        zone.classList.remove('drag-over');
+      });
+      
+      touchDragElement.style.opacity = '1';
+      touchDragElement.classList.remove('dragging');
+      
+      if (touchClone) {
+        touchClone.remove();
+        touchClone = null;
+      }
+      touchDragElement = null;
+    }
+    
+    function confirmValueSort() {
+      const coreEl = document.getElementById('coreValues');
+      const importantEl = document.getElementById('importantValues');
+      const supportEl = document.getElementById('supportValues');
+      
+      appData.coreValues = Array.from(coreEl.querySelectorAll('.draggable-item')).map(el => el.dataset.value);
+      appData.importantValues = Array.from(importantEl.querySelectorAll('.draggable-item')).map(el => el.dataset.value);
+      appData.supportValues = Array.from(supportEl.querySelectorAll('.draggable-item')).map(el => el.dataset.value);
+      
+      if (appData.coreValues.length === 0) {
+        alert('请至少将一些价值观拖入"核心价值"区域');
+        return;
+      }
+      
+      const transitionMsgs = valueCardsCorpus.transition;
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = '正在进入下一站...';
+      
+      setTimeout(() => {
+        goToNextPhase(getNextPhase('cards'));
+      }, 1200);
+    }
+    
+    // ========== 阶段3：人生时间轴 ==========
+    let eventCounter = 0;
+    
+    function playTimelineIntro() {
+      const intro = timelineCorpus.intro;
+      const timelineArea = document.querySelector('#page-timeline .glass');
+      if (timelineArea) {
+        const existingHint = document.getElementById('timelineIntroHint');
+        if (!existingHint) {
+          const hintDiv = document.createElement('div');
+          hintDiv.id = 'timelineIntroHint';
+          hintDiv.className = 'text-center mb-6 p-4 glass-light rounded-2xl';
+          hintDiv.style.animation = 'fadeInUp 0.6s ease';
+          hintDiv.innerHTML = `
+            <p class="text-purple-300 text-sm mb-1">📖 ${intro[0]}</p>
+            <p class="text-gray-400 text-xs">${intro[2]}</p>
+          `;
+          timelineArea.parentNode.insertBefore(hintDiv, timelineArea);
+        }
+      }
+    }
+    
+    function switchPeriod(period) {
+      appData.currentPeriod = period;
+      document.querySelectorAll('.timeline-period').forEach(btn => {
+        btn.classList.remove('bg-purple-500/30', 'text-white');
+        btn.classList.add('text-gray-400');
+      });
+      document.querySelector(`.timeline-period[data-period="${period}"]`).classList.add('bg-purple-500/30', 'text-white');
+      document.querySelector(`.timeline-period[data-period="${period}"]`).classList.remove('text-gray-400');
+      
+      renderTimelineEvents();
+    }
+    
+    function renderTimelineEvents() {
+      const container = document.getElementById('timelineEvents');
+      const events = appData.lifeEvents.filter(e => e.period === appData.currentPeriod);
+      
+      if (events.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-gray-400">
+            <div class="text-4xl mb-3">📝</div>
+            <p>这个阶段还没有添加事件</p>
+            <p class="text-sm">点击下方按钮添加你的里程碑</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = events.map((event, i) => `
+        <div class="relative pl-10 md:pl-0 md:flex ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}">
+          <div class="md:w-1/2 ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}">
+            <div class="glass rounded-xl p-4 inline-block">
+              <div class="flex items-center gap-2 mb-2 ${i % 2 === 0 ? 'md:justify-end' : ''}">
+                <span class="text-2xl">${getEventEmoji(event.type)}</span>
+                <span class="font-medium text-white">${event.name}</span>
+              </div>
+              ${event.desc ? `<p class="text-sm text-gray-400">${event.desc}</p>` : ''}
+              <div class="text-xs text-purple-300 mt-2">情绪强度: ${event.emotion}/10</div>
+            </div>
+          </div>
+          <div class="absolute left-4 md:left-1/2 top-4 w-3 h-3 md:w-4 md:h-4 rounded-full bg-purple-500 transform md:-translate-x-1/2 border-4 border-slate-900"></div>
+          <div class="md:w-1/2"></div>
+        </div>
+      `).join('');
+    }
+    
+    function getEventEmoji(type) {
+      const emojis = {
+        achievement: '🌟',
+        challenge: '💪',
+        relationship: '💕',
+        turning: '🎯',
+        awakening: '🌱'
+      };
+      return emojis[type] || '✨';
+    }
+    
+    function showAddEventModal() {
+      document.getElementById('addEventModal').classList.remove('hidden');
+      document.getElementById('addEventModal').classList.add('flex');
+      document.getElementById('eventName').value = '';
+      document.getElementById('eventDesc').value = '';
+      document.getElementById('eventEmotion').value = 5;
+      document.getElementById('emotionDisplay').textContent = '5';
+      appData.selectedEventType = '';
+      document.querySelectorAll('.event-type-btn').forEach(b => b.classList.remove('bg-purple-500/50', 'ring-2', 'ring-purple-400'));
+    }
+    
+    function closeAddEventModal() {
+      document.getElementById('addEventModal').classList.add('hidden');
+      document.getElementById('addEventModal').classList.remove('flex');
+    }
+    
+    function selectEventType(type) {
+      appData.selectedEventType = type;
+      document.querySelectorAll('.event-type-btn').forEach(b => {
+        b.classList.remove('bg-purple-500/50', 'ring-2', 'ring-purple-400');
+      });
+      document.querySelector(`.event-type-btn[data-type="${type}"]`).classList.add('bg-purple-500/50', 'ring-2', 'ring-purple-400');
+    }
+    
+    function updateEmotionDisplay() {
+      document.getElementById('emotionDisplay').textContent = document.getElementById('eventEmotion').value;
+    }
+    
+    function saveEvent() {
+      const name = document.getElementById('eventName').value.trim();
+      if (!name) {
+        alert('请填写事件名称');
+        return;
+      }
+      if (!appData.selectedEventType) {
+        alert('请选择事件类型');
+        return;
+      }
+      
+      const event = {
+        id: 'event-' + (++eventCounter),
+        name,
+        type: appData.selectedEventType,
+        emotion: parseInt(document.getElementById('eventEmotion').value),
+        desc: document.getElementById('eventDesc').value.trim(),
+        period: appData.currentPeriod
+      };
+      
+      appData.lifeEvents.push(event);
+      closeAddEventModal();
+      renderTimelineEvents();
+      
+      if (appData.lifeEvents.length >= 3) {
+        document.getElementById('lifeThemeArea').classList.remove('hidden');
+        generateLifeTheme();
+      }
+      
+      showEventReflectionToast();
+    }
+    
+    function showEventReflectionToast() {
+      const reflections = timelineCorpus.afterEvent;
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-24 left-1/2 -translate-x-1/2 glass-light px-6 py-3 rounded-2xl z-50';
+      toast.style.animation = 'fadeInUp 0.5s ease';
+      toast.innerHTML = `
+        <p class="text-purple-200 text-sm">💭 ${pickRandom(reflections)}</p>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => toast.remove(), 500);
+      }, 4000);
+    }
+    
+    function generateLifeTheme() {
+      const theme = lifeThemes[Math.floor(Math.random() * lifeThemes.length)];
+      const discoveryPrompts = timelineCorpus.themeDiscovery;
+      document.getElementById('lifeThemeText').textContent = theme.title;
+      document.getElementById('lifeThemeDesc').textContent = theme.desc;
+    }
+    
+    function skipTimeline() {
+      goToNextPhase('roles');
+    }
+    
+    // ========== 阶段4：人生角色排序 ==========
+    function playRolesIntro() {
+      const intro = roleCorpus.intro;
+      const roleSelectStep = document.getElementById('roleSelectStep');
+      if (roleSelectStep) {
+        const existingHint = document.getElementById('rolesIntroHint');
+        if (!existingHint) {
+          const hintDiv = document.createElement('div');
+          hintDiv.id = 'rolesIntroHint';
+          hintDiv.className = 'text-center mb-6 p-4 glass-light rounded-2xl';
+          hintDiv.style.animation = 'fadeInUp 0.6s ease';
+          hintDiv.innerHTML = `
+            <p class="text-purple-300 text-sm mb-1">🎭 ${intro[0]}</p>
+            <p class="text-gray-400 text-xs">${intro[2]}</p>
+          `;
+          roleSelectStep.insertBefore(hintDiv, roleSelectStep.firstChild);
+        }
+      }
+    }
+    
+    function initRoleOptions() {
+      const container = document.getElementById('roleOptions');
+      container.innerHTML = rolesData.map(role => `
+        <button class="role-option p-4 rounded-xl bg-white/5 border-2 border-transparent hover:bg-white/10 transition-all" data-id="${role.id}" onclick="toggleRole('${role.id}', this)">
+          <div class="text-3xl mb-2">${role.emoji}</div>
+          <div class="text-sm font-medium text-white">${role.name}</div>
+          <div class="text-xs text-gray-500 mt-1">${role.desc}</div>
+        </button>
+      `).join('');
+    }
+    
+    function toggleRole(id, el) {
+      const idx = appData.selectedRoles.indexOf(id);
+      if (idx > -1) {
+        appData.selectedRoles.splice(idx, 1);
+        el.classList.remove('border-purple-400', 'bg-purple-500/20');
+        el.classList.add('bg-white/5', 'border-transparent');
+      } else {
+        if (appData.selectedRoles.length >= 6) {
+          return;
+        }
+        appData.selectedRoles.push(id);
+        el.classList.add('border-purple-400', 'bg-purple-500/20');
+        el.classList.remove('bg-white/5', 'border-transparent');
+      }
+      
+      const count = appData.selectedRoles.length;
+      const btn = document.getElementById('startRoleSortBtn');
+      const hint = document.getElementById('roleSelectHint');
+      
+      if (count >= 5 && count <= 6) {
+        btn.disabled = false;
+        hint.textContent = `已选择 ${count} 个角色`;
+      } else {
+        btn.disabled = true;
+        hint.textContent = `请选择 5-6 个角色（已选 ${count}）`;
+      }
+    }
+    
+    function resetRolePhase() {
+      appData.selectedRoles = [];
+      appData.roleCurrentOrder = [];
+      appData.roleIdealOrder = [];
+      document.getElementById('roleSelectStep').classList.remove('hidden');
+      document.getElementById('roleSortStep').classList.add('hidden');
+      document.getElementById('roleIdealStep').classList.add('hidden');
+      document.getElementById('roleComparison').classList.add('hidden');
+      initRoleOptions();
+      document.getElementById('startRoleSortBtn').disabled = true;
+      document.getElementById('roleSelectHint').textContent = '请选择 5-6 个角色';
+    }
+    
+    function startRoleSort() {
+      appData.roleCurrentOrder = [...appData.selectedRoles];
+      
+      document.getElementById('roleSelectStep').classList.add('hidden');
+      document.getElementById('roleSortStep').classList.remove('hidden');
+      
+      const sortHint = roleCorpus.currentSort;
+      const sortStep = document.getElementById('roleSortStep');
+      const existingHint = document.getElementById('currentSortHint');
+      if (!existingHint) {
+        const hintDiv = document.createElement('div');
+        hintDiv.id = 'currentSortHint';
+        hintDiv.className = 'text-center mb-4 text-purple-300 text-sm';
+        hintDiv.style.animation = 'fadeInUp 0.5s ease';
+        hintDiv.innerHTML = `
+          <p class="mb-1">💡 ${sortHint[1]}</p>
+        `;
+        const sortGlass = sortStep.querySelector('.glass');
+        if (sortGlass) {
+          sortGlass.insertBefore(hintDiv, sortGlass.firstChild);
+        }
+      }
+      
+      renderRoleSortList('roleSortList', appData.roleCurrentOrder);
+    }
+    
+    function renderRoleSortList(containerId, order) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = order.map((roleId, index) => {
+        const role = rolesData.find(r => r.id === roleId);
+        return `
+          <div class="draggable-item flex items-center gap-4 p-4 glass rounded-xl" 
+               draggable="true" data-role="${roleId}" data-index="${index}"
+               ondragstart="handleRoleDragStart(event)"
+               ondragover="handleRoleDragOver(event)"
+               ondrop="handleRoleDrop(event, '${containerId}')">
+            <div class="text-gray-400 text-lg font-bold w-6 text-center">${index + 1}</div>
+            <div class="text-2xl">${role.emoji}</div>
+            <div class="flex-1">
+              <div class="font-medium text-white">${role.name}</div>
+              <div class="text-xs text-gray-400">${role.desc}</div>
+            </div>
+            <div class="text-gray-500 cursor-grab">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/>
+              </svg>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    let draggedRoleEl = null;
+    
+    function handleRoleDragStart(e) {
+      draggedRoleEl = e.currentTarget;
+      draggedRoleEl.classList.add('dragging');
+    }
+    
+    function handleRoleDragOver(e) {
+      e.preventDefault();
+    }
+    
+    function handleRoleDrop(e, containerId) {
+      e.preventDefault();
+      if (!draggedRoleEl) return;
+      
+      const container = document.getElementById(containerId);
+      const items = Array.from(container.querySelectorAll('.draggable-item'));
+      const draggedIdx = parseInt(draggedRoleEl.dataset.index);
+      let dropIdx = -1;
+      
+      items.forEach((item, i) => {
+        const rect = item.getBoundingClientRect();
+        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+          dropIdx = i;
+        }
+      });
+      
+      if (dropIdx > -1 && draggedIdx !== dropIdx) {
+        const orderKey = containerId === 'roleSortList' ? 'roleCurrentOrder' : 'roleIdealOrder';
+        const order = appData[orderKey];
+        const [moved] = order.splice(draggedIdx, 1);
+        order.splice(dropIdx, 0, moved);
+        renderRoleSortList(containerId, order);
+      }
+      
+      draggedRoleEl.classList.remove('dragging');
+      draggedRoleEl = null;
+    }
+    
+    function showIdealRoleSort() {
+      appData.roleIdealOrder = [...appData.roleCurrentOrder];
+      
+      document.getElementById('roleSortStep').classList.add('hidden');
+      document.getElementById('roleIdealStep').classList.remove('hidden');
+      
+      const idealHint = roleCorpus.idealSort;
+      const idealStep = document.getElementById('roleIdealStep');
+      const existingHint = document.getElementById('idealSortHint');
+      if (!existingHint) {
+        const hintDiv = document.createElement('div');
+        hintDiv.id = 'idealSortHint';
+        hintDiv.className = 'text-center mb-4 text-purple-300 text-sm';
+        hintDiv.style.animation = 'fadeInUp 0.5s ease';
+        hintDiv.innerHTML = `
+          <p class="mb-1">✨ ${idealHint[1]}</p>
+        `;
+        const sortGlass = idealStep.querySelector('.glass');
+        if (sortGlass) {
+          sortGlass.insertBefore(hintDiv, sortGlass.firstChild);
+        }
+      }
+      
+      renderRoleSortList('roleIdealSortList', appData.roleIdealOrder);
+    }
+    
+    function confirmRoleSort() {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = '正在进入下一站...';
+      
+      document.getElementById('roleComparison').classList.remove('hidden');
+      setTimeout(() => {
+        renderRoleRadarChart();
+      }, 100);
+      
+      // 计算洞察
+      const insights = [];
+      const firstCurrent = appData.roleCurrentOrder[0];
+      const firstIdeal = appData.roleIdealOrder[0];
+      
+      if (firstCurrent !== firstIdeal) {
+        const r1 = rolesData.find(r => r.id === firstCurrent);
+        const r2 = rolesData.find(r => r.id === firstIdeal);
+        insights.push(`💡 你目前投入最多的是"${r1.name}"，但你内心最看重的是"${r2.name}"角色`);
+      } else {
+        insights.push(`✨ 你的现实与理想相当一致，这是很难得的状态！`);
+      }
+      
+      // 计算更多的洞察
+      let mismatchCount = 0;
+      for (let i = 0; i < Math.min(appData.roleCurrentOrder.length, appData.roleIdealOrder.length); i++) {
+        if (appData.roleCurrentOrder[i] !== appData.roleIdealOrder[i]) {
+          mismatchCount++;
+        }
+      }
+      
+      if (mismatchCount > 2) {
+        insights.push(`🌊 现实与理想之间有较大差距，这正是成长和改变的机会`);
+      } else if (mismatchCount > 0) {
+        insights.push(`🎯 几个位置的调整可以让你更接近理想状态`);
+      }
+      
+      // 显示洞察
+      const insightEl = document.getElementById('roleInsight');
+      insightEl.innerHTML = insights.map((insight, i) => 
+        `<p class="mb-2" style="animation: fadeInUp 0.5s ease ${0.5 + i * 0.3}s both">${insight}</p>`
+      ).join('');
+      
+      // 延迟导航到下一个阶段
+      setTimeout(() => {
+        goToNextPhase(getNextPhase('roles'));
+      }, 2500);
+    }
+    
+    function renderRoleRadarChart() {
+      const chartDom = document.getElementById('reportRoleRadar') || document.getElementById('roleRadarChart');
+      if (!chartDom) return;
+      
+      const myChart = echarts.init(chartDom);
+      
+      const currentData = rolesData
+        .filter(r => appData.roleCurrentOrder.includes(r.id))
+        .map(r => ({
+          name: r.name,
+          value: (appData.roleCurrentOrder.length - appData.roleCurrentOrder.indexOf(r.id)) * (10 / appData.roleCurrentOrder.length)
+        }));
+      
+      const idealData = rolesData
+        .filter(r => appData.roleIdealOrder.includes(r.id))
+        .map(r => ({
+          name: r.name,
+          value: (appData.roleIdealOrder.length - appData.roleIdealOrder.indexOf(r.id)) * (10 / appData.roleIdealOrder.length)
+        }));
+      
+      const indicators = currentData.map(d => ({ name: d.name, max: 10 }));
+      
+      const option = {
+        backgroundColor: 'transparent',
+        tooltip: {
+          backgroundColor: 'rgba(15, 23, 42, 0.9)',
+          borderColor: 'rgba(139, 92, 246, 0.3)',
+          textStyle: { color: '#fff' }
+        },
+        legend: {
+          data: ['目前投入', '理想状态'],
+          textStyle: { color: '#9ca3af', fontSize: 12 },
+          bottom: 0
+        },
+        radar: {
+          indicator: indicators,
+          radius: '65%',
+          axisName: {
+            color: '#d1d5db',
+            fontSize: 12
+          },
+          splitLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.1)' }
+          },
+          splitArea: {
+            areaStyle: {
+              color: ['rgba(255,255,255,0.02)', 'rgba(255,255,255,0.05)']
+            }
+          },
+          axisLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.15)' }
+          }
+        },
+        series: [{
+          type: 'radar',
+          data: [
+            {
+              name: '目前投入',
+              value: currentData.map(d => d.value),
+              lineStyle: { color: '#6366f1', width: 2 },
+              areaStyle: { color: 'rgba(99, 102, 241, 0.3)' },
+              itemStyle: { color: '#6366f1' }
+            },
+            {
+              name: '理想状态',
+              value: idealData.map(d => d.value),
+              lineStyle: { color: '#ec4899', width: 2 },
+              areaStyle: { color: 'rgba(236, 72, 153, 0.25)' },
+              itemStyle: { color: '#ec4899' }
+            }
+          ]
+        }]
+      };
+      
+      myChart.setOption(option);
+    }
+    
+    // ========== 阶段5：愿景冥想 ==========
+    let currentVisionScene = 0;
+    
+    function playVisionIntro() {
+      const intro = visionCorpus.intro;
+      const visionPage = document.getElementById('page-vision');
+      if (visionPage) {
+        const existingHint = document.getElementById('visionIntroHint');
+        if (!existingHint) {
+          const hintDiv = document.createElement('div');
+          hintDiv.id = 'visionIntroHint';
+          hintDiv.className = 'text-center mb-6 p-4 glass-light rounded-2xl max-w-2xl mx-auto';
+          hintDiv.style.animation = 'fadeInUp 0.6s ease';
+          hintDiv.innerHTML = `
+            <p class="text-purple-300 text-sm mb-1">✨ ${intro[0]}</p>
+            <p class="text-gray-400 text-xs">${intro[2]}</p>
+          `;
+          const glass = visionPage.querySelector('.glass');
+          if (glass) {
+            glass.parentNode.insertBefore(hintDiv, glass);
+          }
+        }
+      }
+    }
+    
+    function resetVisionPhase() {
+      currentVisionScene = 0;
+      showVisionScene(0);
+    }
+    
+    function showVisionScene(index) {
+      document.querySelectorAll('.vision-scene').forEach((s, i) => {
+        s.classList.toggle('hidden', i !== index);
+      });
+      
+      document.querySelectorAll('[data-dot]').forEach((d, i) => {
+        d.classList.toggle('bg-purple-500', i === index);
+        d.classList.toggle('bg-white/20', i !== index);
+      });
+      
+      document.getElementById('prevSceneBtn').classList.toggle('hidden', index === 0);
+      document.getElementById('nextSceneBtn').textContent = index === 3 ? '完成愿景探索 →' : '下一个 →';
+    }
+    
+    function nextVisionScene() {
+      if (currentVisionScene < 3) {
+        currentVisionScene++;
+        showVisionScene(currentVisionScene);
+      } else {
+        // 保存愿景数据
+        appData.visionMorning = document.getElementById('visionMorning').value;
+        appData.visionThought = document.getElementById('visionThought').value;
+        appData.visionWork = document.getElementById('visionWork').value;
+        appData.visionJoy = document.getElementById('visionJoy').value;
+        appData.visionNight = document.getElementById('visionNight').value;
+        appData.visionGratitude = document.getElementById('visionGratitude').value;
+        
+        const btn = document.getElementById('nextSceneBtn');
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = '正在进入下一站...';
+        }
+        
+        setTimeout(() => {
+          goToNextPhase(getNextPhase('vision'));
+        }, 1200);
+      }
+    }
+    
+    function prevVisionScene() {
+      if (currentVisionScene > 0) {
+        currentVisionScene--;
+        showVisionScene(currentVisionScene);
+      }
+    }
+    
+    function toggleEmotion(emotion, el) {
+      const idx = appData.selectedEmotions.indexOf(emotion);
+      if (idx > -1) {
+        appData.selectedEmotions.splice(idx, 1);
+        el.classList.remove('bg-purple-500');
+        el.classList.add('bg-white/10');
+      } else {
+        if (appData.selectedEmotions.length >= 3) return;
+        appData.selectedEmotions.push(emotion);
+        el.classList.add('bg-purple-500');
+        el.classList.remove('bg-white/10');
+      }
+    }
+    
+    // ========== 阶段6：给未来的信 ==========
+    function playLetterIntro() {
+      const intro = letterCorpus.intro;
+      const letterPage = document.getElementById('page-letter');
+      if (letterPage) {
+        const existingHint = document.getElementById('letterIntroHint');
+        if (!existingHint) {
+          const hintDiv = document.createElement('div');
+          hintDiv.id = 'letterIntroHint';
+          hintDiv.className = 'text-center mb-6 p-4 glass-light rounded-2xl max-w-2xl mx-auto';
+          hintDiv.style.animation = 'fadeInUp 0.6s ease';
+          hintDiv.innerHTML = `
+            <p class="text-purple-300 text-sm mb-1">💌 ${intro[0]}</p>
+            <p class="text-gray-400 text-xs">${intro[2]}</p>
+          `;
+          const letterTabs = letterPage.querySelector('.flex.justify-center.gap-4');
+          if (letterTabs) {
+            letterTabs.parentNode.insertBefore(hintDiv, letterTabs);
+          }
+        }
+      }
+    }
+    
+    function switchLetter(letterType) {
+      document.querySelectorAll('.letter-tab').forEach(tab => {
+        tab.classList.remove('bg-purple-500/30', 'text-white');
+        tab.classList.add('bg-white/10', 'text-gray-400');
+      });
+      document.querySelector(`.letter-tab[data-letter="${letterType}"]`).classList.add('bg-purple-500/30', 'text-white');
+      document.querySelector(`.letter-tab[data-letter="${letterType}"]`).classList.remove('bg-white/10', 'text-gray-400');
+      
+      document.getElementById('letter1Year').classList.toggle('hidden', letterType !== '1year');
+      document.getElementById('letter5Year').classList.toggle('hidden', letterType !== '5year');
+    }
+    
+    function completeLetter() {
+      appData.letter1Proud = document.getElementById('letter1Proud').value;
+      appData.letter1Grateful = document.getElementById('letter1Grateful').value;
+      appData.letter1Remember = document.getElementById('letter1Remember').value;
+      appData.letter5Proud = document.getElementById('letter5Proud').value;
+      appData.letter5Remind = document.getElementById('letter5Remind').value;
+      appData.letter5Important = document.getElementById('letter5Important').value;
+      
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = '正在进入最后一站...';
+      
+      setTimeout(() => {
+        goToNextPhase('balance');
+      }, 1200);
+    }
+    
+    // ========== 阶段7：生命平衡 ==========
+    function playBalanceIntro() {
+      const intro = balanceCorpus.intro;
+      const balancePage = document.getElementById('page-balance');
+      if (balancePage) {
+        const existingHint = document.getElementById('balanceIntroHint');
+        if (!existingHint) {
+          const hintDiv = document.createElement('div');
+          hintDiv.id = 'balanceIntroHint';
+          hintDiv.className = 'text-center mb-6 p-4 glass-light rounded-2xl max-w-3xl mx-auto';
+          hintDiv.style.animation = 'fadeInUp 0.6s ease';
+          hintDiv.innerHTML = `
+            <p class="text-purple-300 text-sm mb-1">📊 ${intro[0]}</p>
+            <p class="text-gray-400 text-xs">${intro[2]}</p>
+          `;
+          const glass = balancePage.querySelector('.glass');
+          if (glass) {
+            glass.parentNode.insertBefore(hintDiv, glass);
+          }
+        }
+      }
+    }
+    
+    function initBalanceRatings() {
+      const dimensions = ['career', 'finance', 'health', 'family', 'social', 'growth'];
+      
+      dimensions.forEach(dim => {
+        const container = document.querySelector(`#balanceRatings [data-dimension="${dim}"]`);
+        if (!container) return;
+        container.innerHTML = '';
+        
+        for (let i = 1; i <= 10; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'flex-1 h-8 rounded-lg cursor-pointer transition-all bg-gray-600/30 hover:bg-gray-500/40';
+          dot.dataset.score = i;
+          dot.onclick = () => setBalanceScore(dim, i);
+          
+          if (i <= appData.balance[dim]) {
+            dot.className = 'flex-1 h-8 rounded-lg cursor-pointer transition-all bg-gradient-to-br from-indigo-500 to-purple-500 shadow-md';
+          }
+          
+          container.appendChild(dot);
+        }
+      });
+    }
+    
+    function setBalanceScore(dimension, score) {
+      appData.balance[dimension] = score;
+      
+      const container = document.querySelector(`#balanceRatings [data-dimension="${dimension}"]`);
+      const dots = container.querySelectorAll('div');
+      dots.forEach((dot, i) => {
+        if (i < score) {
+          dot.className = 'flex-1 h-8 rounded-lg cursor-pointer transition-all bg-gradient-to-br from-indigo-500 to-purple-500 shadow-md';
+        } else {
+          dot.className = 'flex-1 h-8 rounded-lg cursor-pointer transition-all bg-gray-600/30 hover:bg-gray-500/40';
+        }
+      });
+      
+      document.querySelector(`.balance-value[data-dimension="${dimension}"]`).textContent = score;
+    }
+    
+    // ========== 生成报告 ==========
+    function generateReport() {
+      document.getElementById('reportName').textContent = (appData.userName || '你') + '的';
+      document.getElementById('reportDate').textContent = new Date().toLocaleDateString('zh-CN');
+      
+      // 人生主题
+      if (appData.lifeEvents.length > 0 && document.getElementById('lifeThemeText')) {
+        document.getElementById('reportLifeTheme').textContent = document.getElementById('lifeThemeText').textContent;
+      } else {
+        document.getElementById('reportLifeTheme').textContent = '自我探索者';
+      }
+      
+      // 核心价值观标签
+      const coreValuesContainer = document.getElementById('reportCoreValues');
+      coreValuesContainer.innerHTML = '';
+      const displayValues = appData.coreValues.length > 0 ? appData.coreValues : ['成长', '自由', '爱'];
+      displayValues.forEach((v, i) => {
+        const tag = document.createElement('span');
+        tag.className = 'px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/30 to-purple-500/30 text-purple-200 text-sm';
+        tag.style.animation = `fadeInUp 0.5s ease ${i * 0.1}s both`;
+        tag.textContent = v;
+        coreValuesContainer.appendChild(tag);
+      });
+      
+      // 雷达图
+      setTimeout(() => {
+        renderReportRadar();
+      }, 100);
+      
+      // 人生里程碑
+      renderReportTimeline();
+      
+      // 愿景关键词
+      renderVisionKeywords();
+      
+      // 角色对比雷达图
+      if (appData.roleCurrentOrder.length > 0) {
+        setTimeout(() => {
+          renderRoleRadarChart();
+        }, 200);
+      }
+      
+      // 信件精选
+      renderReportLetters();
+      
+      // 行动建议
+      renderActionSuggestions();
+      
+      // 结束语和祝福
+      renderClosingMessage();
+      
+      currentPhaseIndex = phases.length;
+      updateProgress();
+      showPage('page-report');
+    }
+    
+    function renderClosingMessage() {
+      const closing = reportCorpus.closing;
+      const closingContainer = document.getElementById('closingMessage');
+      if (closingContainer) {
+        closingContainer.innerHTML = closing.slice(0, 3).map((text, i) => `
+          <p style="animation: fadeInUp 0.5s ease ${i * 0.2 + 0.5}s both">${text}</p>
+        `).join('');
+      }
+      
+      const blessing = document.getElementById('blessingText');
+      if (blessing) {
+        blessing.textContent = pickRandom(reportCorpus.blessings);
+        blessing.style.animation = 'fadeInUp 0.8s ease 1.2s both';
+      }
+      
+      const reminders = reportCorpus.reminders;
+      const reminderList = document.getElementById('reminderList');
+      if (reminderList) {
+        reminderList.innerHTML = reminders.map((r, i) => `
+          <span style="animation: fadeInUp 0.5s ease ${1.5 + i * 0.15}s both">💡 ${r}</span>
+        `).join('');
+      }
+    }
+    
+    function renderReportRadar() {
+      const chartDom = document.getElementById('reportRadarChart');
+      if (!chartDom) return;
+      
+      const myChart = echarts.init(chartDom);
+      
+      const labels = { career: '事业成就', finance: '财务状况', health: '健康活力', family: '家庭关系', social: '人际社交', growth: '个人成长' };
+      
+      const indicators = Object.entries(appData.balance).map(([key, val]) => ({
+        name: labels[key],
+        max: 10
+      }));
+      
+      const values = Object.values(appData.balance);
+      
+      const option = {
+        backgroundColor: 'transparent',
+        tooltip: {
+          backgroundColor: 'rgba(15, 23, 42, 0.9)',
+          borderColor: 'rgba(139, 92, 246, 0.3)',
+          textStyle: { color: '#fff' }
+        },
+        radar: {
+          indicator: indicators,
+          radius: '70%',
+          axisName: {
+            color: '#d1d5db',
+            fontSize: 13
+          },
+          splitLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.1)' }
+          },
+          splitArea: {
+            areaStyle: {
+              color: ['rgba(255,255,255,0.02)', 'rgba(255,255,255,0.05)']
+            }
+          },
+          axisLine: {
+            lineStyle: { color: 'rgba(255,255,255,0.15)' }
+          }
+        },
+        series: [{
+          type: 'radar',
+          data: [{
+            name: '生命平衡',
+            value: values,
+            lineStyle: { 
+              color: '#a855f7',
+              width: 3
+            },
+            areaStyle: { 
+              color: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
+                { color: 'rgba(168, 85, 247, 0.6)', offset: 0 },
+                { color: 'rgba(99, 102, 241, 0.3)', offset: 1 }
+              ])
+            },
+            itemStyle: { color: '#ec4899' },
+            symbol: 'circle',
+            symbolSize: 8
+          }]
+        }]
+      };
+      
+      myChart.setOption(option);
+      
+      // 分数显示
+      const labels2 = { career: '事业', finance: '财务', health: '健康', family: '家庭', social: '社交', growth: '成长' };
+      const display = document.getElementById('balanceScoreDisplay');
+      display.innerHTML = Object.entries(appData.balance).map(([k, v]) => `
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-300">${v}</div>
+          <div class="text-xs text-gray-400">${labels2[k]}</div>
+        </div>
+      `).join('');
+    }
+    
+    function renderReportTimeline() {
+      const container = document.getElementById('reportTimeline');
+      const events = appData.lifeEvents.slice(0, 5);
+      
+      if (events.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-gray-400">
+            <div class="text-3xl mb-2">📖</div>
+            <p class="text-sm">（你还没有添加里程碑事件）</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = events.map((e, i) => `
+        <div class="flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors">
+          <div class="text-2xl flex-shrink-0">${getEventEmoji(e.type)}</div>
+          <div class="flex-1">
+            <div class="font-medium text-white">${e.name}</div>
+            <div class="text-xs text-gray-500 mt-1">
+              ${e.period === 'childhood' ? '童年印记' : e.period === 'youth' ? '青春探索' : e.period === 'adult' ? '成年起步' : e.period === 'mature' ? '成熟沉淀' : '智慧绽放'}
+              · 情绪强度 ${e.emotion}/10
+            </div>
+            ${e.desc ? `<p class="text-sm text-gray-400 mt-1">${e.desc}</p>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function renderVisionKeywords() {
+      const container = document.getElementById('reportVisionKeywords');
+      container.innerHTML = '';
+      
+      const keywords = [
+        ...appData.selectedEmotions,
+        appData.visionJoy ? appData.visionJoy.substring(0, 8) : null,
+        appData.visionGratitude ? appData.visionGratitude.substring(0, 8) : null
+      ].filter(Boolean);
+      
+      if (keywords.length === 0) {
+        keywords.push('平静', '喜悦', '成长', '自由');
+      }
+      
+      keywords.forEach((kw, i) => {
+        const el = document.createElement('span');
+        el.className = 'px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500/20 to-pink-500/20 border border-amber-400/30 text-amber-200 text-base font-medium';
+        el.style.animation = `fadeInUp 0.5s ease ${i * 0.1}s both`;
+        el.textContent = kw;
+        container.appendChild(el);
+      });
+    }
+    
+    function renderReportLetters() {
+      const l1 = document.getElementById('reportLetter1');
+      l1.innerHTML = `
+        <p>最骄傲的是：${appData.letter1Proud || '（未填写）'}</p>
+        <p>最感激的是：${appData.letter1Grateful || '（未填写）'}</p>
+        <p>别忘了：${appData.letter1Remember || '（未填写）'}</p>
+      `;
+      
+      const l5 = document.getElementById('reportLetter5');
+      l5.innerHTML = `
+        <p>为你骄傲的是：${appData.letter5Proud || '（未填写）'}</p>
+        <p>想提醒你：${appData.letter5Remind || '（未填写）'}</p>
+        <p>最重要的是：${appData.letter5Important || '（未填写）'}</p>
+      `;
+    }
+    
+    function renderActionSuggestions() {
+      const container = document.getElementById('actionSuggestions');
+      const suggestions = [];
+      
+      // 最低分维度建议
+      const balanceEntries = Object.entries(appData.balance);
+      balanceEntries.sort((a, b) => a[1] - b[1]);
+      
+      const lowest = balanceEntries[0];
+      const lowestLabels = { career: '事业', finance: '财务', health: '健康', family: '家庭', social: '社交', growth: '成长' };
+      
+      suggestions.push({
+        icon: '🎯',
+        title: `提升${lowestLabels[lowest[0]]}维度`,
+        desc: `你的${lowestLabels[lowest[0]]}得分最低（${lowest[1]}分），建议从今天开始，每天为这一维度投入15-30分钟。`
+      });
+      
+      // 价值观建议
+      if (appData.coreValues.length > 0) {
+        suggestions.push({
+          icon: '💎',
+          title: `以"${appData.coreValues[0]}"为决策依据`,
+          desc: `在面临选择时，问问自己：这个选择是否符合我最看重的"${appData.coreValues[0]}"价值观？`
+        });
+      }
+      
+      // 愿景建议
+      if (appData.selectedEmotions.length > 0) {
+        suggestions.push({
+          icon: '💫',
+          title: `每天创造"${appData.selectedEmotions[0]}"时刻`,
+          desc: `主动规划能让你体验到"${appData.selectedEmotions[0]}"的小事，让理想情绪融入日常生活。`
+        });
+      }
+      
+      // 角色平衡建议
+      if (appData.roleCurrentOrder.length > 0 && appData.roleIdealOrder.length > 0) {
+        suggestions.push({
+          icon: '🧩',
+          title: '角色再平衡',
+          desc: `建议每周检查一次你的角色投入比例，逐步向理想状态靠拢。小步调整比剧变更可持续。`
+        });
+      }
+      
+      container.innerHTML = suggestions.map((s, i) => `
+        <div class="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors" style="animation: fadeInUp 0.5s ease ${i * 0.15}s both">
+          <div class="text-2xl flex-shrink-0">${s.icon}</div>
+          <div>
+            <div class="font-medium text-white">${s.title}</div>
+            <div class="text-sm text-gray-400 mt-1">${s.desc}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // ========== 重新开始 ==========
+    function restartJourney() {
+      if (confirm('确定要重新开始吗？当前数据将会被清除。')) {
+        location.reload();
+      }
+    }
+    
+    function shareReport() {
+      alert('分享功能开发中～\n你可以截图保存此页面，分享给你的朋友！');
+    }
+    
+  </script>
+</body>
+</html>
