@@ -1182,9 +1182,47 @@
           <button onclick="exportPDF()" class="btn-primary px-6 py-3 text-sm flex items-center gap-2">
             <span>📄</span> 导出PDF
           </button>
+          <button onclick="exportData()" class="btn-ghost px-6 py-3 text-sm flex items-center gap-2">
+            <span>💾</span> 导出数据
+          </button>
+          <button onclick="document.getElementById('importFileInput').click()" class="btn-ghost px-6 py-3 text-sm flex items-center gap-2">
+            <span>📥</span> 导入数据
+          </button>
+          <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importData(event)">
           <button onclick="goHome()" class="btn-ghost px-6 py-3 text-sm">
             返回首页
           </button>
+        </div>
+
+        <div class="mt-8 ln-card rounded-2xl p-6">
+          <h3 class="text-sm font-semibold mb-4" style="color: var(--ln-color-text);">📦 数据管理</h3>
+          <div class="space-y-3">
+            <button onclick="exportData()" class="w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 transition-colors hover:bg-amber-50">
+              <span class="text-xl">💾</span>
+              <div class="flex-1">
+                <div class="text-sm font-medium" style="color: var(--ln-color-text);">导出我的数据</div>
+                <div class="text-xs" style="color: var(--ln-color-text-tertiary);">保存为JSON文件，可备份或分享</div>
+              </div>
+              <span class="text-xs" style="color: var(--ln-color-text-tertiary);">→</span>
+            </button>
+            <button onclick="document.getElementById('importFileInput2').click()" class="w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 transition-colors hover:bg-amber-50">
+              <span class="text-xl">📥</span>
+              <div class="flex-1">
+                <div class="text-sm font-medium" style="color: var(--ln-color-text);">导入数据</div>
+                <div class="text-xs" style="color: var(--ln-color-text-tertiary);">从JSON文件恢复数据</div>
+              </div>
+              <span class="text-xs" style="color: var(--ln-color-text-tertiary);">→</span>
+            </button>
+            <input type="file" id="importFileInput2" accept=".json" class="hidden" onchange="importData(event)">
+            <button onclick="clearAllData()" class="w-full text-left px-4 py-3 rounded-xl flex items-center gap-3 transition-colors hover:bg-red-50">
+              <span class="text-xl">🗑️</span>
+              <div class="flex-1">
+                <div class="text-sm font-medium" style="color: #dc2626;">清空所有数据</div>
+                <div class="text-xs" style="color: var(--ln-color-text-tertiary);">删除本地保存的所有探索记录</div>
+              </div>
+              <span class="text-xs" style="color: var(--ln-color-text-tertiary);">→</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -2867,6 +2905,54 @@
       
       btn.innerHTML = originalText;
       btn.disabled = false;
+    }
+
+    function exportData() {
+      const data = getData();
+      const jsonStr = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `生命导航数据_${dateStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          
+          if (!confirm('导入数据将覆盖当前所有数据，确定继续吗？')) {
+            event.target.value = '';
+            return;
+          }
+          
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          alert('数据导入成功！');
+          location.reload();
+        } catch (err) {
+          console.error('导入失败:', err);
+          alert('导入失败：文件格式不正确');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function clearAllData() {
+      if (!confirm('确定要清空所有数据吗？此操作不可恢复！')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
     }
     
     // ========== 初始化 ==========
