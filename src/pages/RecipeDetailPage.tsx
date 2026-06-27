@@ -133,7 +133,13 @@ export default function RecipeDetailPage() {
                 {bakeMode ? '退出跟做' : '开始跟做'}
               </button>
             </div>
-            <StepList steps={recipe.steps} />
+            <StepList
+              steps={recipe.steps}
+              ingredients={recipe.ingredients}
+              ratio={ratio}
+              bakeMode={bakeMode}
+              onExitBakeMode={() => setBakeMode(false)}
+            />
           </div>
         </div>
       </div>

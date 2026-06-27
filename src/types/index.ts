@@ -12,6 +12,12 @@ export interface Step {
   title: string;
   description: string;
   duration?: number;
+  relatedIngredients?: string[];
+  temperature?: {
+    celsius: number;
+    note?: string;
+  };
+  tips?: string;
 }
 
 export interface Recipe {
