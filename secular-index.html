@@ -13,42 +13,74 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      /* 品牌色：琥珀金 */
+      --ln-color-primary: #C8860E;
+      --ln-color-primary-light: #E5A830;
+      --ln-color-primary-lighter: #F5DFA0;
+      --ln-color-primary-lightest: #FFF8EB;
+      --ln-color-primary-dark: #A06C08;
+      --ln-color-primary-darker: #7A5206;
+
+      /* 中性色 */
+      --ln-color-bg: #FFFBF5;
+      --ln-color-bg-warm: #FFF6E9;
+      --ln-color-surface: #FFFFFF;
+      --ln-color-surface-muted: #F9F3EA;
+      --ln-color-border: #E8DFD0;
+      --ln-color-border-light: #F0E9DD;
+
+      /* 文字色 */
+      --ln-color-text: #2D2A24;
+      --ln-color-text-secondary: #6B6456;
+      --ln-color-text-tertiary: #9E9586;
+      --ln-color-text-on-primary: #FFFFFF;
+
+      /* 字体 */
+      --ln-font-display: 'Noto Serif SC', Georgia, serif;
+      --ln-font-body: 'Noto Sans SC', sans-serif;
+
+      /* 圆角 */
+      --ln-radius-sm: 6px;
+      --ln-radius-md: 10px;
+      --ln-radius-lg: 14px;
+      --ln-radius-xl: 16px;
+      --ln-radius-full: 9999px;
+
+      /* 阴影（alpha必须<=0.05，仅静态元素使用） */
+      --ln-shadow-sm: 0 1px 3px rgba(45,42,36, 0.04);
+      --ln-shadow-md: 0 2px 8px rgba(45,42,36, 0.05);
+
+      /* 过渡 */
+      --ln-transition-fast: 150ms ease;
+      --ln-transition-normal: 250ms ease;
+    }
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Noto Sans SC', sans-serif;
-      background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%);
-      background-attachment: fixed;
+      font-family: var(--ln-font-body);
+      background: var(--ln-color-bg);
       min-height: 100vh;
-      color: #1F2937;
+      color: var(--ln-color-text);
       overflow-x: hidden;
     }
-    .font-serif-cn { font-family: 'Noto Serif SC', serif; }
+    .font-serif-cn { font-family: var(--ln-font-display); }
     
-    .glass-card {
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(245, 158, 11, 0.15);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    /* 新的卡片样式 */
+    .ln-card {
+      background: var(--ln-color-surface);
+      border: 1px solid var(--ln-color-border);
+      border-radius: var(--ln-radius-xl);
+      box-shadow: var(--ln-shadow-sm);
     }
-    .glass-card-strong {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(245, 158, 11, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    .ln-card-selected {
+      background: var(--ln-color-primary-lightest);
+      border: 1px solid var(--ln-color-primary);
     }
-    .glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-    .glass-light {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+    .ln-card-warm {
+      background: var(--ln-color-bg-warm);
+      border: 1px solid var(--ln-color-border-light);
+      border-radius: var(--ln-radius-xl);
     }
     
     .page { display: none; animation: fadeInUp 0.5s ease; }
@@ -58,61 +90,86 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    .gradient-text-amber {
-      background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .gradient-text-green {
-      background: linear-gradient(135deg, #059669 0%, #10B981 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* 渐变文字替换为品牌色 */
+    .ln-text-primary { color: var(--ln-color-primary); }
+    .ln-text-secondary { color: var(--ln-color-text-secondary); }
+    .ln-text-tertiary { color: var(--ln-color-text-tertiary); }
+    .ln-text-gradient {
+      color: var(--ln-color-primary);
+      font-weight: 600;
     }
     
+    /* Primary按钮：药丸形 */
     .btn-primary {
-      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-      transition: all 0.3s ease;
+      background: var(--ln-color-primary);
+      color: var(--ln-color-text-on-primary);
+      border-radius: var(--ln-radius-full);
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      transition: all var(--ln-transition-fast);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(245, 158, 11, 0.5); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .btn-secondary {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1.5px solid rgba(16, 185, 129, 0.3);
-      color: #059669;
-      transition: all 0.3s ease;
+    .btn-primary:hover {
+      background: var(--ln-color-primary-dark);
+      transform: translateY(-1px);
     }
-    .btn-secondary:hover { background: rgba(16, 185, 129, 0.15); }
+    .btn-primary:active {
+      transform: scale(0.99);
+    }
+    .btn-primary:disabled {
+      background: var(--ln-color-surface-muted);
+      color: var(--ln-color-text-tertiary);
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Ghost按钮：透明边框 */
     .btn-ghost {
-      background: rgba(255, 255, 255, 0.15);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
-      transition: all 0.3s ease;
+      background: transparent;
+      border: 1px solid var(--ln-color-border);
+      color: var(--ln-color-text-secondary);
+      border-radius: var(--ln-radius-lg);
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all var(--ln-transition-fast);
     }
-    .btn-ghost:hover { background: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.5); }
-    .glass-card .btn-ghost { background: rgba(0, 0, 0, 0.05); color: #4B5563; border: 1px solid rgba(0, 0, 0, 0.08); }
-    .glass-card .btn-ghost:hover { background: rgba(0, 0, 0, 0.08); }
+    .btn-ghost:hover {
+      background: var(--ln-color-surface-muted);
+      border-color: var(--ln-color-primary-light);
+    }
+    .btn-ghost:active {
+      transform: scale(0.99);
+    }
     
-    .glow-amber { box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.1); }
+    /* 移除发光效果，使用静态阴影 */
+    .ln-icon-badge {
+      background: var(--ln-color-primary);
+      color: var(--ln-color-text-on-primary);
+      border-radius: var(--ln-radius-full);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
     .float-animation { animation: float 6s ease-in-out infinite; }
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    
+
     .pulse-ring { animation: pulseRing 2s ease-out infinite; }
     @keyframes pulseRing {
       0% { transform: scale(0.8); opacity: 1; }
       100% { transform: scale(1.5); opacity: 0; }
     }
     
+    /* 底部导航栏 */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
       padding-bottom: env(safe-area-inset-bottom);
-      background: rgba(255, 251, 235, 0.9);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(245, 158, 11, 0.15);
+      background: var(--ln-color-surface);
+      border-top: 1px solid var(--ln-color-border);
     }
-    .nav-item { transition: all 0.3s ease; color: #6B7280; }
-    .nav-item.active { color: #D97706; }
+    .nav-item { transition: var(--ln-transition-fast); color: var(--ln-color-text-tertiary); }
+    .nav-item.active { color: var(--ln-color-primary); font-weight: 500; }
     .nav-item.active .nav-icon { transform: translateY(-2px); }
     
     .card-flip { perspective: 1000px; }
@@ -129,47 +186,112 @@
     }
     .card-back { transform: rotateY(180deg); }
     
-    .value-tag-high { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #92400E; }
-    .value-tag-mid { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #065F46; }
-    
-    .timeline-line { background: linear-gradient(to bottom, #F59E0B, #10B981, #6366F1); }
+    /* 价值观标签 */
+    .ln-tag-primary {
+      background: var(--ln-color-primary-lighter);
+      border: 1px solid var(--ln-color-primary-light);
+      color: var(--ln-color-primary-dark);
+      padding: 4px 12px;
+      border-radius: var(--ln-radius-full);
+      font-size: 12px;
+    }
+    .ln-tag-secondary {
+      background: var(--ln-color-surface-muted);
+      border: 1px solid var(--ln-color-border);
+      color: var(--ln-color-text-secondary);
+      padding: 4px 12px;
+      border-radius: var(--ln-radius-full);
+      font-size: 12px;
+    }
+
+    .timeline-line { background: var(--ln-color-primary); }
     
     .letter-paper {
-      background: linear-gradient(to bottom, #fefce8, #fffbeb);
-      background-image: linear-gradient(#fef3c7 1px, transparent 1px);
+      background: var(--ln-color-bg);
+      background-image: linear-gradient(var(--ln-color-border-light) 1px, transparent 1px);
       background-size: 100% 32px;
       background-position: 0 32px;
     }
-    
+
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.03); }
-    ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: var(--ln-color-surface-muted); }
+    ::-webkit-scrollbar-thumb { background: var(--ln-color-primary-light); border-radius: 3px; }
     
-    .progress-step { transition: all 0.3s ease; }
+    .progress-step { transition: var(--ln-transition-normal); }
     .progress-step.active { transform: scale(1.2); }
-    .progress-step.completed { background: #10b981 !important; }
+    .progress-step.completed { background: var(--ln-color-primary) !important; }
+
+    /* 种子维度卡片 */
+    .seed-dimension-card {
+      background: var(--ln-color-surface);
+      border: 1px solid var(--ln-color-border);
+      border-radius: var(--ln-radius-lg);
+      transition: var(--ln-transition-normal);
+      cursor: pointer;
+    }
+    .seed-dimension-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ln-color-primary-light);
+    }
+    .seed-dimension-card.active {
+      border-color: var(--ln-color-primary);
+      background: var(--ln-color-primary-lightest);
+    }
+
+    /* 选项卡片 */
+    .option-card {
+      background: var(--ln-color-surface);
+      border: 1px solid var(--ln-color-border);
+      border-radius: var(--ln-radius-lg);
+      cursor: pointer;
+      transition: var(--ln-transition-fast);
+    }
+    .option-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--ln-color-primary-light);
+      background: var(--ln-color-bg-warm);
+    }
+    .option-card.selected {
+      background: var(--ln-color-primary-lightest);
+      border: 1px solid var(--ln-color-primary);
+    }
     
-    .seed-dimension-card { transition: all 0.3s ease; cursor: pointer; }
-    .seed-dimension-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px -8px rgba(245, 158, 11, 0.2); }
-    .seed-dimension-card.active { border-color: rgba(245, 158, 11, 0.6); background: rgba(251, 191, 36, 0.2); }
-    
-    .option-card { transition: all 0.3s ease; cursor: pointer; }
-    .option-card:hover { border-color: rgba(245, 158, 11, 0.4); background: rgba(251, 191, 36, 0.08); }
-    .option-card.selected { border-color: #F59E0B; background: rgba(251, 191, 36, 0.15); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
-    
-    .rating-btn { transition: all 0.2s ease; cursor: pointer; }
-    .rating-btn:hover { transform: scale(1.1); }
-    .rating-btn.selected { background: linear-gradient(135deg, #F59E0B, #D97706); border-color: transparent; color: white; }
-    
-    .draggable-item { cursor: grab; transition: all 0.2s ease; }
+    /* 评分按钮 */
+    .rating-btn {
+      background: var(--ln-color-surface);
+      border: 1px solid var(--ln-color-border);
+      color: var(--ln-color-text-secondary);
+      transition: var(--ln-transition-fast);
+      cursor: pointer;
+    }
+    .rating-btn:hover { transform: scale(1.1); border-color: var(--ln-color-primary-light); }
+    .rating-btn.selected {
+      background: var(--ln-color-primary);
+      border-color: var(--ln-color-primary);
+      color: var(--ln-color-text-on-primary);
+    }
+
+    /* 拖拽元素 */
+    .draggable-item {
+      cursor: grab;
+      transition: var(--ln-transition-fast);
+      background: var(--ln-color-surface);
+      border: 1px solid var(--ln-color-border-light);
+    }
     .draggable-item:active { cursor: grabbing; }
     .draggable-item.dragging { opacity: 0.5; transform: scale(1.05); }
-    .drop-zone.drag-over { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.5); }
-    
-    .modal-backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+    .drop-zone.drag-over {
+      background: var(--ln-color-primary-lightest);
+      border-color: var(--ln-color-primary);
+    }
+
+    /* 弹窗背景 */
+    .modal-backdrop {
+      background: rgba(45,42,36, 0.4);
+    }
     
     .chart-container { width: 100%; height: 320px; }
-    
+
     @media (max-width: 640px) {
       body { font-size: 14px; -webkit-tap-highlight-color: transparent; }
       .pb-safe { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
@@ -178,21 +300,22 @@
       input, textarea { font-size: 16px !important; min-height: 44px; }
       .chart-container { height: 280px; }
     }
-    
+
     @media (hover: none) and (pointer: coarse) {
       button:active { transform: scale(0.97); opacity: 0.9; }
       .draggable-item { touch-action: none; }
     }
-    
+
     .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
-    
+
+    /* DNA卡片 - 顶部装饰条 */
     .dna-card {
       position: relative; overflow: hidden;
     }
     .dna-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #F59E0B, #10B981, #6366F1);
+      background: var(--ln-color-primary);
     }
   </style>
 </head>
@@ -218,16 +341,16 @@
 
         <!-- 进度卡片 -->
         <div class="max-w-2xl mx-auto w-full mb-6">
-          <div class="glass-card-strong rounded-2xl p-5 mb-5">
+          <div class="ln-card-warm rounded-2xl p-5 mb-5">
             <div class="flex justify-between items-center mb-3">
-              <h3 class="font-serif-cn font-bold text-gray-800">我的探索之旅</h3>
-              <span id="homeProgressText" class="text-sm font-semibold text-amber-600">0/7 阶段</span>
+              <h3 class="font-serif-cn font-bold" style="color: var(--ln-color-text);">我的探索之旅</h3>
+              <span id="homeProgressText" class="text-sm font-semibold" style="color: var(--ln-color-primary);">0/7 阶段</span>
             </div>
             <div class="bg-gray-100 rounded-full h-2.5 overflow-hidden mb-3">
-              <div id="homeProgressBar" class="h-full rounded-full bg-gradient-to-r from-amber-400 to-amber-600" style="width: 0%"></div>
+              <div id="homeProgressBar" class="h-full rounded-full" style="background: var(--ln-color-primary); width: 0%"></div>
             </div>
-            <div class="flex justify-between text-xs text-gray-500">
-              <span id="homeCurrentPhase" class="font-medium text-amber-600">未开始</span>
+            <div class="flex justify-between text-xs" style="color: var(--ln-color-text-secondary);">
+              <span id="homeCurrentPhase" class="font-medium" style="color: var(--ln-color-primary);">未开始</span>
               <span>预计用时约20-30分钟</span>
             </div>
           </div>
@@ -235,14 +358,14 @@
 
         <!-- 每日智慧卡片 -->
         <div class="max-w-2xl mx-auto w-full mb-6">
-          <div class="glass-card rounded-2xl p-5 cursor-pointer hover:shadow-lg transition-all" onclick="goToPage('wisdom')" style="background: linear-gradient(135deg, #FEF3C7, #FFFBEB);">
+          <div class="ln-card-warm rounded-2xl p-5 cursor-pointer transition-all" onclick="goToPage('wisdom')">
             <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white text-xl flex-shrink-0">
+              <div class="w-12 h-12 rounded-xl ln-icon-badge text-xl flex-shrink-0">
                 ✨
               </div>
               <div class="flex-1">
-                <p class="text-xs text-amber-700 mb-1 font-medium">每日智慧</p>
-                <p class="text-gray-700 text-sm font-serif-cn" id="dailyWisdomQuote">"认识你自己" — 苏格拉底</p>
+                <p class="text-xs mb-1 font-medium" style="color: var(--ln-color-primary-dark);">每日智慧</p>
+                <p class="text-sm font-serif-cn" style="color: var(--ln-color-text);" id="dailyWisdomQuote">"认识你自己" — 苏格拉底</p>
               </div>
             </div>
           </div>
@@ -250,64 +373,64 @@
 
         <!-- 功能模块网格 -->
         <div class="max-w-2xl mx-auto w-full">
-          <h3 class="font-serif-cn font-bold text-gray-800 mb-4 text-lg">探索模块</h3>
+          <h3 class="font-serif-cn font-bold mb-4 text-lg" style="color: var(--ln-color-text);">探索模块</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('seed')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('seed')">
               <div class="text-3xl mb-2">🌱</div>
-              <div class="font-semibold text-gray-800 text-sm">种子发现</div>
-              <div class="text-xs text-gray-500">热情天赋价值</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">种子发现</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">热情天赋价值</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('values')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('values')">
               <div class="text-3xl mb-2">💎</div>
-              <div class="font-semibold text-gray-800 text-sm">价值观</div>
-              <div class="text-xs text-gray-500">发现核心价值</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">价值观</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">发现核心价值</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('journey')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('journey')">
               <div class="text-3xl mb-2">🌈</div>
-              <div class="font-semibold text-gray-800 text-sm">生命旅程</div>
-              <div class="text-xs text-gray-500">人生回顾</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">生命旅程</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">人生回顾</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('roles')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('roles')">
               <div class="text-3xl mb-2">🧩</div>
-              <div class="font-semibold text-gray-800 text-sm">角色探索</div>
-              <div class="text-xs text-gray-500">求真尚美向善</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">角色探索</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">求真尚美向善</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('vision')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('vision')">
               <div class="text-3xl mb-2">🎬</div>
-              <div class="font-semibold text-gray-800 text-sm">愿景冥想</div>
-              <div class="text-xs text-gray-500">理想终局</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">愿景冥想</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">理想终局</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('balance')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('balance')">
               <div class="text-3xl mb-2">⚖️</div>
-              <div class="font-semibold text-gray-800 text-sm">生命平衡</div>
-              <div class="text-xs text-gray-500">七维评估</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">生命平衡</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">七维评估</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="startModule('dna')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="startModule('dna')">
               <div class="text-3xl mb-2">🧬</div>
-              <div class="font-semibold text-gray-800 text-sm">人生DNA</div>
-              <div class="text-xs text-gray-500">使命愿景价值</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">人生DNA</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">使命愿景价值</div>
             </div>
-            <div class="glass-card rounded-2xl p-4 cursor-pointer hover:shadow-md transition-all hover:-translate-y-1 text-center" onclick="goToPage('report')">
+            <div class="ln-card rounded-2xl p-4 cursor-pointer transition-all hover:-translate-y-1 text-center" onclick="goToPage('report')">
               <div class="text-3xl mb-2">📊</div>
-              <div class="font-semibold text-gray-800 text-sm">我的报告</div>
-              <div class="text-xs text-gray-500">查看生成</div>
+              <div class="font-semibold text-sm" style="color: var(--ln-color-text);">我的报告</div>
+              <div class="text-xs" style="color: var(--ln-color-text-tertiary);">查看生成</div>
             </div>
           </div>
 
-          <button onclick="startFullJourney()" class="w-full btn-primary text-white font-semibold py-4 rounded-2xl w-full flex items-center justify-center gap-2">
+          <button onclick="startFullJourney()" class="w-full btn-primary font-semibold py-4 flex items-center justify-center gap-2">
             <span>🚀</span> 开启完整探索之旅
           </button>
-          <p class="text-center text-xs text-gray-500 mt-3">约需 20-30 分钟 · 建议在安静环境中进行</p>
+          <p class="text-center text-xs mt-3" style="color: var(--ln-color-text-tertiary);">约需 20-30 分钟 · 建议在安静环境中进行</p>
         </div>
 
         <!-- 产品理念 -->
         <div class="max-w-2xl mx-auto w-full mt-10 text-center">
-          <div class="glass-card rounded-2xl p-6">
-            <h3 class="font-serif-cn font-bold text-gray-800 text-lg mb-3">💫 关于生命导航</h3>
-            <p class="text-gray-600 text-sm leading-relaxed">
+          <div class="ln-card rounded-2xl p-6">
+            <h3 class="font-serif-cn font-bold text-lg mb-3" style="color: var(--ln-color-text);">💫 关于生命导航</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--ln-color-text-secondary);">
               基于积极心理学、德鲁克管理学、东西方哲学等多元智慧，帮助每个人找到那颗属于你的人生种子，浇灌它、培育它，让生命从内而外地绽放。
             </p>
-            <p class="text-gray-400 text-xs mt-3">科学的自我探索工具 · 发现真正的自己</p>
+            <p class="text-xs mt-3" style="color: var(--ln-color-text-tertiary);">科学的自我探索工具 · 发现真正的自己</p>
           </div>
         </div>
       </div>
@@ -316,11 +439,11 @@
     <!-- ========== 每日智慧页 ========== -->
     <div id="page-wisdom" class="page pt-20 pb-24">
       <div class="max-w-2xl mx-auto px-4">
-        <div class="fixed top-0 left-0 right-0 z-40 px-4 pt-safe-top pt-3 pb-3" style="background: rgba(255, 251, 235, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(245, 158, 11, 0.1);">
+        <div class="fixed top-0 left-0 right-0 z-40 px-4 pt-safe-top pt-3 pb-3 ln-card" style="border-bottom: 1px solid var(--ln-color-border);">
           <div class="max-w-2xl mx-auto flex items-center gap-3">
             <button onclick="goHome()" class="btn-ghost px-3 py-2 rounded-xl text-sm">← 返回</button>
             <div class="flex-1 text-center">
-              <div class="text-sm font-medium text-gray-700">每日智慧</div>
+              <div class="text-sm font-medium" style="color: var(--ln-color-text);">每日智慧</div>
             </div>
             <div class="w-16"></div>
           </div>
@@ -328,22 +451,22 @@
 
         <div class="text-center mb-8 mt-12">
           <div class="text-5xl mb-4">✨</div>
-          <h2 class="text-2xl font-bold font-serif-cn text-gray-800 mb-2">今日智慧</h2>
-          <p class="text-gray-500 text-sm" id="wisdomDate">2026年6月27日</p>
+          <h2 class="text-2xl font-bold font-serif-cn mb-2" style="color: var(--ln-color-text);">今日智慧</h2>
+          <p class="text-sm" style="color: var(--ln-color-text-tertiary);" id="wisdomDate">2026年6月27日</p>
         </div>
 
-        <div class="glass-card-strong rounded-3xl p-8 mb-6 text-center" style="background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);">
+        <div class="ln-card-warm rounded-3xl p-8 mb-6 text-center">
           <div class="text-6xl mb-6">📜</div>
-          <p id="wisdomQuote" class="text-xl md:text-2xl font-serif-cn text-gray-800 leading-relaxed mb-6">
+          <p id="wisdomQuote" class="text-xl md:text-2xl font-serif-cn leading-relaxed mb-6" style="color: var(--ln-color-text);">
             "认识你自己"
           </p>
-          <p id="wisdomAuthor" class="text-gray-600 text-sm">— 苏格拉底</p>
-          <p id="wisdomCategory" class="mt-4 inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">古希腊哲学</p>
+          <p id="wisdomAuthor" class="text-sm" style="color: var(--ln-color-text-secondary);">— 苏格拉底</p>
+          <p id="wisdomCategory" class="mt-4 inline-block px-3 py-1 rounded-full text-xs font-medium" style="background: var(--ln-color-primary-lighter); color: var(--ln-color-primary-dark);">古希腊哲学</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-5 mb-6">
-          <h4 class="font-semibold text-gray-800 mb-3 text-sm">💭 我的感悟</h4>
-          <textarea placeholder="写下你对这句话的理解和感悟..." class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm h-28 resize-none focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-100"></textarea>
+        <div class="ln-card rounded-2xl p-5 mb-6">
+          <h4 class="font-semibold mb-3 text-sm" style="color: var(--ln-color-text);">💭 我的感悟</h4>
+          <textarea placeholder="写下你对这句话的理解和感悟..." class="w-full px-4 py-3 rounded-xl border text-sm h-28 resize-none" style="border-color: var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);"></textarea>
         </div>
 
         <div class="flex gap-3">
@@ -362,20 +485,20 @@
     
     <!-- ========== 顶部进度条 ========== -->
     <div id="topProgressBar" class="fixed top-0 left-0 right-0 z-40 hidden">
-      <div class="glass border-b border-white/10 pt-safe-top">
+      <div class="ln-card border-b pt-safe-top" style="border-color: var(--ln-color-border);">
         <div class="max-w-4xl mx-auto px-4 py-3">
           <div class="flex items-center justify-between mb-2">
-            <button onclick="goHome()" class="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-sm">
+            <button onclick="goHome()" class="flex items-center gap-1 text-sm" style="color: var(--ln-color-text-secondary);">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
               </svg>
               <span>返回</span>
             </button>
-            <div class="text-sm text-white/80" id="progressTitle">探索之旅</div>
-            <div class="text-sm text-white/60" id="progressPercent">0%</div>
+            <div class="text-sm" style="color: var(--ln-color-text);" id="progressTitle">探索之旅</div>
+            <div class="text-sm" style="color: var(--ln-color-text-tertiary);" id="progressPercent">0%</div>
           </div>
-          <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
-            <div id="progressFill" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+          <div class="h-1.5 rounded-full overflow-hidden" style="background: var(--ln-color-surface-muted);">
+            <div id="progressFill" class="h-full rounded-full transition-all duration-500" style="background: var(--ln-color-primary); width: 0%"></div>
           </div>
         </div>
       </div>
@@ -385,7 +508,7 @@
     <div id="page-seed" class="page pt-20 pb-24">
       <div class="max-w-3xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>🌱</span>
             <span>种子发现 · 四维评估</span>
           </div>
@@ -394,81 +517,81 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <div class="seed-dimension-card glass rounded-2xl p-4 text-center active" data-dim="passion" onclick="switchSeedDimension('passion')">
+          <div class="seed-dimension-card rounded-2xl p-4 text-center active" data-dim="passion" onclick="switchSeedDimension('passion')">
             <div class="text-3xl mb-2">🔥</div>
             <div class="text-sm font-medium">热情</div>
             <div class="text-xs text-gray-400 mt-1" id="dim-passion-status">未开始</div>
           </div>
-          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="talent" onclick="switchSeedDimension('talent')">
+          <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="talent" onclick="switchSeedDimension('talent')">
             <div class="text-3xl mb-2">⭐</div>
             <div class="text-sm font-medium">天赋</div>
             <div class="text-xs text-gray-400 mt-1" id="dim-talent-status">未开始</div>
           </div>
-          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="need" onclick="switchSeedDimension('need')">
+          <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="need" onclick="switchSeedDimension('need')">
             <div class="text-3xl mb-2">🌍</div>
             <div class="text-sm font-medium">社会需求</div>
             <div class="text-xs text-gray-400 mt-1" id="dim-need-status">未开始</div>
           </div>
-          <div class="seed-dimension-card glass rounded-2xl p-4 text-center" data-dim="value" onclick="switchSeedDimension('value')">
+          <div class="seed-dimension-card rounded-2xl p-4 text-center" data-dim="value" onclick="switchSeedDimension('value')">
             <div class="text-3xl mb-2">💎</div>
             <div class="text-sm font-medium">价值实现</div>
             <div class="text-xs text-gray-400 mt-1" id="dim-value-status">未开始</div>
           </div>
         </div>
         
-        <div id="seedQuestionArea" class="glass rounded-3xl p-6 mb-6">
+        <div id="seedQuestionArea" class="ln-card rounded-3xl p-6 mb-6">
           <div class="text-center mb-6">
-            <div class="text-sm text-gray-400 mb-2">第 <span id="seedCurrentQ">1</span> / <span id="seedTotalQ">6</span> 题</div>
-            <h3 class="text-xl font-serif-cn" id="seedQuestionText">加载中...</h3>
+            <div class="text-sm mb-2" style="color: var(--ln-color-text-tertiary);">第 <span id="seedCurrentQ">1</span> / <span id="seedTotalQ">6</span> 题</div>
+            <h3 class="text-xl font-serif-cn" id="seedQuestionText" style="color: var(--ln-color-text);">加载中...</h3>
           </div>
-          
+
           <div id="seedOptions" class="space-y-3">
           </div>
-          
+
           <div class="flex justify-between mt-8">
-            <button onclick="prevSeedQuestion()" id="prevSeedBtn" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm disabled:opacity-50" disabled>
+            <button onclick="prevSeedQuestion()" id="prevSeedBtn" class="btn-ghost px-6 py-2.5 rounded-xl text-sm disabled:opacity-50" disabled>
               ← 上一题
             </button>
-            <button onclick="nextSeedQuestion()" id="nextSeedBtn" class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm disabled:opacity-50" disabled>
+            <button onclick="nextSeedQuestion()" id="nextSeedBtn" class="btn-primary px-6 py-2.5 rounded-xl text-sm disabled:opacity-50" disabled>
               下一题 →
             </button>
           </div>
         </div>
-        
+
         <div id="seedResultArea" class="hidden">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <h3 class="text-xl font-serif-cn text-center mb-4 gradient-text">四维雷达图</h3>
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <h3 class="text-xl font-serif-cn text-center mb-4 ln-text-gradient">四维雷达图</h3>
             <div id="seedRadarChart" class="chart-container"></div>
           </div>
-          
-          <div class="glass rounded-3xl p-6 mb-6 text-center">
-            <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-4xl mb-4 glow-purple">
+
+          <div class="ln-card rounded-3xl p-6 mb-6 text-center">
+            <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-4xl mb-4" style="background: var(--ln-color-primary);">
               🌻
             </div>
-            <h3 class="text-xl font-serif-cn mb-2">你的种子类型：<span class="gradient-text" id="seedType">综合型种子</span></h3>
-            <p class="text-gray-400 text-sm mb-4" id="seedTypeDesc"></p>
-            
+            <h3 class="text-xl font-serif-cn mb-2" style="color: var(--ln-color-text);">你的种子类型：<span class="ln-text-gradient" id="seedType">综合型种子</span></h3>
+            <p class="text-sm mb-4" style="color: var(--ln-color-text-secondary);" id="seedTypeDesc"></p>
+
             <div class="grid grid-cols-2 gap-3 text-left mb-4">
-              <div class="glass-light rounded-xl p-4">
-                <div class="text-purple-300 text-sm font-medium mb-2">💡 核心优势</div>
-                <div class="text-gray-300 text-sm" id="seedStrength"></div>
+              <div class="ln-card-warm rounded-xl p-4">
+                <div class="text-sm font-medium mb-2" style="color: var(--ln-color-primary);">💡 核心优势</div>
+                <div class="text-sm" style="color: var(--ln-color-text-secondary);" id="seedStrength"></div>
               </div>
-              <div class="glass-light rounded-xl p-4">
-                <div class="text-amber-300 text-sm font-medium mb-2">🌱 成长建议</div>
-                <div class="text-gray-300 text-sm" id="seedGrowth"></div>
+              <div class="ln-card-warm rounded-xl p-4">
+                <div class="text-sm font-medium mb-2" style="color: var(--ln-color-primary);">🌱 成长建议</div>
+                <div class="text-sm" style="color: var(--ln-color-text-secondary);" id="seedGrowth"></div>
               </div>
             </div>
-            
-            <div class="glass-light rounded-xl p-4 text-left">
-              <div class="text-emerald-300 text-sm font-medium mb-2">📖 名言勉励</div>
-              <div class="text-gray-300 text-sm font-serif-cn italic" id="seedBible">
+
+            <div class="ln-card-warm rounded-xl p-4 text-left">
+              <div class="text-sm font-medium mb-2" style="color: var(--ln-color-primary);">📖 名言勉励</div>
+              <div class="text-sm font-serif-cn italic" style="color: var(--ln-color-text-secondary);" id="seedBible">
                 「我晓得我所信的是谁，也深信他能保全我所交付他的，直到那日。」 — 提摩太后书 1:12
               </div>
             </div>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="saveSeedResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            <button onclick="saveSeedResult()" class="btn-primary px-8 py-3 font-medium">
               保存并继续 →
             </button>
           </div>
@@ -480,7 +603,7 @@
     <div id="page-values" class="page pt-20 pb-24">
       <div class="max-w-3xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>💎</span>
             <span>价值观探索</span>
           </div>
@@ -489,41 +612,41 @@
         </div>
         
         <div id="valuesStep1">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <p class="text-center text-gray-300 mb-4">
-              请选择你认为最重要的 <span class="text-purple-300 font-medium">8 个</span> 价值观
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <p class="text-center mb-4" style="color: var(--ln-color-text-secondary);">
+              请选择你认为最重要的 <span class="font-medium" style="color: var(--ln-color-primary);">8 个</span> 价值观
             </p>
-            <p class="text-center text-xs text-gray-500 mb-6">
-              已选 <span id="selectedValuesCount" class="text-purple-300">0</span> / 8
+            <p class="text-center text-xs mb-6" style="color: var(--ln-color-text-tertiary);">
+              已选 <span id="selectedValuesCount" style="color: var(--ln-color-primary);">0</span> / 8
             </p>
             <div class="grid grid-cols-3 md:grid-cols-4 gap-2" id="valueCards">
             </div>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="goToValueSort()" id="valueNextBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+            <button onclick="goToValueSort()" id="valueNextBtn" class="btn-primary px-8 py-3 font-medium disabled:opacity-50" disabled>
               下一步：排序 →
             </button>
           </div>
         </div>
-        
+
         <div id="valuesStep2" class="hidden">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <p class="text-center text-gray-300 mb-6">
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <p class="text-center mb-6" style="color: var(--ln-color-text-secondary);">
               请按重要性从高到低排序（拖拽调整顺序）
             </p>
             <div class="space-y-2" id="valueSortList">
             </div>
           </div>
-          
-          <div id="valueAnalysis" class="glass-light rounded-2xl p-5 mb-6 hidden">
-            <h4 class="font-serif-cn text-lg mb-3 gradient-text text-center">💎 你的核心价值观</h4>
-            <p class="text-sm text-gray-300 text-center mb-4">价值观是人生的指南针，指引你做出每一个重要决定</p>
-            <div class="text-sm text-gray-300 text-center" id="valueInsight"></div>
+
+          <div id="valueAnalysis" class="ln-card-warm rounded-2xl p-5 mb-6 hidden">
+            <h4 class="font-serif-cn text-lg mb-3 ln-text-gradient text-center">💎 你的核心价值观</h4>
+            <p class="text-sm text-center mb-4" style="color: var(--ln-color-text-secondary);">价值观是人生的指南针，指引你做出每一个重要决定</p>
+            <div class="text-sm text-center" style="color: var(--ln-color-text-secondary);" id="valueInsight"></div>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="saveValuesResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            <button onclick="saveValuesResult()" class="btn-primary px-8 py-3 font-medium">
               保存并继续 →
             </button>
           </div>
@@ -535,7 +658,7 @@
     <div id="page-journey" class="page pt-20 pb-24">
       <div class="max-w-4xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>🌈</span>
             <span>生命旅程地图</span>
           </div>
@@ -543,29 +666,29 @@
           <p class="text-gray-400 mt-2">回顾过往，那些塑造了今天的你的瞬间</p>
         </div>
         
-        <div class="glass rounded-3xl p-6 md:p-8 mb-6">
+        <div class="ln-card rounded-3xl p-6 md:p-8 mb-6">
           <div class="flex justify-between items-center mb-6 overflow-x-auto pb-2 gap-2">
-            <button class="timeline-period px-3 py-2 rounded-lg text-sm bg-amber-400/30 text-white whitespace-nowrap" data-period="childhood" onclick="switchPeriod('childhood')">
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm whitespace-nowrap" data-period="childhood" onclick="switchPeriod('childhood')" style="background: var(--ln-color-primary-lighter); color: var(--ln-color-primary-dark);">
               童年印记
             </button>
-            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="youth" onclick="switchPeriod('youth')">
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm whitespace-nowrap" data-period="youth" onclick="switchPeriod('youth')" style="color: var(--ln-color-text-tertiary);">
               青春探索
             </button>
-            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="adult" onclick="switchPeriod('adult')">
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm whitespace-nowrap" data-period="adult" onclick="switchPeriod('adult')" style="color: var(--ln-color-text-tertiary);">
               成年起步
             </button>
-            <button class="timeline-period px-3 py-2 rounded-lg text-sm text-gray-400 whitespace-nowrap" data-period="mature" onclick="switchPeriod('mature')">
+            <button class="timeline-period px-3 py-2 rounded-lg text-sm whitespace-nowrap" data-period="mature" onclick="switchPeriod('mature')" style="color: var(--ln-color-text-tertiary);">
               成熟沉淀
             </button>
           </div>
-          
+
           <div class="relative">
             <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 timeline-line transform md:-translate-x-1/2"></div>
             <div id="timelineEvents" class="space-y-6">
             </div>
-            
+
             <div class="flex justify-center mt-8">
-              <button onclick="showAddEventModal()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm flex items-center gap-2">
+              <button onclick="showAddEventModal()" class="btn-ghost px-6 py-2.5 rounded-xl text-sm flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -574,18 +697,18 @@
             </div>
           </div>
         </div>
-        
+
         <div id="lifeThemeArea" class="hidden mb-6">
-          <div class="glass-light rounded-2xl p-6 text-center">
+          <div class="ln-card-warm rounded-2xl p-6 text-center">
             <div class="text-4xl mb-4">💡</div>
-            <h3 class="text-xl font-bold text-white mb-2">我发现了你的人生主题</h3>
-            <p class="text-purple-300 text-lg font-serif-cn mb-4" id="lifeThemeText"></p>
-            <p class="text-gray-400 text-sm mb-4" id="lifeThemeDesc"></p>
+            <h3 class="text-xl font-bold mb-2" style="color: var(--ln-color-text);">我发现了你的人生主题</h3>
+            <p class="text-lg font-serif-cn mb-4" style="color: var(--ln-color-primary);" id="lifeThemeText"></p>
+            <p class="text-sm mb-4" style="color: var(--ln-color-text-secondary);" id="lifeThemeDesc"></p>
           </div>
         </div>
-        
+
         <div class="text-center">
-          <button onclick="saveJourneyResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+          <button onclick="saveJourneyResult()" class="btn-primary px-8 py-3 font-medium">
             保存并继续 →
           </button>
         </div>
@@ -594,50 +717,50 @@
     
     <!-- 添加事件弹窗 -->
     <div id="addEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
-      <div class="glass-light rounded-2xl p-6 max-w-md w-full">
-        <h3 class="text-xl font-bold text-white mb-4">添加里程碑事件</h3>
+      <div class="ln-card rounded-2xl p-6 max-w-md w-full">
+        <h3 class="text-xl font-bold mb-4" style="color: var(--ln-color-text);">添加里程碑事件</h3>
         <div class="space-y-4">
           <div>
-            <label class="text-sm text-gray-300 mb-1 block">事件名称</label>
-            <input type="text" id="eventName" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：第一次离家上大学"/>
+            <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">事件名称</label>
+            <input type="text" id="eventName" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：第一次离家上大学"/>
           </div>
           <div>
-            <label class="text-sm text-gray-300 mb-1 block">事件类型</label>
+            <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">事件类型</label>
             <div class="grid grid-cols-5 gap-2" id="eventTypeOptions">
-              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="achievement" onclick="selectEventType('achievement')">🌟</button>
-              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="challenge" onclick="selectEventType('challenge')">💪</button>
-              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="relationship" onclick="selectEventType('relationship')">💕</button>
-              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="turning" onclick="selectEventType('turning')">🎯</button>
-              <button class="event-type-btn p-3 rounded-xl bg-white/10 text-2xl hover:bg-white/20 transition-all" data-type="awakening" onclick="selectEventType('awakening')">🌱</button>
+              <button class="event-type-btn p-3 rounded-xl text-2xl transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border);" data-type="achievement" onclick="selectEventType('achievement')">🌟</button>
+              <button class="event-type-btn p-3 rounded-xl text-2xl transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border);" data-type="challenge" onclick="selectEventType('challenge')">💪</button>
+              <button class="event-type-btn p-3 rounded-xl text-2xl transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border);" data-type="relationship" onclick="selectEventType('relationship')">💕</button>
+              <button class="event-type-btn p-3 rounded-xl text-2xl transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border);" data-type="turning" onclick="selectEventType('turning')">🎯</button>
+              <button class="event-type-btn p-3 rounded-xl text-2xl transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border);" data-type="awakening" onclick="selectEventType('awakening')">🌱</button>
             </div>
           </div>
           <div>
-            <label class="text-sm text-gray-300 mb-1 block">视角认知</label>
+            <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">视角认知</label>
             <div class="grid grid-cols-2 gap-2">
-              <button class="p-3 rounded-xl bg-white/10 text-sm hover:bg-white/20 transition-all view-type-btn" data-view="field" onclick="selectEventView('field')">
+              <button class="p-3 rounded-xl text-sm transition-all view-type-btn" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-view="field" onclick="selectEventView('field')">
                 🌱 成长视角
               </button>
-              <button class="p-3 rounded-xl bg-white/10 text-sm hover:bg-white/20 transition-all view-type-btn" data-view="arena" onclick="selectEventView('arena')">
+              <button class="p-3 rounded-xl text-sm transition-all view-type-btn" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-view="arena" onclick="selectEventView('arena')">
                 ⚔️ 挑战视角
               </button>
             </div>
-            <p class="text-xs text-gray-500 mt-2">成长视角：困难是成长的机会；挑战视角：困难是对能力的考验</p>
+            <p class="text-xs mt-2" style="color: var(--ln-color-text-tertiary);">成长视角：困难是成长的机会；挑战视角：困难是对能力的考验</p>
           </div>
           <div>
-            <label class="text-sm text-gray-300 mb-1 block">情绪强度（1-10）</label>
+            <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">情绪强度（1-10）</label>
             <input type="range" id="eventEmotion" min="1" max="10" value="5" class="w-full" oninput="updateEmotionDisplay()"/>
-            <div class="text-center text-purple-300 text-sm" id="emotionDisplay">5</div>
+            <div class="text-center text-sm" style="color: var(--ln-color-primary);" id="emotionDisplay">5</div>
           </div>
           <div>
-            <label class="text-sm text-gray-300 mb-1 block">这个经历教会了你什么？</label>
-            <textarea id="eventDesc" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="从长远来看，这个困难教会了你什么？"></textarea>
+            <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">这个经历教会了你什么？</label>
+            <textarea id="eventDesc" rows="2" class="w-full px-4 py-3 rounded-xl resize-none" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="从长远来看，这个困难教会了你什么？"></textarea>
           </div>
         </div>
         <div class="flex gap-3 mt-6">
-          <button onclick="closeAddEventModal()" class="flex-1 btn-ghost py-2.5 rounded-xl text-white">
+          <button onclick="closeAddEventModal()" class="flex-1 btn-ghost py-2.5 rounded-xl">
             取消
           </button>
-          <button onclick="saveEvent()" class="flex-1 btn-primary py-2.5 rounded-xl text-white">
+          <button onclick="saveEvent()" class="flex-1 btn-primary py-2.5 rounded-xl">
             保存
           </button>
         </div>
@@ -648,7 +771,7 @@
     <div id="page-roles" class="page pt-20 pb-24">
       <div class="max-w-4xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>🧩</span>
             <span>角色探索</span>
           </div>
@@ -657,47 +780,47 @@
         </div>
         
         <div id="roleStep1">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <p class="text-center text-gray-300 mb-6">请选择你生活中最重要的 5-6 个角色</p>
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <p class="text-center mb-6" style="color: var(--ln-color-text-secondary);">请选择你生活中最重要的 5-6 个角色</p>
             <div class="grid grid-cols-2 md:grid-cols-5 gap-3" id="roleOptions">
             </div>
           </div>
           <div class="text-center">
-            <button onclick="startRoleSort()" id="startRoleSortBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+            <button onclick="startRoleSort()" id="startRoleSortBtn" class="btn-primary px-8 py-3 font-medium disabled:opacity-50" disabled>
               开始排序 →
             </button>
-            <p class="text-sm text-gray-500 mt-2" id="roleSelectHint">请选择 5-6 个角色</p>
+            <p class="text-sm mt-2" style="color: var(--ln-color-text-tertiary);" id="roleSelectHint">请选择 5-6 个角色</p>
           </div>
         </div>
-        
+
         <div id="roleStep2" class="hidden">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <p class="text-center text-gray-300 mb-6">按你目前投入的时间从多到少排序（拖拽调整）</p>
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <p class="text-center mb-6" style="color: var(--ln-color-text-secondary);">按你目前投入的时间从多到少排序（拖拽调整）</p>
             <div class="space-y-2" id="roleSortList">
             </div>
           </div>
           <div class="text-center">
-            <button onclick="showIdealRoleSort()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm">
+            <button onclick="showIdealRoleSort()" class="btn-ghost px-6 py-2.5 rounded-xl text-sm">
               下一步：理想状态 →
             </button>
           </div>
         </div>
-        
+
         <div id="roleStep3" class="hidden">
-          <div class="glass rounded-3xl p-6 mb-6">
-            <p class="text-center text-gray-300 mb-6">如果一切皆有可能，你理想中的角色投入顺序是？</p>
+          <div class="ln-card rounded-3xl p-6 mb-6">
+            <p class="text-center mb-6" style="color: var(--ln-color-text-secondary);">如果一切皆有可能，你理想中的角色投入顺序是？</p>
             <div class="space-y-2" id="roleIdealSortList">
             </div>
           </div>
-          
-          <div id="roleComparison" class="hidden glass-light rounded-2xl p-6 mb-6">
-            <h3 class="text-lg font-bold text-white text-center mb-4">现实 vs 理想 · 角色投入对比</h3>
+
+          <div id="roleComparison" class="hidden ln-card-warm rounded-2xl p-6 mb-6">
+            <h3 class="text-lg font-bold text-center mb-4" style="color: var(--ln-color-text);">现实 vs 理想 · 角色投入对比</h3>
             <div id="roleRadarChart" class="chart-container"></div>
-            <p class="text-sm text-gray-400 text-center mt-4" id="roleInsight"></p>
+            <p class="text-sm text-center mt-4" style="color: var(--ln-color-text-secondary);" id="roleInsight"></p>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="saveRolesResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            <button onclick="saveRolesResult()" class="btn-primary px-8 py-3 font-medium">
               保存并继续 →
             </button>
           </div>
@@ -709,7 +832,7 @@
     <div id="page-vision" class="page pt-20 pb-24">
       <div class="max-w-2xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>🎬</span>
             <span>愿景冥想 · 人生终局</span>
           </div>
@@ -717,109 +840,109 @@
           <p class="text-gray-400 mt-2">闭上眼睛，让我们一起进入未来</p>
         </div>
         
-        <div class="glass rounded-3xl p-6 md:p-8">
+        <div class="ln-card rounded-3xl p-6 md:p-8">
           <div id="visionScenes">
             <div class="vision-scene" data-scene="0">
               <div class="text-center mb-6">
                 <div class="text-5xl mb-4">🌅</div>
-                <h3 class="text-xl font-bold text-white mb-2">清晨醒来</h3>
-                <p class="text-gray-400 text-sm">想象现在是10年后一个普通的早晨</p>
+                <h3 class="text-xl font-bold mb-2" style="color: var(--ln-color-text);">清晨醒来</h3>
+                <p class="text-sm" style="color: var(--ln-color-text-tertiary);">想象现在是10年后一个普通的早晨</p>
               </div>
               <div class="space-y-4">
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">你是被什么唤醒的？</label>
-                  <input type="text" id="visionMorning" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阳光、鸟鸣、爱人的亲吻..."/>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">你是被什么唤醒的？</label>
+                  <input type="text" id="visionMorning" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：阳光、鸟鸣、爱人的亲吻..."/>
                 </div>
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">醒来后的第一个念头是？</label>
-                  <input type="text" id="visionThought" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：今天又是美好的一天..."/>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">醒来后的第一个念头是？</label>
+                  <input type="text" id="visionThought" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：今天又是美好的一天..."/>
                 </div>
               </div>
             </div>
-            
+
             <div class="vision-scene hidden" data-scene="1">
               <div class="text-center mb-6">
                 <div class="text-5xl mb-4">☀️</div>
-                <h3 class="text-xl font-bold text-white mb-2">白天的工作</h3>
-                <p class="text-gray-400 text-sm">你的一天是如何度过的？</p>
+                <h3 class="text-xl font-bold mb-2" style="color: var(--ln-color-text);">白天的工作</h3>
+                <p class="text-sm" style="color: var(--ln-color-text-tertiary);">你的一天是如何度过的？</p>
               </div>
               <div class="space-y-4">
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">你在做什么工作？</label>
-                  <textarea id="visionWork" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="描述你理想中的工作内容、环境、同事..."></textarea>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">你在做什么工作？</label>
+                  <textarea id="visionWork" rows="3" class="w-full px-4 py-3 rounded-xl resize-none" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="描述你理想中的工作内容、环境、同事..."></textarea>
                 </div>
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">工作中最让你感到满足的是？</label>
-                  <input type="text" id="visionJoy" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：创造价值、帮助他人、自由..."/>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">工作中最让你感到满足的是？</label>
+                  <input type="text" id="visionJoy" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：创造价值、帮助他人、自由..."/>
                 </div>
               </div>
             </div>
-            
+
             <div class="vision-scene hidden" data-scene="2">
               <div class="text-center mb-6">
                 <div class="text-5xl mb-4">🌙</div>
-                <h3 class="text-xl font-bold text-white mb-2">夜幕降临</h3>
-                <p class="text-gray-400 text-sm">你如何结束这一天？</p>
+                <h3 class="text-xl font-bold mb-2" style="color: var(--ln-color-text);">夜幕降临</h3>
+                <p class="text-sm" style="color: var(--ln-color-text-tertiary);">你如何结束这一天？</p>
               </div>
               <div class="space-y-4">
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">睡前你在做什么？</label>
-                  <input type="text" id="visionNight" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：阅读、和家人聊天、冥想..."/>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">睡前你在做什么？</label>
+                  <input type="text" id="visionNight" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：阅读、和家人聊天、冥想..."/>
                 </div>
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">睡前你最感激的是什么？</label>
-                  <input type="text" id="visionGratitude" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400" placeholder="例如：健康、爱、成长..."/>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">睡前你最感激的是什么？</label>
+                  <input type="text" id="visionGratitude" class="w-full px-4 py-3 rounded-xl" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：健康、爱、成长..."/>
                 </div>
               </div>
             </div>
-            
+
             <div class="vision-scene hidden" data-scene="3">
               <div class="text-center mb-6">
                 <div class="text-5xl mb-4">✨</div>
-                <h3 class="text-xl font-bold text-white mb-2">人生终局</h3>
-                <p class="text-gray-400 text-sm">从人生终点回望当下的选择</p>
+                <h3 class="text-xl font-bold mb-2" style="color: var(--ln-color-text);">人生终局</h3>
+                <p class="text-sm" style="color: var(--ln-color-text-tertiary);">从人生终点回望当下的选择</p>
               </div>
               <div class="space-y-4">
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">在你的葬礼上，你希望人们如何评价你？</label>
-                  <textarea id="visionEpitaph" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none" placeholder="你的墓志铭..."></textarea>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">在你的葬礼上，你希望人们如何评价你？</label>
+                  <textarea id="visionEpitaph" rows="3" class="w-full px-4 py-3 rounded-xl resize-none" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="你的墓志铭..."></textarea>
                 </div>
                 <div>
-                  <label class="text-sm text-gray-300 mb-2 block">核心情绪（选1-3个）</label>
+                  <label class="text-sm mb-2 block" style="color: var(--ln-color-text-secondary);">核心情绪（选1-3个）</label>
                   <div class="flex flex-wrap gap-2 justify-center" id="emotionOptions">
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="平静" onclick="toggleEmotion('平静', this)">😌 平静</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="喜悦" onclick="toggleEmotion('喜悦', this)">😊 喜悦</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="充实" onclick="toggleEmotion('充实', this)">💪 充实</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="自由" onclick="toggleEmotion('自由', this)">🕊️ 自由</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="被爱" onclick="toggleEmotion('被爱', this)">💗 被爱</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="成就感" onclick="toggleEmotion('成就感', this)">🏆 成就感</button>
-                    <button class="emotion-btn px-4 py-2 rounded-full bg-white/10 text-white text-sm hover:bg-amber-400/30 transition-all" data-emotion="平安" onclick="toggleEmotion('平安', this)">🕊️ 平安</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="平静" onclick="toggleEmotion('平静', this)">😌 平静</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="喜悦" onclick="toggleEmotion('喜悦', this)">😊 喜悦</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="充实" onclick="toggleEmotion('充实', this)">💪 充实</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="自由" onclick="toggleEmotion('自由', this)">🕊️ 自由</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="被爱" onclick="toggleEmotion('被爱', this)">💗 被爱</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="成就感" onclick="toggleEmotion('成就感', this)">🏆 成就感</button>
+                    <button class="emotion-btn px-4 py-2 rounded-full text-sm transition-all" style="background: var(--ln-color-surface-muted); border: 1px solid var(--ln-color-border); color: var(--ln-color-text);" data-emotion="平安" onclick="toggleEmotion('平安', this)">🕊️ 平安</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div class="flex justify-between mt-8">
-            <button id="prevSceneBtn" onclick="prevVisionScene()" class="btn-ghost px-6 py-2.5 rounded-xl text-white text-sm hidden">
+            <button id="prevSceneBtn" onclick="prevVisionScene()" class="btn-ghost px-6 py-2.5 rounded-xl text-sm hidden">
               ← 上一个
             </button>
             <div class="flex-1"></div>
-            <button id="nextSceneBtn" onclick="nextVisionScene()" class="btn-primary px-6 py-2.5 rounded-xl text-white text-sm">
+            <button id="nextSceneBtn" onclick="nextVisionScene()" class="btn-primary px-6 py-2.5 rounded-xl text-sm">
               下一个 →
             </button>
           </div>
-          
+
           <div class="flex justify-center gap-2 mt-6">
-            <div class="w-2 h-2 rounded-full bg-purple-500" data-dot="0"></div>
-            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="1"></div>
-            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="2"></div>
-            <div class="w-2 h-2 rounded-full bg-white/20" data-dot="3"></div>
+            <div class="w-2 h-2 rounded-full" style="background: var(--ln-color-primary);" data-dot="0"></div>
+            <div class="w-2 h-2 rounded-full" style="background: var(--ln-color-surface-muted);" data-dot="1"></div>
+            <div class="w-2 h-2 rounded-full" style="background: var(--ln-color-surface-muted);" data-dot="2"></div>
+            <div class="w-2 h-2 rounded-full" style="background: var(--ln-color-surface-muted);" data-dot="3"></div>
           </div>
         </div>
-        
+
         <div class="text-center mt-6">
-          <button onclick="saveVisionResult()" id="saveVisionBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium hidden">
+          <button onclick="saveVisionResult()" id="saveVisionBtn" class="btn-primary px-8 py-3 font-medium hidden">
             保存愿景 →
           </button>
         </div>
@@ -830,7 +953,7 @@
     <div id="page-dna" class="page pt-20 pb-24">
       <div class="max-w-2xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>🧬</span>
             <span>人生DNA · Being-Having-Doing</span>
           </div>
@@ -839,107 +962,107 @@
         </div>
         
         <div id="dnaStep1">
-          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+          <div class="ln-card rounded-3xl p-6 mb-6 dna-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-xl">👤</div>
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl" style="background: var(--ln-color-primary);">👤</div>
               <div>
-                <h3 class="text-lg font-serif-cn font-semibold">Being · 我是谁</h3>
-                <p class="text-xs text-gray-400">自我身份认知</p>
+                <h3 class="text-lg font-serif-cn font-semibold" style="color: var(--ln-color-text);">Being · 我是谁</h3>
+                <p class="text-xs" style="color: var(--ln-color-text-tertiary);">自我身份认知</p>
               </div>
             </div>
             <div class="space-y-3">
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我是...</label>
-                <textarea id="beingIdentity" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：终身学习者、创造者、帮助者..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我是...</label>
+                <textarea id="beingIdentity" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：终身学习者、创造者、帮助者..."></textarea>
               </div>
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的核心品格是...</label>
-                <textarea id="beingCharacter" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：真诚、勇敢、坚韧、善良..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的核心品格是...</label>
+                <textarea id="beingCharacter" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：真诚、勇敢、坚韧、善良..."></textarea>
               </div>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+
+          <div class="ln-card rounded-3xl p-6 mb-6 dna-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-xl">💎</div>
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl" style="background: var(--ln-color-primary-light);">💎</div>
               <div>
-                <h3 class="text-lg font-serif-cn font-semibold">Having · 我有甚么</h3>
-                <p class="text-xs text-gray-400">神所赐的资源与恩赐</p>
+                <h3 class="text-lg font-serif-cn font-semibold" style="color: var(--ln-color-text);">Having · 我有甚么</h3>
+                <p class="text-xs" style="color: var(--ln-color-text-tertiary);">神所赐的资源与恩赐</p>
               </div>
             </div>
             <div class="space-y-3">
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的天赋优势是...</label>
-                <textarea id="havingGifts" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：创造力、同理心、领导力、分析力..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的天赋优势是...</label>
+                <textarea id="havingGifts" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：创造力、同理心、领导力、分析力..."></textarea>
               </div>
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的经验资产是...</label>
-                <textarea id="havingExperience" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="过去的经历、学到的功课..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的经验资产是...</label>
+                <textarea id="havingExperience" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="过去的经历、学到的功课..."></textarea>
               </div>
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的人脉资源是...</label>
-                <textarea id="havingRelationships" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="良师益友、合作伙伴、人生导师..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的人脉资源是...</label>
+                <textarea id="havingRelationships" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="良师益友、合作伙伴、人生导师..."></textarea>
               </div>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6 mb-6 dna-card">
+
+          <div class="ln-card rounded-3xl p-6 mb-6 dna-card">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl">🚀</div>
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl" style="background: var(--ln-color-primary-dark);">🚀</div>
               <div>
-                <h3 class="text-lg font-serif-cn font-semibold">Doing · 我要做什么</h3>
-                <p class="text-xs text-gray-400">基于身份和资源的行动方向</p>
+                <h3 class="text-lg font-serif-cn font-semibold" style="color: var(--ln-color-text);">Doing · 我要做什么</h3>
+                <p class="text-xs" style="color: var(--ln-color-text-tertiary);">基于身份和资源的行动方向</p>
               </div>
             </div>
             <div class="space-y-3">
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的使命陈述是...</label>
-                <textarea id="doingMission" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="例如：通过____帮助____，使____得福。"></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的使命陈述是...</label>
+                <textarea id="doingMission" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="例如：通过____帮助____，使____得福。"></textarea>
               </div>
               <div>
-                <label class="text-sm text-gray-300 mb-1 block">我的第一步行动是...</label>
-                <textarea id="doingFirstStep" rows="2" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-purple-400 resize-none text-sm" placeholder="具体、可执行的第一步..."></textarea>
+                <label class="text-sm mb-1 block" style="color: var(--ln-color-text-secondary);">我的第一步行动是...</label>
+                <textarea id="doingFirstStep" rows="2" class="w-full px-4 py-3 rounded-xl resize-none text-sm" style="border: 1px solid var(--ln-color-border); background: var(--ln-color-surface); color: var(--ln-color-text);" placeholder="具体、可执行的第一步..."></textarea>
               </div>
             </div>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="generateDNA()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            <button onclick="generateDNA()" class="btn-primary px-8 py-3 font-medium">
               生成我的生命DNA →
             </button>
           </div>
         </div>
-        
+
         <div id="dnaStep2" class="hidden">
-          <div class="glass rounded-3xl p-6 mb-6 dna-card">
-            <h3 class="text-xl font-serif-cn text-center mb-6 gradient-text">我的生命DNA</h3>
-            
-            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #6366f1;">
-              <div class="text-indigo-300 text-sm font-medium mb-1">🎯 使命（方向）</div>
-              <div class="text-white" id="dnaMission"></div>
+          <div class="ln-card rounded-3xl p-6 mb-6 dna-card">
+            <h3 class="text-xl font-serif-cn text-center mb-6 ln-text-gradient">我的生命DNA</h3>
+
+            <div class="ln-card-warm rounded-xl p-4 mb-4" style="border-left: 4px solid var(--ln-color-primary);">
+              <div class="text-sm font-medium mb-1" style="color: var(--ln-color-primary);">🎯 使命（方向）</div>
+              <div style="color: var(--ln-color-text);" id="dnaMission"></div>
             </div>
-            
-            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #a855f7;">
-              <div class="text-purple-300 text-sm font-medium mb-1">🌟 愿景（梦想）</div>
-              <div class="text-white" id="dnaVision"></div>
+
+            <div class="ln-card-warm rounded-xl p-4 mb-4" style="border-left: 4px solid var(--ln-color-primary-light);">
+              <div class="text-sm font-medium mb-1" style="color: var(--ln-color-primary);">🌟 愿景（梦想）</div>
+              <div style="color: var(--ln-color-text);" id="dnaVision"></div>
             </div>
-            
-            <div class="glass-light rounded-xl p-4 mb-4" style="border-left: 4px solid #ec4899;">
-              <div class="text-pink-300 text-sm font-medium mb-1">💎 价值观（方法）</div>
+
+            <div class="ln-card-warm rounded-xl p-4 mb-4" style="border-left: 4px solid var(--ln-color-primary-lighter);">
+              <div class="text-sm font-medium mb-1" style="color: var(--ln-color-primary);">💎 价值观（方法）</div>
               <div class="flex flex-wrap gap-2" id="dnaValues">
               </div>
             </div>
-            
-            <div class="glass-light rounded-xl p-4">
-              <div class="text-amber-300 text-sm font-medium mb-1">📖 生命名言</div>
-              <div class="text-white font-serif-cn italic text-sm" id="dnaBible">
+
+            <div class="ln-card-warm rounded-xl p-4">
+              <div class="text-sm font-medium mb-1" style="color: var(--ln-color-primary);">📖 生命名言</div>
+              <div class="font-serif-cn italic text-sm" style="color: var(--ln-color-text-secondary);" id="dnaBible">
                 「我知道我所信的是谁，也深信他能保全我所交付他的，直到那日。」 — 提摩太后书 1:12
               </div>
             </div>
           </div>
-          
+
           <div class="text-center">
-            <button onclick="saveDNAResult()" class="btn-primary px-8 py-3 rounded-xl text-white font-medium">
+            <button onclick="saveDNAResult()" class="btn-primary px-8 py-3 font-medium">
               保存DNA →
             </button>
           </div>
@@ -951,7 +1074,7 @@
     <div id="page-balance" class="page pt-20 pb-24">
       <div class="max-w-3xl mx-auto px-4">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>⚖️</span>
             <span>生命平衡自评</span>
           </div>
@@ -959,11 +1082,11 @@
           <p class="text-gray-400 mt-2">请为以下七个维度打分（1-10分）</p>
         </div>
         
-        <div class="glass rounded-3xl p-6 mb-6" id="balanceRatings">
+        <div class="ln-card rounded-3xl p-6 mb-6" id="balanceRatings">
         </div>
-        
+
         <div class="text-center">
-          <button onclick="saveBalanceResult()" id="saveBalanceBtn" class="btn-primary px-8 py-3 rounded-xl text-white font-medium disabled:opacity-50" disabled>
+          <button onclick="saveBalanceResult()" id="saveBalanceBtn" class="btn-primary px-8 py-3 font-medium disabled:opacity-50" disabled>
             生成平衡报告 →
           </button>
         </div>
@@ -974,81 +1097,81 @@
     <div id="page-report" class="page pt-20 pb-24">
       <div class="max-w-3xl mx-auto px-4" id="reportContent">
         <div class="text-center mb-8">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-purple-300 mb-4">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ln-card text-sm mb-4" style="color: var(--ln-color-primary);">
             <span>📊</span>
             <span>生命导航报告</span>
           </div>
-          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn gradient-text">你的生命导航报告</h2>
+          <h2 class="text-2xl md:text-3xl font-bold font-serif-cn ln-text-gradient">你的生命导航报告</h2>
           <p class="text-gray-400 mt-2 text-sm" id="reportDate"></p>
         </div>
         
-        <div id="reportEmpty" class="glass rounded-3xl p-8 text-center">
+        <div id="reportEmpty" class="ln-card rounded-3xl p-8 text-center">
           <div class="text-5xl mb-4">📝</div>
-          <h3 class="text-xl font-serif-cn mb-2">还没有生成报告</h3>
-          <p class="text-gray-400 text-sm mb-6">完成各模块探索后，将生成你的专属生命导航报告</p>
-          <button onclick="startFullJourney()" class="btn-primary px-6 py-3 rounded-xl text-white text-sm">
+          <h3 class="text-xl font-serif-cn mb-2" style="color: var(--ln-color-text);">还没有生成报告</h3>
+          <p class="text-sm mb-6" style="color: var(--ln-color-text-tertiary);">完成各模块探索后，将生成你的专属生命导航报告</p>
+          <button onclick="startFullJourney()" class="btn-primary px-6 py-3 text-sm">
             开始探索 →
           </button>
         </div>
-        
+
         <div id="reportContentInner" class="hidden space-y-6">
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🌱 种子画像</h3>
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">🌱 种子画像</h3>
             <div id="reportSeedArea">
-              <p class="text-gray-400 text-sm">未完成种子发现评估</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未完成种子发现评估</p>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">💎 价值观光谱</h3>
+
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">💎 价值观光谱</h3>
             <div id="reportValuesArea">
-              <p class="text-gray-400 text-sm">未完成价值观探索</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未完成价值观探索</p>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">⚖️ 七维生命平衡</h3>
+
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">⚖️ 七维生命平衡</h3>
             <div id="reportBalanceArea">
-              <p class="text-gray-400 text-sm">未完成生命平衡评估</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未完成生命平衡评估</p>
               <div id="reportBalanceChart" class="chart-container hidden"></div>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🧩 角色探索</h3>
+
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">🧩 角色探索</h3>
             <div id="reportRolesArea">
-              <p class="text-gray-400 text-sm">未完成角色探索</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未完成角色探索</p>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🧬 生命DNA</h3>
+
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">🧬 生命DNA</h3>
             <div id="reportDnaArea">
-              <p class="text-gray-400 text-sm">未生成生命DNA</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未生成生命DNA</p>
             </div>
           </div>
-          
-          <div class="glass rounded-3xl p-6">
-            <h3 class="text-lg font-serif-cn font-semibold mb-4 gradient-text">🌈 生命旅程主题</h3>
+
+          <div class="ln-card rounded-3xl p-6">
+            <h3 class="text-lg font-serif-cn font-semibold mb-4 ln-text-gradient">🌈 生命旅程主题</h3>
             <div id="reportJourneyArea">
-              <p class="text-gray-400 text-sm">未记录生命旅程</p>
+              <p class="text-sm" style="color: var(--ln-color-text-tertiary);">未记录生命旅程</p>
             </div>
           </div>
-          
-          <div class="glass-light rounded-2xl p-6 text-center">
-            <div class="text-purple-300 text-sm mb-2">💫 生命勉励</div>
-            <p class="text-white font-serif-cn text-lg italic" id="reportEncouragement">
+
+          <div class="ln-card-warm rounded-2xl p-6 text-center">
+            <div class="text-sm mb-2" style="color: var(--ln-color-primary);">💫 生命勉励</div>
+            <p class="font-serif-cn text-lg italic" style="color: var(--ln-color-text);" id="reportEncouragement">
               「认识你自己」
             </p>
-            <p class="text-gray-400 text-sm mt-2">— 苏格拉底</p>
+            <p class="text-sm mt-2" style="color: var(--ln-color-text-tertiary);">— 苏格拉底</p>
           </div>
         </div>
-        
+
         <div id="reportActions" class="hidden mt-8 flex gap-3 justify-center flex-wrap">
-          <button onclick="exportPDF()" class="btn-primary px-6 py-3 rounded-xl text-white text-sm flex items-center gap-2">
+          <button onclick="exportPDF()" class="btn-primary px-6 py-3 text-sm flex items-center gap-2">
             <span>📄</span> 导出PDF
           </button>
-          <button onclick="goHome()" class="btn-ghost px-6 py-3 rounded-xl text-white text-sm">
+          <button onclick="goHome()" class="btn-ghost px-6 py-3 text-sm">
             返回首页
           </button>
         </div>
@@ -1056,7 +1179,7 @@
     </div>
     
     <!-- ========== 底部导航 ========== -->
-    <div id="bottomNav" class="bottom-nav glass border-t border-white/10 hidden">
+    <div id="bottomNav" class="bottom-nav hidden">
       <div class="max-w-md mx-auto flex justify-around py-2 px-4">
         <button class="nav-item flex flex-col items-center gap-1 px-3 py-1 active" onclick="goHome()">
           <span class="nav-icon text-xl">🏠</span>
@@ -1407,7 +1530,7 @@
       document.getElementById('seedQuestionText').textContent = q.q;
       
       const optionsHtml = q.options.map((opt, i) => `
-        <div class="option-card glass-light rounded-xl p-4 ${seedAnswers[currentSeedDim][seedCurrentQIndex] === i ? 'selected' : ''}" 
+        <div class="option-card ln-card-warm rounded-xl p-4 ${seedAnswers[currentSeedDim][seedCurrentQIndex] === i ? 'selected' : ''}"
              onclick="selectSeedOption(${i})">
           ${opt.text}
         </div>
@@ -1489,7 +1612,7 @@
         const statusEl = document.getElementById('dim-' + dim + '-status');
         if (seedScores[dim] > 0) {
           statusEl.textContent = seedScores[dim] + '分';
-          statusEl.style.color = '#86efac';
+          statusEl.style.color = 'var(--ln-color-primary)';
         }
       });
     }
@@ -1661,10 +1784,10 @@
       
       const container = document.getElementById('valueCards');
       container.innerHTML = valueList.map((v, i) => `
-        <div class="option-card glass rounded-xl p-3 text-center text-sm ${selectedValues.includes(i) ? 'selected' : ''}" 
+        <div class="option-card rounded-xl p-3 text-center text-sm ${selectedValues.includes(i) ? 'selected' : ''}"
              onclick="toggleValue(${i})">
           <div class="text-xl mb-1">${v.emoji}</div>
-          <div>${v.name}</div>
+          <div style="color: var(--ln-color-text);">${v.name}</div>
         </div>
       `).join('');
       
@@ -1701,18 +1824,18 @@
       container.innerHTML = sortedValues.map((valIdx, i) => {
         const v = valueList[valIdx];
         return `
-          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3" 
-               draggable="true" 
+          <div class="draggable-item rounded-xl p-4 flex items-center gap-3"
+               draggable="true"
                ondragstart="handleDragStart(event, ${i})"
                ondragover="handleDragOverSort(event)"
                ondrop="handleDropSort(event, ${i})"
                ondragend="handleDragEnd(event)">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--ln-color-primary); color: var(--ln-color-text-on-primary);">
               ${i + 1}
             </div>
             <div class="text-xl">${v.emoji}</div>
-            <div class="flex-1">${v.name}</div>
-            <span class="text-xs px-2 py-1 rounded-full ${v.category === 'high' ? 'value-tag-heaven' : 'value-tag-world'}">
+            <div class="flex-1" style="color: var(--ln-color-text);">${v.name}</div>
+            <span class="text-xs px-2 py-1 rounded-full ${v.category === 'high' ? 'ln-tag-primary' : 'ln-tag-secondary'}">
               ${v.category === 'high' ? '高层' : '中层'}
             </span>
           </div>
@@ -1821,19 +1944,19 @@
         const isLeft = i % 2 === 0;
         const typeEmojis = { achievement: '🌟', challenge: '💪', relationship: '💕', turning: '🎯', awakening: '🌱' };
         const viewText = event.view === 'field' ? '训练场视角' : event.view === 'arena' ? '决斗场视角' : '';
-        
+
         return `
           <div class="relative pl-12 md:pl-0 ${isLeft ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'}">
-            <div class="absolute left-2 md:left-1/2 top-4 w-4 h-4 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 transform md:-translate-x-1/2 border-2 border-white/20 z-10">
+            <div class="absolute left-2 md:left-1/2 top-4 w-4 h-4 rounded-full transform md:-translate-x-1/2 border-2 z-10" style="background: var(--ln-color-primary); border-color: var(--ln-color-border);">
             </div>
-            <div class="glass-light rounded-xl p-4 ${isLeft ? 'md:mr-8' : 'md:ml-8'}">
+            <div class="ln-card-warm rounded-xl p-4 ${isLeft ? 'md:mr-8' : 'md:ml-8'}">
               <div class="flex items-center gap-2 mb-2 ${isLeft ? 'md:justify-end' : ''}">
                 <span class="text-xl">${typeEmojis[event.type] || '📌'}</span>
-                <span class="font-medium">${event.name}</span>
+                <span class="font-medium" style="color: var(--ln-color-text);">${event.name}</span>
               </div>
-              ${event.view ? `<div class="text-xs text-purple-300 mb-2">${viewText}</div>` : ''}
-              ${event.desc ? `<p class="text-sm text-gray-400">${event.desc}</p>` : ''}
-              <div class="text-xs text-gray-500 mt-2">情绪强度: ${'❤️'.repeat(event.emotion)}</div>
+              ${event.view ? `<div class="text-xs mb-2" style="color: var(--ln-color-primary);">${viewText}</div>` : ''}
+              ${event.desc ? `<p class="text-sm" style="color: var(--ln-color-text-secondary);">${event.desc}</p>` : ''}
+              <div class="text-xs mt-2" style="color: var(--ln-color-text-tertiary);">情绪强度: ${'❤️'.repeat(event.emotion)}</div>
             </div>
           </div>
         `;
@@ -1848,9 +1971,8 @@
       currentPeriod = period;
       document.querySelectorAll('.timeline-period').forEach(btn => {
         const isActive = btn.dataset.period === period;
-        btn.classList.toggle('bg-amber-400/30', isActive);
-        btn.classList.toggle('text-white', isActive);
-        btn.classList.toggle('text-gray-400', !isActive);
+        btn.style.background = isActive ? 'var(--ln-color-primary-lighter)' : 'var(--ln-color-surface-muted)';
+        btn.style.color = isActive ? 'var(--ln-color-primary-dark)' : 'var(--ln-color-text-tertiary)';
       });
       renderTimeline();
     }
@@ -1877,18 +1999,28 @@
     function selectEventType(type) {
       currentEventType = type;
       document.querySelectorAll('.event-type-btn').forEach(btn => {
-        btn.classList.toggle('bg-purple-500/40', btn.dataset.type === type);
-        btn.classList.toggle('border-2', btn.dataset.type === type);
-        btn.classList.toggle('border-purple-400', btn.dataset.type === type);
+        if (btn.dataset.type === type) {
+          btn.style.background = 'var(--ln-color-primary-lightest)';
+          btn.style.borderColor = 'var(--ln-color-primary)';
+        } else {
+          btn.style.background = 'var(--ln-color-surface-muted)';
+          btn.style.borderColor = 'var(--ln-color-border)';
+        }
       });
     }
-    
+
     function selectEventView(view) {
       currentEventView = view;
       document.querySelectorAll('.view-type-btn').forEach(btn => {
-        btn.classList.toggle('bg-purple-500/40', btn.dataset.view === view);
-        btn.classList.toggle('border-2', btn.dataset.view === view);
-        btn.classList.toggle('border-purple-400', btn.dataset.view === view);
+        if (btn.dataset.view === view) {
+          btn.style.background = 'var(--ln-color-primary-lightest)';
+          btn.style.borderColor = 'var(--ln-color-primary)';
+          btn.style.color = 'var(--ln-color-primary)';
+        } else {
+          btn.style.background = 'var(--ln-color-surface-muted)';
+          btn.style.borderColor = 'var(--ln-color-border)';
+          btn.style.color = 'var(--ln-color-text-secondary)';
+        }
       });
     }
     
@@ -1986,10 +2118,10 @@
       
       const container = document.getElementById('roleOptions');
       container.innerHTML = roleList.map((role, i) => `
-        <div class="option-card glass rounded-xl p-4 text-center ${selectedRoles.includes(i) ? 'selected' : ''}"
+        <div class="option-card rounded-xl p-4 text-center ${selectedRoles.includes(i) ? 'selected' : ''}"
              onclick="toggleRole(${i})">
           <div class="text-3xl mb-2">${role.emoji}</div>
-          <div class="text-sm">${role.name}</div>
+          <div class="text-sm" style="color: var(--ln-color-text);">${role.name}</div>
         </div>
       `).join('');
       
@@ -2034,18 +2166,18 @@
       container.innerHTML = actualRoles.map((roleIdx, i) => {
         const role = roleList[roleIdx];
         return `
-          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3"
+          <div class="draggable-item rounded-xl p-4 flex items-center gap-3"
                draggable="true"
                ondragstart="handleRoleDragStart(event, ${i}, 'actual')"
                ondragover="handleRoleDragOver(event)"
                ondrop="handleRoleDrop(event, ${i}, 'actual')"
                ondragend="handleRoleDragEnd(event)">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--ln-color-primary); color: var(--ln-color-text-on-primary);">
               ${i + 1}
             </div>
             <div class="text-2xl">${role.emoji}</div>
-            <div class="flex-1">${role.name}</div>
-            <div class="text-gray-400 text-xs">≡</div>
+            <div class="flex-1" style="color: var(--ln-color-text);">${role.name}</div>
+            <div class="text-xs" style="color: var(--ln-color-text-tertiary);">≡</div>
           </div>
         `;
       }).join('');
@@ -2067,18 +2199,18 @@
       container.innerHTML = idealRoles.map((roleIdx, i) => {
         const role = roleList[roleIdx];
         return `
-          <div class="draggable-item glass-light rounded-xl p-4 flex items-center gap-3"
+          <div class="draggable-item rounded-xl p-4 flex items-center gap-3"
                draggable="true"
                ondragstart="handleRoleDragStart(event, ${i}, 'ideal')"
                ondragover="handleRoleDragOver(event)"
                ondrop="handleRoleDrop(event, ${i}, 'ideal')"
                ondragend="handleRoleDragEnd(event)">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-sm font-bold">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style="background: var(--ln-color-primary-light); color: var(--ln-color-text-on-primary);">
               ${i + 1}
             </div>
             <div class="text-2xl">${role.emoji}</div>
-            <div class="flex-1">${role.name}</div>
-            <div class="text-gray-400 text-xs">≡</div>
+            <div class="flex-1" style="color: var(--ln-color-text);">${role.name}</div>
+            <div class="text-xs" style="color: var(--ln-color-text-tertiary);">≡</div>
           </div>
         `;
       }).join('');
@@ -2286,17 +2418,16 @@
       document.querySelectorAll('.vision-scene').forEach((scene, i) => {
         scene.classList.toggle('hidden', i !== currentVisionScene);
       });
-      
+
       document.querySelectorAll('[data-dot]').forEach((dot, i) => {
-        dot.classList.toggle('bg-purple-500', i <= currentVisionScene);
-        dot.classList.toggle('bg-white/20', i > currentVisionScene);
+        dot.style.background = i <= currentVisionScene ? 'var(--ln-color-primary)' : 'var(--ln-color-surface-muted)';
       });
-      
+
       document.getElementById('prevSceneBtn').classList.toggle('hidden', currentVisionScene === 0);
       document.getElementById('nextSceneBtn').textContent = currentVisionScene === 3 ? '完成 →' : '下一个 →';
-      
+
       updateProgress('愿景冥想', Math.round((currentVisionScene / 3) * 100));
-      
+
       if (currentVisionScene === 3) {
         document.getElementById('saveVisionBtn').classList.remove('hidden');
       }
@@ -2306,10 +2437,12 @@
       const idx = selectedEmotions.indexOf(emotion);
       if (idx > -1) {
         selectedEmotions.splice(idx, 1);
-        btn.classList.remove('bg-purple-500/50', 'border-purple-400');
+        btn.style.background = 'var(--ln-color-surface-muted)';
+        btn.style.borderColor = 'var(--ln-color-border)';
       } else if (selectedEmotions.length < 3) {
         selectedEmotions.push(emotion);
-        btn.classList.add('bg-purple-500/50');
+        btn.style.background = 'var(--ln-color-primary-lightest)';
+        btn.style.borderColor = 'var(--ln-color-primary)';
       }
     }
     
@@ -2456,13 +2589,13 @@
           <div class="flex items-center justify-between mb-2">
             <div class="flex items-center gap-2">
               <span class="text-xl">${dim.emoji}</span>
-              <span class="text-sm font-medium ${dim.special ? 'text-purple-300' : 'text-white'}">${dim.name}</span>
+              <span class="text-sm font-medium" style="color: var(--ln-color-text);">${dim.name}</span>
             </div>
-            <span class="text-sm text-gray-400">${dim.desc}</span>
+            <span class="text-sm" style="color: var(--ln-color-text-tertiary);">${dim.desc}</span>
           </div>
           <div class="flex gap-1 justify-center" data-dimension="${dim.key}">
             ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-              <div class="rating-btn w-8 h-8 md:w-9 md:h-9 rounded-lg border border-white/20 flex items-center justify-center text-xs font-medium ${balanceScores[dim.key] === n ? 'selected' : ''}"
+              <div class="rating-btn w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center text-xs font-medium ${balanceScores[dim.key] === n ? 'selected' : ''}"
                    onclick="setBalanceScore('${dim.key}', ${n})">
                 ${n}
               </div>
@@ -2519,12 +2652,12 @@
       if (data.seed) {
         document.getElementById('reportSeedArea').innerHTML = `
           <div class="flex items-center gap-4 mb-4">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-pink-500 flex items-center justify-center text-3xl glow-purple">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background: var(--ln-color-primary);">
               🌱
             </div>
             <div>
-              <div class="text-lg font-serif-cn font-semibold">${data.seed.type}</div>
-              <div class="text-sm text-gray-400">热情 ${data.seed.scores.passion}分 · 天赋 ${data.seed.scores.talent}分 · 社会需求 ${data.seed.scores.need}分 · 价值实现 ${data.seed.scores.value}分</div>
+              <div class="text-lg font-serif-cn font-semibold" style="color: var(--ln-color-text);">${data.seed.type}</div>
+              <div class="text-sm" style="color: var(--ln-color-text-secondary);">热情 ${data.seed.scores.passion}分 · 天赋 ${data.seed.scores.talent}分 · 社会需求 ${data.seed.scores.need}分 · 价值实现 ${data.seed.scores.value}分</div>
             </div>
           </div>
           <div id="reportSeedChart" class="chart-container"></div>
@@ -2572,18 +2705,18 @@
         document.getElementById('reportValuesArea').innerHTML = `
           <div class="flex flex-wrap gap-2 mb-4">
             ${topValues.map(v => `
-              <span class="px-3 py-1.5 rounded-full text-sm ${v.category === 'high' ? 'value-tag-heaven' : 'value-tag-world'}">
+              <span class="px-3 py-1.5 rounded-full text-sm ${v.category === 'high' ? 'ln-tag-primary' : 'ln-tag-secondary'}">
                 ${v.emoji} ${v.name}
               </span>
             `).join('')}
           </div>
           <div class="flex gap-4 text-sm">
-            <span class="text-purple-300">高层价值: ${highCount}个</span>
-            <span class="text-amber-300">中层价值: ${midCount}个</span>
+            <span style="color: var(--ln-color-primary);">高层价值: ${highCount}个</span>
+            <span style="color: var(--ln-color-text-secondary);">中层价值: ${midCount}个</span>
           </div>
         `;
       }
-      
+
       if (data.balance) {
         document.getElementById('reportBalanceArea').innerHTML = '';
         document.getElementById('reportBalanceChart').classList.remove('hidden');
@@ -2622,31 +2755,31 @@
         document.getElementById('reportRolesArea').innerHTML = `
           <div class="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <div class="text-gray-400 mb-2">现实排序前4</div>
+              <div class="mb-2" style="color: var(--ln-color-text-tertiary);">现实排序前4</div>
               <div class="space-y-1">
-                ${actualNames.map((n, i) => `<div class="text-amber-300">${i+1}. ${n}</div>`).join('')}
+                ${actualNames.map((n, i) => `<div style="color: var(--ln-color-primary);">${i+1}. ${n}</div>`).join('')}
               </div>
             </div>
             <div>
-              <div class="text-gray-400 mb-2">理想排序前4</div>
+              <div class="mb-2" style="color: var(--ln-color-text-tertiary);">理想排序前4</div>
               <div class="space-y-1">
-                ${idealNames.map((n, i) => `<div class="text-purple-300">${i+1}. ${n}</div>`).join('')}
+                ${idealNames.map((n, i) => `<div style="color: var(--ln-color-primary);">${i+1}. ${n}</div>`).join('')}
               </div>
             </div>
           </div>
         `;
       }
-      
+
       if (data.dna) {
         document.getElementById('reportDnaArea').innerHTML = `
           <div class="space-y-3">
-            <div class="glass-light rounded-xl p-3" style="border-left: 3px solid #6366f1;">
-              <div class="text-indigo-300 text-xs font-medium mb-1">🎯 使命</div>
-              <div class="text-sm">${data.dna.mission || '正在探索中...'}</div>
+            <div class="ln-card-warm rounded-xl p-3" style="border-left: 3px solid var(--ln-color-primary);">
+              <div class="text-xs font-medium mb-1" style="color: var(--ln-color-primary);">🎯 使命</div>
+              <div class="text-sm" style="color: var(--ln-color-text);">${data.dna.mission || '正在探索中...'}</div>
             </div>
-            <div class="glass-light rounded-xl p-3" style="border-left: 3px solid #a855f7;">
-              <div class="text-purple-300 text-xs font-medium mb-1">🌟 愿景</div>
-              <div class="text-sm">${data.dna.vision || '正在描绘中...'}</div>
+            <div class="ln-card-warm rounded-xl p-3" style="border-left: 3px solid var(--ln-color-primary-light);">
+              <div class="text-xs font-medium mb-1" style="color: var(--ln-color-primary);">🌟 愿景</div>
+              <div class="text-sm" style="color: var(--ln-color-text);">${data.dna.vision || '正在描绘中...'}</div>
             </div>
           </div>
         `;
@@ -2666,13 +2799,13 @@
           awakening: '觉醒型'
         };
         const mainTheme = sorted[0] ? themes[sorted[0][0]] || '独特型' : '正在书写中';
-        
+
         document.getElementById('reportJourneyArea').innerHTML = `
           <div class="flex items-center gap-4">
             <div class="text-4xl">🌈</div>
             <div>
-              <div class="font-medium mb-1">人生主题：${mainTheme}</div>
-              <div class="text-sm text-gray-400">已记录 ${data.journey.length} 个里程碑事件</div>
+              <div class="font-medium mb-1" style="color: var(--ln-color-text);">人生主题：${mainTheme}</div>
+              <div class="text-sm" style="color: var(--ln-color-text-secondary);">已记录 ${data.journey.length} 个里程碑事件</div>
             </div>
           </div>
         `;

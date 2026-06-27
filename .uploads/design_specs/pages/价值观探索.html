@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价值观探索</title>
+    <style id="theme-vars">
+/* ===== Life Navigator — Warm Healing Design System ===== */
+/* Brand prefix: ln */
+
+:root {
+  /* ── Primary: Warm Amber/Gold ── */
+  --ln-color-primary: #C8860E;
+  --ln-color-primary-light: #E5A830;
+  --ln-color-primary-lighter: #F5DFA0;
+  --ln-color-primary-lightest: #FFF8EB;
+  --ln-color-primary-dark: #A06C08;
+  --ln-color-primary-darker: #7A5206;
+
+  /* ── Neutral Palette ── */
+  --ln-color-bg: #FFFBF5;
+  --ln-color-bg-warm: #FFF6E9;
+  --ln-color-surface: #FFFFFF;
+  --ln-color-surface-elevated: #FFFFFF;
+  --ln-color-surface-muted: #F9F3EA;
+  --ln-color-border: #E8DFD0;
+  --ln-color-border-light: #F0E9DD;
+
+  /* ── Text ── */
+  --ln-color-text: #2D2A24;
+  --ln-color-text-secondary: #6B6456;
+  --ln-color-text-tertiary: #9E9586;
+  --ln-color-text-inverse: #FFFFFF;
+  --ln-color-text-on-primary: #FFFFFF;
+
+  /* ── State Colors ── */
+  --state-success: #3D8B5E;
+  --state-warning: #D4952B;
+  --state-error: #C45A4D;
+  --state-info: #5B7FA5;
+
+  /* ── Typography ── */
+  --ln-font-display: 'Noto Serif SC', 'Georgia', serif;
+  --ln-font-body: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ln-font-size-xs: 0.75rem;
+  --ln-font-size-sm: 0.875rem;
+  --ln-font-size-base: 1rem;
+  --ln-font-size-lg: 1.125rem;
+  --ln-font-size-xl: 1.25rem;
+  --ln-font-size-2xl: 1.5rem;
+  --ln-font-size-3xl: 1.875rem;
+  --ln-font-size-4xl: 2.25rem;
+
+  --ln-font-weight-normal: 400;
+  --ln-font-weight-medium: 500;
+  --ln-font-weight-semibold: 600;
+  --ln-font-weight-bold: 700;
+
+  --ln-line-height-tight: 1.3;
+  --ln-line-height-normal: 1.6;
+  --ln-line-height-relaxed: 1.8;
+
+  /* ── Spacing ── */
+  --ln-space-xs: 4px;
+  --ln-space-sm: 8px;
+  --ln-space-md: 16px;
+  --ln-space-lg: 24px;
+  --ln-space-xl: 32px;
+  --ln-space-2xl: 48px;
+  --ln-space-3xl: 64px;
+
+  /* ── Shape ── */
+  --ln-radius-sm: 6px;
+  --ln-radius-md: 10px;
+  --ln-radius-lg: 14px;
+  --ln-radius-xl: 16px;
+  --ln-radius-full: 9999px;
+
+  /* ── Surface & Depth ── */
+  --ln-shadow-sm: 0 1px 3px rgba(45, 42, 36, 0.04);
+  --ln-shadow-md: 0 2px 8px rgba(45, 42, 36, 0.05);
+  --ln-shadow-lg: 0 8px 24px rgba(45, 42, 36, 0.05);
+  --ln-shadow-float: 0 12px 40px rgba(45, 42, 36, 0.12);
+
+  /* ── Transition ── */
+  --ln-transition-fast: 150ms ease;
+  --ln-transition-normal: 250ms ease;
+  --ln-transition-slow: 400ms ease;
+}
+
+/* ── Typography Classes ── */
+.ln-h1 {
+  font-family: var(--ln-font-display);
+  font-size: var(--ln-font-size-4xl);
+  font-weight: var(--ln-font-weight-bold);
+  line-height: var(--ln-line-height-tight);
+  color: var(--ln-color-text);
+}
+
+.ln-h2 {
+  font-family: var(--ln-font-display);
+  font-size: var(--ln-font-size-3xl);
+  font-weight: var(--ln-font-weight-bold);
+  line-height: var(--ln-line-height-tight);
+  color: var(--ln-color-text);
+}
+
+.ln-h3 {
+  font-family: var(--ln-font-display);
+  font-size: var(--ln-font-size-2xl);
+  font-weight: var(--ln-font-weight-semibold);
+  line-height: var(--ln-line-height-normal);
+  color: var(--ln-color-text);
+}
+
+.ln-h4 {
+  font-family: var(--ln-font-body);
+  font-size: var(--ln-font-size-xl);
+  font-weight: var(--ln-font-weight-semibold);
+  line-height: var(--ln-line-height-normal);
+  color: var(--ln-color-text);
+}
+
+.ln-body {
+  font-family: var(--ln-font-body);
+  font-size: var(--ln-font-size-base);
+  font-weight: var(--ln-font-weight-normal);
+  line-height: var(--ln-line-height-relaxed);
+  color: var(--ln-color-text-secondary);
+}
+
+.ln-caption {
+  font-family: var(--ln-font-body);
+  font-size: var(--ln-font-size-sm);
+  font-weight: var(--ln-font-weight-normal);
+  line-height: var(--ln-line-height-normal);
+  color: var(--ln-color-text-tertiary);
+}
+
+.ln-label {
+  font-family: var(--ln-font-body);
+  font-size: var(--ln-font-size-xs);
+  font-weight: var(--ln-font-weight-medium);
+  line-height: var(--ln-line-height-normal);
+  color: var(--ln-color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--ln-color-primary);
+    --color-primary-light: var(--ln-color-primary-light);
+    --color-primary-lighter: var(--ln-color-primary-lighter);
+    --color-primary-lightest: var(--ln-color-primary-lightest);
+    --color-primary-dark: var(--ln-color-primary-dark);
+    --color-surface: var(--ln-color-surface);
+    --color-border: var(--ln-color-border);
+    --color-border-light: var(--ln-color-border-light);
+    --color-bg: var(--ln-color-bg);
+    --color-bg-warm: var(--ln-color-bg-warm);
+    --color-surface-muted: var(--ln-color-surface-muted);
+    --color-text: var(--ln-color-text);
+    --color-text-secondary: var(--ln-color-text-secondary);
+    --color-text-tertiary: var(--ln-color-text-tertiary);
+    --color-text-inverse: var(--ln-color-text-inverse);
+    --color-text-on-primary: var(--ln-color-text-on-primary);
+    --radius-sm: var(--ln-radius-sm);
+    --radius-md: var(--ln-radius-md);
+    --radius-lg: var(--ln-radius-lg);
+    --radius-xl: var(--ln-radius-xl);
+  }
+  @layer base {
+    body { background: var(--ln-color-bg); color: var(--ln-color-text); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="min-h-screen pb-24" style="background: var(--ln-color-bg);">
+      <!-- Top Progress Bar -->
+      <header class="sticky top-0 z-30 bg-[var(--ln-color-bg)]/95 backdrop-blur-sm">
+        <div class="h-1 w-full" style="background: linear-gradient(90deg, var(--ln-color-primary) 30%, var(--ln-color-primary-lighter) 100%);"></div>
+        <div class="flex items-center px-4 py-3">
+          <button class="inline-flex h-8 w-8 items-center justify-center rounded-lg" style="color: var(--ln-color-text-secondary);" aria-label="返回">
+            <i data-lucide="chevron-left" class="h-5 w-5"></i>
+          </button>
+          <span class="ml-3 text-sm font-medium" style="color: var(--ln-color-text-secondary);">价值观探索</span>
+        </div>
+      </header>
+
+      <!-- Page Header -->
+      <section class="px-5 pt-6 pb-2 text-center">
+        <h1 class="text-2xl font-semibold" style="font-family: var(--ln-font-display); color: var(--ln-color-text); text-wrap: balance; word-break: keep-all;">生命价值观卡牌</h1>
+        <p class="mt-2 text-sm" style="font-family: var(--ln-font-body); color: var(--ln-color-text-tertiary);">选择你生命中最重要的价值观</p>
+      </section>
+
+      <!-- Step Indicator -->
+      <section class="px-5 pt-4 pb-2">
+        <div class="flex items-center justify-between rounded-xl px-4 py-3" style="background: var(--ln-color-surface-muted);">
+          <span class="text-sm font-medium" style="color: var(--ln-color-text-secondary);">第一步：选择 8 个价值观</span>
+          <span class="text-sm font-semibold" style="color: var(--ln-color-primary);">已选 3/8</span>
+        </div>
+      </section>
+
+      <!-- Value Cards Grid -->
+      <section class="px-5 pt-5 pb-6">
+        <div class="grid grid-cols-3 gap-3">
+
+          <!-- Selected Cards -->
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-medium whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-primary-lightest); border: 1.5px solid var(--ln-color-primary); color: var(--ln-color-primary-dark);" data-dom-id="value-card-family">
+            家庭
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-medium whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-primary-lightest); border: 1.5px solid var(--ln-color-primary); color: var(--ln-color-primary-dark);" data-dom-id="value-card-freedom">
+            自由
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-medium whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-primary-lightest); border: 1.5px solid var(--ln-color-primary); color: var(--ln-color-primary-dark);" data-dom-id="value-card-health">
+            健康
+          </button>
+
+          <!-- Unselected Cards -->
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-create">
+            创造
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-growth">
+            成长
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-honest">
+            诚实
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-kindness">
+            善良
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-wisdom">
+            智慧
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-courage">
+            勇气
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-peace">
+            平安
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-love">
+            爱
+          </button>
+
+          <button class="flex items-center justify-center rounded-xl px-3 py-4 text-sm font-normal whitespace-nowrap transition-colors duration-150" style="background: var(--ln-color-surface); border: 1.5px solid var(--ln-color-border); color: var(--ln-color-text-secondary);" data-dom-id="value-card-justice">
+            公正
+          </button>
+
+        </div>
+      </section>
+
+      <!-- Action Button (disabled state) -->
+      <section class="px-5 pt-2 pb-6">
+        <button disabled class="flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold whitespace-nowrap opacity-50 cursor-not-allowed" style="background: var(--ln-color-text-tertiary); color: var(--ln-color-surface);" data-dom-id="cta-next-sort">
+          下一步：排序
+        </button>
+      </section>
+
+      <!-- Spacer for Bottom Tab Bar -->
+      <div class="h-20"></div>
+
+    </main>
+
+    <!-- Bottom Tab Bar -->
+    <nav class="fixed bottom-0 inset-x-0 z-30 border-t" style="background: var(--ln-color-surface); border-color: var(--ln-color-border);" aria-label="主导航">
+      <div class="flex items-center justify-around h-16 max-w-md mx-auto px-2" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+
+        <a href="home.html" class="flex flex-col items-center gap-0.5 min-w-0" data-dom-id="tab-home" style="color: var(--ln-color-text-tertiary);">
+          <span class="text-lg leading-none">&#x1F3E0;</span>
+          <span class="text-xs" style="color: var(--ln-color-text-tertiary);">首页</span>
+        </a>
+
+        <a href="seed.html" class="flex flex-col items-center gap-0.5 min-w-0" data-dom-id="tab-seed" style="color: var(--ln-color-text-tertiary);">
+          <span class="text-lg leading-none">&#x1F331;</span>
+          <span class="text-xs" style="color: var(--ln-color-text-tertiary);">种子</span>
+        </a>
+
+        <a href="values.html" class="flex flex-col items-center gap-0.5 min-w-0" data-dom-id="tab-dna" aria-current="page" style="color: var(--ln-color-primary);">
+          <span class="text-lg leading-none">&#x1F9EC;</span>
+          <span class="text-xs font-medium" style="color: var(--ln-color-primary);">DNA</span>
+        </a>
+
+        <a href="report.html" class="flex flex-col items-center gap-0.5 min-w-0" data-dom-id="tab-report" style="color: var(--ln-color-text-tertiary);">
+          <span class="text-lg leading-none">&#x1F4CA;</span>
+          <span class="text-xs" style="color: var(--ln-color-text-tertiary);">报告</span>
+        </a>
+
+      </div>
+    </nav>
+    <style>
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+    </style>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
