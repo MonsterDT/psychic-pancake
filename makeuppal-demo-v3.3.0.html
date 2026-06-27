@@ -5728,11 +5728,16 @@ body {
 .waterfall-card:active { transform: scale(0.97); }
 .waterfall-card-img {
   width: 100%;
+  height: 200px;
   background: var(--color-bg-alt);
   position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 .waterfall-card-img img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 .waterfall-badge {
@@ -8045,7 +8050,7 @@ body {
     </div>
     <div class="waterfall-grid">
       <div class="waterfall-card" onclick="openTemplateDetail('t2')">
-        <div class="waterfall-card-img" style="height: 180px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E7%B2%BE%E8%87%B4%E6%99%9A%E5%AE%B4%E5%A6%86%E5%AE%B9%EF%BC%8C%E9%AB%98%E7%BA%A7%E6%84%9F%EF%BC%8C%E4%BC%98%E9%9B%85%E5%A4%A7%E6%B0%94%EF%BC%8C%E5%AF%8C%E5%AE%B6%E5%8D%83%E9%87%91%E9%A3%8E%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="晚宴精致妆容">
           <span class="waterfall-badge l2">L2 精选</span>
         </div>
@@ -8061,7 +8066,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t3')">
-        <div class="waterfall-card-img" style="height: 220px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E6%97%A5%E5%B8%B8%E9%80%9A%E5%8B%A4%E5%A6%86%E5%AE%B9%EF%BC%8C%E6%B8%85%E6%96%B0%E8%87%AA%E7%84%B6%EF%BC%8C%E4%BC%AA%E7%B4%A0%E9%A2%9C%EF%BC%8C%E8%81%8C%E5%9C%BA%E6%B0%94%E8%B4%A8%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="日常清新裸妆">
           <span class="waterfall-badge free">免费</span>
         </div>
@@ -8077,7 +8082,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t4')">
-        <div class="waterfall-card-img" style="height: 200px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E4%B8%AD%E5%9B%BD%E9%A3%8E%E5%8F%A4%E5%85%B8%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%85%B8%E9%9B%85%E4%B8%9C%E6%96%B9%E6%B0%94%E8%B4%A8%EF%BC%8C%E6%B1%89%E6%9C%8D%E5%94%90%E8%A3%85%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="国风唐妆">
           <span class="waterfall-badge gufeng">国风</span>
         </div>
@@ -8093,7 +8098,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t5')">
-        <div class="waterfall-card-img" style="height: 160px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E5%A4%8D%E5%8F%A4%E6%B8%AF%E9%A3%8E%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%A4%A7%E7%BA%A2%E5%94%87%EF%BC%8C%E6%B5%93%E7%9C%89%EF%BC%8C90%E5%B9%B4%E4%BB%A3%E6%84%9F%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="通勤大地色">
           <span class="waterfall-badge l3">L3 大师</span>
         </div>
@@ -8109,7 +8114,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t6')">
-        <div class="waterfall-card-img" style="height: 210px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E9%9D%A2%E9%83%A8%E7%89%B9%E5%86%99%E8%82%96%E5%83%8F%E7%85%A7%EF%BC%8C%E7%94%9C%E7%BE%8E%E5%85%83%E6%B0%94%E5%B0%91%E5%A5%B3%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%A4%8F%E6%97%A5%E6%B8%85%E6%96%B0%EF%BC%8C%E7%B2%89%E5%AB%A9%E8%85%AE%E7%BA%A2%EF%BC%8C%E6%9E%9C%E6%B1%81%E5%94%87%E9%87%89%EF%BC%8C%E6%B8%85%E9%80%8F%E5%BA%95%E5%A6%86%EF%BC%8C%E6%AD%A3%E9%9D%A2%E7%95%A5%E5%BE%AE%E4%BE%A7%E8%84%B8%EF%BC%8C%E8%81%9A%E7%84%A6%E8%84%B8%E9%83%A8%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F&image_size=portrait_4_3" alt="夏日元气妆">
           <span class="waterfall-badge l2">L2 精选</span>
         </div>
@@ -8125,7 +8130,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 190px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E6%97%A5%E5%B8%B8%E9%80%9A%E5%8B%A4%E5%A6%86%E5%AE%B9%EF%BC%8C%E6%B8%85%E6%96%B0%E8%87%AA%E7%84%B6%EF%BC%8C%E4%BC%AA%E7%B4%A0%E9%A2%9C%EF%BC%8C%E8%81%8C%E5%9C%BA%E6%B0%94%E8%B4%A8%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="复古港风妆">
           <span class="waterfall-badge free">免费</span>
         </div>
@@ -8181,7 +8186,7 @@ body {
 
     <div class="waterfall-grid" style="margin-top: var(--spacing-3);">
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 180px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E7%B2%BE%E8%87%B4%E6%99%9A%E5%AE%B4%E5%A6%86%E5%AE%B9%EF%BC%8C%E9%AB%98%E7%BA%A7%E6%84%9F%EF%BC%8C%E4%BC%98%E9%9B%85%E5%A4%A7%E6%B0%94%EF%BC%8C%E5%AF%8C%E5%AE%B6%E5%8D%83%E9%87%91%E9%A3%8E%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="晚宴精致妆容">
           <span class="waterfall-badge l2">L2 精选</span>
         </div>
@@ -8197,7 +8202,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 220px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E6%97%A5%E5%B8%B8%E9%80%9A%E5%8B%A4%E5%A6%86%E5%AE%B9%EF%BC%8C%E6%B8%85%E6%96%B0%E8%87%AA%E7%84%B6%EF%BC%8C%E4%BC%AA%E7%B4%A0%E9%A2%9C%EF%BC%8C%E8%81%8C%E5%9C%BA%E6%B0%94%E8%B4%A8%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="日常清新裸妆">
           <span class="waterfall-badge free">免费</span>
         </div>
@@ -8213,7 +8218,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 200px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E4%B8%AD%E5%9B%BD%E9%A3%8E%E5%8F%A4%E5%85%B8%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%85%B8%E9%9B%85%E4%B8%9C%E6%96%B9%E6%B0%94%E8%B4%A8%EF%BC%8C%E6%B1%89%E6%9C%8D%E5%94%90%E8%A3%85%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="国风唐妆">
           <span class="waterfall-badge gufeng">国风</span>
         </div>
@@ -8229,7 +8234,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 160px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E5%A4%8D%E5%8F%A4%E6%B8%AF%E9%A3%8E%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%A4%A7%E7%BA%A2%E5%94%87%EF%BC%8C%E6%B5%93%E7%9C%89%EF%BC%8C90%E5%B9%B4%E4%BB%A3%E6%84%9F%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="通勤大地色">
           <span class="waterfall-badge l3">L3 大师</span>
         </div>
@@ -8245,7 +8250,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 210px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E9%9D%A2%E9%83%A8%E7%89%B9%E5%86%99%E8%82%96%E5%83%8F%E7%85%A7%EF%BC%8C%E7%94%9C%E7%BE%8E%E5%85%83%E6%B0%94%E5%B0%91%E5%A5%B3%E5%A6%86%E5%AE%B9%EF%BC%8C%E5%A4%8F%E6%97%A5%E6%B8%85%E6%96%B0%EF%BC%8C%E7%B2%89%E5%AB%A9%E8%85%AE%E7%BA%A2%EF%BC%8C%E6%9E%9C%E6%B1%81%E5%94%87%E9%87%89%EF%BC%8C%E6%B8%85%E9%80%8F%E5%BA%95%E5%A6%86%EF%BC%8C%E6%AD%A3%E9%9D%A2%E7%95%A5%E5%BE%AE%E4%BE%A7%E8%84%B8%EF%BC%8C%E8%81%9A%E7%84%A6%E8%84%B8%E9%83%A8%E5%A6%86%E5%AE%B9%E6%95%88%E6%9E%9C%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F&image_size=portrait_4_3" alt="夏日元气妆">
           <span class="waterfall-badge l2">L2 精选</span>
         </div>
@@ -8261,7 +8266,7 @@ body {
         </div>
       </div>
       <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-        <div class="waterfall-card-img" style="height: 190px;">
+        <div class="waterfall-card-img">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E6%97%A5%E5%B8%B8%E9%80%9A%E5%8B%A4%E5%A6%86%E5%AE%B9%EF%BC%8C%E6%B8%85%E6%96%B0%E8%87%AA%E7%84%B6%EF%BC%8C%E4%BC%AA%E7%B4%A0%E9%A2%9C%EF%BC%8C%E8%81%8C%E5%9C%BA%E6%B0%94%E8%B4%A8%EF%BC%8C%E4%BA%9A%E6%B4%B2%E5%A5%B3%E6%80%A7%E6%A8%A1%E7%89%B9%EF%BC%8C%E9%AB%98%E6%B8%85%E4%BA%BA%E5%83%8F%E6%91%84%E5%BD%B1%EF%BC%8C%E4%B8%93%E4%B8%9A%E7%BE%8E%E5%A6%86%E5%B9%BF%E5%91%8A%E8%B4%A8%E6%84%9F%EF%BC%8C%E6%9F%94%E5%92%8C%E5%85%89%E7%BA%BF%EF%BC%8C%E7%B2%BE%E8%87%B4%E9%9D%A2%E9%83%A8%E7%BB%86%E8%8A%82%EF%BC%8C%E5%AE%8C%E7%BE%8E%E8%82%A4%E8%B4%A8&image_size=portrait_4_3" alt="复古港风妆">
           <span class="waterfall-badge free">免费</span>
         </div>
@@ -12225,66 +12230,65 @@ body {
         ]
     }
 ],
-    "faceShapes": [
-      {
-        "id": "fs001",
-        "name": "椭圆脸",
-        "description": "额头与颧骨基本等宽，脸长约为脸宽的1.5倍"
-      },
-      {
-        "id": "fs002",
-        "name": "圆脸",
-        "description": "脸长与脸宽接近，轮廓圆润"
-      },
-      {
-        "id": "fs003",
-        "name": "方脸",
-        "description": "下颌骨明显，额头与下颌宽度接近"
-      },
-      {
-        "id": "fs004",
-        "name": "长脸",
-        "description": "脸长明显大于脸宽，中庭较长"
-      },
-      {
-        "id": "fs005",
-        "name": "心形脸",
-        "description": "额头宽，下颌窄，尖下巴"
-      },
-      {
-        "id": "fs006",
-        "name": "菱形脸",
-        "description": "颧骨最宽，额头和下颌较窄"
-      }
-    ],
-    "skinTones": [
-      {
-        "id": "ton001",
-        "name": "冷白皮",
-        "description": "肤色偏白，血管呈蓝紫色，适合银饰"
-      },
-      {
-        "id": "ton002",
-        "name": "暖黄皮",
-        "description": "肤色偏黄，血管呈绿色，适合金饰"
-      },
-      {
-        "id": "ton003",
-        "name": "中性皮",
-        "description": "肤色自然，血管蓝绿兼有，冷暖皆宜"
-      },
-      {
-        "id": "ton004",
-        "name": "小麦色",
-        "description": "肤色偏深，健康光泽，适合大地色系"
-      },
-      {
-        "id": "ton005",
-        "name": "深肤色",
-        "description": "肤色较深，对比度强，适合高饱和色彩"
-      }
-    ]
-  },
+  "faceShapes": [
+    {
+      "id": "fs001",
+      "name": "椭圆脸",
+      "description": "额头与颧骨基本等宽，脸长约为脸宽的1.5倍"
+    },
+    {
+      "id": "fs002",
+      "name": "圆脸",
+      "description": "脸长与脸宽接近，轮廓圆润"
+    },
+    {
+      "id": "fs003",
+      "name": "方脸",
+      "description": "下颌骨明显，额头与下颌宽度接近"
+    },
+    {
+      "id": "fs004",
+      "name": "长脸",
+      "description": "脸长明显大于脸宽，中庭较长"
+    },
+    {
+      "id": "fs005",
+      "name": "心形脸",
+      "description": "额头宽，下颌窄，尖下巴"
+    },
+    {
+      "id": "fs006",
+      "name": "菱形脸",
+      "description": "颧骨最宽，额头和下颌较窄"
+    }
+  ],
+  "skinTones": [
+    {
+      "id": "ton001",
+      "name": "冷白皮",
+      "description": "肤色偏白，血管呈蓝紫色，适合银饰"
+    },
+    {
+      "id": "ton002",
+      "name": "暖黄皮",
+      "description": "肤色偏黄，血管呈绿色，适合金饰"
+    },
+    {
+      "id": "ton003",
+      "name": "中性皮",
+      "description": "肤色自然，血管蓝绿兼有，冷暖皆宜"
+    },
+    {
+      "id": "ton004",
+      "name": "小麦色",
+      "description": "肤色偏深，健康光泽，适合大地色系"
+    },
+    {
+      "id": "ton005",
+      "name": "深肤色",
+      "description": "肤色较深，对比度强，适合高饱和色彩"
+    }
+  ],
   "onboardingSteps": [
     {
       "stepNum": 1,
@@ -13497,7 +13501,7 @@ const templateItems = {
       const card = sampleCards[i % sampleCards.length];
       return `
         <div class="waterfall-card" onclick="openTemplateDetail('t1')">
-          <div class="waterfall-card-img" style="height: ${card.h}px;">
+          <div class="waterfall-card-img">
             <img src="${card.img}" alt="${card.title}">
             <span class="waterfall-badge ${card.badgeClass}">${card.badge}</span>
           </div>
@@ -14027,6 +14031,37 @@ window.addEventListener('load', function() {
       parent.postMessage({ type: 'tabChanged', tab: currentTab }, '*');
     }
   });
+
+  window.switchTab = switchTab;
+  window.showToast = showToast;
+  window.openIngredientScan = openIngredientScan;
+  window.closeIngredientScan = closeIngredientScan;
+  window.startIngredientScan = startIngredientScan;
+  window.showOnboarding = showOnboarding;
+  window.goToNextStep = goToNextStep;
+  window.goToPrevStep = goToPrevStep;
+  window.skipOnboarding = skipOnboarding;
+  window.finishOnboarding = finishOnboarding;
+  window.startObFaceScan = function() { showToast('正在启动面部扫描...'); setTimeout(function() { document.getElementById('ob-scan-btn').textContent = '扫描完成 ✓'; goToNextStep(); }, 1500); };
+  window.openGpCenter = openGpCenter;
+  window.closeGpCenter = function() { document.getElementById('gp-center-modal').classList.remove('show'); };
+  window.claimTask = claimTask;
+  window.openUploadWork = openUploadWork;
+  window.closeUploadWork = closeUploadWork;
+  window.uploadCoverImage = uploadCoverImage;
+  window.openShareModal = openShareModal;
+  window.closeShareModal = closeShareModal;
+  window.doShare = doShare;
+  window.switchMirrorMode = switchMirrorMode;
+  window.sendChatMessage = sendChatMessage;
+  window.sendQuickMsg = sendQuickMsg;
+  window.openMyTemplates = openMyTemplates;
+  window.openMyReports = openMyReports;
+  window.openToolbox = openToolbox;
+  window.openStylePreference = openStylePreference;
+  window.openStoreMap = openStoreMap;
+  window.openCreatorCenter = openCreatorCenter;
+  window.closeScanModal = closeIngredientScan;
 </script>
 
 </body>
