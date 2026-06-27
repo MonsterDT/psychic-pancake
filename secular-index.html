@@ -264,8 +264,18 @@
       color: var(--ln-color-text-secondary);
       transition: var(--ln-transition-fast);
       cursor: pointer;
+      min-width: 32px;
+      min-height: 32px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .rating-btn:hover { transform: scale(1.1); border-color: var(--ln-color-primary-light); }
+    .rating-btn:hover { 
+      border-color: var(--ln-color-primary-light); 
+      background: var(--ln-color-bg-warm);
+    }
+    .rating-btn:active { 
+      transform: scale(0.95); 
+    }
     .rating-btn.selected {
       background: var(--ln-color-primary);
       border-color: var(--ln-color-primary);
@@ -2587,19 +2597,19 @@
       const container = document.getElementById('balanceRatings');
       container.innerHTML = balanceDimensions.map(dim => `
         <div class="mb-5 last:mb-0">
-          <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
               <span class="text-xl">${dim.emoji}</span>
               <span class="text-sm font-medium" style="color: var(--ln-color-text);">${dim.name}</span>
             </div>
-            <span class="text-sm" style="color: var(--ln-color-text-tertiary);">${dim.desc}</span>
+            <span class="text-xs" style="color: var(--ln-color-text-tertiary);">${dim.desc}</span>
           </div>
-          <div class="flex gap-1 justify-center" data-dimension="${dim.key}">
+          <div class="flex gap-2 justify-center" data-dimension="${dim.key}">
             ${[1,2,3,4,5,6,7,8,9,10].map(n => `
-              <div class="rating-btn w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center text-xs font-medium ${balanceScores[dim.key] === n ? 'selected' : ''}"
+              <button class="rating-btn w-10 h-10 rounded-lg flex items-center justify-center text-sm font-medium ${balanceScores[dim.key] === n ? 'selected' : ''}"
                    onclick="setBalanceScore('${dim.key}', ${n})">
                 ${n}
-              </div>
+              </button>
             `).join('')}
           </div>
         </div>
