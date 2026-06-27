@@ -756,7 +756,7 @@ body {
 .switch.active .switch-thumb { left: 22px; }
 
 .category-panel-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 10000;
   background: rgba(0,0,0,0.5);
@@ -1575,7 +1575,7 @@ body {
   padding-top: 3px;
 }
 .product-detail-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -1587,6 +1587,8 @@ body {
   align-items: center;
   gap: var(--spacing-3);
   z-index: 100;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
 }
 .pdf-footer-left {
   display: flex;
@@ -2659,7 +2661,7 @@ body {
 
 /* ============ Bottom Sheet ============ */
 .bottom-sheet-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(26, 24, 22, 0.5);
   z-index: var(--z-sheet);
@@ -2727,7 +2729,7 @@ body {
 
 /* ============ Onboarding ============ */
 .onboarding-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 9999;
   background: linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%);
@@ -3487,7 +3489,7 @@ body {
 
 /* ============ Full Screen Modal ============ */
 .modal-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: var(--color-bg);
   z-index: var(--z-sheet);
@@ -3528,7 +3530,7 @@ body {
   padding-bottom: calc(100px + var(--safe-bottom));
 }
 .modal-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0; right: 0;
   padding: var(--spacing-4);
@@ -4116,7 +4118,7 @@ body {
 
 /* 底部发布按钮 */
 .upload-work-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -4127,6 +4129,8 @@ body {
   display: flex;
   gap: var(--spacing-3);
   z-index: 100;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
 }
 .publish-btn {
   flex: 1;
@@ -4151,7 +4155,7 @@ body {
 
 /* 商品选择弹层 */
 .product-picker-overlay {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5);
   z-index: 2000;
@@ -4844,7 +4848,7 @@ body {
 
 /* ============ Bottom Sheet Popup ============ */
 .bottom-popup {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(26, 24, 22, 0.5);
   z-index: var(--z-sheet);
@@ -5303,10 +5307,11 @@ body {
 
 /* ============ Tab Bar ============ */
 .tab-bar {
-  position: fixed;
+  position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 100%;
   max-width: var(--content-max-width);
   height: var(--tab-bar-height);
@@ -5339,7 +5344,7 @@ body {
 
 /* ============ Toast ============ */
 .toast {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.9);
@@ -5364,7 +5369,7 @@ body {
 
 /* ============ Scan Result Modal ============ */
 .modal-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(26, 24, 22, 0.5);
   z-index: var(--z-modal);
@@ -6275,7 +6280,7 @@ body {
 
 /* ============ Full Screen Modal (General) ============ */
 .fs-modal-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: var(--color-bg);
   z-index: var(--z-modal);
@@ -6690,7 +6695,7 @@ body {
 
 /* 底部发布按钮 */
 .upload-work-footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
@@ -6701,6 +6706,8 @@ body {
   display: flex;
   gap: var(--spacing-3);
   z-index: 100;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
 }
 .publish-btn {
   flex: 1;
@@ -6725,7 +6732,7 @@ body {
 
 /* 商品选择弹层 */
 .product-picker-overlay {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5);
   z-index: 2000;
@@ -7273,7 +7280,7 @@ body {
 
 /* Share Modal */
 .share-modal-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 10000;
   background: rgba(0,0,0,0.5);
@@ -7508,7 +7515,7 @@ body {
 
 /* ============ Bottom Sheet Modal ============ */
 .bs-modal-overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: rgba(0,0,0,0.5);
   z-index: var(--z-modal);
