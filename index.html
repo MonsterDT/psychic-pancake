@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#FF6B9D">
+    <title>妆伴 - 你的专属美妆顾问</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="status-icons">
+                <span class="icon signal">
+                    <svg viewBox="0 0 18 12" fill="currentColor">
+                        <rect x="0" y="8" width="3" height="4" rx="0.5"/>
+                        <rect x="5" y="5" width="3" height="7" rx="0.5"/>
+                        <rect x="10" y="2" width="3" height="10" rx="0.5"/>
+                        <rect x="15" y="0" width="3" height="12" rx="0.5"/>
+                    </svg>
+                </span>
+                <span class="icon wifi">
+                    <svg viewBox="0 0 16 12" fill="currentColor">
+                        <path d="M8 12C6.9 12 6 11.1 6 10C6 8.9 6.9 8 8 8C9.1 8 10 8.9 10 10C10 11.1 9.1 12 8 12ZM0 4.5L1.5 3C5.6 7 10.4 7 14.5 3L16 4.5C11 9.5 5 9.5 0 4.5ZM3.5 6.5L5 5C7.2 7.2 8.8 7.2 11 5L12.5 6.5C9.2 9.8 4.8 9.8 3.5 6.5Z"/>
+                    </svg>
+                </span>
+                <span class="icon battery">
+                    <svg viewBox="0 0 27 12" fill="none">
+                        <rect x="0.5" y="0.5" width="22" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.35"/>
+                        <rect x="2" y="2" width="19" height="8" rx="1.5" fill="currentColor"/>
+                        <rect x="24" y="4" width="1.5" height="4" rx="0.5" fill="currentColor" fill-opacity="0.4"/>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="page page-home active" id="page-home">
+            <header class="app-header">
+                <div class="header-left">
+                    <div class="avatar">
+                        <svg viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="16" fill="url(#avatarGrad)"/>
+                            <circle cx="16" cy="13" r="5" fill="#fff" fill-opacity="0.8"/>
+                            <path d="M8 26C8 21.6 11.6 18 16 18C20.4 18 24 21.6 24 26" fill="#fff" fill-opacity="0.8"/>
+                            <defs>
+                                <linearGradient id="avatarGrad" x1="0" y1="0" x2="32" y2="32">
+                                    <stop stop-color="#FF8FB1"/>
+                                    <stop offset="1" stop-color="#FF6B9D"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="greeting">
+                        <p class="greeting-text">早上好，小仙女</p>
+                        <p class="greeting-sub">今天想化什么妆呢？</p>
+                    </div>
+                </div>
+                <button class="header-btn" onclick="openModal('notification')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                    <span class="badge">3</span>
+                </button>
+            </header>
+
+            <div class="search-bar" onclick="openModal('search')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <span>搜索口红、粉底、眼影...</span>
+            </div>
+
+            <div class="banner-section">
+                <div class="banner">
+                    <div class="banner-content">
+                        <p class="banner-tag">限时特惠</p>
+                        <h2 class="banner-title">夏日清透妆<br>新品首发</h2>
+                        <p class="banner-desc">轻盈持妆12小时</p>
+                        <button class="banner-btn" onclick="openModal('product')">立即选购</button>
+                    </div>
+                    <div class="banner-image">
+                        <div class="cosmetic-item lipstick">
+                            <div class="lipstick-body"></div>
+                            <div class="lipstick-cap"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <div class="action-item" onclick="openModal('tryon')">
+                    <div class="action-icon icon-pink">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <span>AR试妆</span>
+                </div>
+                <div class="action-item" onclick="switchTab('category')">
+                    <div class="action-icon icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"/>
+                            <rect x="14" y="3" width="7" height="7"/>
+                            <rect x="14" y="14" width="7" height="7"/>
+                            <rect x="3" y="14" width="7" height="7"/>
+                        </svg>
+                    </div>
+                    <span>全部分类</span>
+                </div>
+                <div class="action-item" onclick="openModal('analysis')">
+                    <div class="action-icon icon-orange">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 7h-9"/>
+                            <path d="M14 17H5"/>
+                            <circle cx="17" cy="17" r="3"/>
+                            <circle cx="7" cy="7" r="3"/>
+                        </svg>
+                    </div>
+                    <span>肤质分析</span>
+                </div>
+                <div class="action-item" onclick="switchTab('profile')">
+                    <div class="action-icon icon-green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <span>我的</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title">热门推荐</h3>
+                    <a class="section-more" href="javascript:void(0)">查看全部</a>
+                </div>
+                <div class="product-scroll">
+                    <div class="product-card" onclick="openModal('product')">
+                        <div class="product-image product-1">
+                            <div class="product-tag">热销</div>
+                        </div>
+                        <div class="product-info">
+                            <h4 class="product-name">丝绒哑光唇釉</h4>
+                            <p class="product-brand">MAKEUP PAL</p>
+                            <div class="product-price">
+                                <span class="price-current">¥129</span>
+                                <span class="price-origin">¥199</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card" onclick="openModal('product')">
+                        <div class="product-image product-2">
+                            <div class="product-tag tag-new">新品</div>
+                        </div>
+                        <div class="product-info">
+                            <h4 class="product-name">轻透持妆粉底液</h4>
+                            <p class="product-brand">MAKEUP PAL</p>
+                            <div class="product-price">
+                                <span class="price-current">¥259</span>
+                                <span class="price-origin">¥329</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card" onclick="openModal('product')">
+                        <div class="product-image product-3">
+                            <div class="product-tag tag-sale">特惠</div>
+                        </div>
+                        <div class="product-info">
+                            <h4 class="product-name">大地色眼影盘</h4>
+                            <p class="product-brand">MAKEUP PAL</p>
+                            <div class="product-price">
+                                <span class="price-current">¥168</span>
+                                <span class="price-origin">¥218</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-header">
+                    <h3 class="section-title">今日妆容灵感</h3>
+                    <a class="section-more" href="javascript:void(0)">更多灵感</a>
+                </div>
+                <div class="inspiration-grid">
+                    <div class="inspiration-card card-large" onclick="openModal('look')">
+                        <div class="inspiration-image insp-1"></div>
+                        <div class="inspiration-overlay">
+                            <span class="inspiration-tag">日常通勤</span>
+                            <h4>元气橘朵妆</h4>
+                            <p>5步完成 · 3分钟</p>
+                        </div>
+                    </div>
+                    <div class="inspiration-card" onclick="openModal('look')">
+                        <div class="inspiration-image insp-2"></div>
+                        <div class="inspiration-overlay">
+                            <span class="inspiration-tag">约会</span>
+                            <h4>纯欲风</h4>
+                        </div>
+                    </div>
+                    <div class="inspiration-card" onclick="openModal('look')">
+                        <div class="inspiration-image insp-3"></div>
+                        <div class="inspiration-overlay">
+                            <span class="inspiration-tag">派对</span>
+                            <h4>烟熏妆</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-safe"></div>
+        </div>
+
+        <div class="page page-category" id="page-category">
+            <header class="app-header">
+                <h1 class="page-title">全部分类</h1>
+                <button class="header-btn" onclick="openModal('search')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                    </svg>
+                </button>
+            </header>
+            <div class="category-container">
+                <div class="category-sidebar">
+                    <div class="category-tab active">口红唇釉</div>
+                    <div class="category-tab">粉底隔离</div>
+                    <div class="category-tab">眼影眼线</div>
+                    <div class="category-tab">睫毛膏</div>
+                    <div class="category-tab">腮红修容</div>
+                    <div class="category-tab">定妆散粉</div>
+                    <div class="category-tab">护肤套装</div>
+                    <div class="category-tab">香水香氛</div>
+                    <div class="category-tab">美妆工具</div>
+                </div>
+                <div class="category-content">
+                    <div class="category-banner">
+                        <span>口红唇釉</span>
+                        <p>水润 · 哑光 · 丝绒 · 唇泥</p>
+                    </div>
+                    <div class="sub-category-grid">
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-1"></div>
+                            <span>哑光口红</span>
+                        </div>
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-2"></div>
+                            <span>镜面唇釉</span>
+                        </div>
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-3"></div>
+                            <span>丝绒唇泥</span>
+                        </div>
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-4"></div>
+                            <span>水光唇蜜</span>
+                        </div>
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-5"></div>
+                            <span>唇线笔</span>
+                        </div>
+                        <div class="sub-category-item">
+                            <div class="sub-cat-img sub-6"></div>
+                            <span>润唇膏</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-safe"></div>
+        </div>
+
+        <div class="page page-cart" id="page-cart">
+            <header class="app-header">
+                <h1 class="page-title">购物车</h1>
+                <button class="header-btn">编辑</button>
+            </header>
+            <div class="cart-empty">
+                <div class="cart-empty-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                </div>
+                <p class="cart-empty-text">购物车还是空的</p>
+                <p class="cart-empty-sub">快去挑选心仪的美妆好物吧</p>
+                <button class="cart-empty-btn" onclick="switchTab('home')">去逛逛</button>
+            </div>
+            <div class="bottom-safe"></div>
+        </div>
+
+        <div class="page page-profile" id="page-profile">
+            <header class="app-header profile-header">
+                <div class="profile-user">
+                    <div class="profile-avatar">
+                        <svg viewBox="0 0 64 64" fill="none">
+                            <circle cx="32" cy="32" r="32" fill="url(#profileGrad)"/>
+                            <circle cx="32" cy="26" r="10" fill="#fff" fill-opacity="0.9"/>
+                            <path d="M16 52C16 43.2 23.2 36 32 36C40.8 36 48 43.2 48 52" fill="#fff" fill-opacity="0.9"/>
+                            <defs>
+                                <linearGradient id="profileGrad" x1="0" y1="0" x2="64" y2="64">
+                                    <stop stop-color="#FF8FB1"/>
+                                    <stop offset="1" stop-color="#FF6B9D"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="profile-name">美妆小仙女</h2>
+                        <p class="profile-desc">VIP会员 · 肤质：混合偏干</p>
+                    </div>
+                </div>
+                <button class="header-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-num">12</span>
+                    <span class="stat-label">收藏</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">28</span>
+                    <span class="stat-label">订单</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">156</span>
+                    <span class="stat-label">积分</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-num">6</span>
+                    <span class="stat-label">优惠券</span>
+                </div>
+            </div>
+
+            <div class="profile-menu">
+                <div class="menu-group">
+                    <div class="menu-item">
+                        <div class="menu-icon pink">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                <line x1="3" y1="6" x2="21" y2="6"/>
+                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">我的订单</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">我的收藏</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="menu-item" onclick="openModal('tryon')">
+                        <div class="menu-icon orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">试妆记录</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="menu-group">
+                    <div class="menu-item" onclick="openModal('analysis')">
+                        <div class="menu-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 7h-9"/>
+                                <path d="M14 17H5"/>
+                                <circle cx="17" cy="17" r="3"/>
+                                <circle cx="7" cy="7" r="3"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">肤质档案</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                                <line x1="4" y1="22" x2="4" y2="15"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">优惠券</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-icon gray">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <span class="menu-text">地址管理</span>
+                        <svg class="menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-safe"></div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span>首页</span>
+            </div>
+            <div class="nav-item" data-tab="category" onclick="switchTab('category')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <span>分类</span>
+            </div>
+            <div class="nav-item nav-try" onclick="openModal('tryon')">
+                <div class="nav-try-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                        <line x1="9" y1="9" x2="9.01" y2="9"/>
+                        <line x1="15" y1="9" x2="15.01" y2="9"/>
+                    </svg>
+                </div>
+                <span>试妆</span>
+            </div>
+            <div class="nav-item" data-tab="cart" onclick="switchTab('cart')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <span>购物车</span>
+            </div>
+            <div class="nav-item" data-tab="profile" onclick="switchTab('profile')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>我的</span>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+            <div class="modal-bottom" id="modal-product">
+                <div class="modal-handle"></div>
+                <div class="modal-product-header">
+                    <div class="modal-product-image product-1"></div>
+                    <div class="modal-product-info">
+                        <div class="modal-product-tag">热销爆款</div>
+                        <h3 class="modal-product-name">丝绒哑光唇釉 #红梨色</h3>
+                        <p class="modal-product-brand">MAKEUP PAL · 6.5ml</p>
+                        <div class="modal-product-price">
+                            <span class="price-current">¥129</span>
+                            <span class="price-origin">¥199</span>
+                            <span class="price-discount">6.5折</span>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closeModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-product-colors">
+                    <p class="modal-section-title">选择颜色</p>
+                    <div class="color-options">
+                        <div class="color-option active" style="--color: #C9184A">
+                            <span class="color-dot"></span>
+                            <span class="color-name">红梨色</span>
+                        </div>
+                        <div class="color-option" style="--color: #FF6B6B">
+                            <span class="color-dot"></span>
+                            <span class="color-name">蜜桃橘</span>
+                        </div>
+                        <div class="color-option" style="--color: #9D4EDD">
+                            <span class="color-dot"></span>
+                            <span class="color-name">葡萄紫</span>
+                        </div>
+                        <div class="color-option" style="--color: #FF8FAB">
+                            <span class="color-dot"></span>
+                            <span class="color-name">玫瑰粉</span>
+                        </div>
+                        <div class="color-option" style="--color: #774936">
+                            <span class="color-dot"></span>
+                            <span class="color-name">焦糖棕</span>
+                        </div>
+                        <div class="color-option" style="--color: #FF006E">
+                            <span class="color-dot"></span>
+                            <span class="color-name">火龙果</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-product-desc">
+                    <p class="modal-section-title">产品详情</p>
+                    <div class="desc-tags">
+                        <span>丝绒哑光</span>
+                        <span>持久不脱妆</span>
+                        <span>滋润保湿</span>
+                        <span>显白提气</span>
+                    </div>
+                    <p class="desc-text">高级丝绒质地，一抹顺滑显色。蕴含玻尿酸滋润成分，哑光不拔干，持妆可达8小时。黄皮友好，轻松驾驭各种妆容风格。</p>
+                </div>
+                <div class="modal-product-actions">
+                    <div class="action-fav">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                        </svg>
+                        <span>收藏</span>
+                    </div>
+                    <button class="btn-cart">加入购物车</button>
+                    <button class="btn-buy">立即购买</button>
+                </div>
+                <div class="bottom-safe"></div>
+            </div>
+
+            <div class="modal-center" id="modal-tryon">
+                <div class="tryon-container">
+                    <div class="tryon-header">
+                        <h3>AR 虚拟试妆</h3>
+                        <button class="modal-close" onclick="closeModal()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="tryon-face">
+                        <div class="face-outline">
+                            <div class="face-feature face-eye left"></div>
+                            <div class="face-feature face-eye right"></div>
+                            <div class="face-feature face-nose"></div>
+                            <div class="face-feature face-lip"></div>
+                            <div class="face-feature face-blush left"></div>
+                            <div class="face-feature face-blush right"></div>
+                        </div>
+                    </div>
+                    <div class="tryon-tabs">
+                        <div class="tryon-tab active">口红</div>
+                        <div class="tryon-tab">眼影</div>
+                        <div class="tryon-tab">腮红</div>
+                        <div class="tryon-tab">粉底</div>
+                    </div>
+                    <div class="tryon-colors">
+                        <div class="tryon-color active" style="--color: #C9184A"></div>
+                        <div class="tryon-color" style="--color: #FF6B6B"></div>
+                        <div class="tryon-color" style="--color: #9D4EDD"></div>
+                        <div class="tryon-color" style="--color: #FF8FAB"></div>
+                        <div class="tryon-color" style="--color: #774936"></div>
+                        <div class="tryon-color" style="--color: #FF006E"></div>
+                        <div class="tryon-color" style="--color: #E63946"></div>
+                        <div class="tryon-color" style="--color: #B5179E"></div>
+                    </div>
+                    <div class="tryon-actions">
+                        <button class="tryon-btn secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                                <circle cx="12" cy="13" r="4"/>
+                            </svg>
+                            拍照
+                        </button>
+                        <button class="tryon-btn primary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="21" r="1"/>
+                                <circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                            购买同款
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-bottom modal-search" id="modal-search">
+                <div class="search-modal-header">
+                    <div class="search-input-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.3-4.3"/>
+                        </svg>
+                        <input type="text" placeholder="搜索口红、粉底、眼影..." autofocus>
+                    </div>
+                    <button class="search-cancel" onclick="closeModal()">取消</button>
+                </div>
+                <div class="search-hot">
+                    <p class="search-section-title">热门搜索</p>
+                    <div class="hot-tags">
+                        <span class="hot-tag hot">哑光唇釉</span>
+                        <span class="hot-tag">持妆粉底液</span>
+                        <span class="hot-tag hot">大地色眼影</span>
+                        <span class="hot-tag">腮红推荐</span>
+                        <span class="hot-tag">定妆散粉</span>
+                        <span class="hot-tag">卸妆水</span>
+                        <span class="hot-tag hot">口红礼盒</span>
+                        <span class="hot-tag">新手化妆套装</span>
+                    </div>
+                </div>
+                <div class="search-history">
+                    <div class="search-section-header">
+                        <p class="search-section-title">搜索历史</p>
+                        <button class="search-clear">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                <line x1="10" y1="11" x2="10" y2="17"/>
+                                <line x1="14" y1="11" x2="14" y2="17"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span>丝绒哑光口红</span>
+                        </div>
+                        <div class="history-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span>油皮粉底液推荐</span>
+                        </div>
+                        <div class="history-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span>日常妆容教程</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-safe"></div>
+            </div>
+
+            <div class="modal-bottom modal-notification" id="modal-notification">
+                <div class="modal-handle"></div>
+                <div class="notification-header">
+                    <h3>消息通知</h3>
+                    <button class="notification-allread">全部已读</button>
+                </div>
+                <div class="notification-list">
+                    <div class="notification-item unread">
+                        <div class="notif-icon pink">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <div class="notif-content">
+                            <h4>收藏商品降价提醒</h4>
+                            <p>您收藏的「丝绒哑光唇釉」降价了，现价¥129</p>
+                            <span class="notif-time">2分钟前</span>
+                        </div>
+                        <span class="notif-dot"></span>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notif-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                <line x1="3" y1="6" x2="21" y2="6"/>
+                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                            </svg>
+                        </div>
+                        <div class="notif-content">
+                            <h4>订单发货通知</h4>
+                            <p>您的订单 #20240612001 已发货，预计明天送达</p>
+                            <span class="notif-time">1小时前</span>
+                        </div>
+                        <span class="notif-dot"></span>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notif-icon orange">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                                <line x1="4" y1="22" x2="4" y2="15"/>
+                            </svg>
+                        </div>
+                        <div class="notif-content">
+                            <h4>优惠券到账</h4>
+                            <p>恭喜获得满199减50优惠券，快去使用吧</p>
+                            <span class="notif-time">昨天</span>
+                        </div>
+                        <span class="notif-dot"></span>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notif-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="notif-content">
+                            <h4>肤质分析报告已生成</h4>
+                            <p>您的肤质分析报告已生成，点击查看详情</p>
+                            <span class="notif-time">2天前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-safe"></div>
+            </div>
+
+            <div class="modal-bottom modal-analysis" id="modal-analysis">
+                <div class="modal-handle"></div>
+                <div class="analysis-header">
+                    <h3>肤质分析报告</h3>
+                    <button class="modal-close" onclick="closeModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="analysis-result">
+                    <div class="skin-type-card">
+                        <div class="skin-type-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                        </div>
+                        <div class="skin-type-info">
+                            <h4>混合偏干性肌肤</h4>
+                            <p>T区微油，两颊偏干</p>
+                        </div>
+                    </div>
+                    <div class="skin-scores">
+                        <div class="score-item">
+                            <div class="score-ring" style="--percent: 72">
+                                <span class="score-num">72</span>
+                            </div>
+                            <span class="score-label">水润度</span>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-ring" style="--percent: 58">
+                                <span class="score-num">58</span>
+                            </div>
+                            <span class="score-label">弹性</span>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-ring" style="--percent: 65">
+                                <span class="score-num">65</span>
+                            </div>
+                            <span class="score-label">细腻度</span>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-ring" style="--percent: 45">
+                                <span class="score-num">45</span>
+                            </div>
+                            <span class="score-label">抗痘</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="analysis-recommend">
+                    <p class="modal-section-title">护肤建议</p>
+                    <div class="recommend-list">
+                        <div class="recommend-item">
+                            <span class="recommend-num">1</span>
+                            <div>
+                                <h5>加强保湿</h5>
+                                <p>两颊偏干，建议使用滋润型面霜</p>
+                            </div>
+                        </div>
+                        <div class="recommend-item">
+                            <span class="recommend-num">2</span>
+                            <div>
+                                <h5>T区控油</h5>
+                                <p>使用清爽型爽肤水，重点护理T区</p>
+                            </div>
+                        </div>
+                        <div class="recommend-item">
+                            <span class="recommend-num">3</span>
+                            <div>
+                                <h5>注意防晒</h5>
+                                <p>日常防晒SPF30+，户外活动SPF50+</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="analysis-btn">重新检测</button>
+                <div class="bottom-safe"></div>
+            </div>
+
+            <div class="modal-center modal-look" id="modal-look">
+                <div class="look-container">
+                    <button class="modal-close look-close" onclick="closeModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                    <div class="look-image insp-1"></div>
+                    <div class="look-info">
+                        <span class="look-tag">日常通勤</span>
+                        <h3>元气橘朵妆</h3>
+                        <p class="look-desc">元气满满的橘色系妆容，适合日常通勤，提气色又不夸张。</p>
+                        <div class="look-steps">
+                            <p class="look-steps-title">妆容步骤</p>
+                            <div class="step-item">
+                                <span class="step-num">1</span>
+                                <span class="step-text">妆前乳打底，均匀肤色</span>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">2</span>
+                                <span class="step-text">轻薄粉底，打造清透底妆</span>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">3</span>
+                                <span class="step-text">橘色眼影晕染眼窝</span>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">4</span>
+                                <span class="step-text">蜜桃色腮红横扫脸颊</span>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">5</span>
+                                <span class="step-text">橘调口红点缀双唇</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="look-actions">
+                        <button class="look-btn secondary" onclick="openModal('tryon')">一键试妆</button>
+                        <button class="look-btn primary">收藏妆容</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
