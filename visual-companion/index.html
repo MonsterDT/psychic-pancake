@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBF 联营投资管理系统 - 设计方案</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        .tab-active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <div class="container mx-auto px-6 py-8 max-w-7xl">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    RBF 联营投资管理系统
+                </h1>
+            </div>
+            <p class="text-gray-400 text-lg">全流程智能化投资管理平台 · 投前尽调 · 投中风控 · 投后管理</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10">
+            <button onclick="showTab('architecture')" id="tab-architecture" class="tab-btn px-6 py-3 rounded-xl font-medium transition-all tab-active">
+                系统架构
+            </button>
+            <button onclick="showTab('pre-investment')" id="tab-pre-investment" class="tab-btn px-6 py-3 rounded-xl font-medium transition-all bg-white/10 hover:bg-white/20">
+                投前管理
+            </button>
+            <button onclick="showTab('mid-investment')" id="tab-mid-investment" class="tab-btn px-6 py-3 rounded-xl font-medium transition-all bg-white/10 hover:bg-white/20">
+                投中风控
+            </button>
+            <button onclick="showTab('post-investment')" id="tab-post-investment" class="tab-btn px-6 py-3 rounded-xl font-medium transition-all bg-white/10 hover:bg-white/20">
+                投后管理
+            </button>
+            <button onclick="showTab('ai')" id="tab-ai" class="tab-btn px-6 py-3 rounded-xl font-medium transition-all bg-white/10 hover:bg-white/20">
+                AI 能力
+            </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="content-architecture" class="tab-content">
+            <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 glow">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></span>
+                    系统整体架构
+                </h2>
+                <div class="mermaid bg-white rounded-2xl p-6">
+graph TD
+    subgraph "用户层"
+        U1[投资经理]
+        U2[风控专员]
+        U3[投后经理]
+        U4[管理层]
+        U5[品牌方/创业者]
+    end
+
+    subgraph "应用层 - 六大核心模块"
+        A1[项目线索管理]
+        A2[投前尽调系统]
+        A3[投资决策引擎]
+        A4[投中风控稽核]
+        A5[投后管理平台]
+        A6[数据智能分析]
+    end
+
+    subgraph "AI 能力层"
+        B1[智能筛查评分]
+        B2[风险预警模型]
+        B3[收入分成测算]
+        B4[文档智能解析]
+        B5[对话式助手]
+        B6[预测分析引擎]
+    end
+
+    subgraph "数据层"
+        C1[项目数据库]
+        C2[财务数据仓库]
+        C3[门店数据中心]
+        C4[风控规则库]
+        C5[知识库/文档库]
+    end
+
+    subgraph "基础设施层"
+        D1[统一身份认证]
+        D2[工作流引擎]
+        D3[消息通知中心]
+        D4[数据集成接口]
+        D5[安全审计日志]
+    end
+
+    U1 & U2 & U3 & U4 & U5 --> A1 & A2 & A3 & A4 & A5 & A6
+    A1 & A2 & A3 & A4 & A5 & A6 --> B1 & B2 & B3 & B4 & B5 & B6
+    B1 & B2 & B3 & B4 & B5 & B6 --> C1 & C2 & C3 & C4 & C5
+    A1 & A2 & A3 & A4 & A5 & A6 --> D1 & D2 & D3 & D4 & D5
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">投前管理</h3>
+                    <p class="text-gray-400 text-sm">线索管理、初筛评分、尽职调查、方案评估、洽谈跟进全流程数字化</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">投中风控</h3>
+                    <p class="text-gray-400 text-sm">实时数据稽核、风险预警、分成核算、资金监控、合规检查自动化</p>
+                </div>
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 card-hover">
+                    <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">投后赋能</h3>
+                    <p class="text-gray-400 text-sm">门店运营监控、增长分析、资源对接、价值增值、退出管理全周期</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-pre-investment" class="tab-content hidden">
+            <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 glow">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-gradient-to-b from-blue-500 to-cyan-500 rounded-full"></span>
+                    投前管理流程
+                </h2>
+                <div class="mermaid bg-white rounded-2xl p-6">
+flowchart TD
+    subgraph "线索获取"
+        L1[渠道录入]
+        L2[品牌自荐]
+        L3[渠道推荐]
+        L4[行业活动]
+    end
+
+    subgraph "初步筛选"
+        S1[AI智能初评]
+        S2[四维评估打分]
+        S3{是否达标?}
+        S4[进入待跟进池]
+        S5[淘汰归档]
+    end
+
+    subgraph "尽职调查"
+        D1[签订保密协议]
+        D2[数据采集]
+        D3[AI文档解析]
+        D4[财务尽调]
+        D5[门店尽调]
+        D6[法务尽调]
+        D7[风险评级]
+    end
+
+    subgraph "方案设计"
+        P1[RBF方案测算]
+        P2[出资方案生成]
+        P3[多方案对比]
+        P4[内部审批]
+    end
+
+    subgraph "洽谈签约"
+        N1[方案沟通]
+        N2[谈判跟进]
+        N3[协议签署]
+        N4[出资放款]
+    end
+
+    L1 & L2 & L3 & L4 --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 -->|是| S4
+    S3 -->|否| S5
+    S4 --> D1
+    D1 --> D2
+    D2 --> D3
+    D3 --> D4
+    D4 --> D5
+    D5 --> D6
+    D6 --> D7
+    D7 --> P1
+    P1 --> P2
+    P2 --> P3
+    P3 --> P4
+    P4 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 card-hover">
+                    <h3 class="text-xl font-bold mb-4 text-blue-400">AI 初筛评分卡</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-400">品牌力</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-400">供应链</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-400">渠道力</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-gray-400">数字化</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-6 card-hover">
+                    <h3 class="text-xl font-bold mb-4 text-purple-400">RBF 方案测算器</h3>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400">月均收入</span>
+                            <span class="font-mono">¥ 300 万</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400">融资额度</span>
+                            <span class="font-mono text-green-400">¥ 1,200 万 (4倍月收)</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400">分成比例</span>
+                            <span class="font-mono text-yellow-400">6%</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-gray-400">回报上限</span>
+                            <span class="font-mono text-blue-400">1.8 倍 = ¥ 2,160 万</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-400">预计回收期</span>
+                            <span class="font-mono">约 12 个月</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-mid-investment" class="tab-content hidden">
+            <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 glow">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-gradient-to-b from-yellow-500 to-orange-500 rounded-full"></span>
+                    投中风控稽核体系
+                </h2>
+                <div class="mermaid bg-white rounded-2xl p-6">
+graph TD
+    subgraph "数据采集层"
+        DS1[收银系统对接]
+        DS2[外卖平台对接]
+        DS3[供应链系统]
+        DS4[POS 流水]
+        DS5[银行流水]
+    end
+
+    subgraph "数据稽核"
+        V1[收入数据交叉验证]
+        V2[门店数据真实性校验]
+        V3[异常波动检测]
+        V4[数据完整性检查]
+    end
+
+    subgraph "风险监控"
+        R1[实时风险仪表盘]
+        R2[分级预警机制]
+        R3[风险事件追踪]
+        R4[合规检查清单]
+    end
+
+    subgraph "分成核算"
+        C1[月度收入核算]
+        C2[分成金额计算]
+        C3[对账确认]
+        C4[资金划拨]
+    end
+
+    subgraph "预警响应"
+        A1[黄色预警-关注]
+        A2[橙色预警-警示]
+        A3[红色预警-处置]
+        A4[风险处置流程]
+    end
+
+    DS1 & DS2 & DS3 & DS4 & DS5 --> V1 & V2 & V3 & V4
+    V1 & V2 & V3 & V4 --> R1 & R2 & R3 & R4
+    R2 --> A1 & A2 & A3
+    A1 & A2 & A3 --> A4
+    V1 & V2 & V3 & V4 --> C1 & C2 & C3 & C4
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-4 mt-8">
+                <div class="bg-green-500/10 border border-green-500/30 rounded-2xl p-5 card-hover">
+                    <div class="text-3xl font-bold text-green-400">98.5%</div>
+                    <div class="text-sm text-gray-400 mt-1">数据准确率</div>
+                </div>
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-5 card-hover">
+                    <div class="text-3xl font-bold text-yellow-400">3</div>
+                    <div class="text-sm text-gray-400 mt-1">黄色预警</div>
+                </div>
+                <div class="bg-orange-500/10 border border-orange-500/30 rounded-2xl p-5 card-hover">
+                    <div class="text-3xl font-bold text-orange-400">0</div>
+                    <div class="text-sm text-gray-400 mt-1">橙色预警</div>
+                </div>
+                <div class="bg-red-500/10 border border-red-500/30 rounded-2xl p-5 card-hover">
+                    <div class="text-3xl font-bold text-red-400">0</div>
+                    <div class="text-sm text-gray-400 mt-1">红色预警</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-post-investment" class="tab-content hidden">
+            <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 glow">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-gradient-to-b from-green-500 to-emerald-500 rounded-full"></span>
+                    投后管理体系
+                </h2>
+                <div class="mermaid bg-white rounded-2xl p-6">
+graph TD
+    subgraph "运营监控"
+        O1[门店经营数据看板]
+        O2[收入趋势分析]
+        O3[单店模型健康度]
+        O4[扩张进度追踪]
+    end
+
+    subgraph "价值赋能"
+        E1[资源对接平台]
+        E2[供应链优化建议]
+        E3[数字化升级指导]
+        E4[行业研究支持]
+    end
+
+    subgraph "增长分析"
+        G1[同店增长分析]
+        G2[新店表现评估]
+        G3[品类结构优化]
+        G4[用户画像分析]
+    end
+
+    subgraph "退出管理"
+        X1[投资回报追踪]
+        X2[回款进度管理]
+        X3[提前还款处理]
+        X4[到期结清管理]
+        X5[投资档案归档]
+    end
+
+    O1 & O2 & O3 & O4 --> G1 & G2 & G3 & G4
+    O1 & O2 & O3 & O4 --> E1 & E2 & E3 & E4
+    O1 & O2 & O3 & O4 --> X1 & X2 & X3 & X4 & X5
+    G1 & G2 & G3 & G4 --> E1 & E2 & E3 & E4
+                </div>
+            </div>
+        </div>
+
+        <div id="content-ai" class="tab-content hidden">
+            <div class="bg-white/5 backdrop-blur-lg rounded-3xl p-8 glow">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span class="w-2 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></span>
+                    AI 智能化能力矩阵
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">🔍</div>
+                        <h3 class="text-lg font-bold mb-2">智能尽调助手</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• 财务报表智能解析</li>
+                            <li>• 合同条款风险识别</li>
+                            <li>• 异常数据自动标注</li>
+                            <li>• 尽调报告自动生成</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-lg font-bold mb-2">收入预测引擎</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• 基于历史数据预测</li>
+                            <li>• 季节性因素建模</li>
+                            <li>• 门店增长趋势分析</li>
+                            <li>• 投资回收期测算</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">⚠️</div>
+                        <h3 class="text-lg font-bold mb-2">风险预警系统</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• 实时异常检测</li>
+                            <li>• 收入下滑预警</li>
+                            <li>• 数据造假识别</li>
+                            <li>• 风险等级自动评定</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">💡</div>
+                        <h3 class="text-lg font-bold mb-2">方案优化建议</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• RBF参数智能推荐</li>
+                            <li>• 多方案对比分析</li>
+                            <li>• 风险收益平衡优化</li>
+                            <li>• 退出策略建议</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">💬</div>
+                        <h3 class="text-lg font-bold mb-2">智能对话助手</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• 项目信息问答</li>
+                            <li>• 数据查询对话式</li>
+                            <li>• 流程指引助手</li>
+                            <li>• 知识库智能检索</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl p-6 card-hover">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-lg font-bold mb-2">投后增长分析</h3>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li>• 门店表现智能评分</li>
+                            <li>• 增长瓶颈诊断</li>
+                            <li>• 优化建议生成</li>
+                            <li>• 行业对标分析</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-16 text-gray-500 text-sm">
+            <p>RBF 联营投资管理系统 · 设计方案 v1.0</p>
+        </footer>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#e0e7ff',
+                primaryTextColor: '#1e1b4b',
+                primaryBorderColor: '#6366f1',
+                lineColor: '#6366f1',
+                secondaryColor: '#fef3c7',
+                tertiaryColor: '#d1fae5'
+            }
+        });
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('tab-active');
+                el.classList.add('bg-white/10', 'hover:bg-white/20');
+            });
+            
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            const activeTab = document.getElementById('tab-' + tabName);
+            activeTab.classList.add('tab-active');
+            activeTab.classList.remove('bg-white/10', 'hover:bg-white/20');
+        }
+    </script>
+</body>
+</html>
