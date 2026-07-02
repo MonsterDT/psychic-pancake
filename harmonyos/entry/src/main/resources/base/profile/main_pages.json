@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "pages/MainPage/MainPage",
+    "pages/XiaomeiChat/XiaomeiChat",
+    "pages/XiaomeiSettings/XiaomeiSettings"
+  ],
+  "window": {
+    "designWidth": 360,
+    "autoDesignWidth": true
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "妆伴"
+    },
+    {
+      "name": "app_desc",
+      "value": "美妆闺蜜AI应用，你的专属美妆顾问"
+    },
+    {
+      "name": "module_desc",
+      "value": "主入口模块"
+    },
+    {
+      "name": "ability_desc",
+      "value": "主功能页面"
+    },
+    {
+      "name": "ability_label",
+      "value": "妆伴"
+    },
+    {
+      "name": "perm_audio_reason",
+      "value": "需要访问麦克风进行语音交互"
+    },
+    {
+      "name": "xiaomei_name",
+      "value": "小美"
+    },
+    {
+      "name": "xiaomei_wake_word",
+      "value": "小美小美"
+    },
+    {
+      "xiaomei_greeting": "你好呀！我是小美，你的美妆闺蜜~ 有什么可以帮你的？"
+    },
+    {
+      "name": "btn_voice",
+      "value": "语音"
+    },
+    {
+      "name": "btn_settings",
+      "value": "设置"
+    },
+    {
+      "name": "placeholder_input",
+      "value": "和小美聊聊..."
+    },
+    {
+      "name": "title_settings",
+      "value": "小美设置"
+    },
+    {
+      "name": "label_personality",
+      "value": "AI性格特征"
+    },
+    {
+      "name": "desc_personality",
+      "value": "选择小美的互动性格"
+    },
+    {
+      "name": "personality_gentle",
+      "value": "温柔贴心"
+    },
+    {
+      "name": "desc_gentle",
+      "value": "像闺蜜一样温柔关怀"
+    },
+    {
+      "name": "personality_professional",
+      "value": "专业严谨"
+    },
+    {
+      "name": "desc_professional",
+      "value": "专业美妆顾问风格"
+    },
+    {
+      "name": "personality_cheerful",
+      "value": "活泼开朗"
+    },
+    {
+      "name": "desc_cheerful",
+      "value": "元气满满正能量"
+    },
+    {
+      "name": "label_professional",
+      "value": "专业领域"
+    },
+    {
+      "name": "desc_professional",
+      "value": "专注的美妆专业方向"
+    },
+    {
+      "name": "prof_all",
+      "value": "全部"
+    },
+    {
+      "name": "prof_makeup",
+      "value": "彩妆"
+    },
+    {
+      "name": "prof_skincare",
+      "value": "护肤"
+    },
+    {
+      "name": "prof_hair",
+      "value": "发型"
+    },
+    {
+      "name": "prof_nails",
+      "value": "美甲"
+    },
+    {
+      "name": "label_memory",
+      "value": "记忆功能"
+    },
+    {
+      "name": "desc_memory",
+      "value": "记住你的偏好和历史记录"
+    },
+    {
+      "name": "label_style",
+      "value": "交互风格"
+    },
+    {
+      "name": "desc_style",
+      "value": "小美的回复风格"
+    },
+    {
+      "name": "style_concise",
+      "value": "简洁明了"
+    },
+    {
+      "name": "style_detailed",
+      "value": "详细丰富"
+    },
+    {
+      "name": "style_humorous",
+      "value": "幽默风趣"
+    },
+    {
+      "name": "toast_save_success",
+      "value": "设置已保存"
+    },
+    {
+      "name": "toast_memory_on",
+      "value": "记忆功能已开启"
+    },
+    {
+      "name": "toast_memory_off",
+      "value": "记忆功能已关闭"
+    }
+  ]
+}

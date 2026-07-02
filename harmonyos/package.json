@@ -1,0 +1,26 @@
+{
+  "name": "makeuppal",
+  "version": "1.0.0",
+  "description": "美妆闺蜜AI应用 - 妆伴",
+  "main": "index.js",
+  "scripts": {
+    "build:hap": "hvigorw assembleHap",
+    "build:app": "hvigorw assembleApp",
+    "build:debug": "hvigorw assembleHap --mode debug",
+    "build:release": "hvigorw assembleHap --mode release",
+    "clean": "hvigorw clean",
+    "start": "hvigorw run",
+    "install": "hvigorw installHap",
+    "build:all": "hvigorw assembleHap && hvigorw assembleApp"
+  },
+  "dependencies": {
+    "@ohos/hypium": "^6.0.0"
+  },
+  "devDependencies": {
+    "@ohos/hvigor": "^4.0.0",
+    "@ohos/hvigor-ohos-plugin": "^4.0.0"
+  },
+  "keywords": ["makeup", "beauty", "AI", "companion", "harmonyos"],
+  "author": "MonsterDT",
+  "license": "MIT"
+}
