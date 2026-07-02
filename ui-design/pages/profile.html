@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 - 妆伴 MakeupPal</title>
+    <style id="theme-vars">
+/* MakeupPal Brand Design System */
+/* Rose Gold + Cream Warm Palette */
+
+:root {
+  /* === Brand Colors === */
+  --color-primary: #C4956A;
+  --color-primary-light: #D4B08A;
+  --color-primary-lighter: #E8D5C0;
+  --color-primary-lightest: #F5EDE4;
+  --color-primary-dark: #A87D56;
+  --color-primary-darker: #8B6542;
+
+  /* Background & Surface */
+  --color-bg: #FFF8F0;
+  --color-bg-secondary: #FFF1E6;
+  --color-bg-tertiary: #FFE8D6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+
+  /* Text */
+  --color-text-primary: #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-tertiary: #9E9790;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #C4956A;
+
+  /* Semantic State Colors */
+  --state-success: #4CAF50;
+  --state-warning: #FF9800;
+  --state-error: #E53935;
+  --state-info: #42A5F5;
+
+  /* Border */
+  --color-border: #E8DDD2;
+  --color-border-light: #F0E8DF;
+
+  /* === Typography === */
+  --font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* === Spacing === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+
+  /* === Radius === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* === Shadow === */
+  --shadow-sm: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-md: 0 2px 8px rgba(196, 149, 106, 0.05);
+  --shadow-lg: 0 4px 16px rgba(196, 149, 106, 0.05);
+  --shadow-xl: 0 8px 32px rgba(196, 149, 106, 0.05);
+  --shadow-card: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* === Animation === */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* === Z-index === */
+  --z-tab-bar: 100;
+  --z-bottom-sheet: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* === Layout === */
+  --tab-bar-height: 56px;
+  --header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px;
+}
+
+/* === Typography Classes === */
+.text-xs { font-size: var(--font-size-xs); line-height: var(--line-height-tight); }
+.text-sm { font-size: var(--font-size-sm); line-height: var(--line-height-normal); }
+.text-base { font-size: var(--font-size-base); line-height: var(--line-height-normal); }
+.text-md { font-size: var(--font-size-md); line-height: var(--line-height-normal); }
+.text-lg { font-size: var(--font-size-lg); line-height: var(--line-height-normal); }
+.text-xl { font-size: var(--font-size-xl); line-height: var(--line-height-tight); }
+.text-2xl { font-size: var(--font-size-2xl); line-height: var(--line-height-tight); }
+.text-3xl { font-size: var(--font-size-3xl); line-height: var(--line-height-tight); }
+.text-4xl { font-size: var(--font-size-4xl); line-height: var(--line-height-tight); }
+
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* === Color Utility Classes === */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-brand { color: var(--color-primary); }
+.text-brand-dark { color: var(--color-primary-dark); }
+.text-success { color: var(--state-success); }
+.text-warning { color: var(--state-warning); }
+.text-error { color: var(--state-error); }
+
+.bg-page { background-color: var(--color-bg); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-brand { background-color: var(--color-primary); }
+.bg-brand-light { background-color: var(--color-primary-lighter); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+
+/* === Component Classes === */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-brand {
+  background: var(--color-primary-lightest);
+  color: var(--color-primary-dark);
+}
+
+.badge-success {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.badge-warning {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.badge-error {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: var(--z-bottom-sheet);
+  transition: opacity var(--transition-fast);
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  z-index: calc(var(--z-bottom-sheet) + 1);
+  transition: transform var(--transition-fast);
+}
+
+.bottom-sheet-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  margin: 8px auto;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* GP Token Badge */
+.gp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #C4956A, #D4B08A);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Tab Bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--tab-bar-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: var(--z-tab-bar);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  transition: color var(--transition-fast);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.tab-item.active {
+  color: var(--color-primary);
+}
+
+.tab-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Button Styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(196, 149, 106, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border: 1.5px solid var(--color-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 42, 38, 0.85);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  z-index: var(--z-toast);
+  backdrop-filter: blur(8px);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <!-- Top bar icons -->
+    <div style="display:flex; justify-content:flex-end; align-items:center; margin-bottom:20px; position:relative; z-index:2;">
+      <!-- Notification bell -->
+      <div style="width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; position:relative;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span style="position:absolute; top:4px; right:4px; width:7px; height:7px; border-radius:50%; background:#E53935; border:1.5px solid #C4956A;"></span>
+      </div>
+      <!-- Settings gear -->
+      <div style="width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; margin-left:4px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- User info -->
+    <div style="display:flex; align-items:center; gap:14px; position:relative; z-index:2;">
+      <!-- Avatar -->
+      <div style="width:64px; height:64px; border-radius:50%; border:3px solid rgba(255,255,255,0.9); overflow:hidden; flex-shrink:0; background:rgba(255,255,255,0.15);">
+        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="rgba(255,255,255,0.85)">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Name & badge -->
+      <div>
+        <div style="font-size:18px; font-weight:700; color:#FFFFFF; line-height:1.3;">小美</div>
+        <div style="margin-top:6px;">
+          <span style="display:inline-flex; align-items:center; gap:4px; padding:3px 12px; border-radius:999px; background:linear-gradient(135deg, #F0D48A, #E8C44A); font-size:11px; font-weight:600; color:#8B6914; box-shadow:0 1px 4px rgba(232,196,74,0.3);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8B6914">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm0 2h14v2H5v-2z"/>
+            </svg>
+            Gold会员
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GP Balance Card -->
+    <div class="gp-card">
+      <div>
+        <div class="gp-number">128 <span style="font-size:14px; font-weight:500;">GP</span></div>
+        <div class="gp-label">我的GP余额</div>
+      </div>
+      <div class="gp-actions">
+        <button class="gp-btn gp-btn-primary">充值</button>
+        <button class="gp-btn gp-btn-secondary">明细</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature Cards Grid -->
+  <div class="feature-grid">
+    <!-- Card 1: 美妆工具箱 -->
+    <div class="feature-card">
+      <div class="icon-wrap" style="background:#FFF1E6;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+        <span class="red-dot"></span>
+      </div>
+      <span class="card-label">美妆工具箱</span>
+      <span class="card-subtitle">3件产品</span>
+    </div>
+
+    <!-- Card 2: 肤质档案 -->
+    <div class="feature-card">
+      <div class="icon-wrap" style="background:#E8F5E9;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          <path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/>
+          <circle cx="12" cy="7" r="1" fill="#4CAF50"/>
+        </svg>
+      </div>
+      <span class="card-label">肤质档案</span>
+      <span class="card-subtitle">油性肌肤</span>
+    </div>
+
+    <!-- Card 3: 明星脸型 -->
+    <div class="feature-card">
+      <div class="icon-wrap" style="background:#FFF8E1;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <span class="card-label">明星脸型</span>
+      <span class="card-subtitle">Top3相似度</span>
+    </div>
+
+    <!-- Card 4: 我的收藏 -->
+    <div class="feature-card">
+      <div class="icon-wrap" style="background:#FCE4EC;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E91E63" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <span class="card-label">我的收藏</span>
+      <span class="card-subtitle">12件好物</span>
+    </div>
+  </div>
+
+  <!-- Star Face Match Card -->
+  <div class="star-face-card">
+    <div class="card-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      明星脸型匹配
+    </div>
+    <div class="celebrity-list">
+      <!-- Celebrity 1 -->
+      <div class="celebrity-item">
+        <div class="celebrity-avatar">
+          <div class="ring ring-gold"></div>
+          <div class="avatar-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="1.5">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+        </div>
+        <span class="celebrity-name">明星A</span>
+        <span class="celebrity-match">85%相似</span>
+      </div>
+      <!-- Celebrity 2 -->
+      <div class="celebrity-item">
+        <div class="celebrity-avatar">
+          <div class="ring ring-light"></div>
+          <div class="avatar-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D4B08A" stroke-width="1.5">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+        </div>
+        <span class="celebrity-name">明星B</span>
+        <span class="celebrity-match">78%相似</span>
+      </div>
+      <!-- Celebrity 3 -->
+      <div class="celebrity-item">
+        <div class="celebrity-avatar">
+          <div class="ring ring-lighter"></div>
+          <div class="avatar-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E8D5C0" stroke-width="1.5">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+        </div>
+        <span class="celebrity-name">明星C</span>
+        <span class="celebrity-match">72%相似</span>
+      </div>
+    </div>
+    <div class="view-report-link">
+      查看完整报告
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Settings List -->
+  <!-- Group 1 -->
+  <div class="settings-section">
+    <div class="settings-section-title">常用功能</div>
+    <div class="settings-group">
+      <!-- 我的订单 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#FFF1E6;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C4956A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <span class="item-text">我的订单</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <!-- 创作者中心 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#F3E5F5;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#9C27B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+            <path d="M2 2l7.586 7.586"/>
+            <circle cx="11" cy="11" r="2"/>
+          </svg>
+        </div>
+        <span class="item-text">创作者中心</span>
+        <span class="item-badge">L2</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <!-- 地址管理 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#E8F5E9;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <span class="item-text">地址管理</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Group 2 -->
+  <div class="settings-section" style="margin-bottom:24px;">
+    <div class="settings-section-title">更多</div>
+    <div class="settings-group">
+      <!-- 帮助与反馈 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#E3F2FD;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#42A5F5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <span class="item-text">帮助与反馈</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <!-- 设置 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#F5F5F5;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#757575" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <span class="item-text">设置</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+      <!-- 关于妆伴 -->
+      <div class="settings-item">
+        <div class="item-icon" style="background:#FFF8E1;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <span class="item-text">关于妆伴</span>
+        <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Tab Bar -->
+  <div class="tab-bar" data-active-tab="profile">
+    <!-- 首页 -->
+    <a class="tab-item" href="home.html" data-dom-id="tab-home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span>首页</span>
+    </a>
+    <!-- 搜索 -->
+    <a class="tab-item" href="search.html" data-dom-id="tab-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <span>搜索</span>
+    </a>
+    <!-- 商城 -->
+    <a class="tab-item" href="mall.html" data-dom-id="tab-mall">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span>商城</span>
+    </a>
+    <!-- 镜面 -->
+    <a class="tab-item" href="mirror.html" data-dom-id="tab-mirror">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span>镜面</span>
+    </a>
+    <!-- 我的 (active) -->
+    <a class="tab-item active" href="profile.html" data-dom-id="tab-profile">
+      <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+      <span>我的</span>
+    </a>
+  </div>
+
+
+    <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-family);
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      max-width: 414px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding-bottom: calc(var(--tab-bar-height) + var(--safe-area-bottom));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Profile Header */
+    .profile-header {
+      background: linear-gradient(135deg, #C4956A, #D4B08A);
+      padding: 40px 16px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -40px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .profile-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* GP Card */
+    .gp-card {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .gp-card .gp-number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .gp-card .gp-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 2px;
+    }
+    .gp-card .gp-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .gp-card .gp-btn {
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .gp-card .gp-btn-primary {
+      background: rgba(255, 255, 255, 0.95);
+      color: #C4956A;
+    }
+    .gp-card .gp-btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Feature Cards Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 16px;
+      margin-top: -12px;
+      position: relative;
+      z-index: 2;
+    }
+    .feature-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(196, 149, 106, 0.10);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .feature-card:active {
+      transform: scale(0.97);
+    }
+    .feature-card .icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .feature-card .icon-wrap svg {
+      width: 24px;
+      height: 24px;
+    }
+    .feature-card .card-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2D2A26;
+    }
+    .feature-card .card-subtitle {
+      font-size: 11px;
+      color: #9E9790;
+    }
+    .red-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #E53935;
+      border: 2px solid #FFFFFF;
+    }
+
+    /* Star Face Match Card */
+    .star-face-card {
+      margin: 0 16px 16px;
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(196, 149, 106, 0.10);
+      padding: 16px;
+    }
+    .star-face-card .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #2D2A26;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .celebrity-list {
+      display: flex;
+      justify-content: space-around;
+      gap: 12px;
+    }
+    .celebrity-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .celebrity-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .celebrity-avatar .avatar-inner {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #F5EDE4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .celebrity-avatar .avatar-inner svg {
+      width: 28px;
+      height: 28px;
+      color: #C4956A;
+    }
+    .celebrity-avatar .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 3px solid transparent;
+    }
+    .celebrity-avatar .ring-gold {
+      border-color: #C4956A;
+    }
+    .celebrity-avatar .ring-light {
+      border-color: #D4B08A;
+    }
+    .celebrity-avatar .ring-lighter {
+      border-color: #E8D5C0;
+    }
+    .celebrity-name {
+      font-size: 12px;
+      color: #6B6560;
+    }
+    .celebrity-match {
+      font-size: 11px;
+      color: #C4956A;
+      font-weight: 600;
+    }
+    .view-report-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid #F0E8DF;
+      font-size: 13px;
+      color: #C4956A;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .view-report-link svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Settings List */
+    .settings-section {
+      margin: 0 16px 16px;
+    }
+    .settings-section-title {
+      font-size: 12px;
+      color: #9E9790;
+      font-weight: 500;
+      padding: 0 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .settings-group {
+      background: #FFFFFF;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(196, 149, 106, 0.10);
+      overflow: hidden;
+    }
+    .settings-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      position: relative;
+    }
+    .settings-item:active {
+      background: #FFF8F0;
+    }
+    .settings-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 52px;
+      right: 16px;
+      height: 1px;
+      background: #F0E8DF;
+    }
+    .settings-item .item-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .settings-item .item-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .settings-item .item-text {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      color: #2D2A26;
+    }
+    .settings-item .item-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #C4956A, #D4B08A);
+      color: #FFFFFF;
+      margin-right: 8px;
+    }
+    .settings-item .item-arrow {
+      width: 16px;
+      height: 16px;
+      color: #C4C0BC;
+      flex-shrink: 0;
+    }
+
+    /* Bottom Tab Bar */
+    .tab-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 414px;
+      height: 56px;
+      background: #FFFFFF;
+      border-top: 1px solid #F0E8DF;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 10px;
+      color: #9E9790;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+    .tab-item.active {
+      color: #C4956A;
+    }
+    .tab-item svg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeupPal - 首页</title>
+    <style id="theme-vars">
+/* MakeupPal Brand Design System */
+/* Rose Gold + Cream Warm Palette */
+
+:root {
+  /* === Brand Colors === */
+  --color-primary: #C4956A;
+  --color-primary-light: #D4B08A;
+  --color-primary-lighter: #E8D5C0;
+  --color-primary-lightest: #F5EDE4;
+  --color-primary-dark: #A87D56;
+  --color-primary-darker: #8B6542;
+
+  /* Background & Surface */
+  --color-bg: #FFF8F0;
+  --color-bg-secondary: #FFF1E6;
+  --color-bg-tertiary: #FFE8D6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+
+  /* Text */
+  --color-text-primary: #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-tertiary: #9E9790;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #C4956A;
+
+  /* Semantic State Colors */
+  --state-success: #4CAF50;
+  --state-warning: #FF9800;
+  --state-error: #E53935;
+  --state-info: #42A5F5;
+
+  /* Border */
+  --color-border: #E8DDD2;
+  --color-border-light: #F0E8DF;
+
+  /* === Typography === */
+  --font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* === Spacing === */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+
+  /* === Radius === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* === Shadow === */
+  --shadow-sm: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-md: 0 2px 8px rgba(196, 149, 106, 0.05);
+  --shadow-lg: 0 4px 16px rgba(196, 149, 106, 0.05);
+  --shadow-xl: 0 8px 32px rgba(196, 149, 106, 0.05);
+  --shadow-card: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* === Animation === */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+
+  /* === Z-index === */
+  --z-tab-bar: 100;
+  --z-bottom-sheet: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* === Layout === */
+  --tab-bar-height: 56px;
+  --header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px;
+}
+
+/* === Typography Classes === */
+.text-xs { font-size: var(--font-size-xs); line-height: var(--line-height-tight); }
+.text-sm { font-size: var(--font-size-sm); line-height: var(--line-height-normal); }
+.text-base { font-size: var(--font-size-base); line-height: var(--line-height-normal); }
+.text-md { font-size: var(--font-size-md); line-height: var(--line-height-normal); }
+.text-lg { font-size: var(--font-size-lg); line-height: var(--line-height-normal); }
+.text-xl { font-size: var(--font-size-xl); line-height: var(--line-height-tight); }
+.text-2xl { font-size: var(--font-size-2xl); line-height: var(--line-height-tight); }
+.text-3xl { font-size: var(--font-size-3xl); line-height: var(--line-height-tight); }
+.text-4xl { font-size: var(--font-size-4xl); line-height: var(--line-height-tight); }
+
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* === Color Utility Classes === */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-brand { color: var(--color-primary); }
+.text-brand-dark { color: var(--color-primary-dark); }
+.text-success { color: var(--state-success); }
+.text-warning { color: var(--state-warning); }
+.text-error { color: var(--state-error); }
+
+.bg-page { background-color: var(--color-bg); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-brand { background-color: var(--color-primary); }
+.bg-brand-light { background-color: var(--color-primary-lighter); }
+.bg-secondary { background-color: var(--color-bg-secondary); }
+
+/* === Component Classes === */
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-brand {
+  background: var(--color-primary-lightest);
+  color: var(--color-primary-dark);
+}
+
+.badge-success {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.badge-warning {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.badge-error {
+  background: #FFEBEE;
+  color: #C62828;
+}
+
+.bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: var(--z-bottom-sheet);
+  transition: opacity var(--transition-fast);
+}
+
+.bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  z-index: calc(var(--z-bottom-sheet) + 1);
+  transition: transform var(--transition-fast);
+}
+
+.bottom-sheet-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  margin: 8px auto;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-bg-secondary) 25%, var(--color-bg-tertiary) 50%, var(--color-bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* GP Token Badge */
+.gp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #C4956A, #D4B08A);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Tab Bar */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--tab-bar-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: var(--z-tab-bar);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  transition: color var(--transition-fast);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.tab-item.active {
+  color: var(--color-primary);
+}
+
+.tab-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Button Styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(196, 149, 106, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border: 1.5px solid var(--color-primary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 42, 38, 0.85);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  z-index: var(--z-toast);
+  backdrop-filter: blur(8px);
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-primary: var(--color-primary);
+    --color-border: var(--color-border);
+  }
+  @layer base {
+    body { background: var(--color-surface); color: var(--color-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body>
+
+<div class="app-frame" style="max-width: 414px; margin: 0 auto; min-height: 100vh; background: var(--color-bg); position: relative; font-family: var(--font-family);">
+
+  <main class="page-content" style="padding-bottom: calc(56px + var(--safe-area-bottom)); min-height: 100vh; overflow-y: auto;">
+
+    <!-- ========== 1. Header (Sticky Top) ========== -->
+    <header style="position: sticky; top: 0; z-index: 50; background: var(--color-bg); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+
+      <!-- Left: Avatar + Nickname + GP Badge -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <!-- User Avatar with gradient ring -->
+        <div class="avatar-ring" style="width: 40px; height: 40px; flex-shrink: 0;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: 600;">美</div>
+        </div>
+        <!-- Nickname -->
+        <span style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);">小美</span>
+        <!-- GP Badge -->
+        <div class="gp-badge" style="font-size: 11px; padding: 3px 8px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/>
+          </svg>
+          <span>128 GP</span>
+        </div>
+      </div>
+
+      <!-- Right: Notification Bell + Recharge Button -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <!-- Notification Bell -->
+        <button style="position: relative; background: none; border: none; padding: 4px; cursor: pointer; -webkit-tap-highlight-color: transparent;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <!-- Red dot indicator -->
+          <span style="position: absolute; top: 2px; right: 2px; width: 7px; height: 7px; background: var(--state-error); border-radius: 50%; border: 1.5px solid var(--color-bg);"></span>
+        </button>
+        <!-- Recharge Button -->
+        <button class="btn-secondary" style="padding: 5px 12px; font-size: var(--font-size-xs); border-width: 1px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 3px;">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/>
+          </svg>
+          充值
+        </button>
+      </div>
+
+    </header>
+
+    <!-- ========== 2. Banner Carousel ========== -->
+    <section style="padding: 0 16px; margin-bottom: 20px;">
+      <div style="position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 16/9;">
+        <!-- Banner Image -->
+        <img src="../assets/hero-banner.jpg" alt="AI焕新妆造" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        <!-- Gradient Overlay -->
+        <div class="banner-overlay" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;">
+          <h1 style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.2); margin-bottom: 4px; line-height: var(--line-height-tight);">AI焕新妆造</h1>
+          <p style="font-size: var(--font-size-sm); color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.15);">发现最适合你的妆容</p>
+        </div>
+        <!-- Dots Indicator -->
+        <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 5px;">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. Feature Entry Grid (2x2) ========== -->
+    <section style="padding: 0 16px; margin-bottom: 24px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+
+        <!-- Feature 1: 面部扫描 -->
+        <div class="feature-card card" style="padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary);">
+            <img src="../assets/feature-scan.jpg" alt="面部扫描" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div style="min-width: 0;">
+            <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 2px;">面部扫描</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">3D脸型分析</div>
+          </div>
+        </div>
+
+        <!-- Feature 2: AI妆造 -->
+        <div class="feature-card card" style="padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary);">
+            <img src="../assets/feature-ai.jpg" alt="AI妆造" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <div style="min-width: 0;">
+            <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 2px;">AI妆造</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">智能推荐妆容</div>
+          </div>
+        </div>
+
+        <!-- Feature 3: 妆造教程 -->
+        <div class="feature-card card" style="padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary); display: flex; align-items: center; justify-content: center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            </svg>
+          </div>
+          <div style="min-width: 0;">
+            <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 2px;">妆造教程</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">跟练步骤详解</div>
+          </div>
+        </div>
+
+        <!-- Feature 4: 肤质检测 -->
+        <div class="feature-card card" style="padding: 14px; display: flex; align-items: center; gap: 12px; cursor: pointer;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary); display: flex; align-items: center; justify-content: center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </div>
+          <div style="min-width: 0;">
+            <div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 2px;">肤质检测</div>
+            <div style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">定制护肤方案</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== 4. Personalized Makeup Feed ========== -->
+    <section style="padding: 0 16px; margin-bottom: 24px;">
+
+      <!-- Section Header -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text-primary);">为你推荐</h2>
+        <a href="#" style="font-size: var(--font-size-sm); color: var(--color-text-tertiary); text-decoration: none; display: flex; align-items: center; gap: 2px; transition: color 0.2s ease;">
+          查看更多
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Feed Card 1 -->
+      <div class="feed-card card" style="padding: 12px; display: flex; gap: 12px; margin-bottom: 12px; cursor: pointer;">
+        <!-- Cover Image -->
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary);">
+          <img src="../assets/feed-card-1.jpg" alt="晚宴精致妆容" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <!-- Info -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0;">
+          <div>
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">晚宴精致妆容</h3>
+            <!-- Creator -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--color-bg-tertiary);">
+                <div style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">L</div>
+              </div>
+              <span style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">美妆师Luna</span>
+            </div>
+          </div>
+          <!-- Bottom: GP Price + Face Type Badge -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-primary);">50 GP</span>
+            <span class="badge badge-brand" style="font-size: 10px; padding: 2px 6px;">适合鹅蛋脸</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed Card 2 -->
+      <div class="feed-card card" style="padding: 12px; display: flex; gap: 12px; margin-bottom: 12px; cursor: pointer;">
+        <!-- Cover Image -->
+        <div style="width: 80px; height: 80px; border-radius: var(--radius-md); overflow: hidden; flex-shrink: 0; background: var(--color-bg-secondary);">
+          <img src="../assets/feed-card-2.jpg" alt="日常清新裸妆" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <!-- Info -->
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0;">
+          <div>
+            <h3 style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">日常清新裸妆</h3>
+            <!-- Creator -->
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 20px; height: 20px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--color-bg-tertiary);">
+                <div style="width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">妆</div>
+              </div>
+              <span style="font-size: var(--font-size-xs); color: var(--color-text-secondary);">小妆日记</span>
+            </div>
+          </div>
+          <!-- Bottom: GP Price + Face Type Badge -->
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-primary);">30 GP</span>
+            <span class="badge badge-brand" style="font-size: 10px; padding: 2px 6px;">适合圆脸</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========== 5. Bottom Tab Bar ========== -->
+  <nav class="tab-bar" data-active-tab="home">
+
+    <!-- Home Tab (Active) -->
+    <a class="tab-item" data-tab-key="home" data-dom-id="tab-home" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12.5L12 4l9 8.5"/>
+        <path d="M5 11v8a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-8"/>
+      </svg>
+      <span>首页</span>
+    </a>
+
+    <!-- Search Tab -->
+    <a class="tab-item" data-tab-key="search" data-dom-id="tab-search" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <span>搜索</span>
+    </a>
+
+    <!-- Mall Tab -->
+    <a class="tab-item" data-tab-key="mall" data-dom-id="tab-mall" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 7v13a2 2 0 002 2h14a2 2 0 002-2V7l-3-5H6z"/>
+        <path d="M3 7h18"/>
+        <path d="M16 11a4 4 0 01-8 0"/>
+      </svg>
+      <span>商城</span>
+    </a>
+
+    <!-- Mirror Tab -->
+    <a class="tab-item" data-tab-key="mirror" data-dom-id="tab-mirror" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3v18"/>
+        <path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/>
+        <path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/>
+      </svg>
+      <span>镜面</span>
+    </a>
+
+    <!-- Profile Tab -->
+    <a class="tab-item" data-tab-key="profile" data-dom-id="tab-profile" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 10-16 0"/>
+      </svg>
+      <span>我的</span>
+    </a>
+
+  </nav>
+
+</div>
+
+
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-family);
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Scrollbar hide */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Banner carousel dots */
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: all 0.2s ease; }
+    .dot.active { width: 18px; border-radius: 3px; background: #fff; }
+
+    /* Feature card hover */
+    .feature-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .feature-card:active { transform: scale(0.97); }
+
+    /* Feed card */
+    .feed-card { transition: transform 0.2s ease; }
+    .feed-card:active { transform: scale(0.98); }
+
+    /* Gradient border for avatar */
+    .avatar-ring {
+      padding: 2px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C4956A, #D4B08A, #E8D5C0);
+    }
+    .avatar-ring img {
+      border-radius: 50%;
+      border: 2px solid var(--color-bg);
+      display: block;
+    }
+
+    /* Banner gradient overlay */
+    .banner-overlay {
+      background: linear-gradient(180deg, rgba(45,42,38,0.05) 0%, rgba(45,42,38,0.55) 100%);
+    }
+
+    /* Tab bar active states */
+    .tab-item[data-active="true"] { color: var(--color-primary); }
+    .tab-bar[data-active-tab="home"] .tab-item[data-tab-key="home"],
+    .tab-bar[data-active-tab="search"] .tab-item[data-tab-key="search"],
+    .tab-bar[data-active-tab="mall"] .tab-item[data-tab-key="mall"],
+    .tab-bar[data-active-tab="mirror"] .tab-item[data-tab-key="mirror"],
+    .tab-bar[data-active-tab="profile"] .tab-item[data-tab-key="profile"] {
+      color: var(--color-primary);
+    }
+    .tab-bar .tab-item {
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .tab-bar[data-active-tab="home"] .tab-item[data-tab-key="home"],
+    .tab-bar[data-active-tab="search"] .tab-item[data-tab-key="search"],
+    .tab-bar[data-active-tab="mall"] .tab-item[data-tab-key="mall"],
+    .tab-bar[data-active-tab="mirror"] .tab-item[data-tab-key="mirror"],
+    .tab-bar[data-active-tab="profile"] .tab-item[data-tab-key="profile"] {
+      color: var(--color-primary);
+    }
+  </style>
+</body>
+</html>

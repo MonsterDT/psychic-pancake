@@ -1,0 +1,36 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "ability",
+    "srcEntry": "./ets/MainAbility/MainAbility.ts",
+    "description": "$string:module_desc",
+    "mainElement": "MainAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": [
+      "$profile:main_pages.json"
+    ],
+    "abilities": [
+      {
+        "name": "MainAbility",
+        "srcEntry": "./ets/MainAbility/MainAbility.ts",
+        "description": "$string:ability_desc",
+        "icon": "$media:app_icon",
+        "label": "$string:ability_label",
+        "startWindowIcon": "$media:app_icon",
+        "startWindowBackground": "$color:start_window_bg",
+        "orientation": "unspecified"
+      }
+    ],
+    "metadata": [],
+    "requestPermissions": [
+      "ohos.permission.RECORD_AUDIO",
+      "ohos.permission.INTERNET",
+      "ohos.permission.ACCESS_NETWORK_STATE"
+    ]
+  }
+}

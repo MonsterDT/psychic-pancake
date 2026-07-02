@@ -1,0 +1,96 @@
+{
+  "dimen": [
+    {
+      "name": "spacing_1",
+      "value": "4vp"
+    },
+    {
+      "name": "spacing_2",
+      "value": "8vp"
+    },
+    {
+      "name": "spacing_3",
+      "value": "12vp"
+    },
+    {
+      "name": "spacing_4",
+      "value": "16vp"
+    },
+    {
+      "name": "spacing_5",
+      "value": "20vp"
+    },
+    {
+      "name": "spacing_6",
+      "value": "24vp"
+    },
+    {
+      "name": "spacing_8",
+      "value": "32vp"
+    },
+    {
+      "name": "radius_xs",
+      "value": "4vp"
+    },
+    {
+      "name": "radius_sm",
+      "value": "6vp"
+    },
+    {
+      "name": "radius_md",
+      "value": "10vp"
+    },
+    {
+      "name": "radius_lg",
+      "value": "16vp"
+    },
+    {
+      "name": "radius_xl",
+      "value": "20vp"
+    },
+    {
+      "name": "radius_full",
+      "value": "9999vp"
+    },
+    {
+      "name": "font_size_xs",
+      "value": "11fp"
+    },
+    {
+      "name": "font_size_sm",
+      "value": "12fp"
+    },
+    {
+      "name": "font_size_base",
+      "value": "14fp"
+    },
+    {
+      "name": "font_size_md",
+      "value": "15fp"
+    },
+    {
+      "name": "font_size_lg",
+      "value": "17fp"
+    },
+    {
+      "name": "font_size_xl",
+      "value": "19fp"
+    },
+    {
+      "name": "font_size_2xl",
+      "value": "22fp"
+    },
+    {
+      "name": "font_size_3xl",
+      "value": "28fp"
+    },
+    {
+      "name": "header_height",
+      "value": "56vp"
+    },
+    {
+      "name": "tab_bar_height",
+      "value": "56vp"
+    }
+  ]
+}
