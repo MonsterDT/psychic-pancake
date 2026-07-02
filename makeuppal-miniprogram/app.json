@@ -1,0 +1,141 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/library/library",
+    "pages/mirror/mirror",
+    "pages/mall/mall",
+    "pages/profile/profile"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "name": "trade",
+      "pages": [
+        "pages/product-detail/product-detail",
+        "pages/cart/cart",
+        "pages/orders/orders",
+        "pages/order-detail/order-detail",
+        "pages/address/address",
+        "pages/address-edit/address-edit",
+        "pages/coupon/coupon",
+        "pages/favorites/favorites"
+      ]
+    },
+    {
+      "root": "packageB",
+      "name": "library-detail",
+      "pages": [
+        "pages/template-detail/template-detail",
+        "pages/my-templates/my-templates",
+        "pages/my-reports/my-reports",
+        "pages/report-detail/report-detail",
+        "pages/face-profile/face-profile",
+        "pages/diary/diary",
+        "pages/custom-makeup/custom-makeup",
+        "pages/skin-protection/skin-protection",
+        "pages/toolbox/toolbox"
+      ]
+    },
+    {
+      "root": "packageC",
+      "name": "creator",
+      "pages": [
+        "pages/creator/creator",
+        "pages/upload/upload",
+        "pages/data-center/data-center",
+        "pages/earnings/earnings",
+        "pages/academy/academy",
+        "pages/brand/brand",
+        "pages/style-pref/style-pref",
+        "pages/store-map/store-map",
+        "pages/message/message",
+        "pages/invite/invite"
+      ]
+    },
+    {
+      "root": "packageD",
+      "name": "flow",
+      "pages": [
+        "pages/search/search",
+        "pages/scan/scan",
+        "pages/gp-center/gp-center",
+        "pages/trending/trending",
+        "pages/recharge/recharge",
+        "pages/withdraw/withdraw",
+        "pages/companion-chat/companion-chat",
+        "pages/mirror-settings/mirror-settings",
+        "pages/face-auth/face-auth",
+        "pages/onboarding/onboarding",
+        "pages/share/share"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/library/library": {
+      "network": "all",
+      "packages": ["library-detail"]
+    },
+    "pages/mall/mall": {
+      "network": "all",
+      "packages": ["trade"]
+    },
+    "pages/profile/profile": {
+      "network": "all",
+      "packages": ["creator", "flow"]
+    }
+  },
+  "window": {
+    "navigationBarTitleText": "妆伴 MakeupPal",
+    "navigationBarBackgroundColor": "#FFF8F0",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF8F0",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#9B9590",
+    "selectedColor": "#C4956A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/library/library",
+        "text": "颜库"
+      },
+      {
+        "pagePath": "pages/mirror/mirror",
+        "text": "焕新"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "市集"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于门店地图功能"
+    },
+    "scope.camera": {
+      "desc": "用于虚拟试妆和成分扫描"
+    },
+    "scope.record": {
+      "desc": "用于美妆闺蜜语音输入"
+    },
+    "scope.writePhotosAlbum": {
+      "desc": "用于保存试妆效果和分享图片"
+    }
+  },
+  "requiredPrivateInfos": ["chooseLocation", "getLocation"],
+  "lazyCodeLoading": "requiredComponents",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

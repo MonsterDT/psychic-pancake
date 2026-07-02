@@ -1,0 +1,8 @@
+<!-- pages/profile/profile.wxml -->
+<view class="page-container">
+  <view class="placeholder">
+    <text class="placeholder-title">👤 我的</text>
+    <text class="placeholder-desc">个人中心</text>
+    <text class="placeholder-hint">待实现：面部卡片、GP焕新值、功能网格、创作者中心</text>
+  </view>
+</view>

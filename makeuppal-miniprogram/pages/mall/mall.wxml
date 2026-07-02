@@ -1,0 +1,8 @@
+<!-- pages/mall/mall.wxml -->
+<view class="page-container">
+  <view class="placeholder">
+    <text class="placeholder-title">🛍️ 市集</text>
+    <text class="placeholder-desc">美妆商品浏览与购买</text>
+    <text class="placeholder-hint">待实现：类目tab、商品瀑布流、购物车角标</text>
+  </view>
+</view>

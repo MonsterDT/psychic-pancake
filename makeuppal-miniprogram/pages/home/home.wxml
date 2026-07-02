@@ -1,0 +1,8 @@
+<!-- pages/home/home.wxml -->
+<view class="page-container">
+  <view class="placeholder">
+    <text class="placeholder-title">🏠 首页</text>
+    <text class="placeholder-desc">MakeupPal v3.6.0 小程序版 - 阶段0脚手架</text>
+    <text class="placeholder-hint">待实现：面部档案卡片、金刚位、轮播Banner、热门推荐</text>
+  </view>
+</view>

@@ -1,0 +1,8 @@
+<!-- pages/library/library.wxml -->
+<view class="page-container">
+  <view class="placeholder">
+    <text class="placeholder-title">💄 颜库</text>
+    <text class="placeholder-desc">卡片模式(Tinder滑动) + 瀑布流模式</text>
+    <text class="placeholder-hint">待实现：movable-view卡片滑动、模式切换、7大分类</text>
+  </view>
+</view>

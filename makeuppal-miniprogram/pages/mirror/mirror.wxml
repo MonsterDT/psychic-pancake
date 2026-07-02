@@ -1,0 +1,8 @@
+<!-- pages/mirror/mirror.wxml -->
+<view class="page-container">
+  <view class="placeholder">
+    <text class="placeholder-title">🪞 焕新</text>
+    <text class="placeholder-desc">AI虚拟试妆</text>
+    <text class="placeholder-hint">待实现：camera组件试妆、滤镜slider、拍照保存</text>
+  </view>
+</view>

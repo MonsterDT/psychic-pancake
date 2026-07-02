@@ -1,0 +1,24 @@
+/* pages/mirror/mirror.wxss */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px;
+}
+.placeholder-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+.placeholder-desc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+.placeholder-hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
