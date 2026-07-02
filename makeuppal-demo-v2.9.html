@@ -1,0 +1,2340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>妆伴 MakeupPal V2.9 Demo</title>
+    <style>
+:root {
+  --color-bg: #FFF8F0; --color-bg-alt: #FFF1E6; --color-bg-card: #FFFFFF;
+  --color-primary: #C4956A; --color-primary-light: #D4B896; --color-primary-dark: #A67B52;
+  --color-accent: #E8C9A8; --color-text: #2D2A26; --color-text-secondary: #6B6560; --color-text-muted: #9B9590;
+  --color-border: #E8DDD2; --color-border-light: #F5EDE4; --color-hero-bg: #1A1816; --color-hero-text: #FFF8F0;
+  --color-success: #6B9E6B; --color-warning: #D4A03C; --color-danger: #C45C5C; --color-info: #5B8EC4;
+  --font-sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 20px; --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(45,42,38,0.08); --shadow-md: 0 4px 12px rgba(45,42,38,0.1); --shadow-lg: 0 8px 30px rgba(45,42,38,0.12);
+  --font-size-xs: 11px; --font-size-sm: 12px; --font-size-base: 14px; --font-size-md: 15px; --font-size-lg: 17px;
+  --font-weight-medium: 500; --font-weight-semibold: 600; --font-weight-bold: 700;
+  --spacing-1: 4px; --spacing-2: 8px; --spacing-3: 12px; --spacing-4: 16px; --spacing-5: 20px; --spacing-6: 24px;
+  --tab-bar-height: 56px; --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px; --z-tab: 100; --z-modal: 300; --z-toast: 400; --z-onboarding: 500;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1); --duration-fast: 150ms; --duration-normal: 250ms; --duration-slow: 400ms;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body { font-family: var(--font-sans); background: #e8e2dc; color: var(--color-text); font-size: var(--font-size-base); line-height: 1.6; }
+.app-shell { max-width: var(--content-max-width); margin: 0 auto; min-height: 100vh; background: var(--color-bg); position: relative; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,0.08); }
+.page { display: none; padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom)); min-height: 100vh; overflow-y: auto; animation: pageIn var(--duration-normal) var(--ease); }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.app-header { position: sticky; top: 0; z-index: 50; background: rgba(255, 248, 240, 0.85); backdrop-filter: blur(18px); padding: 10px var(--spacing-4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(232, 221, 210, 0.5); }
+.header-left { display: flex; align-items: center; gap: var(--spacing-3); }
+.header-right { display: flex; align-items: center; gap: var(--spacing-2); }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: var(--font-weight-semibold); font-size: 15px; }
+.avatar-sm { width: 24px; height: 24px; font-size: 10px; }
+.avatar-lg { width: 68px; height: 68px; font-size: 24px; }
+.avatar-ring { padding: 2px; background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-primary-light)); border-radius: 50%; }
+.avatar-ring .avatar { width: 100%; height: 100%; }
+.gp-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; border-radius: var(--radius-full); font-size: 11px; font-weight: var(--font-weight-semibold); cursor: pointer; }
+.gp-badge:active { transform: scale(0.95); }
+.icon-btn { position: relative; width: 36px; height: 36px; background: transparent; border: none; border-radius: 50%; cursor: pointer; color: var(--color-text-secondary); display: flex; align-items: center; justify-content: center; transition: all var(--duration-fast) var(--ease); }
+.icon-btn:active { transform: scale(0.92); background: var(--color-bg-alt); }
+.icon-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
+.notif-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; background: var(--color-danger); border-radius: 50%; border: 1.5px solid var(--color-bg); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 22px; border-radius: var(--radius-full); font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); border: none; cursor: pointer; transition: all var(--duration-fast) var(--ease); font-family: var(--font-sans); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; box-shadow: 0 2px 10px rgba(196, 149, 106, 0.3); }
+.btn-secondary { background: var(--color-bg-card); color: var(--color-primary); border: 1.5px solid var(--color-primary); }
+.btn-ghost { background: transparent; color: var(--color-text-secondary); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 6px 14px; font-size: 12px; }
+.btn-lg { padding: 14px 28px; font-size: var(--font-size-md); }
+.card { background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow: hidden; }
+.badge { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: var(--radius-xs); font-size: 10px; font-weight: var(--font-weight-semibold); }
+.badge-primary { background: #F5EDE4; color: var(--color-primary-dark); }
+.badge-success { background: #E8F0E8; color: var(--color-success); }
+.badge-warning { background: #FAF0E0; color: var(--color-warning); }
+.badge-danger { background: #F5E8E8; color: var(--color-danger); }
+.badge-info { background: #E8EEF5; color: var(--color-info); }
+.badge-pill { border-radius: var(--radius-full); }
+.section { padding: var(--spacing-5) var(--spacing-4); }
+.section-sm { padding: var(--spacing-3) var(--spacing-4); }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-4); }
+.section-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text); }
+.section-more { font-size: var(--font-size-sm); color: var(--color-text-muted); cursor: pointer; }
+
+/* ========== Face Info Card ========== */
+.face-info-card { margin: var(--spacing-4); padding: var(--spacing-4); background: linear-gradient(135deg, #FFF 0%, #FFF8F0 100%); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border-light); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.face-info-card:active { transform: scale(0.99); }
+.face-info-top { display: flex; align-items: center; gap: var(--spacing-3); margin-bottom: var(--spacing-3); }
+.face-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent)); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.face-info-main { flex: 1; }
+.face-info-main h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: 2px; }
+.face-info-main p { font-size: var(--font-size-xs); color: var(--color-text-secondary); }
+.face-tags { display: flex; gap: var(--spacing-2); flex-wrap: wrap; }
+.face-tag { padding: 3px 10px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: 10px; color: var(--color-text-secondary); font-weight: var(--font-weight-medium); }
+.face-tag.primary { background: rgba(196, 149, 106, 0.12); color: var(--color-primary-dark); }
+
+/* ========== Feature 5-grid ========== */
+.features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-4); }
+.feature-card { padding: 12px 4px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: all var(--duration-fast) var(--ease); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.feature-card:active { transform: scale(0.95); }
+.feature-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; }
+.feature-icon svg { color: var(--color-primary); width: 18px; height: 18px; }
+.feature-text h3 { font-size: 10px; font-weight: var(--font-weight-semibold); color: var(--color-text); text-align: center; }
+.feature-text p { font-size: 9px; color: var(--color-text-muted); text-align: center; margin-top: 1px; }
+.feature-new { color: var(--color-danger) !important; font-weight: var(--font-weight-bold) !important; }
+
+/* ========== Hero Banner ========== */
+.hero-banner { margin: 0 var(--spacing-4) var(--spacing-4); border-radius: var(--radius-lg); overflow: hidden; position: relative; aspect-ratio: 16/9; box-shadow: var(--shadow-md); cursor: pointer; }
+.hero-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,24,22,0) 40%, rgba(26,24,22,0.65) 100%); }
+.hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; color: #fff; }
+.hero-content h1 { font-size: 20px; font-weight: var(--font-weight-bold); margin-bottom: 4px; }
+.hero-content p { font-size: var(--font-size-xs); color: rgba(255,248,240,0.8); }
+.hero-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; }
+.hero-dots span { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,248,240,0.4); transition: all var(--duration-fast) var(--ease); }
+.hero-dots span.active { width: 16px; border-radius: 3px; background: #fff; }
+
+/* ========== Waterfall Feed ========== */
+.feed-waterfall { padding: 0 var(--spacing-4); display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-3); margin-bottom: var(--spacing-5); }
+.feed-card { background: var(--color-bg-card); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.feed-card:active { transform: scale(0.97); }
+.feed-card-img { width: 100%; aspect-ratio: 1; background: var(--color-bg-alt); position: relative; }
+.feed-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.feed-card-tag { position: absolute; top: 8px; left: 8px; }
+.feed-card-info { padding: 10px; }
+.feed-card-title { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feed-card-meta { display: flex; align-items: center; justify-content: space-between; }
+.feed-card-creator { display: flex; align-items: center; gap: 4px; }
+.feed-card-creator span { font-size: 10px; color: var(--color-text-muted); }
+.feed-card-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+
+/* ========== Trending Hot ========== */
+.trending-hot { margin: 0 var(--spacing-4) var(--spacing-5); padding: var(--spacing-4); background: linear-gradient(135deg, rgba(196,149,106,0.08), rgba(232,201,168,0.08)); border-radius: var(--radius-lg); }
+.trending-hot-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-3); }
+.trending-hot-title { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); display: flex; align-items: center; gap: 6px; }
+.trending-hot-list { display: flex; flex-direction: column; gap: 10px; }
+.trending-hot-item { display: flex; align-items: center; gap: var(--spacing-3); cursor: pointer; padding: 6px; border-radius: var(--radius-sm); transition: background var(--duration-fast) var(--ease); }
+.trending-hot-item:active { background: rgba(255,255,255,0.5); }
+.trending-hot-rank { width: 20px; font-size: 14px; font-weight: var(--font-weight-bold); text-align: center; }
+.trending-hot-rank.top1 { color: var(--color-danger); }
+.trending-hot-rank.top2 { color: var(--color-warning); }
+.trending-hot-rank.top3 { color: var(--color-primary); }
+.trending-hot-cover { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.trending-hot-info { flex: 1; min-width: 0; }
+.trending-hot-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trending-hot-info p { font-size: 10px; color: var(--color-text-muted); }
+.trending-hot-gp { font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); color: var(--color-primary); }
+
+/* ========== Library Page - Xiaohongshu Style ========== */
+.lib-search-bar { display: flex; align-items: center; gap: 8px; flex: 1; background: var(--color-bg-alt); border-radius: var(--radius-full); padding: 8px 16px; }
+.lib-search-bar input { flex: 1; background: transparent; border: none; outline: none; font-size: var(--font-size-sm); color: var(--color-text); font-family: var(--font-sans); }
+.lib-search-bar input::placeholder { color: var(--color-text-muted); }
+
+/* Level 1 Tabs - 子类目 */
+.lib-cat-tabs { display: flex; gap: 0; padding: 0 var(--spacing-4); overflow-x: auto; background: var(--color-bg); border-bottom: 1px solid var(--color-border-light); position: sticky; top: 60px; z-index: 40; }
+.lib-cat-tab { padding: 12px 16px; font-size: var(--font-size-base); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; position: relative; }
+.lib-cat-tab.active { color: var(--color-text); font-weight: var(--font-weight-bold); font-size: var(--font-size-md); }
+.lib-cat-tab.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; background: var(--color-primary); border-radius: 2px; }
+
+/* Level 2 Tabs - 孙类目 */
+.lib-sub-tabs { display: flex; gap: var(--spacing-2); padding: var(--spacing-3) var(--spacing-4); overflow-x: auto; background: var(--color-bg); position: sticky; top: 104px; z-index: 39; border-bottom: 1px solid var(--color-border-light); }
+.lib-sub-tab { padding: 6px 14px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; }
+.lib-sub-tab.active { background: var(--color-primary); color: #fff; font-weight: var(--font-weight-semibold); }
+
+/* Content Area */
+.lib-content-area { padding-bottom: var(--spacing-6); }
+.lib-cat-panel { display: block; }
+
+/* Xiaohongshu Waterfall */
+.xhs-waterfall { padding: 12px 12px; column-count: 2; column-gap: 10px; }
+.xhs-card { break-inside: avoid; margin-bottom: 10px; background: #fff; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s ease; }
+.xhs-card:active { transform: scale(0.96); opacity: 0.9; }
+.xhs-card-img { width: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f5f5f5; }
+.xhs-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.xhs-card-emoji { font-size: 52px; position: absolute; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1)); }
+.xhs-card-tag { position: absolute; top: 8px; left: 8px; padding: 3px 8px; background: rgba(255,255,255,0.92); color: #C4956A; border-radius: 4px; font-size: 10px; font-weight: 600; backdrop-filter: blur(10px); }
+.xhs-card-tag.xhs-tag-free { background: rgba(107, 158, 107, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-l3 { background: rgba(187, 143, 206, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-guofeng { background: rgba(212, 160, 60, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-yinfa { background: rgba(107, 158, 107, 0.9); color: #fff; }
+.xhs-card-tag.xhs-tag-brand { background: rgba(26, 24, 22, 0.85); color: #fff; }
+.xhs-card-tag.xhs-tag-star { background: rgba(241, 148, 138, 0.9); color: #fff; }
+.xhs-card-video-tag { position: absolute; top: 8px; right: 8px; display: flex; align-items: center; gap: 3px; padding: 3px 6px; background: rgba(0,0,0,0.5); color: #fff; border-radius: 4px; font-size: 10px; font-weight: 500; backdrop-filter: blur(4px); }
+.xhs-brand-logo { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; position: absolute; z-index: 2; }
+.xhs-card-info { padding: 8px 10px 10px; }
+.xhs-card-title { font-size: 13px; font-weight: 500; color: #333; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; letter-spacing: -0.2px; }
+.xhs-card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.xhs-card-author { display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; }
+.xhs-avatar { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 600; flex-shrink: 0; }
+.xhs-card-author span { font-size: 11px; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; }
+.xhs-card-like { font-size: 11px; color: #999; flex-shrink: 0; margin-left: 6px; display: flex; align-items: center; gap: 2px; }
+
+/* Hot Questions Chips */
+.hot-questions { display: flex; gap: var(--spacing-2); overflow-x: auto; padding: var(--spacing-2) 0; }
+.hot-q-chip { padding: 6px 14px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: var(--font-size-sm); color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; transition: all var(--duration-fast) var(--ease); font-weight: var(--font-weight-medium); flex-shrink: 0; }
+.hot-q-chip.active { background: rgba(196, 149, 106, 0.12); color: var(--color-primary-dark); font-weight: var(--font-weight-semibold); }
+
+/* Brand horizontal scroll */
+.brand-scroll { display: flex; gap: var(--spacing-3); padding: 0 var(--spacing-4) var(--spacing-4); overflow-x: auto; }
+.brand-scroll-card { flex-shrink: 0; width: 140px; padding: var(--spacing-3); background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.brand-scroll-card:active { transform: scale(0.97); }
+.brand-scroll-logo { width: 36px; height: 36px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: var(--font-weight-bold); font-size: 14px; margin-bottom: 8px; }
+.brand-scroll-card h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); margin-bottom: 2px; }
+.brand-scroll-card p { font-size: 10px; color: var(--color-text-muted); }
+
+/* Zone Cards */
+.zone-cards { padding: 0 var(--spacing-4) var(--spacing-5); display: flex; flex-direction: column; gap: var(--spacing-3); }
+.zone-card { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-4); border-radius: var(--radius-lg); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.zone-card:active { transform: scale(0.98); }
+.zone-card.guofeng { background: linear-gradient(135deg, #D4A03C 0%, #C4956A 100%); color: #fff; }
+.zone-card.yinfa { background: linear-gradient(135deg, #6B9E6B 0%, #8FB88F 100%); color: #fff; }
+.zone-card-icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.zone-card-info { flex: 1; }
+.zone-card-info h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); margin-bottom: 2px; }
+.zone-card-info p { font-size: var(--font-size-xs); opacity: 0.85; }
+.zone-card-arrow { font-size: 18px; opacity: 0.7; }
+
+/* ========== Search Page - F25 ========== */
+.search-bar { display: flex; align-items: center; gap: 8px; flex: 1; background: var(--color-bg-alt); border-radius: var(--radius-full); padding: 8px 16px; }
+.search-bar input { flex: 1; background: transparent; border: none; outline: none; font-size: var(--font-size-sm); color: var(--color-text); font-family: var(--font-sans); }
+.search-bar input::placeholder { color: var(--color-text-muted); }
+
+.solution-grid { padding: var(--spacing-4); }
+.solution-header { text-align: center; margin-bottom: var(--spacing-4); }
+.solution-header h2 { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); margin-bottom: 4px; }
+.solution-header p { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.solution-card { background: var(--color-bg-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: var(--spacing-4); margin-bottom: var(--spacing-3); cursor: pointer; transition: all var(--duration-fast) var(--ease); border: 2px solid transparent; }
+.solution-card:active { transform: scale(0.98); }
+.solution-card.recommended { border-color: var(--color-primary); background: linear-gradient(135deg, rgba(196,149,106,0.05), rgba(255,255,255,1)); }
+.solution-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-3); }
+.solution-top h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); display: flex; align-items: center; gap: 6px; }
+.solution-badge { font-size: 9px; padding: 2px 8px; background: var(--color-primary); color: #fff; border-radius: var(--radius-full); font-weight: var(--font-weight-semibold); }
+.solution-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-2); margin-bottom: var(--spacing-3); }
+.solution-metric { text-align: center; padding: 8px; background: var(--color-bg-alt); border-radius: var(--radius-sm); }
+.solution-metric-num { font-size: 16px; font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 2px; }
+.solution-metric-num.warning { color: var(--color-warning); }
+.solution-metric-num.success { color: var(--color-success); }
+.solution-metric-label { font-size: 9px; color: var(--color-text-muted); }
+.solution-desc { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.6; margin-bottom: var(--spacing-3); }
+.solution-bottom { display: flex; align-items: center; justify-content: space-between; }
+.solution-suitable { font-size: 10px; color: var(--color-text-muted); }
+.solution-btn { padding: 6px 14px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-full); font-size: 11px; font-weight: var(--font-weight-semibold); cursor: pointer; font-family: var(--font-sans); }
+
+/* ========== F26 - Tutorial with Products ========== */
+.tutorial-product { padding: var(--spacing-3); background: #FAF7F4; border-radius: var(--radius-sm); margin-top: var(--spacing-3); }
+.tutorial-product-title { font-size: 11px; font-weight: var(--font-weight-semibold); color: var(--color-primary-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+.product-tiers { display: flex; gap: 6px; }
+.product-tier { flex: 1; padding: 8px 6px; background: var(--color-bg-card); border-radius: var(--radius-xs); text-align: center; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.product-tier:active { transform: scale(0.95); }
+.product-tier-tag { font-size: 8px; font-weight: var(--font-weight-bold); color: var(--color-text-muted); margin-bottom: 4px; }
+.product-tier-name { font-size: 10px; font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-tier-price { font-size: 9px; color: var(--color-primary); font-weight: var(--font-weight-semibold); }
+
+/* ========== F27 - Risk Alert ========== */
+.risk-alert { position: fixed; inset: 0; background: rgba(26, 24, 22, 0.6); z-index: 450; display: none; align-items: center; justify-content: center; padding: var(--spacing-5); backdrop-filter: blur(6px); animation: fadeIn var(--duration-fast) var(--ease); }
+.risk-alert.show { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.risk-alert-card { width: 100%; max-width: 340px; background: var(--color-bg-card); border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); animation: scaleIn var(--duration-normal) var(--ease); }
+@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.risk-alert-header { padding: var(--spacing-5); text-align: center; background: linear-gradient(135deg, var(--color-danger), #D47878); color: #fff; }
+.risk-alert-icon { width: 56px; height: 56px; margin: 0 auto var(--spacing-3); background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+.risk-alert-header h2 { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); margin-bottom: 4px; }
+.risk-alert-header p { font-size: var(--font-size-sm); opacity: 0.9; }
+.risk-alert-body { padding: var(--spacing-4) var(--spacing-5); }
+.risk-alert-section { margin-bottom: var(--spacing-4); }
+.risk-alert-section:last-child { margin-bottom: 0; }
+.risk-alert-section h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.risk-alert-section p { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: 1.7; }
+.risk-level-row { display: flex; align-items: center; gap: var(--spacing-3); padding: 10px 12px; background: #F5E8E8; border-radius: var(--radius-sm); }
+.risk-level-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--color-danger); flex-shrink: 0; }
+.risk-level-text { flex: 1; font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-danger); }
+.risk-alert-footer { padding: var(--spacing-4) var(--spacing-5) var(--spacing-5); display: flex; gap: var(--spacing-3); }
+
+/* ========== Mall Tabs ========== */
+.mall-tabs { display: flex; gap: 0; padding: 0 var(--spacing-4); border-bottom: 1px solid var(--color-border-light); margin-bottom: var(--spacing-4); overflow-x: auto; }
+.mall-tab { padding: 14px 0; margin-right: var(--spacing-5); font-size: var(--font-size-md); color: var(--color-text-muted); cursor: pointer; position: relative; white-space: nowrap; font-weight: var(--font-weight-medium); transition: color var(--duration-fast) var(--ease); flex-shrink: 0; }
+.mall-tab.active { color: var(--color-text); font-weight: var(--font-weight-semibold); }
+.mall-tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 24px; height: 3px; background: var(--color-primary); border-radius: 2px; }
+.product-grid { padding: 0 var(--spacing-4) var(--spacing-6); display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-3); }
+.product-card { border-radius: var(--radius-md); overflow: hidden; background: var(--color-bg-card); box-shadow: var(--shadow-sm); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.product-card:active { transform: scale(0.97); }
+.product-img { width: 100%; aspect-ratio: 1; background: var(--color-bg-alt); position: relative; }
+.product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-tag { position: absolute; top: 8px; left: 8px; }
+.product-text { padding: 10px; }
+.product-text h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.product-meta { display: flex; align-items: center; justify-content: space-between; }
+.product-price { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); }
+.product-sales { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+
+/* ========== Mirror Dual Mode ========== */
+.mirror-mode-toggle { display: flex; background: rgba(255,248,240,0.15); border-radius: var(--radius-full); padding: 4px; margin-bottom: var(--spacing-4); width: 180px; }
+.mirror-mode-btn { flex: 1; padding: 6px 0; text-align: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: rgba(255,248,240,0.6); cursor: pointer; border-radius: var(--radius-full); transition: all var(--duration-fast) var(--ease); }
+.mirror-mode-btn.active { background: var(--color-primary); color: #fff; }
+
+.mirror-hero { height: 58vh; min-height: 400px; background: linear-gradient(160deg, var(--color-hero-bg) 0%, #2A2622 100%); position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-hero-text); overflow: hidden; }
+.mirror-hero.chat-mode { height: auto; min-height: auto; padding: var(--spacing-4); align-items: stretch; }
+.mirror-face { width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle, rgba(196,149,106,0.25) 0%, rgba(196,149,106,0.08) 60%, transparent 100%); display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-5); position: relative; }
+.mirror-face-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(196,149,106,0.4); animation: facePulse 2.5s ease-in-out infinite; }
+@keyframes facePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.06); opacity: 0.6; } }
+.mirror-face svg { color: var(--color-primary-light); }
+.mirror-hero h2 { font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); margin-bottom: 6px; }
+.mirror-hero p { font-size: var(--font-size-sm); color: rgba(255,248,240,0.5); }
+.mirror-steps { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.mirror-steps span { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,248,240,0.25); transition: all var(--duration-fast) var(--ease); }
+.mirror-steps span.active { width: 20px; border-radius: 3px; background: var(--color-primary); }
+.mirror-controls { position: absolute; top: calc(var(--safe-top, 0px) + 16px); right: 16px; display: flex; flex-direction: column; gap: 10px; }
+.mirror-ctrl-btn { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,248,240,0.15); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; color: var(--color-hero-text); cursor: pointer; transition: background var(--duration-fast) var(--ease); }
+.mirror-ctrl-btn:active { background: rgba(255,248,240,0.25); }
+.mirror-bottom-bar { position: absolute; bottom: 0; left: 0; right: 0; padding: var(--spacing-4); background: linear-gradient(180deg, transparent, rgba(26,24,22,0.8)); display: flex; align-items: center; justify-content: space-around; }
+.mirror-bottom-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--color-hero-text); cursor: pointer; }
+.mirror-bottom-btn svg { width: 24px; height: 24px; }
+.mirror-bottom-btn span { font-size: 10px; opacity: 0.7; }
+.mirror-capture-btn { width: 64px; height: 64px; border-radius: 50%; background: #fff; border: 4px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.mirror-capture-btn:active { transform: scale(0.92); }
+.mirror-capture-btn-inner { width: 48px; height: 48px; border-radius: 50%; background: var(--color-primary); }
+.intensity-slider { display: flex; align-items: center; gap: var(--spacing-3); padding: 0 var(--spacing-4); width: 200px; }
+.intensity-slider input { flex: 1; accent-color: var(--color-primary); }
+
+/* Chat mode */
+.chat-header { padding: var(--spacing-4) var(--spacing-4) 0; display: flex; align-items: center; justify-content: space-between; }
+.chat-close { color: var(--color-hero-text); opacity: 0.7; cursor: pointer; }
+.chat-messages { flex: 1; overflow-y: auto; padding: var(--spacing-4); display: flex; flex-direction: column; gap: var(--spacing-3); min-height: 300px; }
+.chat-msg { max-width: 85%; padding: 10px 14px; border-radius: var(--radius-lg); font-size: var(--font-size-sm); line-height: 1.6; }
+.chat-msg.ai { background: rgba(255,248,240,0.1); color: var(--color-hero-text); align-self: flex-start; border-bottom-left-radius: 4px; }
+.chat-msg.user { background: var(--color-primary); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-input-bar { display: flex; gap: var(--spacing-2); padding: var(--spacing-3) var(--spacing-4); background: rgba(255,248,240,0.08); border-top: 1px solid rgba(255,248,240,0.1); }
+.chat-input { flex: 1; background: rgba(255,248,240,0.1); border: 1px solid rgba(255,248,240,0.2); border-radius: var(--radius-full); padding: 10px 16px; color: var(--color-hero-text); font-size: var(--font-size-sm); outline: none; font-family: var(--font-sans); }
+.chat-input::placeholder { color: rgba(255,248,240,0.4); }
+.chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.chat-quick { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 var(--spacing-4) var(--spacing-3); }
+.chat-quick-chip { padding: 6px 12px; background: rgba(255,248,240,0.1); border: 1px solid rgba(255,248,240,0.2); border-radius: var(--radius-full); font-size: 11px; color: var(--color-hero-text); cursor: pointer; opacity: 0.8; }
+.chat-quick-chip:active { opacity: 1; background: rgba(255,248,240,0.2); }
+
+.tutorial-list { padding: var(--spacing-4); }
+.tutorial-item { display: flex; gap: var(--spacing-3); padding: 14px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-3); transition: all var(--duration-fast) var(--ease); }
+.tutorial-item.done { opacity: 0.7; }
+.tutorial-item.active { background: linear-gradient(135deg, rgba(196,149,106,0.08), rgba(196,149,106,0.02)); border: 1.5px solid var(--color-primary); box-shadow: 0 2px 12px rgba(196,149,106,0.15); }
+.step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; font-weight: var(--font-weight-bold); font-size: 14px; color: var(--color-primary-dark); flex-shrink: 0; }
+.tutorial-item.done .step-num { background: var(--color-success); color: #fff; }
+.tutorial-item.active .step-num { background: var(--color-primary); color: #fff; }
+.tutorial-text { flex: 1; }
+.tutorial-text h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 3px; }
+.tutorial-text p { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+
+/* ========== Profile Page Redesign ========== */
+.profile-face-card { margin: var(--spacing-4); padding: var(--spacing-4); background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 60%, var(--color-accent) 100%); border-radius: var(--radius-lg); color: #fff; position: relative; overflow: hidden; cursor: pointer; }
+.profile-face-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); }
+.profile-face-top { display: flex; align-items: center; gap: var(--spacing-3); position: relative; z-index: 1; }
+.profile-face-avatar { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.profile-face-info h3 { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); margin-bottom: 2px; }
+.profile-face-info p { font-size: var(--font-size-xs); opacity: 0.85; }
+.profile-face-tags { display: flex; gap: 6px; margin-top: var(--spacing-3); position: relative; z-index: 1; flex-wrap: wrap; }
+.profile-face-tag { padding: 3px 10px; background: rgba(255,255,255,0.2); border-radius: var(--radius-full); font-size: 10px; font-weight: var(--font-weight-medium); }
+
+.profile-gp-card { margin: 0 var(--spacing-4) var(--spacing-5); padding: var(--spacing-4); background: linear-gradient(135deg, #FFFBF5 0%, #FFF3E6 100%); border-radius: var(--radius-lg); box-shadow: 0 4px 16px rgba(196,149,106,0.12); display: flex; align-items: center; justify-content: space-between; cursor: pointer; border: 1px solid rgba(196,149,106,0.2); transition: all var(--duration-fast) var(--ease); position: relative; overflow: hidden; }
+.profile-gp-card::before { content: ''; position: absolute; top: -30%; right: -10%; width: 120px; height: 120px; background: radial-gradient(circle, rgba(196,149,106,0.15) 0%, transparent 70%); }
+.profile-gp-card:active { transform: scale(0.99); }
+.profile-gp-left { display: flex; align-items: center; gap: var(--spacing-3); position: relative; z-index: 1; }
+.profile-gp-icon-wrap { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 12px rgba(196,149,106,0.3); }
+.profile-gp-info h4 { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-text-primary); }
+.profile-gp-info p { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.profile-gp-right { text-align: right; position: relative; z-index: 1; }
+.profile-gp-amount { font-size: 26px; font-weight: var(--font-weight-bold); color: var(--color-primary); line-height: 1.1; }
+.profile-gp-arrow { font-size: 11px; color: var(--color-primary); margin-top: 4px; opacity: 0.8; }
+
+/* 化妆记录卡片 */
+.makeup-record-card { margin: 0 var(--spacing-4) var(--spacing-3); padding: 16px; background: linear-gradient(135deg, #FFF5EB 0%, #FFE8D6 100%); border-radius: 16px; cursor: pointer; transition: all var(--duration-fast) var(--ease); position: relative; overflow: hidden; }
+.makeup-record-card:active { transform: scale(0.98); }
+.makeup-record-card::before { content: ''; position: absolute; right: -20px; top: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(196,149,106,0.15) 0%, transparent 70%); border-radius: 50%; }
+.makeup-record-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; position: relative; z-index: 1; }
+.makeup-record-title { display: flex; align-items: center; gap: 8px; }
+.makeup-record-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(196,149,106,0.2); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.makeup-record-title h4 { font-size: 14px; font-weight: 600; color: #333; }
+.makeup-record-arrow { font-size: 12px; color: #C4956A; font-weight: 500; }
+.makeup-record-stats { display: flex; gap: 16px; position: relative; z-index: 1; }
+.makeup-stat-item { flex: 1; }
+.makeup-stat-num { font-size: 20px; font-weight: 700; color: #C4956A; line-height: 1.2; }
+.makeup-stat-label { font-size: 11px; color: #999; margin-top: 2px; }
+.makeup-record-today { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(196,149,106,0.15); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+.makeup-today-text { font-size: 12px; color: #666; }
+.makeup-today-text strong { color: #C4956A; font-weight: 600; }
+.makeup-today-btn { padding: 5px 12px; background: #C4956A; color: #fff; border-radius: 12px; font-size: 11px; font-weight: 500; }
+
+.profile-section-title { font-size: 13px; font-weight: var(--font-weight-semibold); color: var(--color-text-primary); padding: 0 var(--spacing-4) var(--spacing-2); margin-top: var(--spacing-2); }
+
+.profile-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-2); }
+.profile-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-2); padding: 0 var(--spacing-4); margin-bottom: var(--spacing-5); }
+.profile-grid-item { padding: 12px 4px; background: var(--color-bg-card); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.profile-grid-item:active { transform: scale(0.95); }
+.profile-grid-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); }
+.profile-grid-icon svg { width: 18px; height: 18px; }
+.profile-grid-text { font-size: 10px; color: var(--color-text-secondary); text-align: center; font-weight: var(--font-weight-medium); }
+
+/* ========== Q&A Section ========== */
+.qa-section { background: var(--color-bg-card); border-bottom: 8px solid var(--color-bg-page); }
+.hot-questions { display: flex; gap: var(--spacing-2); overflow-x: auto; margin-bottom: var(--spacing-2); }
+.hot-q-chip { flex-shrink: 0; padding: 6px 14px; background: var(--color-bg-alt); border-radius: 999px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; transition: all var(--duration-fast) var(--ease); border: 1px solid transparent; }
+.hot-q-chip.active { background: linear-gradient(135deg, var(--color-primary), var(--color-accent)); color: #fff; border-color: transparent; }
+.hot-q-chip:active { transform: scale(0.95); }
+
+/* ========== Tab Bar ========== */
+.tab-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); height: calc(var(--tab-bar-height) + 10px); background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--color-border-light); display: flex; align-items: flex-start; justify-content: space-around; z-index: var(--z-tab); padding-bottom: var(--safe-bottom); padding-top: 6px; }
+.tab-btn { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: var(--color-text-muted); transition: all var(--duration-fast) var(--ease); cursor: pointer; padding: 4px 8px; position: relative; flex: 1; font-weight: 500; }
+.tab-btn.active { color: var(--color-primary); }
+.tab-btn.active svg { transform: translateY(-2px); }
+.tab-btn svg { width: 22px; height: 22px; transition: transform var(--duration-fast) var(--ease); }
+.tab-btn:active { opacity: 0.7; }
+.tab-btn.fab-placeholder { opacity: 0; pointer-events: none; }
+
+/* FAB Button */
+.fab-btn { position: fixed; bottom: calc(var(--tab-bar-height) - 18px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(180deg, #D4B896 0%, #C4956A 50%, #A67B52 100%); color: #fff; border: 2px solid rgba(255,255,255,0.3); box-shadow: 0 4px 20px rgba(196,149,106,0.4); z-index: calc(var(--z-tab) + 1); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--duration-fast) var(--ease); font-size: 24px; animation: fabIn 400ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both; }
+.fab-btn:active { transform: translateX(-50%) scale(0.92); }
+.fab-btn:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 24px rgba(196,149,106,0.5); }
+@keyframes fabIn { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* FAB Action Sheet */
+.fab-sheet-overlay { position: fixed; inset: 0; background: rgba(26, 24, 22, 0.5); z-index: 350; display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(6px); animation: fadeIn 200ms ease; }
+.fab-sheet-overlay.show { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fab-sheet { width: 100%; max-width: var(--content-max-width); background: var(--color-bg); border-radius: 24px 24px 0 0; padding: 20px 20px calc(32px + var(--safe-bottom)); animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.fab-sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--color-border); margin: 0 auto 16px; }
+.fab-sheet-title { font-size: 16px; font-weight: 600; color: var(--color-text); text-align: center; margin-bottom: 4px; }
+.fab-sheet-subtitle { font-size: 12px; color: var(--color-text-muted); text-align: center; margin-bottom: 20px; }
+.fab-sheet-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.fab-sheet-option { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.fab-sheet-option:active { background: var(--color-bg-alt); border-color: var(--color-primary); transform: scale(0.98); }
+.fab-sheet-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+.fab-sheet-icon.chat { background: #FFF0F0; }
+.fab-sheet-icon.mirror { background: #FFF8F0; }
+.fab-sheet-icon.upload { background: #F0F7F0; }
+.fab-sheet-info { flex: 1; min-width: 0; }
+.fab-sheet-info h4 { font-size: 14px; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+.fab-sheet-info p { font-size: 12px; color: var(--color-text-muted); }
+.fab-sheet-cancel { width: 100%; padding: 14px; background: transparent; border: none; font-size: 14px; color: var(--color-text-secondary); cursor: pointer; border-radius: 12px; transition: background var(--duration-fast) var(--ease); font-family: var(--font-sans); font-weight: 500; }
+.fab-sheet-cancel:active { background: var(--color-bg-alt); }
+
+/* ========== Toast ========== */
+.toast { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: rgba(26, 24, 22, 0.85); color: #fff; padding: 12px 24px; border-radius: var(--radius-md); font-size: var(--font-size-sm); z-index: var(--z-toast); backdrop-filter: blur(10px); opacity: 0; pointer-events: none; transition: all var(--duration-fast) var(--ease); max-width: 280px; text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+/* ========== Full Screen Modal ========== */
+.modal-overlay { position: fixed; inset: 0; background: rgba(26, 24, 22, 0.5); z-index: var(--z-modal); display: none; align-items: flex-end; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay.show { display: flex; }
+.modal-overlay.fullscreen { align-items: stretch; background: var(--color-bg); backdrop-filter: none; }
+.modal-overlay.fullscreen .modal { max-height: 100vh; border-radius: 0; padding: 0; width: 100%; max-width: var(--content-max-width); animation: slideUp var(--duration-normal) var(--ease); }
+.modal { width: 100%; max-width: var(--content-max-width); background: var(--color-bg); border-radius: var(--radius-xl) var(--radius-xl) 0 0; padding: var(--spacing-3) var(--spacing-4) var(--spacing-5); max-height: 82vh; overflow-y: auto; animation: slideUp var(--duration-normal) var(--ease); padding-bottom: calc(var(--spacing-5) + var(--safe-bottom)); }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--color-border); margin: 0 auto var(--spacing-4); }
+.modal-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); color: var(--color-text); text-align: center; margin-bottom: var(--spacing-5); }
+
+/* Fullscreen modal header */
+.fs-modal-header { position: sticky; top: 0; z-index: 10; background: var(--color-bg); padding: var(--spacing-4); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--color-border-light); }
+.fs-modal-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); }
+.fs-modal-close { width: 32px; height: 32px; border-radius: 50%; background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-secondary); }
+
+/* Template Detail Modal */
+.template-detail { padding-bottom: calc(var(--spacing-6) + var(--safe-bottom)); }
+.template-hero { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--color-bg-alt), var(--color-accent)); position: relative; display: flex; align-items: center; justify-content: center; }
+.template-hero-emoji { font-size: 80px; }
+.template-hero-badge { position: absolute; top: 16px; left: 16px; }
+.template-hero-actions { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; }
+.template-hero-action { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--color-text-secondary); }
+.template-detail-body { padding: var(--spacing-5) var(--spacing-4); }
+.template-detail-title { font-size: 22px; font-weight: var(--font-weight-bold); margin-bottom: var(--spacing-2); }
+.template-detail-creator { display: flex; align-items: center; gap: var(--spacing-2); margin-bottom: var(--spacing-4); }
+.template-detail-creator span { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.template-detail-meta { display: flex; gap: var(--spacing-4); padding: var(--spacing-4); background: var(--color-bg-alt); border-radius: var(--radius-md); margin-bottom: var(--spacing-5); }
+.template-metric { flex: 1; text-align: center; }
+.template-metric-num { font-size: 18px; font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 2px; }
+.template-metric-label { font-size: 10px; color: var(--color-text-muted); }
+.template-detail-section { margin-bottom: var(--spacing-5); }
+.template-detail-section h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-3); }
+.template-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.template-tag { padding: 4px 12px; background: var(--color-bg-alt); border-radius: var(--radius-full); font-size: 11px; color: var(--color-text-secondary); }
+.template-bottom-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: var(--content-max-width); padding: var(--spacing-3) var(--spacing-4); background: var(--color-bg-card); border-top: 1px solid var(--color-border-light); display: flex; align-items: center; justify-content: space-between; z-index: 20; padding-bottom: calc(var(--spacing-3) + var(--safe-bottom)); }
+.template-price-text { font-size: 11px; color: var(--color-text-muted); }
+.template-price-num { font-size: 22px; font-weight: var(--font-weight-bold); color: var(--color-primary); }
+
+/* ========== Onboarding ========== */
+.onboarding { position: fixed; inset: 0; z-index: var(--z-onboarding); background: linear-gradient(160deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-accent) 100%); color: #fff; display: flex; flex-direction: column; }
+.onboarding.hidden { display: none; }
+.onboarding-steps { flex: 1; overflow-y: auto; }
+.onboarding-step { display: none; flex-direction: column; align-items: center; justify-content: center; padding: var(--spacing-6); min-height: 100%; text-align: center; animation: fadeInUp var(--duration-normal) var(--ease); }
+.onboarding-step.active { display: flex; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.onboarding-visual { width: 200px; height: 200px; margin-bottom: var(--spacing-6); display: flex; align-items: center; justify-content: center; }
+.onboarding-visual.large { width: 240px; height: 240px; }
+.onboarding-visual-circle { width: 100%; height: 100%; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 80px; position: relative; }
+.onboarding-visual-circle::before { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 2px dashed rgba(255,255,255,0.3); animation: spin 20s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.onboarding-step h1 { font-size: 28px; font-weight: var(--font-weight-bold); margin-bottom: var(--spacing-3); }
+.onboarding-step p { font-size: var(--font-size-md); opacity: 0.85; line-height: 1.7; max-width: 280px; }
+
+.onboarding-skin-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-3); width: 100%; max-width: 320px; margin-top: var(--spacing-5); }
+.skin-option { padding: var(--spacing-4); background: rgba(255,255,255,0.15); border: 2px solid transparent; border-radius: var(--radius-lg); cursor: pointer; transition: all var(--duration-fast) var(--ease); text-align: center; }
+.skin-option:active { transform: scale(0.97); }
+.skin-option.selected { background: rgba(255,255,255,0.25); border-color: #fff; }
+.skin-option-emoji { font-size: 36px; margin-bottom: 8px; }
+.skin-option-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); }
+.skin-option-desc { font-size: 10px; opacity: 0.7; margin-top: 2px; }
+
+.onboarding-style-options { display: flex; flex-direction: column; gap: var(--spacing-2); width: 100%; max-width: 320px; margin-top: var(--spacing-5); }
+.style-option { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-4); background: rgba(255,255,255,0.15); border: 2px solid transparent; border-radius: var(--radius-lg); cursor: pointer; transition: all var(--duration-fast) var(--ease); }
+.style-option:active { transform: scale(0.98); }
+.style-option.selected { background: rgba(255,255,255,0.25); border-color: #fff; }
+.style-option-emoji { font-size: 28px; width: 44px; text-align: center; flex-shrink: 0; }
+.style-option-info { flex: 1; text-align: left; }
+.style-option-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); }
+.style-option-desc { font-size: 10px; opacity: 0.7; margin-top: 2px; }
+.style-check { opacity: 0; font-size: 18px; }
+.style-option.selected .style-check { opacity: 1; }
+
+.onboarding-gp-reward { width: 100%; max-width: 300px; padding: var(--spacing-5); background: rgba(255,255,255,0.2); border-radius: var(--radius-xl); margin-top: var(--spacing-5); backdrop-filter: blur(10px); }
+.gp-reward-num { font-size: 56px; font-weight: var(--font-weight-bold); line-height: 1; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+.gp-reward-label { font-size: var(--font-size-sm); opacity: 0.85; }
+.gp-reward-perks { display: flex; justify-content: space-around; margin-top: var(--spacing-4); padding-top: var(--spacing-4); border-top: 1px solid rgba(255,255,255,0.2); }
+.gp-perk { text-align: center; }
+.gp-perk-num { font-size: 14px; font-weight: var(--font-weight-bold); margin-bottom: 2px; }
+.gp-perk-label { font-size: 9px; opacity: 0.7; }
+
+.onboarding-bottom { padding: var(--spacing-4) var(--spacing-5); padding-bottom: calc(var(--spacing-5) + var(--safe-bottom)); display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-3); }
+.onboarding-progress { display: flex; gap: 6px; }
+.onboarding-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all var(--duration-fast) var(--ease); }
+.onboarding-dot.active { width: 24px; border-radius: 4px; background: #fff; }
+.onboarding-btn { padding: 12px 28px; background: #fff; color: var(--color-primary); border: none; border-radius: var(--radius-full); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); cursor: pointer; font-family: var(--font-sans); transition: all var(--duration-fast) var(--ease); }
+.onboarding-btn:active { transform: scale(0.97); }
+.onboarding-btn.ghost { background: transparent; color: rgba(255,255,255,0.7); }
+
+/* ========== Ingredient Scan Modal (Fullscreen) ========== */
+.scan-modal-body { padding: 0; }
+.scan-camera-area { width: 100%; aspect-ratio: 1; background: var(--color-hero-bg); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.scan-frame { position: absolute; width: 260px; height: 260px; border: 2px solid var(--color-primary); border-radius: var(--radius-lg); }
+.scan-frame::before, .scan-frame::after,
+.scan-frame > span::before, .scan-frame > span::after { content: ''; position: absolute; width: 24px; height: 24px; border: 3px solid var(--color-primary); }
+.scan-frame::before { top: -2px; left: -2px; border-right: none; border-bottom: none; border-radius: var(--radius-lg) 0 0 0; }
+.scan-frame::after { top: -2px; right: -2px; border-left: none; border-bottom: none; border-radius: 0 var(--radius-lg) 0 0; }
+.scan-frame > span::before { bottom: -2px; left: -2px; border-right: none; border-top: none; border-radius: 0 0 0 var(--radius-lg); }
+.scan-frame > span::after { bottom: -2px; right: -2px; border-left: none; border-top: none; border-radius: 0 0 var(--radius-lg) 0; }
+.scan-scan-line { position: absolute; width: 240px; height: 2px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); top: calc(50% - 130px); left: 50%; transform: translateX(-50%); animation: scanLine 2s ease-in-out infinite; }
+@keyframes scanLine { 0%, 100% { top: calc(50% - 120px); } 50% { top: calc(50% + 100px); } }
+.scan-camera-area p { color: rgba(255,248,240,0.6); font-size: var(--font-size-sm); margin-top: 320px; }
+.scan-modal-tabs { display: flex; gap: 0; padding: var(--spacing-4) var(--spacing-4) 0; }
+.scan-modal-tab { flex: 1; padding: 10px; text-align: center; font-size: var(--font-size-sm); color: var(--color-text-muted); cursor: pointer; border-bottom: 2px solid transparent; font-weight: var(--font-weight-medium); transition: all var(--duration-fast) var(--ease); }
+.scan-modal-tab.active { color: var(--color-primary); border-color: var(--color-primary); }
+.scan-modal-content { padding: var(--spacing-4); }
+
+/* ========== GP Center Fullscreen Modal ========== */
+.gp-center-body { padding-bottom: calc(var(--spacing-6) + var(--safe-bottom)); }
+.gp-center-header-bg { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); padding: var(--spacing-5) var(--spacing-4) var(--spacing-6); color: #fff; position: relative; overflow: hidden; }
+.gp-center-header-bg::before { content: ''; position: absolute; top: -60%; right: -20%; width: 280px; height: 280px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); }
+.gp-center-balance { font-size: 40px; font-weight: var(--font-weight-bold); margin-bottom: 4px; position: relative; z-index: 1; }
+.gp-center-label { font-size: var(--font-size-sm); opacity: 0.85; position: relative; z-index: 1; display: flex; align-items: center; gap: 6px; }
+.gp-center-level { display: flex; align-items: center; justify-content: space-between; margin-top: var(--spacing-4); position: relative; z-index: 1; }
+.gp-center-level-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); }
+.gp-center-level-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.25); border-radius: 3px; margin: 0 var(--spacing-3); overflow: hidden; }
+.gp-center-level-fill { height: 100%; background: #fff; border-radius: 3px; width: 65%; transition: width var(--duration-slow) var(--ease); }
+.gp-center-level-next { font-size: 11px; opacity: 0.7; }
+
+.gp-center-tasks { margin-top: -20px; position: relative; z-index: 2; padding: 0 var(--spacing-4); }
+.gp-task-card { background: var(--color-bg-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); padding: var(--spacing-4); margin-bottom: var(--spacing-3); }
+.gp-task-card h3 { font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-3); display: flex; align-items: center; justify-content: space-between; }
+.gp-task-item { display: flex; align-items: center; gap: var(--spacing-3); padding: 12px 0; border-bottom: 1px solid var(--color-border-light); }
+.gp-task-item:last-child { border-bottom: none; padding-bottom: 0; }
+.gp-task-item:first-child { padding-top: 0; }
+.gp-task-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--color-bg-alt); display: flex; align-items: center; justify-content: center; color: var(--color-primary); flex-shrink: 0; }
+.gp-task-info { flex: 1; min-width: 0; }
+.gp-task-info h4 { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text); margin-bottom: 4px; }
+.gp-task-progress { height: 4px; background: var(--color-bg-alt); border-radius: 2px; overflow: hidden; }
+.gp-task-prog-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light)); border-radius: 2px; transition: width var(--duration-normal) var(--ease); }
+.gp-task-reward { text-align: right; flex-shrink: 0; min-width: 60px; }
+.gp-task-gp { font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); color: var(--color-primary); margin-bottom: 6px; }
+.claim-btn { padding: 4px 12px; font-size: 11px; font-weight: var(--font-weight-semibold); background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)); color: #fff; border: none; border-radius: var(--radius-full); cursor: pointer; font-family: var(--font-sans); transition: all var(--duration-fast) var(--ease); }
+.claim-btn:disabled { background: var(--color-bg-alt); color: var(--color-text-muted); cursor: not-allowed; }
+
+.hidden { display: none !important; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+@media (max-width: 414px) { .app-shell { box-shadow: none; } }
+    </style>
+</head>
+<body>
+<div class="app-shell" id="app">
+
+  <!-- ============ Onboarding ============ -->
+  <div class="onboarding" id="onboarding">
+    <div class="onboarding-steps">
+      <!-- Step 1: Welcome -->
+      <div class="onboarding-step active" data-step="1">
+        <div class="onboarding-visual"><div class="onboarding-visual-circle">💄</div></div>
+        <h1>欢迎来到妆伴</h1>
+        <p>你的专属 AI 美妆顾问<br>让每一次上妆都恰到好处</p>
+      </div>
+      <!-- Step 2: Skin Type -->
+      <div class="onboarding-step" data-step="2">
+        <div class="onboarding-visual"><div class="onboarding-visual-circle">✨</div></div>
+        <h1>你的肤质是？</h1>
+        <p>告诉我们你的肤质，为你定制专属妆容推荐</p>
+        <div class="onboarding-skin-options">
+          <div class="skin-option" onclick="selectSkin(this,'干性')"><div class="skin-option-emoji">🌸</div><div class="skin-option-name">干性皮肤</div><div class="skin-option-desc">易干燥紧绷</div></div>
+          <div class="skin-option" onclick="selectSkin(this,'油性')"><div class="skin-option-emoji">💧</div><div class="skin-option-name">油性皮肤</div><div class="skin-option-desc">T区易出油</div></div>
+          <div class="skin-option" onclick="selectSkin(this,'混合')"><div class="skin-option-emoji">🌿</div><div class="skin-option-name">混合皮肤</div><div class="skin-option-desc">T区油两颊干</div></div>
+          <div class="skin-option" onclick="selectSkin(this,'敏感')"><div class="skin-option-emoji">🌷</div><div class="skin-option-name">敏感皮肤</div><div class="skin-option-desc">易泛红过敏</div></div>
+        </div>
+      </div>
+      <!-- Step 3: Face Scan -->
+      <div class="onboarding-step" data-step="3">
+        <div class="onboarding-visual large"><div class="onboarding-visual-circle">👤</div></div>
+        <h1>扫描你的面部</h1>
+        <p>AI 智能分析骨相特征<br>找到最适合你的妆容风格</p>
+        <div style="margin-top: var(--spacing-5);">
+          <button class="onboarding-btn" onclick="nextOnboardingStep()">📸 开始扫脸分析</button>
+        </div>
+      </div>
+      <!-- Step 4: Style Preference -->
+      <div class="onboarding-step" data-step="4">
+        <div class="onboarding-visual"><div class="onboarding-visual-circle">🎨</div></div>
+        <h1>你喜欢什么风格？</h1>
+        <p>选择你偏好的妆容风格<br>我们会优先为你推荐</p>
+        <div class="onboarding-style-options">
+          <div class="style-option" onclick="selectStyle(this)"><div class="style-option-emoji">🌸</div><div class="style-option-info"><div class="style-option-name">日常清新</div><div class="style-option-desc">自然淡妆，适合日常通勤</div></div><div class="style-check">✓</div></div>
+          <div class="style-option" onclick="selectStyle(this)"><div class="style-option-emoji">💎</div><div class="style-option-info"><div class="style-option-name">精致晚宴</div><div class="style-option-desc">浓妆艳抹，适合特殊场合</div></div><div class="style-check">✓</div></div>
+          <div class="style-option" onclick="selectStyle(this)"><div class="style-option-emoji">🏮</div><div class="style-option-info"><div class="style-option-name">国风古韵</div><div class="style-option-desc">古典妆容，东方韵味</div></div><div class="style-check">✓</div></div>
+          <div class="style-option" onclick="selectStyle(this)"><div class="style-option-emoji">👵</div><div class="style-option-info"><div class="style-option-name">优雅银发</div><div class="style-option-desc">成熟气质，岁月沉淀</div></div><div class="style-check">✓</div></div>
+        </div>
+      </div>
+      <!-- Step 5: GP Reward -->
+      <div class="onboarding-step" data-step="5">
+        <div class="onboarding-visual"><div class="onboarding-visual-circle">🎁</div></div>
+        <h1>新人专享福利</h1>
+        <p>欢迎加入妆伴大家庭<br>送你 100 焕新值，立即体验！</p>
+        <div class="onboarding-gp-reward">
+          <div class="gp-reward-num">+100</div>
+          <div class="gp-reward-label">焕新值 GP</div>
+          <div class="gp-reward-perks">
+            <div class="gp-perk"><div class="gp-perk-num">5+</div><div class="gp-perk-label">免费妆容</div></div>
+            <div class="gp-perk"><div class="gp-perk-num">3次</div><div class="gp-perk-label">成分扫描</div></div>
+            <div class="gp-perk"><div class="gp-perk-num">7天</div><div class="gp-perk-label">会员体验</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="onboarding-bottom">
+      <div class="onboarding-progress">
+        <span class="onboarding-dot active"></span>
+        <span class="onboarding-dot"></span>
+        <span class="onboarding-dot"></span>
+        <span class="onboarding-dot"></span>
+        <span class="onboarding-dot"></span>
+      </div>
+      <div style="display:flex;gap:var(--spacing-2);">
+        <button class="onboarding-btn ghost" id="skipBtn" onclick="skipOnboarding()">跳过</button>
+        <button class="onboarding-btn" id="nextBtn" onclick="nextOnboardingStep()">下一步</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Home Page ============ -->
+  <div class="page active" id="page-home">
+    <header class="app-header">
+      <div class="header-left">
+        <div class="avatar-ring" style="width:42px;height:42px;"><div class="avatar">美</div></div>
+        <div><div style="font-size: var(--font-size-base); font-weight: var(--font-weight-semibold); color: var(--color-text);">小美</div><div style="font-size: 10px; color: var(--color-text-muted);">金妆 Lv.3</div></div>
+        <div class="gp-badge" onclick="openFullscreenModal('gpCenterModal')" style="margin-left:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg><span id="gp-balance">328</span></div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('消息中心')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="notif-dot"></span></button>
+      </div>
+    </header>
+
+    <!-- Face Info Card -->
+    <div class="face-info-card" onclick="showToast('面部详情')">
+      <div class="face-info-top">
+        <div class="face-avatar">👤</div>
+        <div class="face-info-main">
+          <h3>我的面部档案</h3>
+          <p>鹅蛋脸 · 混合性肤质 · 暖色调</p>
+        </div>
+        <span style="color:var(--color-text-muted);font-size:18px;">→</span>
+      </div>
+      <div class="face-tags">
+        <span class="face-tag primary">✨ 骨相评分 86</span>
+        <span class="face-tag">T区油</span>
+        <span class="face-tag">敏感肌</span>
+      </div>
+    </div>
+
+    <!-- 4-Grid Features -->
+    <div class="features-grid">
+      <div class="feature-card" onclick="switchTab('library');scrollToQaSection()"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="feature-text"><h3>局部搜索</h3><p>问题解答</p></div></div>
+      <div class="feature-card" onclick="openFullscreenModal('ingredientScanModal')"><div class="feature-icon" style="background:#F5E8E8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-danger);"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div><div class="feature-text"><h3>成分扫描</h3><p class="feature-new">NEW</p></div></div>
+      <div class="feature-card" onclick="showToast('风格测试')"><div class="feature-icon" style="background:#F0F0F8;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#9B59B6;"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg></div><div class="feature-text"><h3>风格测试</h3><p>找到本命妆</p></div></div>
+      <div class="feature-card" onclick="showToast('创作者中心')"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="feature-text"><h3>创作者</h3><p>投稿模板</p></div></div>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner" onclick="switchTab('mirror')"><img src="ui-design/assets/hero-banner.jpg" alt="AI焕新妆造"><div class="hero-gradient"></div><div class="hero-content"><h1>AI 焕新妆造</h1><p>发现最适合你的专属妆容</p></div><div class="hero-dots"><span class="active"></span><span></span><span></span></div></div>
+
+    <!-- Hot Trending -->
+    <div class="trending-hot">
+      <div class="trending-hot-header">
+        <div class="trending-hot-title">🔥 本周热度榜</div>
+        <span class="section-more" onclick="openModal('trendingModal')">更多 →</span>
+      </div>
+      <div class="trending-hot-list">
+        <div class="trending-hot-item" onclick="openFullscreenModal('templateDetailModal')">
+          <div class="trending-hot-rank top1">1</div>
+          <div class="trending-hot-cover">💄</div>
+          <div class="trending-hot-info"><h4>晚宴精致妆容</h4><p>美妆师 Luna · 2.3k 热度</p></div>
+          <div class="trending-hot-gp">50 GP</div>
+        </div>
+        <div class="trending-hot-item" onclick="openFullscreenModal('templateDetailModal')">
+          <div class="trending-hot-rank top2">2</div>
+          <div class="trending-hot-cover" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);">🌸</div>
+          <div class="trending-hot-info"><h4>日常清新裸妆</h4><p>小妆日记 · 1.9k 热度</p></div>
+          <div class="trending-hot-gp">30 GP</div>
+        </div>
+        <div class="trending-hot-item" onclick="openFullscreenModal('templateDetailModal')">
+          <div class="trending-hot-rank top3">3</div>
+          <div class="trending-hot-cover" style="background:linear-gradient(135deg,#D4A03C,#C4956A);">🏮</div>
+          <div class="trending-hot-info"><h4>国风古韵妆</h4><p>国风美妆社 · 1.6k 热度</p></div>
+          <div class="trending-hot-gp">80 GP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Waterfall Feed -->
+    <div class="section-sm">
+      <div class="section-header">
+        <div class="section-title" style="font-size:var(--font-size-md);">大家都在看</div>
+        <a class="section-more" onclick="switchTab('library')">更多 →</a>
+      </div>
+    </div>
+    <div class="feed-waterfall">
+      <div class="feed-card" onclick="openFullscreenModal('templateDetailModal')"><div class="feed-card-img"><img src="ui-design/assets/feed-card-1.jpg" alt="晚宴妆"><span class="badge badge-primary badge-pill feed-card-tag">L2</span></div><div class="feed-card-info"><div class="feed-card-title">晚宴精致妆容</div><div class="feed-card-meta"><div class="feed-card-creator"><div class="avatar avatar-sm">L</div><span>Luna</span></div><span class="feed-card-price">50 GP</span></div></div></div>
+      <div class="feed-card" onclick="openFullscreenModal('templateDetailModal')"><div class="feed-card-img"><img src="ui-design/assets/feed-card-2.jpg" alt="日常妆"><span class="badge badge-success badge-pill feed-card-tag">免费</span></div><div class="feed-card-info"><div class="feed-card-title">日常清新裸妆</div><div class="feed-card-meta"><div class="feed-card-creator"><div class="avatar avatar-sm" style="background:linear-gradient(135deg,var(--color-accent),var(--color-primary-light));">妆</div><span>小妆</span></div><span class="feed-card-price">免费</span></div></div></div>
+      <div class="feed-card" onclick="openFullscreenModal('templateDetailModal')"><div class="feed-card-img"><img src="ui-design/assets/product-1.jpg" alt="国风妆"><span class="badge badge-warning badge-pill feed-card-tag">国风</span></div><div class="feed-card-info"><div class="feed-card-title">唐风贵妇妆</div><div class="feed-card-meta"><div class="feed-card-creator"><div class="avatar avatar-sm" style="background:linear-gradient(135deg,var(--color-primary-dark),var(--color-primary));">风</div><span>国风社</span></div><span class="feed-card-price">80 GP</span></div></div></div>
+      <div class="feed-card" onclick="openFullscreenModal('templateDetailModal')"><div class="feed-card-img"><img src="ui-design/assets/product-2.jpg" alt="法式妆"><span class="badge badge-info badge-pill feed-card-tag">L3</span></div><div class="feed-card-info"><div class="feed-card-title">法式红唇妆</div><div class="feed-card-meta"><div class="feed-card-creator"><div class="avatar avatar-sm" style="background:linear-gradient(135deg,#B89AC8,#D4B896);">✨</div><span>派对</span></div><span class="feed-card-price">120 GP</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ Library Page ============ -->
+  <div class="page" id="page-library">
+    <header class="app-header" style="padding-bottom:0;">
+      <div class="header-left" style="flex:1;">
+        <div class="lib-search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input placeholder="搜索妆容、成分、美妆问题...">
+        </div>
+      </div>
+      <div class="header-right"><button class="icon-btn" onclick="showToast('发布作品')" style="background:linear-gradient(135deg,var(--color-primary),var(--color-accent));color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div>
+    </header>
+
+    <!-- Level 1 Tabs: 子类目 -->
+    <div class="lib-cat-tabs no-scrollbar" id="libCatTabs">
+      <div class="lib-cat-tab active" data-cat="daren" onclick="switchLibCat(this,'daren')">达人精选</div>
+      <div class="lib-cat-tab" data-cat="jubu" onclick="switchLibCat(this,'jubu')">局部拆解</div>
+      <div class="lib-cat-tab" data-cat="qa" onclick="switchLibCat(this,'qa')">美妆问答</div>
+      <div class="lib-cat-tab" data-cat="guofeng" onclick="switchLibCat(this,'guofeng')">国风专区</div>
+      <div class="lib-cat-tab" data-cat="yinfa" onclick="switchLibCat(this,'yinfa')">银发专区</div>
+      <div class="lib-cat-tab" data-cat="dapai" onclick="switchLibCat(this,'dapai')">大牌精选</div>
+      <div class="lib-cat-tab" data-cat="star" onclick="switchLibCat(this,'star')">明星同款</div>
+    </div>
+
+    <!-- Level 2 Tabs: 孙类目 -->
+    <div class="lib-sub-tabs no-scrollbar" id="libSubTabs">
+      <!-- 动态填充 -->
+    </div>
+
+    <!-- Content Area: 瀑布流 -->
+    <div class="lib-content-area" id="libContentArea">
+
+      <!-- ===== 达人精选 ===== -->
+      <div class="lib-cat-panel" id="panel-daren">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">💄</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">氛围感拉满的法式红唇妆｜约会必备</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8A0A0,#C4956A);">L</div>
+                  <span>Luna美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#EBF5FB 0%,#B8D4E8 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">伪素颜天花板！5分钟出门的日常裸妆教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#FADADD,#FFB6C1);">妆</div>
+                  <span>小妆日记</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-l3">L3</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">派对C位妆｜闪亮亮片+截断式眼妆教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#B89AC8,#8E44AD);">P</div>
+                  <span>派对女王</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">💼</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">职场新人必看｜干练又不失温柔的通勤妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#D4A03C);">职</div>
+                  <span>职场美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 1.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#A3E4D7 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">森系少女妆｜清新自然又减龄</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#A3E4D7,#48C9B0);">森</div>
+                  <span>森林系</span>
+                </div>
+                <div class="xhs-card-like">❤️ 862</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC 0%,#F5B7B1 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag">L2</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">人间水蜜桃｜粉嫩约会妆容分享</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F5B7B1,#E74C3C);">桃</div>
+                  <span>桃子酱</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.2k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 局部拆解 ===== -->
+      <div class="lib-cat-panel" id="panel-jubu" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="showToast('眼妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#FDF2E9,#E8A0A0);">
+              <span class="xhs-card-emoji">👁️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">3种日常眼型调整｜肿眼泡必看</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#E8A0A0;">眼</div>
+                  <span>眼妆达人</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('唇妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDEDEC,#F1948A);">
+              <span class="xhs-card-emoji">💋</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">薄唇变厚！嘟嘟唇画法超详细教程</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F1948A;">唇</div>
+                  <span>唇妆控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('底妆教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7,#F9E79F);">
+              <span class="xhs-card-emoji">✨</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">服帖底妆大法｜油皮夏季不脱妆秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F9E79F;">底</div>
+                  <span>底妆专家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('修容教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#E8C9A8,#C4956A);">
+              <span class="xhs-card-emoji">🎨</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">新手修容｜三步get立体小V脸</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#C4956A;">修</div>
+                  <span>修容小能手</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('眉毛教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7,#D2B4DE);">
+              <span class="xhs-card-emoji">✏️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">手残党也能画好的野生眉</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#D2B4DE;">眉</div>
+                  <span>眉毛大师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('腮红教程详情')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🌸</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">6种腮红画法｜不同脸型怎么选</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F8BBD9;">腮</div>
+                  <span>腮红少女</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.5k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 美妆问答 ===== -->
+      <div class="lib-cat-panel" id="panel-qa" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="showToast('眼线晕妆怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(135deg,#FDF2E9,#E8C9A8);">
+              <span class="xhs-card-emoji">👁️</span>
+              <span class="xhs-card-tag">热门</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">眼线总是晕妆？4个方法告别熊猫眼</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#E8A0A0;">眼</div>
+                  <span>眼妆达人</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('卡粉怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7,#F9E79F);">
+              <span class="xhs-card-emoji">💆</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">底妆卡粉斑驳？救星来了！手把手教你服帖底妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F9E79F;">底</div>
+                  <span>底妆专家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('油皮定妆')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#E8F8F5,#A3E4D7);">
+              <span class="xhs-card-emoji">💧</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">油皮夏季定妆大法｜8小时不脱妆秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#48C9B0;">油</div>
+                  <span>油皮救星</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('新手画眉')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7,#D2B4DE);">
+              <span class="xhs-card-emoji">✏️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">手残党必看｜3步画出自然野生眉</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#BB8FCE;">眉</div>
+                  <span>眉毛大师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('唇纹深怎么办')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC,#F1948A);">
+              <span class="xhs-card-emoji">💋</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">唇纹深显老？5个护唇小妙招</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F1948A;">唇</div>
+                  <span>唇妆控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('敏感肌护肤')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F6F3,#82E0AA);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag">护肤</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">敏感肌必看｜泛红刺痛怎么修护</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#27AE60;">敏</div>
+                  <span>敏感肌研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('成分分析')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#EBF5FB,#85C1E9);">
+              <span class="xhs-card-emoji">🔬</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">烟酰胺不耐受？这些成分更适合你</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#2E86C1;">成</div>
+                  <span>成分党</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="showToast('化妆工具选择')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🖌️</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">新手化妆刷推荐｜这5支就够了</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#F8BBD9;">刷</div>
+                  <span>工具控</span>
+                </div>
+                <div class="xhs-card-like">❤️ 2.9k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 国风专区 ===== -->
+      <div class="lib-cat-panel" id="panel-guofeng" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#D4A03C 100%);">
+              <span class="xhs-card-emoji">🏮</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">唐风贵妃妆｜雍容华贵的大唐气象</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D4A03C,#B7950B);">唐</div>
+                  <span>国风美妆社</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#A3E4D7 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">宋韵清雅妆｜淡雅素净的宋式美学</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#A3E4D7,#48C9B0);">宋</div>
+                  <span>宋韵雅集</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">明制端庄妆｜明代女子的温婉气质</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#BB8FCE,#8E44AD);">明</div>
+                  <span>明制汉服社</span>
+                </div>
+                <div class="xhs-card-like">❤️ 5.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#FDEDEC 0%,#F5B7B1 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">日常汉元素｜通勤也能穿的国风妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F5B7B1,#E74C3C);">汉</div>
+                  <span>汉元素日常</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">🦋</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">敦煌飞天妆｜壁画走出来的神仙妆容</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#D4A03C);">敦</div>
+                  <span>敦煌研究院</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <span class="xhs-card-emoji">🌙</span>
+              <span class="xhs-card-tag xhs-tag-guofeng">国风</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">青花瓷灵感妆｜东方美学的高级感</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#85C1E9,#2E86C1);">青</div>
+                  <span>青花集</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.7k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 银发专区 ===== -->
+      <div class="lib-cat-panel" id="panel-yinfa" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#E8F8F5 0%,#AED6F1 100%);">
+              <span class="xhs-card-emoji">👵</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">50+优雅日常妆｜好气色的秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#AED6F1,#5DADE2);">优</div>
+                  <span>优雅姐姐</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">💄</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">重要场合妆｜女儿婚礼妈妈妆容</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#C4956A);">婚</div>
+                  <span>婚礼美妆师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 6.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7 0%,#D7BDE2 100%);">
+              <span class="xhs-card-emoji">✨</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">抗老护肤+妆容｜熟龄肌的正确打开方式</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D7BDE2,#BB8FCE);">抗</div>
+                  <span>抗老研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 11.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:1/1;background:linear-gradient(135deg,#FADADD,#F8BBD9);">
+              <span class="xhs-card-emoji">🌸</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">减龄10岁的腮红打法｜苹果肌回来了</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F8BBD9,#F1948A);">减</div>
+                  <span>减龄美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 4.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">👁️</span>
+              <span class="xhs-card-tag xhs-tag-yinfa">银发</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">下垂眼型调整｜阿姨变姐姐的眼妆技巧</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#F4D03F);">眼</div>
+                  <span>眼妆实验室</span>
+                </div>
+                <div class="xhs-card-like">❤️ 3.9k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#E8F6F3 0%,#82E0AA 100%);">
+              <span class="xhs-card-emoji">🌿</span>
+              <span class="xhs-card-tag xhs-tag-free">免费</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">更年期护肤指南｜内调外养一起变美</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#82E0AA,#27AE60);">更</div>
+                  <span>健康生活家</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.1k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 大牌精选 ===== -->
+      <div class="lib-cat-panel" id="panel-dapai" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#C4956A 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#1a1a1a,#333);color:#D4AF37;">Y</div>
+              <span class="xhs-card-tag xhs-tag-brand">YSL</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">YSL 2024春夏限定｜不羁少女的法式妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#1a1a1a;color:#D4AF37;">Y</div>
+                  <span>YSL官方</span>
+                </div>
+                <div class="xhs-card-like">❤️ 15.6k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#333);color:#fff;">D</div>
+              <span class="xhs-card-tag xhs-tag-brand">Dior</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">Dior烈艳蓝金｜经典红唇永不过时</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#fff;">D</div>
+                  <span>Dior美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 21.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#222);color:#FFD700;">L</div>
+              <span class="xhs-card-tag xhs-tag-brand">兰蔻</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">兰蔻菁纯系列｜贵妇级底妆养肤又遮瑕</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#FFD700;">L</div>
+                  <span>兰蔻LANCOME</span>
+                </div>
+                <div class="xhs-card-like">❤️ 9.8k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#F4ECF7 0%,#D7BDE2 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#000,#333);color:#fff;">E</div>
+              <span class="xhs-card-tag xhs-tag-brand">雅诗兰黛</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">雅诗兰黛DW｜油皮亲妈持妆测评</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#000;color:#fff;">E</div>
+                  <span>EL雅诗兰黛</span>
+                </div>
+                <div class="xhs-card-like">❤️ 13.2k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDF2E9 0%,#D4A03C 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#D4A03C,#B7950B);color:#fff;">花</div>
+              <span class="xhs-card-tag xhs-tag-brand">花西子</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">花西子傣族印象｜东方美学新诠释</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#D4A03C,#B7950B);color:#fff;">花</div>
+                  <span>花西子Florasis</span>
+                </div>
+                <div class="xhs-card-like">❤️ 18.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <div class="xhs-brand-logo" style="background:linear-gradient(135deg,#333,#555);color:#fff;">毛</div>
+              <span class="xhs-card-tag xhs-tag-brand">毛戈平</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">毛戈平光影塑颜｜化妆大师的修容秘诀</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:#333;color:#fff;">毛</div>
+                  <span>MAOGEPING</span>
+                </div>
+                <div class="xhs-card-like">❤️ 7.4k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 明星同款 ===== -->
+      <div class="lib-cat-panel" id="panel-star" style="display:none;">
+        <div class="xhs-waterfall">
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FDEDEC 0%,#F1948A 100%);">
+              <span class="xhs-card-emoji">💃</span>
+              <span class="xhs-card-tag xhs-tag-star">红毯妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">复古港风红毯妆｜80年代女星的风情万种</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F1948A,#E74C3C);">港</div>
+                  <span>港风复刻</span>
+                </div>
+                <div class="xhs-card-like">❤️ 16.5k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#F4ECF7 0%,#BB8FCE 100%);">
+              <span class="xhs-card-emoji">🎤</span>
+              <span class="xhs-card-tag xhs-tag-star">舞台妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">演唱会舞台妆｜镜头前也超上镜</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#BB8FCE,#8E44AD);">舞</div>
+                  <span>舞台美妆师</span>
+                </div>
+                <div class="xhs-card-like">❤️ 8.3k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FEF9E7 0%,#F9E79F 100%);">
+              <span class="xhs-card-emoji">📸</span>
+              <span class="xhs-card-tag xhs-tag-star">日常街拍</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">女星街拍妆容｜伪素颜的最高境界</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F9E79F,#F4D03F);">街</div>
+                  <span>街拍研究所</span>
+                </div>
+                <div class="xhs-card-like">❤️ 12.1k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:5/6;background:linear-gradient(180deg,#EBF5FB 0%,#85C1E9 100%);">
+              <span class="xhs-card-emoji">👑</span>
+              <span class="xhs-card-tag xhs-tag-star">红毯妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">金晨同款人鱼姬｜戛纳红毯妆容解析</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#85C1E9,#2E86C1);">鱼</div>
+                  <span>红毯美妆</span>
+                </div>
+                <div class="xhs-card-like">❤️ 23.7k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:4/5;background:linear-gradient(180deg,#FDF2E9 0%,#E8C9A8 100%);">
+              <span class="xhs-card-emoji">🎬</span>
+              <span class="xhs-card-tag xhs-tag-star">日常街拍</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">韩剧女主同款｜清透奶油肌妆教</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);">韩</div>
+                  <span>韩剧女主</span>
+                </div>
+                <div class="xhs-card-like">❤️ 19.4k</div>
+              </div>
+            </div>
+          </div>
+          <div class="xhs-card" onclick="openFullscreenModal('templateDetailModal')">
+            <div class="xhs-card-img" style="aspect-ratio:3/4;background:linear-gradient(180deg,#FADADD 0%,#F8BBD9 100%);">
+              <span class="xhs-card-emoji">💗</span>
+              <span class="xhs-card-tag xhs-tag-star">舞台妆</span>
+            </div>
+            <div class="xhs-card-info">
+              <div class="xhs-card-title">爱豆打歌服同款｜甜酷女团妆</div>
+              <div class="xhs-card-bottom">
+                <div class="xhs-card-author">
+                  <div class="xhs-avatar" style="background:linear-gradient(135deg,#F8BBD9,#F1948A);">女</div>
+                  <span>女团制造机</span>
+                </div>
+                <div class="xhs-card-like">❤️ 14.8k</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ Search Page ============ -->
+  <div class="page" id="page-search">
+    <header class="app-header">
+      <div class="header-left" style="flex:1;">
+        <div class="search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-text-muted);"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input placeholder="搜索妆容、成分、问题..." value="眼线晕妆" readonly>
+        </div>
+      </div>
+      <div class="header-right"><button class="btn btn-ghost btn-sm" onclick="showToast('取消')">取消</button></div>
+    </header>
+
+    <!-- F25: Solution Comparison -->
+    <div class="solution-grid">
+      <div class="solution-header">
+        <h2>眼线晕妆怎么办？</h2>
+        <p>为你找到 4 种解决方案</p>
+      </div>
+
+      <div class="solution-card recommended" onclick="showToast('查看方案详情')">
+        <div class="solution-top">
+          <h3>方案一：眼部打底膏 <span class="solution-badge">最推荐</span></h3>
+        </div>
+        <div class="solution-metrics">
+          <div class="solution-metric"><div class="solution-metric-num success">95%</div><div class="solution-metric-label">效果</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">简单</div><div class="solution-metric-label">难度</div></div>
+          <div class="solution-metric"><div class="solution-metric-num warning">5分钟</div><div class="solution-metric-label">耗时</div></div>
+        </div>
+        <p class="solution-desc">在上眼影前使用专门的眼部打底膏，可以有效防止眼影晕染，延长妆容持久度。适合油性眼皮和夏季使用。</p>
+        <div class="solution-bottom">
+          <span class="solution-suitable">适合：油皮 / 夏季 / 长时间带妆</span>
+          <button class="solution-btn">查看详情</button>
+        </div>
+      </div>
+
+      <div class="solution-card" onclick="showToast('查看方案详情')">
+        <div class="solution-top">
+          <h3>方案二：散粉定妆法</h3>
+        </div>
+        <div class="solution-metrics">
+          <div class="solution-metric"><div class="solution-metric-num success">80%</div><div class="solution-metric-label">效果</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">中等</div><div class="solution-metric-label">难度</div></div>
+          <div class="solution-metric"><div class="solution-metric-num warning">8分钟</div><div class="solution-metric-label">耗时</div></div>
+        </div>
+        <p class="solution-desc">画眼妆前在眼下区域轻拍散粉，收集多余的眼影晕染色，保持眼周干净。烘焙法定妆效果更佳。</p>
+        <div class="solution-bottom">
+          <span class="solution-suitable">适合：中油皮 / 日常通勤</span>
+          <button class="solution-btn">查看详情</button>
+        </div>
+      </div>
+
+      <div class="solution-card" onclick="showToast('查看方案详情')">
+        <div class="solution-top">
+          <h3>方案三：防水眼线产品</h3>
+        </div>
+        <div class="solution-metrics">
+          <div class="solution-metric"><div class="solution-metric-num success">90%</div><div class="solution-metric-label">效果</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">中等</div><div class="solution-metric-label">难度</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">3分钟</div><div class="solution-metric-label">耗时</div></div>
+        </div>
+        <p class="solution-desc">选择防水配方的眼线液笔或眼线胶笔，尤其在潮湿环境或出汗时更为重要。需要专门卸妆产品。</p>
+        <div class="solution-bottom">
+          <span class="solution-suitable">适合：运动 / 游泳 / 潮湿天气</span>
+          <button class="solution-btn">查看详情</button>
+        </div>
+      </div>
+
+      <div class="solution-card" onclick="showF27Alert()">
+        <div class="solution-top">
+          <h3>方案四：睫毛膏晕染 <span style="color:var(--color-danger);font-size:11px;">⚠️ 含致敏成分</span></h3>
+        </div>
+        <div class="solution-metrics">
+          <div class="solution-metric"><div class="solution-metric-num warning" style="color:var(--color-danger);">风险</div><div class="solution-metric-label">敏感肌</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">简单</div><div class="solution-metric-label">难度</div></div>
+          <div class="solution-metric"><div class="solution-metric-num">2分钟</div><div class="solution-metric-label">耗时</div></div>
+        </div>
+        <p class="solution-desc">选择防水型睫毛膏防止下眼睑晕染（熊猫眼）。但注意部分产品含酒精和香精，敏感肌需谨慎。</p>
+        <div class="solution-bottom">
+          <span class="solution-suitable" style="color:var(--color-danger);">⚠️ 敏感肌慎用</span>
+          <button class="solution-btn" style="background:var(--color-danger);">查看风险</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Mall Page ============ -->
+  <div class="page" id="page-mall">
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">妆容商城</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('搜索')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button></div></header>
+    <div class="mall-tabs no-scrollbar"><div class="mall-tab active">全部</div><div class="mall-tab">L2精选</div><div class="mall-tab">L3大师</div><div class="mall-tab">新品上架</div></div>
+    <div class="section-sm"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">热门妆容</div></div></div>
+    <div class="product-grid">
+      <div class="product-card" onclick="openFullscreenModal('templateDetailModal')"><div class="product-img"><img src="ui-design/assets/product-2.jpg" alt="法式红唇妆"><span class="badge badge-danger badge-pill product-tag">热销</span></div><div class="product-text"><h4>法式红唇妆</h4><div class="product-meta"><span class="product-price">60 GP</span><span class="product-sales">2.3万</span></div></div></div>
+      <div class="product-card" onclick="openFullscreenModal('templateDetailModal')"><div class="product-img"><img src="ui-design/assets/product-3.jpg" alt="元气腮红妆"></div><div class="product-text"><h4>元气腮红妆</h4><div class="product-meta"><span class="product-price">40 GP</span><span class="product-sales">1.8万</span></div></div></div>
+      <div class="product-card" onclick="openFullscreenModal('templateDetailModal')"><div class="product-img"><img src="ui-design/assets/product-4.jpg" alt="烟熏晚宴妆"><span class="badge badge-primary badge-pill product-tag">新品</span></div><div class="product-text"><h4>烟熏晚宴妆</h4><div class="product-meta"><span class="product-price">80 GP</span><span class="product-sales">5千</span></div></div></div>
+      <div class="product-card" onclick="openFullscreenModal('templateDetailModal')"><div class="product-img"><img src="ui-design/assets/product-1.jpg" alt="自然眉妆"></div><div class="product-text"><h4>自然眉妆</h4><div class="product-meta"><span class="product-price">20 GP</span><span class="product-sales">3.1万</span></div></div></div>
+    </div>
+  </div>
+
+  <!-- ============ Mirror Page (Dual Mode) ============ -->
+  <div class="page" id="page-mirror">
+    <div class="mirror-hero" id="mirrorHero">
+      <div class="mirror-controls">
+        <div class="mirror-ctrl-btn" onclick="showToast('切换摄像头')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l-4.64 4.36A9 9 0 0 1 20.49 15"/></svg></div>
+      </div>
+
+      <!-- Mode Toggle -->
+      <div class="mirror-mode-toggle">
+        <div class="mirror-mode-btn active" id="chatModeBtn" onclick="switchMirrorMode('chat')">Chat</div>
+        <div class="mirror-mode-btn" id="mirrorModeBtn" onclick="switchMirrorMode('mirror')">Mirror</div>
+      </div>
+
+      <!-- Mirror Mode Content -->
+      <div id="mirrorModeContent">
+        <div class="mirror-face"><div class="mirror-face-ring"></div><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h2>镜面跟练模式</h2><p>对准面部，开始跟练</p>
+        <div class="mirror-steps"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+      </div>
+
+      <!-- Chat Mode Content -->
+      <div id="chatModeContent" style="display:none;width:100%;flex:1;display:none;flex-direction:column;">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-msg ai">你好！我是你的 AI 美妆顾问 🌸 有什么我可以帮你的吗？你可以问我关于妆容搭配、产品推荐、化妆技巧等问题~</div>
+        </div>
+        <div class="chat-quick">
+          <div class="chat-quick-chip" onclick="sendQuickChat('推荐适合通勤的妆容')">适合通勤的妆容</div>
+          <div class="chat-quick-chip" onclick="sendQuickChat('油皮夏天怎么定妆')">油皮定妆技巧</div>
+          <div class="chat-quick-chip" onclick="sendQuickChat('今年流行什么唇色')">流行唇色</div>
+        </div>
+        <div class="chat-input-bar">
+          <input class="chat-input" placeholder="输入你的问题..." id="chatInput">
+          <button class="chat-send" onclick="sendChatMessage()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+        </div>
+      </div>
+
+      <!-- Mirror Bottom Bar (only in mirror mode) -->
+      <div class="mirror-bottom-bar" id="mirrorBottomBar">
+        <div class="mirror-bottom-btn" onclick="showToast('切换妆容')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+          <span>切换</span>
+        </div>
+        <div class="mirror-bottom-btn" style="flex-direction:column;">
+          <div class="intensity-slider" style="width:100px;padding:0;">
+            <input type="range" min="0" max="100" value="60" oninput="showToast('强度: '+this.value+'%')">
+          </div>
+          <span style="margin-top:2px;">强度</span>
+        </div>
+        <div class="mirror-capture-btn" onclick="showToast('拍照保存')"><div class="mirror-capture-btn-inner"></div></div>
+        <div class="mirror-bottom-btn" onclick="showToast('滤镜')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20"/><path d="M2 12h20"/></svg>
+          <span>滤镜</span>
+        </div>
+        <div class="mirror-bottom-btn" onclick="showToast('收藏')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span>收藏</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tutorial List -->
+    <div class="tutorial-list">
+      <div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">今日跟练步骤</div><span class="badge badge-primary badge-pill">5 / 10 步</span></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>打底妆</h4><p>均匀涂抹粉底液，打造无瑕底妆</p></div></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>定妆</h4><p>散粉轻按定妆，持久持妆</p></div></div>
+      <div class="tutorial-item done"><div class="step-num">✓</div><div class="tutorial-text"><h4>画眉</h4><p>顺着眉形填充，自然过渡</p></div></div>
+
+      <!-- F26: Step with 3-tier products -->
+      <div class="tutorial-item active"><div class="step-num">4</div><div class="tutorial-text">
+        <h4 style="color:var(--color-primary);">画眼影 <span class="badge badge-primary badge-pill" style="margin-left:6px;">进行中</span></h4>
+        <p>浅色系打底，深色系晕染眼尾</p>
+        <div class="tutorial-product">
+          <div class="tutorial-product-title">🛍️ 本步推荐产品</div>
+          <div class="product-tiers">
+            <div class="product-tier" onclick="showToast('平替款详情')">
+              <div class="product-tier-tag">平替</div>
+              <div class="product-tier-name">某品牌眼影盘</div>
+              <div class="product-tier-price">¥59</div>
+            </div>
+            <div class="product-tier" onclick="showToast('中端款详情')">
+              <div class="product-tier-tag">中端</div>
+              <div class="product-tier-name">某热门眼影</div>
+              <div class="product-tier-price">¥199</div>
+            </div>
+            <div class="product-tier" onclick="showToast('大牌款详情')">
+              <div class="product-tier-tag">大牌</div>
+              <div class="product-tier-name">某奢侈品牌</div>
+              <div class="product-tier-price">¥520</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+
+      <div class="tutorial-item"><div class="step-num">5</div><div class="tutorial-text"><h4>画眼线</h4><p>沿着睫毛根部描绘，眼尾微微上扬</p></div></div>
+      <div class="tutorial-item"><div class="step-num">6</div><div class="tutorial-text"><h4>涂睫毛膏</h4><p>从根部向上刷，纤长浓密</p></div></div>
+    </div>
+  </div>
+
+  <!-- ============ Profile Page ============ -->
+  <div class="page" id="page-profile">
+    <header class="app-header"><div class="header-left"><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">我的</h2></div><div class="header-right"><button class="icon-btn" onclick="showToast('设置')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></header>
+
+    <!-- 1. Face Info Card (顶部渐变卡) -->
+    <div class="profile-face-card" onclick="showToast('面部档案详情')">
+      <div class="profile-face-top">
+        <div class="profile-face-avatar">👤</div>
+        <div class="profile-face-info">
+          <h3>小美 · 鹅蛋脸</h3>
+          <p>混合性肤质 · 暖色调 · 敏感肌</p>
+        </div>
+        <span style="font-size:18px;opacity:0.7;">→</span>
+      </div>
+      <div class="profile-face-tags">
+        <span class="profile-face-tag">✨ 骨相 86</span>
+        <span class="profile-face-tag">👁️ 双眼皮</span>
+        <span class="profile-face-tag">👃 高鼻梁</span>
+      </div>
+    </div>
+
+    <!-- 2. GP 焕新值醒目入口 -->
+    <div class="profile-gp-card" onclick="openFullscreenModal('gpCenterModal')">
+      <div class="profile-gp-left">
+        <div class="profile-gp-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>
+        </div>
+        <div class="profile-gp-info">
+          <h4>焕新值 GP</h4>
+          <p>每日任务 · 成就奖励 · 兑换商城</p>
+        </div>
+      </div>
+      <div class="profile-gp-right">
+        <div class="profile-gp-amount" id="profileGpAmount">328</div>
+        <div class="profile-gp-arrow">去查看 →</div>
+      </div>
+    </div>
+
+    <!-- 2.5 化妆记录入口卡片 -->
+    <div class="makeup-record-card" onclick="showToast('化妆记录详情')">
+      <div class="makeup-record-header">
+        <div class="makeup-record-title">
+          <div class="makeup-record-icon">📅</div>
+          <h4>化妆记录</h4>
+        </div>
+        <span class="makeup-record-arrow">查看全部 →</span>
+      </div>
+      <div class="makeup-record-stats">
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">28</div>
+          <div class="makeup-stat-label">本月化妆天数</div>
+        </div>
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">12</div>
+          <div class="makeup-stat-label">尝试妆容数</div>
+        </div>
+        <div class="makeup-stat-item">
+          <div class="makeup-stat-num">86%</div>
+          <div class="makeup-stat-label">坚持率</div>
+        </div>
+      </div>
+      <div class="makeup-record-today">
+        <span class="makeup-today-text">今日还没化妆哦，<strong>快去试试吧</strong></span>
+        <span class="makeup-today-btn">去化妆</span>
+      </div>
+    </div>
+
+    <!-- 3. 功能宫格 - 第一行（5个） -->
+    <div class="profile-section-title">我的服务</div>
+    <div class="profile-grid-5">
+      <div class="profile-grid-item" onclick="showToast('风格偏好')">
+        <div class="profile-grid-icon" style="background:#FDF2E9;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#E67E22;"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></div>
+        <div class="profile-grid-text">风格偏好</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('我的模板')">
+        <div class="profile-grid-icon" style="background:#EBF5FB;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#3498DB;"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="profile-grid-text">我的模板</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('工具箱')">
+        <div class="profile-grid-icon" style="background:#F4ECF7;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#8E44AD;"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="profile-grid-text">工具箱</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('国风专区')">
+        <div class="profile-grid-icon" style="background:#FDEDEC;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#E74C3C;"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div>
+        <div class="profile-grid-text">国风</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('银发专区')">
+        <div class="profile-grid-icon" style="background:#E8F8F5;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#1ABC9C;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="profile-grid-text">银发</div>
+      </div>
+    </div>
+
+    <!-- 功能宫格 - 第二行（3个） -->
+    <div class="profile-grid-3" style="margin-bottom:var(--spacing-4);">
+      <div class="profile-grid-item" onclick="openFullscreenModal('ingredientScanModal')">
+        <div class="profile-grid-icon" style="background:#F5E8E8;color:var(--color-danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <div class="profile-grid-text">成分扫描</div>
+      </div>
+      <div class="profile-grid-item" onclick="showToast('门店地图')">
+        <div class="profile-grid-icon" style="background:#FEF9E7;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#F39C12;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="profile-grid-text">门店地图</div>
+      </div>
+      <div class="profile-grid-item" onclick="switchTab('brand')">
+        <div class="profile-grid-icon" style="background:#EAFAF1;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:#27AE60;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="profile-grid-text">品牌合作</div>
+      </div>
+    </div>
+
+    <!-- 4. 快捷菜单 -->
+    <div class="profile-section-title">更多服务</div>
+    <div class="menu-card">
+      <div class="menu-item" onclick="showToast('面部资产库')">
+        <div class="menu-icon" style="background:#FDF2E9;color:#E67E22;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="menu-text"><h4>我的面部资产</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('订单记录')">
+        <div class="menu-icon" style="background:#EBF5FB;color:#3498DB;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+        </div>
+        <div class="menu-text"><h4>购买记录</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('帮助与反馈')">
+        <div class="menu-icon" style="background:#F4ECF7;color:#8E44AD;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="menu-text"><h4>帮助与反馈</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+      <div class="menu-item" style="border-bottom:none;" onclick="showToast('设置')">
+        <div class="menu-icon" style="background:#E8F8F5;color:#1ABC9C;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+        <div class="menu-text"><h4>设置</h4></div>
+        <span class="menu-arrow">→</span>
+      </div>
+    </div>
+
+    <div style="height:20px;"></div>
+  </div>
+
+  <!-- ============ Brand Page ============ -->
+  <div class="page" id="page-brand">
+    <header class="app-header"><div class="header-left"><button class="icon-btn" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><h2 style="font-size:var(--font-size-lg);font-weight:var(--font-weight-bold);">品牌合作中心</h2></div></header>
+    <div class="brand-hero"><h2>品牌方合作入口</h2><p>入驻妆伴，共建美妆 AI 生态</p><div class="brand-hero-btns"><button class="btn btn-primary" onclick="showToast('立即入驻')">立即入驻</button><button class="btn btn-secondary" onclick="showToast('了解更多')">了解更多</button></div></div>
+    <div class="dashboard"><div class="section-header"><div class="section-title" style="font-size:var(--font-size-md);">数据看板</div><span class="badge badge-info badge-pill">B 端 SaaS</span></div><div class="dash-grid"><div class="dash-card"><div class="dash-num">12</div><div class="dash-label">在售模板</div></div><div class="dash-card"><div class="dash-num">2,340</div><div class="dash-label">累计解锁</div></div><div class="dash-card"><div class="dash-num">4.8</div><div class="dash-label">平均评分</div></div><div class="dash-card"><div class="dash-num">¥12,580</div><div class="dash-label">本月收益</div></div></div></div>
+  </div>
+
+  <!-- ============ Tab Bar (5 Tabs) ============ -->
+  <nav class="tab-bar">
+    <a class="tab-btn active" data-tab="home" onclick="switchTab('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12.5L12 4l9 8.5"/><path d="M5 11v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>首页</span></a>
+    <a class="tab-btn" data-tab="library" onclick="switchTab('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><span>颜库</span></a>
+    <a class="tab-btn fab-placeholder"><span>占位</span></a>
+    <a class="tab-btn" data-tab="mall" onclick="switchTab('mall')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span>商城</span></a>
+    <a class="tab-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg><span>我的</span></a>
+  </nav>
+
+  <!-- FAB Button -->
+  <button class="fab-btn" onclick="openFabSheet()">💄</button>
+
+  <!-- FAB Action Sheet -->
+  <div class="fab-sheet-overlay" id="fabSheetOverlay" onclick="closeFabSheet(event)">
+    <div class="fab-sheet" onclick="event.stopPropagation()">
+      <div class="fab-sheet-handle"></div>
+      <div class="fab-sheet-title">选择你的化妆方式</div>
+      <div class="fab-sheet-subtitle">开启专属美妆体验</div>
+      <div class="fab-sheet-options">
+        <div class="fab-sheet-option" onclick="switchTab('mirror');switchMirrorMode('chat');closeFabSheet()">
+          <div class="fab-sheet-icon chat">🤖</div>
+          <div class="fab-sheet-info">
+            <h4>AI 对话妆造</h4>
+            <p>和 AI 美妆教练聊天，获取个性化妆容方案</p>
+          </div>
+        </div>
+        <div class="fab-sheet-option" onclick="switchTab('mirror');switchMirrorMode('mirror');closeFabSheet()">
+          <div class="fab-sheet-icon mirror">🪞</div>
+          <div class="fab-sheet-info">
+            <h4>开始镜面化妆</h4>
+            <p>打开智能魔镜，边学边画</p>
+          </div>
+        </div>
+        <div class="fab-sheet-option" onclick="showToast('上传妆容功能开发中');closeFabSheet()">
+          <div class="fab-sheet-icon upload">📷</div>
+          <div class="fab-sheet-info">
+            <h4>上传我的妆容</h4>
+            <p>分享你的妆容，成为创作者</p>
+          </div>
+        </div>
+      </div>
+      <button class="fab-sheet-cancel" onclick="closeFabSheet()">取消</button>
+    </div>
+  </div>
+
+  <!-- ============ Toast ============ -->
+  <div class="toast" id="toast">提示信息</div>
+
+  <!-- ============ F27: Risk Alert (大的警示弹窗) ============ -->
+  <div class="risk-alert" id="riskAlert" onclick="closeRiskAlert(event)">
+    <div class="risk-alert-card" onclick="event.stopPropagation()">
+      <div class="risk-alert-header">
+        <div class="risk-alert-icon">⚠️</div>
+        <h2>成分风险预警</h2>
+        <p>该产品含有致敏成分，请谨慎使用</p>
+      </div>
+      <div class="risk-alert-body">
+        <div class="risk-alert-section">
+          <div class="risk-level-row">
+            <div class="risk-level-dot"></div>
+            <div class="risk-level-text">高风险 · 敏感肌禁用</div>
+          </div>
+        </div>
+        <div class="risk-alert-section">
+          <h4>🔬 为什么不能用？</h4>
+          <p>该产品含有 <strong>香精（Fragrance）</strong> 和 <strong>酒精（Alcohol Denat.）</strong>。香精是最常见的致敏原之一，约 2-3% 的人群会对其过敏。酒精会破坏皮肤屏障，加重敏感肌的泛红和刺痛感。</p>
+        </div>
+        <div class="risk-alert-section">
+          <h4>⚡ 可能的风险</h4>
+          <p>• 接触性皮炎：红斑、瘙痒、灼热感<br>• 皮肤屏障受损：长期使用会加重敏感<br>• 毛孔堵塞：可能引发粉刺和闭口</p>
+        </div>
+        <div class="risk-alert-section">
+          <h4>💡 替代建议</h4>
+          <p>推荐选择 <strong>无香精、无酒精</strong> 的产品。可以搜索「敏感肌专用」或查看我们的 <strong>安全成分榜单</strong> 找到更适合你的替代方案。</p>
+        </div>
+      </div>
+      <div class="risk-alert-footer">
+        <button class="btn btn-secondary btn-block" onclick="closeRiskAlert()">我知道了</button>
+        <button class="btn btn-primary btn-block" onclick="showToast('查看安全榜单');closeRiskAlert()">找替代品</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Ingredient Scan Fullscreen Modal ============ -->
+  <div class="modal-overlay fullscreen" id="ingredientScanModal" onclick="closeFullscreenModal('ingredientScanModal',event)">
+    <div class="modal scan-modal-body" onclick="event.stopPropagation()">
+      <div class="fs-modal-header">
+        <div class="fs-modal-title">成分扫描</div>
+        <div class="fs-modal-close" onclick="closeFullscreenModal('ingredientScanModal')">✕</div>
+      </div>
+      <div class="scan-camera-area">
+        <div class="scan-frame"><span></span></div>
+        <div class="scan-scan-line"></div>
+        <p>将成分表对准框内，自动识别</p>
+      </div>
+      <div class="scan-modal-tabs">
+        <div class="scan-modal-tab active">拍照</div>
+        <div class="scan-modal-tab">相册</div>
+        <div class="scan-modal-tab">手动输入</div>
+      </div>
+      <div class="scan-modal-content">
+        <div style="text-align:center;">
+          <button class="btn btn-primary btn-block" onclick="showScanResult()">📸 开始扫描</button>
+          <p style="font-size:11px;color:var(--color-text-muted);margin-top:var(--spacing-3);">支持 10000+ 成分数据库 · 中欧美三方法规对照</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GP Center Fullscreen Modal ============ -->
+  <div class="modal-overlay fullscreen" id="gpCenterModal" onclick="closeFullscreenModal('gpCenterModal',event)">
+    <div class="modal gp-center-body" onclick="event.stopPropagation()">
+      <div class="fs-modal-header" style="background:transparent;border-bottom:none;position:absolute;top:0;left:0;right:0;z-index:10;">
+        <div></div>
+        <div class="fs-modal-title" style="color:#fff;">焕新值中心</div>
+        <div class="fs-modal-close" onclick="closeFullscreenModal('gpCenterModal')" style="background:rgba(255,255,255,0.2);color:#fff;">✕</div>
+      </div>
+
+      <div class="gp-center-header-bg">
+        <div class="gp-center-balance" id="gpCenterBalance">328</div>
+        <div class="gp-center-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>
+          焕新值 GP
+        </div>
+        <div class="gp-center-level">
+          <span class="gp-center-level-name">金妆 Lv.3</span>
+          <div class="gp-center-level-bar"><div class="gp-center-level-fill"></div></div>
+          <span class="gp-center-level-next">距Lv.4 172GP</span>
+        </div>
+      </div>
+
+      <div class="gp-center-tasks">
+        <div class="gp-task-card">
+          <h3>每日任务 <span class="badge badge-primary badge-pill">每日 0 点重置</span></h3>
+          <div class="gp-task-item"><div class="gp-task-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="gp-task-info"><h4>每日签到</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:100%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+10 GP</div><button class="claim-btn" onclick="claimTask(this,10)">领取</button></div></div>
+          <div class="gp-task-item"><div class="gp-task-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div class="gp-task-info"><h4>浏览 3 个妆容模板</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:66%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+15 GP</div><button class="claim-btn" disabled>2/3</button></div></div>
+          <div class="gp-task-item"><div class="gp-task-icon" style="background:#E8F0E8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-success);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="gp-task-info"><h4>成分扫描 1 次</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:0%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+20 GP</div><button class="claim-btn" onclick="closeFullscreenModal('gpCenterModal');openFullscreenModal('ingredientScanModal')">去完成</button></div></div>
+          <div class="gp-task-item" style="border-bottom:none;"><div class="gp-task-icon" style="background:#FAF0E0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-warning);"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div><div class="gp-task-info"><h4>收藏 1 个妆容</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:100%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+10 GP</div><button class="claim-btn" onclick="claimTask(this,10)">领取</button></div></div>
+        </div>
+
+        <div class="gp-task-card">
+          <h3>成就奖励 <span class="badge badge-warning badge-pill">长期</span></h3>
+          <div class="gp-task-item"><div class="gp-task-icon" style="background:#E8EEF5;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-info);"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg></div><div class="gp-task-info"><h4>首次完成面部扫描</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:100%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+50 GP</div><button class="claim-btn" onclick="claimTask(this,50)">领取</button></div></div>
+          <div class="gp-task-item" style="border-bottom:none;"><div class="gp-task-icon" style="background:#F5EDE4;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-primary-dark);"><path d="M6 2L3 6v13a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg></div><div class="gp-task-info"><h4>首次购买妆容模板</h4><div class="gp-task-progress"><div class="gp-task-prog-fill" style="width:0%;"></div></div></div><div class="gp-task-reward"><div class="gp-task-gp">+30 GP</div><button class="claim-btn" disabled>未完成</button></div></div>
+        </div>
+
+        <button class="btn btn-primary btn-block" style="margin:var(--spacing-4);" onclick="showToast('兑换商城')">🛍️ 去兑换商城</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Template Detail Fullscreen Modal ============ -->
+  <div class="modal-overlay fullscreen" id="templateDetailModal" onclick="closeFullscreenModal('templateDetailModal',event)">
+    <div class="modal template-detail" onclick="event.stopPropagation()">
+      <div class="template-hero">
+        <span class="template-hero-emoji">💄</span>
+        <span class="template-hero-badge badge badge-primary badge-pill">L2 精选</span>
+        <div class="template-hero-actions">
+          <div class="template-hero-action" onclick="showToast('已收藏')">♡</div>
+          <div class="template-hero-action" onclick="showToast('分享')">↗</div>
+        </div>
+      </div>
+      <div class="template-detail-body">
+        <h1 class="template-detail-title">晚宴精致妆容</h1>
+        <div class="template-detail-creator">
+          <div class="avatar avatar-sm">L</div>
+          <span>美妆师 Luna · 官方认证创作者</span>
+        </div>
+
+        <div class="template-detail-meta">
+          <div class="template-metric"><div class="template-metric-num">4.9</div><div class="template-metric-label">评分</div></div>
+          <div class="template-metric"><div class="template-metric-num">2.3w</div><div class="template-metric-label">使用次数</div></div>
+          <div class="template-metric"><div class="template-metric-num">10步</div><div class="template-metric-label">教程</div></div>
+          <div class="template-metric"><div class="template-metric-num">15min</div><div class="template-metric-label">时长</div></div>
+        </div>
+
+        <div class="template-detail-section">
+          <h3>妆容简介</h3>
+          <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);line-height:1.8;">一款适合晚宴、派对等正式场合的精致妆容。重点在于眼妆的层次感和唇妆的高级感，让你在人群中脱颖而出。适合鹅蛋脸、瓜子脸等多种脸型。</p>
+        </div>
+
+        <div class="template-detail-section">
+          <h3>适合场景</h3>
+          <div class="template-tags">
+            <span class="template-tag">晚宴派对</span>
+            <span class="template-tag">婚礼</span>
+            <span class="template-tag">商务宴会</span>
+            <span class="template-tag">拍照上镜</span>
+          </div>
+        </div>
+
+        <div class="template-detail-section">
+          <h3>适合脸型</h3>
+          <div class="template-tags">
+            <span class="template-tag">鹅蛋脸</span>
+            <span class="template-tag">瓜子脸</span>
+            <span class="template-tag">圆脸</span>
+            <span class="template-tag">长脸</span>
+          </div>
+        </div>
+
+        <div class="template-detail-section">
+          <h3>用户评价</h3>
+          <div style="background:var(--color-bg-alt);padding:var(--spacing-3);border-radius:var(--radius-sm);">
+            <p style="font-size:var(--font-size-sm);color:var(--color-text-secondary);">"这个妆太绝了！上次参加婚礼用了，好多人问我在哪做的妆。教程很详细，跟着一步步来完全没问题。" — 小**同学</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-bottom-bar">
+        <div>
+          <div class="template-price-text">模板价格</div>
+          <div class="template-price-num">50 GP</div>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="showToast('解锁成功！');closeFullscreenModal('templateDetailModal')">立即解锁</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Trending Modal ============ -->
+  <div class="modal-overlay" id="trendingModal" onclick="closeModal('trendingModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">🔥 今日热度榜</h3>
+      <div class="trending-list">
+        <div class="trending-item" onclick="openFullscreenModal('templateDetailModal');closeModal('trendingModal')"><div class="trending-rank top3">1</div><div class="trending-cover">💄</div><div class="trending-info"><h4>晚宴精致妆容</h4><p>美妆师 Luna · 2,341 热度</p></div><div class="trending-gp">50 GP</div></div>
+        <div class="trending-item" onclick="openFullscreenModal('templateDetailModal');closeModal('trendingModal')"><div class="trending-rank top3">2</div><div class="trending-cover" style="background:linear-gradient(135deg,#E8C9A8,#D4B896);">🌸</div><div class="trending-info"><h4>日常清新裸妆</h4><p>小妆日记 · 1,892 热度</p></div><div class="trending-gp">30 GP</div></div>
+        <div class="trending-item" onclick="openFullscreenModal('templateDetailModal');closeModal('trendingModal')"><div class="trending-rank top3">3</div><div class="trending-cover" style="background:linear-gradient(135deg,#D4A03C,#C4956A);">🏮</div><div class="trending-info"><h4>国风古韵妆</h4><p>国风美妆社 · 1,654 热度</p></div><div class="trending-gp">80 GP</div></div>
+        <div class="trending-item"><div class="trending-rank">4</div><div class="trending-cover">🌹</div><div class="trending-info"><h4>职场干练妆</h4><p>职场丽人 · 1,203 热度</p></div><div class="trending-gp">60 GP</div></div>
+        <div class="trending-item"><div class="trending-rank">5</div><div class="trending-cover">✨</div><div class="trending-info"><h4>派对闪耀妆</h4><p>美妆师 Luna · 986 热度</p></div><div class="trending-gp">120 GP</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Recharge Modal ============ -->
+  <div class="modal-overlay" id="rechargeModal" onclick="closeModal('rechargeModal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">充值焕新值</h3>
+      <div class="recharge-grid">
+        <div class="recharge-item" onclick="selectRecharge(this)"><div class="recharge-amount">60</div><div class="recharge-price">¥6.9</div></div>
+        <div class="recharge-item popular selected" onclick="selectRecharge(this)"><div class="recharge-amount">360</div><div class="recharge-price">¥39</div></div>
+        <div class="recharge-item" onclick="selectRecharge(this)"><div class="recharge-amount">1200</div><div class="recharge-price">¥99</div></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="showToast('充值成功 +360 GP');closeModal('rechargeModal')">立即充值</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let currentTab='home', gpBalance=328, onboardingStep=1;
+
+function switchTab(tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page=document.getElementById('page-'+tab);
+  if(page)page.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  const btn=document.querySelector('.tab-btn[data-tab="'+tab+'"]');
+  if(btn)btn.classList.add('active');
+  currentTab=tab;
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* FAB Action Sheet */
+function openFabSheet(){
+  document.getElementById('fabSheetOverlay').classList.add('show');
+}
+function closeFabSheet(e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById('fabSheetOverlay').classList.remove('show');
+}
+
+function scrollToQaSection(){
+  setTimeout(()=>{
+    const el=document.getElementById('qaSection');
+    if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function updateGPDisplay(){
+  const bal=gpBalance;
+  const gpH=document.getElementById('gp-balance'); if(gpH)gpH.textContent=bal;
+  const gpC=document.getElementById('gpCenterBalance'); if(gpC)gpC.textContent=bal;
+  const gpP=document.getElementById('profileGpAmount'); if(gpP)gpP.textContent=bal;
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t=setTimeout(()=>{t.classList.remove('show')},2000);
+}
+
+function claimTask(btn,amt){
+  if(btn.disabled)return;
+  gpBalance+=amt;
+  updateGPDisplay();
+  btn.disabled=true;
+  btn.textContent='已领取';
+  btn.style.background='var(--color-bg-alt)';
+  btn.style.color='var(--color-text-muted)';
+  showToast('+'+amt+' GP 已领取');
+}
+
+function closeModal(id,e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById(id).classList.remove('show');
+}
+function openModal(id){document.getElementById(id).classList.add('show');}
+
+function openFullscreenModal(id){document.getElementById(id).classList.add('show');}
+function closeFullscreenModal(id,e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById(id).classList.remove('show');
+}
+
+function switchLibTab(el){
+  document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ============== Library Category Switch ============== */
+const libSubCategories = {
+  daren: ['全部','日常通勤','约会妆容','派对晚宴','韩系妆容','日系妆容','欧美妆'],
+  jubu: ['全部','眼妆','唇妆','底妆','修容','眉毛','腮红','遮瑕'],
+  qa: ['全部','底妆问题','眼妆问题','唇妆问题','护肤问题','成分问题','工具选择'],
+  guofeng: ['全部','唐妆','宋妆','明妆','汉妆','古风发型','敦煌飞天'],
+  yinfa: ['全部','日常优雅','重要场合','减龄妆容','护肤保养','妈妈妆'],
+  dapai: ['全部','YSL','Dior','兰蔻','雅诗兰黛','花西子','毛戈平','Armani'],
+  star: ['全部','红毯造型','街拍日常','舞台妆容','颁奖典礼','韩剧女主','港风复古']
+};
+
+let currentLibCat = 'daren';
+let currentLibSub = '全部';
+
+function switchLibCat(el, cat) {
+  document.querySelectorAll('.lib-cat-tab').forEach(tab => tab.classList.remove('active'));
+  el.classList.add('active');
+  currentLibCat = cat;
+  currentLibSub = '全部';
+  
+  document.querySelectorAll('.lib-cat-panel').forEach(panel => panel.style.display = 'none');
+  const panel = document.getElementById('panel-' + cat);
+  if(panel) panel.style.display = 'block';
+  
+  updateSubTabs(cat);
+  document.getElementById('libContentArea').scrollTop = 0;
+}
+
+function updateSubTabs(cat) {
+  const subTabsContainer = document.getElementById('libSubTabs');
+  const subs = libSubCategories[cat] || ['全部'];
+  
+  subTabsContainer.innerHTML = subs.map((sub, i) => 
+    `<div class="lib-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchLibSubTab(this, '${sub}')">${sub}</div>`
+  ).join('');
+}
+
+function switchLibSubTab(el, sub) {
+  document.querySelectorAll('.lib-sub-tab').forEach(tab => tab.classList.remove('active'));
+  el.classList.add('active');
+  currentLibSub = sub;
+  showToast('切换到: ' + sub);
+}
+
+/* Init library sub tabs */
+document.addEventListener('DOMContentLoaded', function() {
+  updateSubTabs('daren');
+});
+
+function selectRecharge(el){
+  el.parentElement.querySelectorAll('.recharge-item').forEach(i=>i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ============== Onboarding ============== */
+function nextOnboardingStep(){
+  if(onboardingStep>=5){completeOnboarding();return;}
+  const steps=document.querySelectorAll('.onboarding-step');
+  steps[onboardingStep-1].classList.remove('active');
+  onboardingStep++;
+  steps[onboardingStep-1].classList.add('active');
+  const dots=document.querySelectorAll('.onboarding-dot');
+  dots.forEach((d,i)=>d.classList.toggle('active',i===onboardingStep-1));
+  const btn=document.getElementById('nextBtn');
+  if(onboardingStep===5){btn.textContent='立即体验';}
+  else{btn.textContent='下一步';}
+  if(onboardingStep===3){
+    setTimeout(()=>{nextOnboardingStep();showToast('扫脸分析完成！');},1500);
+  }
+}
+function skipOnboarding(){completeOnboarding();}
+function completeOnboarding(){
+  gpBalance+=100;
+  updateGPDisplay();
+  document.getElementById('onboarding').classList.add('hidden');
+  showToast('欢迎加入！+100 GP 已到账');
+}
+function selectSkin(el,type){
+  document.querySelectorAll('.skin-option').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  setTimeout(()=>nextOnboardingStep(),300);
+}
+function selectStyle(el){
+  el.classList.toggle('selected');
+}
+
+/* ============== Mirror Dual Mode ============== */
+let mirrorMode='chat';
+function switchMirrorMode(mode){
+  mirrorMode=mode;
+  const chatBtn=document.getElementById('chatModeBtn');
+  const mirrorBtn=document.getElementById('mirrorModeBtn');
+  const chatContent=document.getElementById('chatModeContent');
+  const mirrorContent=document.getElementById('mirrorModeContent');
+  const bottomBar=document.getElementById('mirrorBottomBar');
+  const hero=document.getElementById('mirrorHero');
+  if(mode==='chat'){
+    chatBtn.classList.add('active');
+    mirrorBtn.classList.remove('active');
+    chatContent.style.display='flex';
+    mirrorContent.style.display='none';
+    bottomBar.style.display='none';
+    hero.classList.add('chat-mode');
+  }else{
+    chatBtn.classList.remove('active');
+    mirrorBtn.classList.add('active');
+    chatContent.style.display='none';
+    mirrorContent.style.display='block';
+    bottomBar.style.display='flex';
+    hero.classList.remove('chat-mode');
+  }
+}
+
+function sendQuickChat(msg){
+  document.getElementById('chatInput').value=msg;
+  sendChatMessage();
+}
+function sendChatMessage(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  const msgs=document.getElementById('chatMessages');
+  msgs.innerHTML+='<div class="chat-msg user">'+msg+'</div>';
+  input.value='';
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const replies={
+      '适合通勤的妆容':'推荐你试试「日常清新裸妆」，轻薄自然，适合日常通勤。30 GP 就能解锁，性价比超高~',
+      '油皮夏天怎么定妆':'油皮夏天定妆建议用「三明治定妆法」：妆前乳→散粉→粉底→再散粉。配合控油妆前乳，持妆效果翻倍！',
+      '今年流行什么唇色':'今年流行「乌龙奶茶色」和「复古红棕色」，温柔又显白。点击颜库的L2精选专区看看热门款~'
+    };
+    let reply='好的，我来帮你分析一下~ 根据你的肤质和脸型，我推荐几款适合的妆容，可以去颜库看看哦！';
+    for(let k in replies){if(msg.includes(k.replace(/[?？]/g,'').slice(0,4))){reply=replies[k];break;}}
+    msgs.innerHTML+='<div class="chat-msg ai">'+reply+'</div>';
+    msgs.scrollTop=msgs.scrollHeight;
+  },800);
+}
+
+/* ============== Scan ============== */
+let scanAnimating=false;
+function startScan(){
+  if(scanAnimating)return;
+  scanAnimating=true;
+  showToast('正在识别成分...');
+  setTimeout(()=>{
+    scanAnimating=false;
+    closeFullscreenModal('ingredientScanModal');
+    showScanResult();
+  },1800);
+}
+function showScanResult(){
+  openFullscreenModal('ingredientScanModal');
+  showToast('扫描完成！');
+}
+
+/* ============== F27 Risk Alert ============== */
+function showF27Alert(){document.getElementById('riskAlert').classList.add('show');}
+function closeRiskAlert(e){
+  if(e&&e.target!==e.currentTarget)return;
+  document.getElementById('riskAlert').classList.remove('show');
+}
+
+/* ============== Tabs ============== */
+document.querySelectorAll('.mall-tab').forEach(t=>t.addEventListener('click',function(){
+  document.querySelectorAll('.mall-tab').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active');
+}));
+document.querySelectorAll('.hero-dots span').forEach((dot,i,dots)=>dot.addEventListener('click',()=>{
+  dots.forEach(d=>d.classList.remove('active'));dot.classList.add('active');
+}));
+
+/* Init mirror mode to chat */
+window.addEventListener('DOMContentLoaded',()=>{switchMirrorMode('chat');});
+</script>
+</body>
+</html>

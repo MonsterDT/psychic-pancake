@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>妆伴 MakeupPal V3.0 - Demo</title>
+    <style>
+:root {
+  --color-primary: #C4956A;
+  --color-primary-light: #D4B08A;
+  --color-primary-lighter: #E8D5C0;
+  --color-primary-lightest: #F5EDE4;
+  --color-primary-dark: #A87D56;
+  --color-primary-darker: #8B6542;
+  --color-bg: #FFF8F0;
+  --color-bg-secondary: #FFF1E6;
+  --color-bg-tertiary: #FFE8D6;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-text-primary: #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-tertiary: #9E9790;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #C4956A;
+  --state-success: #4CAF50;
+  --state-warning: #FF9800;
+  --state-error: #E53935;
+  --state-info: #42A5F5;
+  --color-border: #E8DDD2;
+  --color-border-light: #F0E8DF;
+  --font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-md: 0 2px 8px rgba(196, 149, 106, 0.05);
+  --shadow-lg: 0 4px 16px rgba(196, 149, 106, 0.05);
+  --shadow-xl: 0 8px 32px rgba(196, 149, 106, 0.05);
+  --shadow-card: 0 1px 3px rgba(196, 149, 106, 0.04);
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --tab-bar-height: 56px;
+  --header-height: 56px;
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --content-max-width: 414px;
+  --z-tab-bar: 100;
+  --z-bottom-sheet: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font-family);
+  background: #f0ebe6;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
+}
+
+.app-container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,0,0,0.1);
+}
+
+.page {
+  display: none;
+  padding-bottom: calc(var(--tab-bar-height) + var(--safe-area-bottom));
+  min-height: 100vh;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+.page.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-bg);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.header-left { display: flex; align-items: center; gap: 10px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+
+.avatar-ring {
+  width: 40px; height: 40px;
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C4956A, #D4B08A, #E8D5C0);
+  flex-shrink: 0;
+}
+.avatar-inner {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.gp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #C4956A, #D4B08A);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.icon-btn {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.icon-btn:active { opacity: 0.7; }
+.badge-dot {
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 7px; height: 7px;
+  background: var(--state-error);
+  border-radius: 50%;
+  border: 1.5px solid var(--color-bg);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary:active { transform: scale(0.97); box-shadow: 0 1px 4px rgba(196, 149, 106, 0.2); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border: 1.5px solid var(--color-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all var(--transition-fast);
+}
+.btn-secondary:active { opacity: 0.8; }
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card-elevated {
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+.badge-brand { background: var(--color-primary-lightest); color: var(--color-primary-dark); }
+.badge-success { background: #E8F5E9; color: #2E7D32; }
+.badge-warning { background: #FFF3E0; color: #E65100; }
+.badge-error { background: #FFEBEE; color: #C62828; }
+.badge-info { background: #E3F2FD; color: #1565C0; }
+
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--content-max-width);
+  height: var(--tab-bar-height);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: var(--z-tab-bar);
+  padding-bottom: var(--safe-area-bottom);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  transition: color var(--transition-fast);
+  cursor: pointer;
+  padding: 4px 12px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab-item.active { color: var(--color-primary); }
+.tab-item svg { width: 24px; height: 24px; }
+.tab-item:active { opacity: 0.7; }
+
+.section-padding { padding: 0 var(--spacing-base); }
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.section-title h2 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.section-title a {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.banner-section { padding: 0 var(--spacing-base); margin-bottom: 20px; }
+.banner {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  box-shadow: var(--shadow-md);
+}
+.banner img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(45,42,38,0.05) 0%, rgba(45,42,38,0.55) 100%);
+}
+.banner-overlay h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.banner-overlay p {
+  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.banner-dots {
+  position: absolute;
+  bottom: 10px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 5px;
+}
+.banner-dots .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: all 0.2s ease;
+}
+.banner-dots .dot.active {
+  width: 18px;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.features-section { padding: 0 var(--spacing-base); margin-bottom: 24px; }
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.feature-card {
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.feature-card:active { transform: scale(0.97); }
+.feature-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  overflow: hidden;
+}
+.feature-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-md); }
+.feature-info h3 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+.feature-info p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.feed-section { padding: 0 var(--spacing-base); margin-bottom: 24px; }
+.feed-card {
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.feed-card:active { transform: scale(0.98); }
+.feed-cover {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--color-bg-secondary);
+}
+.feed-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.feed-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+.feed-info h3 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.creator-row {
+  display: flex; align-items: center; gap: 6px;
+}
+.creator-avatar {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: var(--font-weight-semibold);
+}
+.creator-name {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+.feed-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.feed-price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.scan-hero {
+  padding: 24px 16px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%);
+}
+.scan-hero h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+}
+.scan-hero p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+.scan-camera-area {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(196, 149, 106, 0.3);
+  cursor: pointer;
+}
+.scan-camera-inner {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.scan-camera-inner svg { color: var(--color-primary); }
+.scan-camera-inner span {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+.scan-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px dashed var(--color-primary-light);
+  animation: rotate 10s linear infinite;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.scan-features {
+  padding: 0 16px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.scan-feature-item {
+  text-align: center;
+  padding: 16px 8px;
+}
+.scan-feature-item .icon-circle {
+  width: 48px; height: 48px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary);
+}
+.scan-feature-item h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.scan-feature-item p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.scan-history-section { padding: 0 16px 24px; }
+.scan-history-item {
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.scan-history-item:active { transform: scale(0.98); }
+.scan-product-img {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary-light);
+}
+.scan-product-info { flex: 1; min-width: 0; }
+.scan-product-info h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.scan-product-info p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+.risk-level {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.risk-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-bg-secondary);
+  overflow: hidden;
+}
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.risk-bar-fill.safe { background: var(--state-success); width: 20%; }
+.risk-bar-fill.warning { background: var(--state-warning); width: 50%; }
+.risk-bar-fill.danger { background: var(--state-error); width: 80%; }
+
+.mall-tabs {
+  display: flex;
+  padding: 0 16px;
+  gap: 20px;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 16px;
+  overflow-x: auto;
+}
+.mall-tab {
+  padding: 12px 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+.mall-tab.active {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+.mall-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+}
+
+.brand-section { padding: 0 16px 24px; }
+.brand-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.brand-card:active { transform: scale(0.98); }
+.brand-logo {
+  width: 50px; height: 50px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-primary-light));
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+}
+.brand-info { flex: 1; min-width: 0; }
+.brand-info h4 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  background: #E3F2FD;
+  color: #1565C0;
+  border-radius: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+.brand-info p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.product-grid {
+  padding: 0 16px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.product-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.product-card:active { transform: scale(0.97); }
+.product-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-bg-secondary);
+  position: relative;
+}
+.product-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.product-info { padding: 10px; }
+.product-info h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.product-price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.mirror-hero {
+  height: 60vh;
+  background: linear-gradient(135deg, #2D2A26 0%, #4A3F35 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.mirror-face {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(196,149,106,0.3), rgba(212,176,138,0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+.mirror-face svg { color: var(--color-primary-light); }
+.mirror-face-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary-light);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.7; }
+}
+.mirror-hero h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 8px;
+}
+.mirror-hero p {
+  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.6);
+}
+.mirror-steps {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: all var(--transition-fast);
+}
+.step-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--color-primary);
+}
+
+.mirror-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.control-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.control-btn:active { background: rgba(255,255,255,0.3); }
+
+.tutorial-section { padding: 16px; }
+.tutorial-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  transition: all var(--transition-fast);
+}
+.step-number {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+}
+.step-number.active {
+  background: var(--color-primary);
+  color: white;
+}
+.step-number.done {
+  background: var(--state-success);
+  color: white;
+}
+.tutorial-info { flex: 1; }
+.tutorial-info h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.tutorial-info p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.profile-header {
+  padding: 24px 16px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.profile-header::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -20%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+}
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  border: 3px solid rgba(255,255,255,0.5);
+}
+.profile-name { flex: 1; }
+.profile-name h2 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 4px;
+}
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: rgba(255,255,255,0.25);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  z-index: 1;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+.stat-item { text-align: center; }
+.stat-item .num {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 2px;
+}
+.stat-item .label {
+  font-size: var(--font-size-xs);
+  opacity: 0.8;
+}
+
+.task-section { padding: 16px; }
+.task-card {
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.task-header h3 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.task-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+.task-tab {
+  padding: 4px 12px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.task-tab.active {
+  background: var(--color-primary);
+  color: white;
+  font-weight: var(--font-weight-medium);
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.task-item:last-child { border-bottom: none; }
+.task-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.task-info { flex: 1; min-width: 0; }
+.task-info h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.task-progress {
+  height: 4px;
+  background: var(--color-bg-secondary);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.task-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.task-reward {
+  text-align: right;
+  flex-shrink: 0;
+}
+.task-gp {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+.claim-btn {
+  padding: 4px 12px;
+  font-size: var(--font-size-xs);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  -webkit-tap-highlight-color: transparent;
+  transition: all var(--transition-fast);
+}
+.claim-btn:disabled {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+}
+
+.level-section { padding: 0 16px 24px; }
+.level-card {
+  padding: 20px;
+  text-align: center;
+}
+.level-current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.level-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.level-gp {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.level-progress {
+  height: 10px;
+  background: var(--color-bg-secondary);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.level-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: 5px;
+  position: relative;
+  transition: width 0.5s ease;
+}
+.level-perks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-light);
+}
+.perk-item { text-align: center; }
+.perk-icon {
+  width: 36px; height: 36px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary);
+}
+.perk-item p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.shop-section { padding: 0 16px 24px; }
+.shop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.shop-item {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.shop-item:active { transform: scale(0.97); }
+.shop-item-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-light);
+}
+.shop-item-info { padding: 10px; }
+.shop-item-info h4 {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+.shop-item-price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stock-tag {
+  font-size: var(--font-size-xs);
+  color: var(--state-error);
+  font-weight: var(--font-weight-medium);
+}
+
+.menu-list { padding: 16px; }
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-light);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { opacity: 0.7; }
+.menu-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-secondary);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.menu-text { flex: 1; }
+.menu-text h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+.menu-arrow { color: var(--color-text-tertiary); }
+
+.brand-center-header {
+  padding: 24px 16px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--color-bg-secondary) 0%, var(--color-bg) 100%);
+}
+.brand-center-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+.brand-center-header p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+.brand-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.dashboard-section { padding: 16px; }
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.dash-card {
+  padding: 16px;
+  text-align: center;
+}
+.dash-card .num {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+.dash-card .label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.chart-card {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.chart-card h3 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+}
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 120px;
+  padding: 0 8px;
+}
+.chart-bar {
+  flex: 1;
+  background: linear-gradient(180deg, var(--color-primary-light), var(--color-primary-lighter));
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  transition: height 0.5s ease;
+}
+.chart-bar.active {
+  background: linear-gradient(180deg, var(--color-primary), var(--color-primary-light));
+}
+.chart-labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.chart-label {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.brand-list-section { padding: 0 16px 24px; }
+.brand-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.brand-status {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+.brand-status.approved { background: #E8F5E9; color: #2E7D32; }
+.brand-status.pending { background: #FFF3E0; color: #E65100; }
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 42, 38, 0.85);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  z-index: var(--z-toast);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.toast.show { opacity: 1; }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: var(--z-modal);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.modal-overlay.show { display: flex; }
+.modal-content {
+  width: 100%;
+  max-width: var(--content-max-width);
+  background: var(--color-surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: 20px 16px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.modal-handle {
+  width: 36px; height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  margin: 0 auto 16px;
+}
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ingredient-result { padding: 16px; }
+.result-header { text-align: center; margin-bottom: 20px; }
+.result-score {
+  font-size: 48px;
+  font-weight: var(--font-weight-bold);
+  color: var(--state-success);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.result-label { font-size: var(--font-size-sm); color: var(--color-text-secondary); }
+.ingredient-list { margin-bottom: 20px; }
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.ingredient-item:last-child { border-bottom: none; }
+.ingredient-name { font-size: var(--font-size-base); color: var(--color-text-primary); }
+.ingredient-risk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.risk-dot { width: 8px; height: 8px; border-radius: 50%; }
+.risk-dot.safe { background: var(--state-success); }
+.risk-dot.warning { background: var(--state-warning); }
+.risk-dot.danger { background: var(--state-error); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@media (max-width: 414px) {
+  .app-container { box-shadow: none; }
+}
+    </style>
+</head>
+<body>
+
+<div class="app-container" id="app">
+
+  <!-- 首页 -->
+  <div class="page active" id="page-home">
+    <header class="page-header">
+      <div class="header-left">
+        <div class="avatar-ring"><div class="avatar-inner">美</div></div>
+        <span style="font-size: var(--font-size-md); font-weight: var(--font-weight-semibold);">小美</span>
+        <div class="gp-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>
+          <span id="gp-balance">328 GP</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('暂无新消息')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <span class="badge-dot"></span>
+        </button>
+        <button class="btn-secondary" onclick="showToast('充值功能开发中')">充值</button>
+      </div>
+    </header>
+
+    <section class="banner-section">
+      <div class="banner">
+        <img src="ui-design/assets/hero-banner.jpg" alt="AI焕新妆造">
+        <div class="banner-overlay">
+          <h1>AI焕新妆造</h1>
+          <p>发现最适合你的妆容</p>
+        </div>
+        <div class="banner-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <div class="features-grid">
+        <div class="feature-card card" onclick="showToast('面部扫描功能')">
+          <div class="feature-icon">
+            <img src="ui-design/assets/feature-scan.jpg" alt="面部扫描">
+          </div>
+          <div class="feature-info"><h3>面部扫描</h3><p>3D脸型分析</p></div>
+        </div>
+        <div class="feature-card card" onclick="showToast('AI妆造功能')">
+          <div class="feature-icon">
+            <img src="ui-design/assets/feature-ai.jpg" alt="AI妆造">
+          </div>
+          <div class="feature-info"><h3>AI妆造</h3><p>智能推荐妆容</p></div>
+        </div>
+        <div class="feature-card card" onclick="switchTab('mirror')">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+            </svg>
+          </div>
+          <div class="feature-info"><h3>妆造教程</h3><p>跟练步骤详解</p></div>
+        </div>
+        <div class="feature-card card" onclick="switchTab('scan')">
+          <div class="feature-icon" style="color: var(--state-success);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/>
+            </svg>
+          </div>
+          <div class="feature-info"><h3>成分检测</h3><p style="color: var(--state-success);"><strong>NEW</strong></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feed-section">
+      <div class="section-title">
+        <h2>为你推荐</h2>
+        <a href="#" onclick="event.preventDefault(); showToast('查看更多')">查看更多 →</a>
+      </div>
+      <div class="feed-card card">
+        <div class="feed-cover">
+          <img src="ui-design/assets/feed-card-1.jpg" alt="晚宴精致妆容">
+        </div>
+        <div class="feed-info">
+          <div>
+            <h3>晚宴精致妆容</h3>
+            <div class="creator-row">
+              <div class="creator-avatar">L</div>
+              <span class="creator-name">美妆师Luna</span>
+            </div>
+          </div>
+          <div class="feed-bottom">
+            <span class="feed-price">50 GP</span>
+            <span class="badge badge-brand">适合鹅蛋脸</span>
+          </div>
+        </div>
+      </div>
+      <div class="feed-card card">
+        <div class="feed-cover">
+          <img src="ui-design/assets/feed-card-2.jpg" alt="日常清新裸妆">
+        </div>
+        <div class="feed-info">
+          <div>
+            <h3>日常清新裸妆</h3>
+            <div class="creator-row">
+              <div class="creator-avatar">妆</div>
+              <span class="creator-name">小妆日记</span>
+            </div>
+          </div>
+          <div class="feed-bottom">
+            <span class="feed-price">30 GP</span>
+            <span class="badge badge-brand">适合圆脸</span>
+          </div>
+        </div>
+      </div>
+      <div class="feed-card card">
+        <div class="feed-cover">
+          <img src="ui-design/assets/product-1.jpg" alt="国风古韵妆">
+        </div>
+        <div class="feed-info">
+          <div>
+            <h3>国风古韵妆</h3>
+            <div class="creator-row">
+              <div class="creator-avatar">风</div>
+              <span class="creator-name">国风美妆社</span>
+            </div>
+          </div>
+          <div class="feed-bottom">
+            <span class="feed-price">80 GP</span>
+            <span class="badge badge-brand">国风专栏</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 成分扫描页 -->
+  <div class="page" id="page-scan">
+    <header class="page-header">
+      <div class="header-left">
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">成分合规检测</h2>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('历史记录')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="scan-hero">
+      <h2>拍照检测成分安全</h2>
+      <p>AI智能识别成分表，检测违禁成分，评估敏感肌风险</p>
+      <div class="scan-camera-area" onclick="startScan()">
+        <div class="scan-ring"></div>
+        <div class="scan-camera-inner">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span>点击拍摄成分表</span>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startScan()">开始扫描</button>
+    </div>
+
+    <div class="scan-features">
+      <div class="scan-feature-item">
+        <div class="icon-circle">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <h4>OCR识别</h4><p>智能识别成分表文字</p>
+      </div>
+      <div class="scan-feature-item">
+        <div class="icon-circle" style="color: var(--state-error);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h4>违禁检测</h4><p>中欧美三方法规库</p>
+      </div>
+      <div class="scan-feature-item">
+        <div class="icon-circle" style="color: var(--state-warning);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h4>肤质评估</h4><p>敏感肌风险预警</p>
+      </div>
+    </div>
+
+    <section class="scan-history-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">最近扫描</h2>
+        <a href="#" onclick="event.preventDefault(); showToast('全部历史')">全部</a>
+      </div>
+      <div class="scan-history-item card" onclick="showScanResult()">
+        <div class="scan-product-img">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+        </div>
+        <div class="scan-product-info">
+          <h4>某品牌精华液</h4>
+          <p>2026-06-25 扫描</p>
+          <div class="risk-level">
+            <div class="risk-bar"><div class="risk-bar-fill safe"></div></div>
+            <span style="font-size: 11px; color: var(--state-success); font-weight: 600;">低风险</span>
+          </div>
+        </div>
+      </div>
+      <div class="scan-history-item card" onclick="showScanResult()">
+        <div class="scan-product-img">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+        </div>
+        <div class="scan-product-info">
+          <h4>某品牌口红</h4>
+          <p>2026-06-24 扫描</p>
+          <div class="risk-level">
+            <div class="risk-bar"><div class="risk-bar-fill warning"></div></div>
+            <span style="font-size: 11px; color: var(--state-warning); font-weight: 600;">中风险</span>
+          </div>
+        </div>
+      </div>
+      <div class="scan-history-item card" onclick="showScanResult()">
+        <div class="scan-product-img">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+          </svg>
+        </div>
+        <div class="scan-product-info">
+          <h4>某品牌面膜</h4>
+          <p>2026-06-23 扫描</p>
+          <div class="risk-level">
+            <div class="risk-bar"><div class="risk-bar-fill danger"></div></div>
+            <span style="font-size: 11px; color: var(--state-error); font-weight: 600;">高风险</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 商城页 -->
+  <div class="page" id="page-mall">
+    <header class="page-header">
+      <div class="header-left">
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">妆容商城</h2>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="showToast('搜索')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="mall-tabs no-scrollbar">
+      <div class="mall-tab active">全部</div>
+      <div class="mall-tab">官方品牌</div>
+      <div class="mall-tab">热门推荐</div>
+      <div class="mall-tab">国风专栏</div>
+      <div class="mall-tab">银发焕新</div>
+    </div>
+
+    <section class="brand-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">品牌官方</h2>
+        <a href="#" onclick="event.preventDefault(); switchTab('brand')">品牌合作 →</a>
+      </div>
+      <div class="brand-card card">
+        <div class="brand-logo">Y</div>
+        <div class="brand-info">
+          <h4>YSL圣罗兰 <span class="verified-badge">官方认证</span></h4>
+          <p>官方妆容模板 12 个 · 评分 4.9</p>
+        </div>
+        <button class="btn-secondary" style="padding: 6px 12px; font-size: 11px;">进店</button>
+      </div>
+      <div class="brand-card card">
+        <div class="brand-logo" style="background: linear-gradient(135deg, #E8C9A8, #D4B08A);">L</div>
+        <div class="brand-info">
+          <h4>LANCÔME <span class="verified-badge">官方</span></h4>
+          <p>官方妆容模板 8 个 · 评分 4.8</p>
+        </div>
+        <button class="btn-secondary" style="padding: 6px 12px; font-size: 11px;">进店</button>
+      </div>
+    </section>
+
+    <div class="product-grid">
+      <div class="product-card" onclick="showToast('查看详情')">
+        <div class="product-img">
+          <img src="ui-design/assets/product-2.jpg" alt="法式红唇妆">
+          <span class="badge badge-error" style="position:absolute;top:8px;left:8px;">热销</span>
+        </div>
+        <div class="product-info">
+          <h4>法式红唇妆</h4>
+          <div class="product-meta">
+            <span class="product-price">60 GP</span>
+            <span style="font-size: 10px; color: var(--color-text-tertiary);">2.3万</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="showToast('查看详情')">
+        <div class="product-img">
+          <img src="ui-design/assets/product-3.jpg" alt="元气腮红妆">
+        </div>
+        <div class="product-info">
+          <h4>元气腮红妆</h4>
+          <div class="product-meta">
+            <span class="product-price">40 GP</span>
+            <span style="font-size: 10px; color: var(--color-text-tertiary);">1.8万</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="showToast('查看详情')">
+        <div class="product-img">
+          <img src="ui-design/assets/product-4.jpg" alt="烟熏晚宴妆">
+          <span class="badge badge-brand" style="position:absolute;top:8px;left:8px;">新品</span>
+        </div>
+        <div class="product-info">
+          <h4>烟熏晚宴妆</h4>
+          <div class="product-meta">
+            <span class="product-price">80 GP</span>
+            <span style="font-size: 10px; color: var(--color-text-tertiary);">5千</span>
+          </div>
+        </div>
+      </div>
+      <div class="product-card" onclick="showToast('查看详情')">
+        <div class="product-img">
+          <img src="ui-design/assets/product-1.jpg" alt="自然眉妆">
+        </div>
+        <div class="product-info">
+          <h4>自然眉妆</h4>
+          <div class="product-meta">
+            <span class="product-price">20 GP</span>
+            <span style="font-size: 10px; color: var(--color-text-tertiary);">3.1万</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 镜面页 -->
+  <div class="page" id="page-mirror">
+    <div class="mirror-hero">
+      <div class="mirror-controls">
+        <div class="control-btn" onclick="showToast('切换摄像头')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l-4.64 4.36A9 9 0 0 1 20.49 15"/>
+          </svg>
+        </div>
+        <div class="control-btn" onclick="showToast('设置')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mirror-face">
+        <div class="mirror-face-overlay"></div>
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <h2>镜面跟练模式</h2>
+      <p>对准面部，开始跟练</p>
+      <div class="mirror-steps">
+        <div class="step-dot active"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+        <div class="step-dot"></div>
+      </div>
+    </div>
+
+    <section class="tutorial-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">今日跟练步骤</h2>
+        <span class="badge badge-brand">5 / 10 步</span>
+      </div>
+      <div class="tutorial-card card">
+        <div class="step-number done">✓</div>
+        <div class="tutorial-info"><h4>打底妆</h4><p>均匀涂抹粉底液，打造无瑕底妆</p></div>
+      </div>
+      <div class="tutorial-card card">
+        <div class="step-number done">✓</div>
+        <div class="tutorial-info"><h4>定妆</h4><p>散粉轻按定妆，持久持妆</p></div>
+      </div>
+      <div class="tutorial-card card">
+        <div class="step-number done">✓</div>
+        <div class="tutorial-info"><h4>画眉</h4><p>顺着眉形填充，自然过渡</p></div>
+      </div>
+      <div class="tutorial-card card" style="border: 2px solid var(--color-primary);">
+        <div class="step-number active">4</div>
+        <div class="tutorial-info">
+          <h4 style="color: var(--color-primary);">画眼影 <span class="badge badge-brand">进行中</span></h4>
+          <p>浅色系打底，深色系晕染眼尾</p>
+        </div>
+      </div>
+      <div class="tutorial-card card">
+        <div class="step-number">5</div>
+        <div class="tutorial-info"><h4>画眼线</h4><p>沿着睫毛根部描绘，眼尾微微上扬</p></div>
+      </div>
+      <div class="tutorial-card card">
+        <div class="step-number">6</div>
+        <div class="tutorial-info"><h4>涂睫毛膏</h4><p>从根部向上刷，纤长浓密</p></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 个人中心 -->
+  <div class="page" id="page-profile">
+    <div class="profile-header">
+      <div class="profile-top">
+        <div class="profile-avatar">美</div>
+        <div class="profile-name">
+          <h2>小美</h2>
+          <div class="level-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/></svg>
+            金妆 Lv.3
+          </div>
+        </div>
+        <button class="btn-secondary" style="background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.3);" onclick="showToast('编辑资料')">编辑</button>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-item"><div class="num">328</div><div class="label">焕新值</div></div>
+        <div class="stat-item"><div class="num">28</div><div class="label">收藏</div></div>
+        <div class="stat-item"><div class="num">12</div><div class="label">关注</div></div>
+        <div class="stat-item"><div class="num">156</div><div class="label">粉丝</div></div>
+      </div>
+    </div>
+
+    <div class="task-section">
+      <div class="task-card card">
+        <div class="task-header">
+          <h3>每日任务</h3>
+          <div class="task-tabs">
+            <div class="task-tab active">每日</div>
+            <div class="task-tab">成就</div>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div class="task-info">
+            <h4>每日签到</h4>
+            <div class="task-progress"><div class="task-progress-fill" style="width: 100%;"></div></div>
+          </div>
+          <div class="task-reward">
+            <div class="task-gp">+10 GP</div>
+            <button class="claim-btn" onclick="claimTask(this, 10)">领取</button>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+            </svg>
+          </div>
+          <div class="task-info">
+            <h4>浏览3个妆容模板</h4>
+            <div class="task-progress"><div class="task-progress-fill" style="width: 66%;"></div></div>
+          </div>
+          <div class="task-reward">
+            <div class="task-gp">+15 GP</div>
+            <button class="claim-btn" disabled>2/3</button>
+          </div>
+        </div>
+        <div class="task-item">
+          <div class="task-icon" style="color: var(--state-success);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="task-info">
+            <h4>成分扫描1次</h4>
+            <div class="task-progress"><div class="task-progress-fill" style="width: 0%;"></div></div>
+          </div>
+          <div class="task-reward">
+            <div class="task-gp">+20 GP</div>
+            <button class="claim-btn" disabled>0/1</button>
+          </div>
+        </div>
+        <div class="task-item" style="border-bottom: none;">
+          <div class="task-icon" style="color: var(--state-warning);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <div class="task-info">
+            <h4>收藏1个妆容</h4>
+            <div class="task-progress"><div class="task-progress-fill" style="width: 100%;"></div></div>
+          </div>
+          <div class="task-reward">
+            <div class="task-gp">+10 GP</div>
+            <button class="claim-btn" onclick="claimTask(this, 10)">领取</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="level-section">
+      <div class="level-card card">
+        <div class="level-current">
+          <span class="level-name">金妆 Lv.3</span>
+          <span class="level-gp">距下一等级还需 172 GP</span>
+        </div>
+        <div class="level-progress">
+          <div class="level-progress-fill" style="width: 65%;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-tertiary);">
+          <span>已消耗 1828 GP</span>
+          <span>Lv.4 钻妆 2000 GP</span>
+        </div>
+        <div class="level-perks">
+          <div class="perk-item">
+            <div class="perk-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L14.09 8.26L20.18 8.64L15.54 12.74L17.12 19.02L12 15.77L6.88 19.02L8.46 12.74L3.82 8.64L9.91 8.26L12 2Z"/>
+              </svg>
+            </div>
+            <p>+10% GP加成</p>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <p>每月1次免费渲染</p>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <p>专属客服</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shop-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">兑换商城</h2>
+        <a href="#" onclick="event.preventDefault(); showToast('更多好物')">更多 →</a>
+      </div>
+      <div class="shop-grid">
+        <div class="shop-item" onclick="showToast('兑换成功')">
+          <div class="shop-item-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <div class="shop-item-info">
+            <h4>AI渲染次数+1</h4>
+            <div class="shop-item-price"><span>200 GP</span></div>
+          </div>
+        </div>
+        <div class="shop-item" onclick="showToast('兑换成功')">
+          <div class="shop-item-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="shop-item-info">
+            <h4>成分扫描+3次</h4>
+            <div class="shop-item-price"><span>150 GP</span></div>
+          </div>
+        </div>
+        <div class="shop-item" onclick="showToast('兑换成功')">
+          <div class="shop-item-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+          </div>
+          <div class="shop-item-info">
+            <h4>口红小样</h4>
+            <div class="shop-item-price"><span>500 GP</span><span class="stock-tag">限量</span></div>
+          </div>
+        </div>
+        <div class="shop-item" onclick="showToast('兑换成功')">
+          <div class="shop-item-img">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+          <div class="shop-item-info">
+            <h4>化妆刷套装</h4>
+            <div class="shop-item-price"><span>3000 GP</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-list card" style="margin: 0 16px 24px; padding: 0 16px;">
+      <div class="menu-item" onclick="switchTab('brand')">
+        <div class="menu-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <div class="menu-text"><h4>品牌合作中心</h4></div>
+        <span style="color: var(--color-text-tertiary);">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('面部资产库')">
+        <div class="menu-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="menu-text"><h4>我的面部资产</h4></div>
+        <span style="color: var(--color-text-tertiary);">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('美妆工具箱')">
+        <div class="menu-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="menu-text"><h4>美妆工具箱</h4></div>
+        <span style="color: var(--color-text-tertiary);">→</span>
+      </div>
+      <div class="menu-item" onclick="showToast('设置')">
+        <div class="menu-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </div>
+        <div class="menu-text"><h4>设置</h4></div>
+        <span style="color: var(--color-text-tertiary);">→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 品牌合作中心 -->
+  <div class="page" id="page-brand">
+    <header class="page-header">
+      <div class="header-left">
+        <button class="icon-btn" onclick="switchTab('profile')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <h2 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-bold);">品牌合作中心</h2>
+      </div>
+    </header>
+
+    <div class="brand-center-header">
+      <h2>品牌方合作入口</h2>
+      <p>入驻妆伴，共建美妆AI生态</p>
+      <div class="brand-actions">
+        <button class="btn-primary" onclick="showToast('申请入驻')">立即入驻</button>
+        <button class="btn-secondary" onclick="showToast('了解更多')">了解更多</button>
+      </div>
+    </div>
+
+    <section class="dashboard-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">数据看板</h2>
+        <span class="badge badge-info">B端SaaS</span>
+      </div>
+      <div class="dashboard-stats">
+        <div class="dash-card card"><div class="num">12</div><div class="label">在售模板</div></div>
+        <div class="dash-card card"><div class="num">2,340</div><div class="label">累计解锁</div></div>
+        <div class="dash-card card"><div class="num">4.8</div><div class="label">平均评分</div></div>
+        <div class="dash-card card"><div class="num">¥12,580</div><div class="label">本月收益</div></div>
+      </div>
+      <div class="chart-card card">
+        <h3>近7天解锁趋势</h3>
+        <div class="chart-bars">
+          <div class="chart-bar" style="height: 40%;"></div>
+          <div class="chart-bar" style="height: 65%;"></div>
+          <div class="chart-bar" style="height: 50%;"></div>
+          <div class="chart-bar active" style="height: 80%;"></div>
+          <div class="chart-bar" style="height: 60%;"></div>
+          <div class="chart-bar" style="height: 90%;"></div>
+          <div class="chart-bar" style="height: 75%;"></div>
+        </div>
+        <div class="chart-labels">
+          <div class="chart-label">周一</div>
+          <div class="chart-label">周二</div>
+          <div class="chart-label">周三</div>
+          <div class="chart-label">周四</div>
+          <div class="chart-label">周五</div>
+          <div class="chart-label">周六</div>
+          <div class="chart-label">周日</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-list-section">
+      <div class="section-title">
+        <h2 style="font-size: var(--font-size-md);">合作品牌</h2>
+        <span style="font-size: 12px; color: var(--color-text-tertiary);">共 5 家</span>
+      </div>
+      <div class="brand-list-item card">
+        <div class="brand-logo">Y</div>
+        <div style="flex:1;">
+          <h4 style="font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px;">YSL圣罗兰</h4>
+          <p style="font-size: 11px; color: var(--color-text-tertiary);">Premium 品牌 · 联合实验室</p>
+        </div>
+        <span class="brand-status approved">已签约</span>
+      </div>
+      <div class="brand-list-item card">
+        <div class="brand-logo" style="background: linear-gradient(135deg, #E8C9A8, #D4B08A);">L</div>
+        <div style="flex:1;">
+          <h4 style="font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px;">LANCÔME</h4>
+          <p style="font-size: 11px; color: var(--color-text-tertiary);">Premium 品牌 · 白标模板</p>
+        </div>
+        <span class="brand-status approved">已签约</span>
+      </div>
+      <div class="brand-list-item card">
+        <div class="brand-logo" style="background: linear-gradient(135deg, #D4B08A, #C4956A);">X</div>
+        <div style="flex:1;">
+          <h4 style="font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px;">完美日记</h4>
+          <p style="font-size: 11px; color: var(--color-text-tertiary);">Standard 品牌</p>
+        </div>
+        <span class="brand-status approved">已签约</span>
+      </div>
+      <div class="brand-list-item card">
+        <div class="brand-logo" style="background: linear-gradient(135deg, #F5EDE4, #E8D5C0); color: var(--color-primary-dark);">花</div>
+        <div style="flex:1;">
+          <h4 style="font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px;">花西子</h4>
+          <p style="font-size: 11px; color: var(--color-text-tertiary);">国风联名 · 审核中</p>
+        </div>
+        <span class="brand-status pending">审核中</span>
+      </div>
+      <div class="brand-list-item card">
+        <div class="brand-logo" style="background: linear-gradient(135deg, #FFE8D6, #FFE8D6); color: var(--color-primary-dark);">毛</div>
+        <div style="flex:1;">
+          <h4 style="font-size: 15px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px;">毛戈平</h4>
+          <p style="font-size: 11px; color: var(--color-text-tertiary);">联合实验室意向</p>
+        </div>
+        <span class="brand-status pending">意向中</span>
+      </div>
+    </section>
+  </div>
+
+  <!-- 底部Tab栏 -->
+  <nav class="tab-bar">
+    <a class="tab-item active" data-tab="home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12.5L12 4l9 8.5"/>
+        <path d="M5 11v8a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-8"/>
+      </svg>
+      <span>首页</span>
+    </a>
+    <a class="tab-item" data-tab="scan" onclick="switchTab('scan')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+      <span>检测</span>
+    </a>
+    <a class="tab-item" data-tab="mall" onclick="switchTab('mall')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span>商城</span>
+    </a>
+    <a class="tab-item" data-tab="mirror" onclick="switchTab('mirror')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3v18"/>
+        <path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/>
+        <path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/>
+      </svg>
+      <span>镜面</span>
+    </a>
+    <a class="tab-item" data-tab="profile" onclick="switchTab('profile')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 10-16 0"/>
+      </svg>
+      <span>我的</span>
+    </a>
+  </nav>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">提示信息</div>
+
+  <!-- 成分扫描结果弹窗 -->
+  <div class="modal-overlay" id="scan-modal" onclick="closeScanModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">成分检测报告</h3>
+      <div class="ingredient-result">
+        <div class="result-header">
+          <div class="result-score" style="color: var(--state-warning);">65</div>
+          <div class="result-label">综合安全评分</div>
+        </div>
+        <div style="display: flex; justify-content: space-around; margin-bottom: 20px;">
+          <div style="text-align: center;">
+            <div style="font-size: 20px; font-weight: 700; color: var(--state-success);">0</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">禁用成分</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 20px; font-weight: 700; color: var(--state-warning);">2</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">限用成分</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 20px; font-weight: 700; color: var(--state-error);">1</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">敏感风险</div>
+          </div>
+        </div>
+        <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--color-text-primary);">检测成分列表</h4>
+        <div class="ingredient-list">
+          <div class="ingredient-item">
+            <span class="ingredient-name">烟酰胺</span>
+            <div class="ingredient-risk">
+              <span style="font-size: 12px; color: var(--color-text-secondary);">提亮</span>
+              <div class="risk-dot safe"></div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-name">透明质酸钠</span>
+            <div class="ingredient-risk">
+              <span style="font-size: 12px; color: var(--color-text-secondary);">保湿</span>
+              <div class="risk-dot safe"></div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-name">视黄醇</span>
+            <div class="ingredient-risk">
+              <span style="font-size: 12px; color: var(--state-warning);">孕妇慎用</span>
+              <div class="risk-dot warning"></div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-name">香精</span>
+            <div class="ingredient-risk">
+              <span style="font-size: 12px; color: var(--state-error);">敏感肌风险</span>
+              <div class="risk-dot danger"></div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <span class="ingredient-name">生育酚乙酸酯</span>
+            <div class="ingredient-risk">
+              <span style="font-size: 12px; color: var(--color-text-secondary);">抗氧化</span>
+              <div class="risk-dot safe"></div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width: 100%;" onclick="showToast('报告已保存'); closeScanModal()">保存报告</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentTab = 'home';
+  let gpBalance = 328;
+
+  function switchTab(tab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+    const tabItem = document.querySelector('.tab-item[data-tab="' + tab + '"]');
+    if (tabItem) tabItem.classList.add('active');
+    currentTab = tab;
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); }, 2000);
+  }
+
+  function claimTask(btn, amount) {
+    if (btn.disabled) return;
+    gpBalance += amount;
+    document.getElementById('gp-balance').textContent = gpBalance + ' GP';
+    btn.disabled = true;
+    btn.textContent = '已领取';
+    btn.style.background = 'var(--color-bg-secondary)';
+    btn.style.color = 'var(--color-text-tertiary)';
+    showToast('+' + amount + ' GP 已领取');
+  }
+
+  function startScan() {
+    showToast('正在扫描中...');
+    setTimeout(() => { showScanResult(); }, 1500);
+  }
+
+  function showScanResult() {
+    document.getElementById('scan-modal').classList.add('show');
+  }
+
+  function closeScanModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('scan-modal').classList.remove('show');
+  }
+
+  document.querySelectorAll('.mall-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.mall-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('.task-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

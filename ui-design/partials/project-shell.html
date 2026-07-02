@@ -1,0 +1,106 @@
+<!-- Shared Project Shell Fragment -->
+<!-- MakeupPal Mobile Beauty App - Common Page Frame & Bottom Tab Bar -->
+<!-- Include this fragment in every leaf page. Set data-active-tab on .tab-bar to control active state. -->
+
+<!-- Required in <head> of leaf page:
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../colors_and_type.css">
+-->
+
+<div class="app-frame" style="max-width: 414px; margin: 0 auto; min-height: 100vh; background: var(--color-bg); position: relative; font-family: var(--font-family);">
+
+  <!-- Content Slot: pages fill this -->
+  <main class="page-content" style="padding-bottom: calc(56px + var(--safe-area-bottom)); min-height: 100vh; overflow-y: auto;">
+    <!-- SLOT: pageBody -->
+  </main>
+
+  <!-- Tab Bar -->
+  <nav class="tab-bar" data-active-tab="home">
+
+    <!-- Home Tab -->
+    <a class="tab-item" data-tab-key="home" data-dom-id="tab-home" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12.5L12 4l9 8.5"/>
+        <path d="M5 11v8a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-8"/>
+      </svg>
+      <span>首页</span>
+    </a>
+
+    <!-- Search Tab -->
+    <a class="tab-item" data-tab-key="search" data-dom-id="tab-search" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <span>搜索</span>
+    </a>
+
+    <!-- Mall Tab -->
+    <a class="tab-item" data-tab-key="mall" data-dom-id="tab-mall" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 7v13a2 2 0 002 2h14a2 2 0 002-2V7l-3-5H6z"/>
+        <path d="M3 7h18"/>
+        <path d="M16 11a4 4 0 01-8 0"/>
+      </svg>
+      <span>商城</span>
+    </a>
+
+    <!-- Mirror Tab -->
+    <a class="tab-item" data-tab-key="mirror" data-dom-id="tab-mirror" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3v18"/>
+        <path d="M12 3c-2.5 2.5-4 6-4 9s1.5 6.5 4 9"/>
+        <path d="M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9"/>
+      </svg>
+      <span>镜面</span>
+    </a>
+
+    <!-- Profile Tab -->
+    <a class="tab-item" data-tab-key="profile" data-dom-id="tab-profile" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M20 21a8 8 0 10-16 0"/>
+      </svg>
+      <span>我的</span>
+    </a>
+
+  </nav>
+
+</div>
+
+<style>
+/* ========================================
+   Project Shell - Tab Bar Active States
+   ======================================== */
+
+/* Direct active attribute fallback */
+.tab-item[data-active="true"] {
+  color: var(--color-primary);
+}
+
+/* data-active-tab driven active states */
+.tab-bar[data-active-tab="home"] .tab-item[data-tab-key="home"],
+.tab-bar[data-active-tab="search"] .tab-item[data-tab-key="search"],
+.tab-bar[data-active-tab="mall"] .tab-item[data-tab-key="mall"],
+.tab-bar[data-active-tab="mirror"] .tab-item[data-tab-key="mirror"],
+.tab-bar[data-active-tab="profile"] .tab-item[data-tab-key="profile"] {
+  color: var(--color-primary);
+}
+
+/* Ensure inactive tabs use tertiary color */
+.tab-bar .tab-item {
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Active tab overrides */
+.tab-bar[data-active-tab="home"] .tab-item[data-tab-key="home"],
+.tab-bar[data-active-tab="search"] .tab-item[data-tab-key="search"],
+.tab-bar[data-active-tab="mall"] .tab-item[data-tab-key="mall"],
+.tab-bar[data-active-tab="mirror"] .tab-item[data-tab-key="mirror"],
+.tab-bar[data-active-tab="profile"] .tab-item[data-tab-key="profile"] {
+  color: var(--color-primary);
+}
+</style>
