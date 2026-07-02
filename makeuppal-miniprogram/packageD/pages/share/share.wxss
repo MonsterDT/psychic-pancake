@@ -1,0 +1,163 @@
+/* packageD/pages/share/share.wxss */
+.share-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: var(--spacing-4);
+  padding-bottom: calc(100px + var(--safe-bottom));
+}
+
+/* 海报预览 */
+.poster-card {
+  margin-bottom: var(--spacing-4);
+}
+
+.poster {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.poster-img {
+  width: 100%;
+  height: 100%;
+}
+
+.poster-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--spacing-6) var(--spacing-4) var(--spacing-4);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.7));
+  color: #fff;
+}
+
+.poster-title {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.poster-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poster-author {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+.poster-brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(196, 149, 106, 0.85);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.brand-icon {
+  font-size: 12px;
+}
+
+.brand-name {
+  font-size: var(--font-size-xs);
+  color: #fff;
+}
+
+.poster-tip {
+  text-align: center;
+  margin-top: var(--spacing-3);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* 平台网格 */
+.platforms-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-4);
+}
+
+.card-title {
+  display: block;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-4);
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-2);
+}
+
+.platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: normal;
+  font-weight: normal;
+}
+
+.platform-btn::after {
+  border: none;
+}
+
+.platform-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: 24px;
+  color: #fff;
+}
+
+.icon-wechat { background: linear-gradient(135deg, #5DD46A, #2EBE45); }
+.icon-moments { background: linear-gradient(135deg, #6FD46F, #3CB23C); }
+.icon-qq { background: linear-gradient(135deg, #5BA8F5, #2E80E0); }
+.icon-weibo { background: linear-gradient(135deg, #FF8866, #E0452E); }
+.icon-link { background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); }
+
+.platform-name {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* 保存按钮 */
+.save-btn-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg-card);
+  padding: var(--spacing-3) var(--spacing-4) calc(var(--safe-bottom) + 12px);
+  box-shadow: 0 -2px 10px rgba(45, 42, 38, 0.06);
+  z-index: var(--z-sheet);
+}
+
+.save-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 12px 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border: none;
+}

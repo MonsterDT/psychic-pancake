@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "品牌馆",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe",
+    "rating-stars": "/components/rating-stars/rating-stars"
+  }
+}

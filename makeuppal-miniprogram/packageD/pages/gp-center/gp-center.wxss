@@ -1,0 +1,226 @@
+/* packageD/pages/gp-center/gp-center.wxss */
+.gp-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: var(--spacing-4);
+  padding-bottom: calc(var(--safe-bottom) + 24px);
+}
+
+/* GP余额大卡片 */
+.gp-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--spacing-5);
+  box-shadow: var(--shadow-md);
+}
+
+.gp-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+}
+
+.gp-card-content {
+  position: relative;
+  padding: var(--spacing-6) var(--spacing-5) var(--spacing-5);
+  color: #fff;
+}
+
+.gp-card-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.gp-card-balance {
+  display: block;
+  font-size: 42px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-5);
+}
+
+.gp-card-actions {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-5);
+}
+
+.gp-card-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  background: #fff;
+  color: var(--color-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.gp-card-btn-outline {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.gp-breakdown {
+  position: relative;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.breakdown-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.breakdown-num {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.breakdown-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.breakdown-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-border-light);
+}
+
+/* 通用区块 */
+.block {
+  margin-bottom: var(--spacing-5);
+}
+
+.block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-3);
+}
+
+.block-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.block-action {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* 收支明细 */
+.detail-list {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-title {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+.detail-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.detail-amount {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.detail-amount.income {
+  color: var(--color-success);
+}
+
+.detail-amount.expense {
+  color: var(--color-danger);
+}
+
+/* 获取方式 */
+.earn-list {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.earn-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border-light);
+  gap: var(--spacing-3);
+}
+
+.earn-item:last-child {
+  border-bottom: none;
+}
+
+.earn-icon {
+  font-size: 28px;
+  width: 40px;
+  text-align: center;
+}
+
+.earn-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.earn-title {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+}
+
+.earn-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.earn-amount {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}

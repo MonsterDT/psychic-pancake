@@ -1,0 +1,31 @@
+<!-- packageC/pages/academy/academy.wxml -->
+<view class="page-container academy-page">
+  <!-- 分类 tab -->
+  <scroll-view class="tab-scroll" scroll-x="true">
+    <view class="tab-bar">
+      <view
+        class="tab-item {{activeTab === item.key ? 'tab-item--active' : ''}}"
+        wx:for="{{tabs}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="onTabTap"
+      >
+        <text class="tab-text">{{item.label}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 教程文章列表 -->
+  <view class="article-list">
+    <view class="article-item card" wx:for="{{articles}}" wx:key="id" data-id="{{item.id}}" bindtap="onArticleTap">
+      <image-safe class="article-cover" src="{{item.cover}}" mode="aspectFill" width="120px" height="90px"></image-safe>
+      <view class="article-info">
+        <text class="article-title ellipsis-2">{{item.title}}</text>
+        <view class="article-meta">
+          <text class="article-views">阅读 {{item.views}}</text>
+          <text class="article-time">{{item.readTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

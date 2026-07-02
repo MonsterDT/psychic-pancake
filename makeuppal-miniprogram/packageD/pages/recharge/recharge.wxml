@@ -1,0 +1,70 @@
+<!--packageD/pages/recharge/recharge.wxml-->
+<view class="recharge-page">
+
+  <!-- 当前余额 -->
+  <view class="balance-card">
+    <text class="balance-label">当前焕新值余额</text>
+    <text class="balance-num">{{gpBalance}} GP</text>
+  </view>
+
+  <!-- 金额选择 -->
+  <view class="block">
+    <text class="block-title">选择充值金额</text>
+    <view class="amount-grid">
+      <view
+        class="amount-item {{selectedAmount === item.amount ? 'active' : ''}}"
+        wx:for="{{amountOptions}}"
+        wx:key="amount"
+        bindtap="onSelectAmount"
+        data-amount="{{item.amount}}"
+      >
+        <text class="amount-num">{{item.amount}}</text>
+        <text class="amount-unit">GP</text>
+        <text class="amount-bonus" wx:if="{{item.bonus}}">+{{item.bonus}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 自定义金额 -->
+  <view class="block">
+    <text class="block-title">自定义金额</text>
+    <view class="custom-input-wrap">
+      <input
+        class="custom-input"
+        type="digit"
+        placeholder="请输入充值金额（GP）"
+        placeholder-class="custom-placeholder"
+        value="{{customAmount}}"
+        bindinput="onCustomInput"
+      />
+      <text class="custom-suffix">GP</text>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="block">
+    <text class="block-title">支付方式</text>
+    <view class="pay-method">
+      <view class="pay-method-info">
+        <text class="pay-icon">💚</text>
+        <text class="pay-name">微信支付</text>
+      </view>
+      <view class="pay-check checked">✓</view>
+    </view>
+  </view>
+
+  <!-- 充值按钮 -->
+  <view class="recharge-footer">
+    <view class="recharge-summary">
+      <text class="summary-label">实付金额</text>
+      <text class="summary-amount">¥ {{payAmount}}</text>
+    </view>
+    <button
+      class="recharge-btn {{!finalAmount ? 'disabled' : ''}}"
+      bindtap="onRecharge"
+      disabled="{{!finalAmount}}"
+    >
+      立即充值 {{finalAmount}} GP
+    </button>
+  </view>
+</view>

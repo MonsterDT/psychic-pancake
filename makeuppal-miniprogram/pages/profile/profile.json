@@ -1,4 +1,8 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "我的"
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe",
+    "user-avatar": "/components/user-avatar/user-avatar",
+    "companion-fab": "/components/companion-fab/companion-fab"
+  }
 }

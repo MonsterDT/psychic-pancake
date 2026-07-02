@@ -1,24 +1,548 @@
-/* pages/mirror/mirror.wxss */
-.placeholder {
+/* pages/mirror/mirror.wxss - 焕新页样式 */
+
+.mirror-page {
+  padding: 0;
+  padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom) + 20px);
+  background: var(--color-bg);
+}
+
+/* ===== 试妆主区 ===== */
+.mirror-hero-v2 {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 520px;
+  max-height: 640px;
+  background: linear-gradient(160deg, #2D2A26 0%, #4A3F36 50%, #6B5B4E 100%);
+  overflow: hidden;
+}
+
+/* 设置按钮 */
+.mirror-settings-btn {
+  position: absolute;
+  top: calc(var(--safe-top) + 12px);
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.mirror-settings-btn .icon-text {
+  font-size: 20px;
+}
+
+.mirror-settings-btn.btn-hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* 摄像头区 */
+.mirror-face-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  padding: 40px;
+  padding: 60px 20px 80px;
 }
-.placeholder-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-primary);
+
+.mirror-camera {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.mirror-camera-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(160deg, #3A322C 0%, #5A4A3E 100%);
+}
+
+.mirror-fallback-img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+/* 人脸引导环 */
+.mirror-face-ring-v2 {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  margin-bottom: 24px;
+  animation: ringPulse 2.5s ease-in-out infinite;
+}
+
+.mirror-face-inner {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.mirror-face-inner .face-icon {
+  font-size: 48px;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.mirror-title-v2 {
+  color: #FFF8F0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  z-index: 5;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mirror-subtitle-v2 {
+  color: rgba(255, 248, 240, 0.85);
+  font-size: var(--font-size-base);
+  z-index: 5;
+  margin-bottom: 16px;
+}
+
+.mirror-encouragement {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(196, 149, 106, 0.3);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  z-index: 5;
+  margin-bottom: 16px;
+}
+
+.mirror-encouragement .encouragement-emoji {
+  font-size: 14px;
+}
+
+.mirror-encouragement .encouragement-text {
+  color: #FFF8F0;
+  font-size: var(--font-size-sm);
+}
+
+/* 闺蜜引导条 */
+.mirror-companion-guide {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  z-index: 5;
+  margin-bottom: 16px;
+  max-width: 90%;
+}
+
+.mirror-companion-guide .companion-guide-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mirror-companion-guide .companion-guide-text {
+  color: rgba(255, 248, 240, 0.9);
+  font-size: var(--font-size-sm);
+  flex: 1;
+}
+
+.mirror-companion-guide .companion-guide-arrow {
+  color: var(--color-primary-light);
+  font-size: 18px;
+}
+
+/* 进度点 */
+.mirror-progress-dots {
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.mirror-progress-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all var(--duration-normal) var(--ease);
+}
+
+.mirror-progress-dots .dot.active {
+  background: var(--color-primary-light);
+  width: 24px;
+  border-radius: var(--radius-full);
+}
+
+/* ===== 底部工具栏 ===== */
+.mirror-bottom-bar {
+  position: absolute;
+  bottom: calc(var(--safe-bottom) + 20px);
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 30px;
+  z-index: 10;
+}
+
+.mirror-bottom-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.mirror-bottom-btn.active {
+  background: var(--color-primary);
+}
+
+.mirror-bottom-btn .btn-icon {
+  font-size: 20px;
+}
+
+.mirror-bottom-btn .btn-label {
+  color: #FFF8F0;
+  font-size: var(--font-size-xs);
+}
+
+.mirror-bottom-btn.btn-hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* 快门按钮 */
+.mirror-shutter-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mirror-shutter-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 4px solid #FFF8F0;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.mirror-shutter-inner {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #FFF8F0;
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.mirror-shutter-btn.shutter-hover {
+  transform: scale(0.92);
+}
+
+.mirror-shutter-btn.shutter-hover .mirror-shutter-inner {
+  background: var(--color-primary-light);
+}
+
+/* ===== 妆容步骤拆解 ===== */
+.tutorial-list {
+  padding: 20px 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 12px;
 }
-.placeholder-desc {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-bottom: 8px;
+
+.section-title-sm {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
 }
-.placeholder-hint {
-  font-size: 12px;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-primary {
+  background: var(--color-primary);
+  color: #FFF8F0;
+}
+
+.badge-secondary {
+  background: var(--color-bg-alt);
+  color: var(--color-text-secondary);
+}
+
+.badge-pill {
+  border-radius: var(--radius-full);
+}
+
+/* 进度条 */
+.tutorial-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tutorial-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease);
+}
+
+/* 面部指南 */
+.tutorial-motion-guide {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tutorial-motion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tutorial-motion-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.tutorial-face-guide {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+}
+
+.tutorial-face-bg {
+  width: 100%;
+  height: 100%;
+}
+
+.tutorial-face-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.face-step-marker {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #FFF8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.5);
+  animation: markerBounce 1s ease-in-out infinite;
+}
+
+/* 不同步骤的标记位置 */
+.face-step-marker.step-1 { top: 45%; left: 50%; }
+.face-step-marker.step-2 { top: 60%; left: 30%; }
+.face-step-marker.step-3 { top: 35%; left: 50%; }
+.face-step-marker.step-4 { top: 40%; left: 35%; }
+.face-step-marker.step-5 { top: 42%; left: 60%; }
+.face-step-marker.step-6 { top: 45%; left: 30%; }
+.face-step-marker.step-7 { top: 55%; left: 50%; }
+.face-step-marker.step-8 { top: 58%; left: 45%; }
+.face-step-marker.step-9 { top: 70%; left: 50%; }
+.face-step-marker.step-10 { top: 50%; left: 50%; }
+
+@keyframes markerBounce {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* 步骤卡片列表 */
+.tutorial-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tutorial-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--color-bg-card);
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.tutorial-step-card.current {
+  border-color: var(--color-primary);
+  background: var(--color-bg-alt);
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.15);
+}
+
+.tutorial-step-card.done {
+  opacity: 0.65;
+}
+
+.tutorial-step-card.card-hover {
+  background: var(--color-bg-alt);
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-border);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+
+.tutorial-step-card.current .step-num {
+  background: var(--color-primary);
+  color: #FFF8F0;
+}
+
+.tutorial-step-card.done .step-num {
+  background: var(--color-success);
+  color: #FFF8F0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.step-icon {
+  font-size: 16px;
+}
+
+.step-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.step-duration {
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+  margin-left: auto;
+}
+
+.step-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* 上一步/下一步 */
+.tutorial-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: #FFF8F0;
+  box-shadow: 0 2px 8px rgba(196, 149, 106, 0.3);
+}
+
+.btn-outline {
+  background: var(--color-bg-card);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.nav-btn[disabled] {
+  opacity: 0.5;
 }

@@ -1,0 +1,45 @@
+/* components/rating-stars/rating-stars.wxss */
+.rating-stars {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.stars-track,
+.stars-fill {
+  display: inline-flex;
+  align-items: center;
+}
+
+.stars-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.star {
+  display: inline-block;
+  line-height: 1;
+}
+
+.star-empty {
+  color: var(--color-border);
+  opacity: 0.7;
+}
+
+.star-full {
+  color: #F5A623;
+}
+
+/* 尺寸 sm */
+.rating-stars--sm .star { font-size: 12px; }
+
+/* 尺寸 md */
+.rating-stars--md .star { font-size: 16px; }
+
+/* 尺寸 lg */
+.rating-stars--lg .star { font-size: 22px; }

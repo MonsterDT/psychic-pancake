@@ -1,0 +1,66 @@
+<!--packageD/pages/withdraw/withdraw.wxml-->
+<view class="withdraw-page">
+
+  <!-- 可提现余额 -->
+  <view class="balance-card">
+    <text class="balance-label">可提现创作收益</text>
+    <view class="balance-row">
+      <text class="balance-num">{{gpCreatorEarnings}}</text>
+      <text class="balance-unit">GP</text>
+    </view>
+    <text class="balance-tips">100 GP = ¥10.00（汇率 1:0.1）</text>
+  </view>
+
+  <!-- 提现金额输入 -->
+  <view class="block">
+    <text class="block-title">提现金额</text>
+    <view class="amount-input-wrap">
+      <text class="amount-prefix">¥</text>
+      <input
+        class="amount-input"
+        type="digit"
+        placeholder="0.00"
+        placeholder-class="amount-placeholder"
+        value="{{amountInput}}"
+        bindinput="onAmountInput"
+      />
+      <view class="amount-all" bindtap="onWithdrawAll">全部提现</view>
+    </view>
+    <text class="amount-convert" wx:if="{{convertGp > 0}}">≈ {{convertGp}} GP</text>
+  </view>
+
+  <!-- 提现方式 -->
+  <view class="block">
+    <text class="block-title">提现方式</text>
+    <view class="method-item">
+      <view class="method-info">
+        <text class="method-icon">💸</text>
+        <view class="method-text">
+          <text class="method-name">微信零钱</text>
+          <text class="method-desc">预计2小时内到账</text>
+        </view>
+      </view>
+      <view class="method-check checked">✓</view>
+    </view>
+  </view>
+
+  <!-- 提现说明 -->
+  <view class="tips-card">
+    <text class="tips-title">提现说明</text>
+    <text class="tips-line">· 最低提现金额为 10 GP（¥1.00）</text>
+    <text class="tips-line">· 每日最多提现 3 次，单次不超过 5000 GP</text>
+    <text class="tips-line">· 提现金额不可超过可提现余额</text>
+    <text class="tips-line">· 实际到账金额以微信支付为准</text>
+  </view>
+
+  <!-- 提现按钮 -->
+  <view class="withdraw-footer">
+    <button
+      class="withdraw-btn {{!canSubmit ? 'disabled' : ''}}"
+      bindtap="onWithdraw"
+      disabled="{{!canSubmit}}"
+    >
+      {{submitText}}
+    </button>
+  </view>
+</view>

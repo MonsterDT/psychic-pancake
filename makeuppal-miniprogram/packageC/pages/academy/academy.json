@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "创作者学院",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe"
+  }
+}

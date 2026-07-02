@@ -1,8 +1,138 @@
-<!-- pages/profile/profile.wxml -->
-<view class="page-container">
-  <view class="placeholder">
-    <text class="placeholder-title">👤 我的</text>
-    <text class="placeholder-desc">个人中心</text>
-    <text class="placeholder-hint">待实现：面部卡片、GP焕新值、功能网格、创作者中心</text>
+<!--pages/profile/profile.wxml - 我的页-->
+<view class="page-container profile-page">
+
+  <!-- 用户信息横幅 -->
+  <view class="profile-banner">
+    <view class="profile-top">
+      <view class="avatar-profile">
+        <image-safe src="{{userInfo.avatar}}" class="avatar-img" mode="aspectFill" />
+        <view class="avatar-ring"></view>
+      </view>
+      <view class="profile-name">
+        <view class="name-row">
+          <text class="name-text">{{userInfo.name}}</text>
+        </view>
+        <view class="level-tag">
+          <text class="level-icon">⭐</text>
+          <text class="level-text">{{userInfo.level}}</text>
+        </view>
+        <view class="profile-bio">{{userInfo.bio}}</view>
+      </view>
+      <view class="btn-edit-profile" bindtap="onEditProfile" hover-class="btn-hover">
+        <text class="edit-icon">✏️</text>
+        <text class="edit-text">编辑</text>
+      </view>
+    </view>
+
+    <!-- stats -->
+    <view class="profile-stats">
+      <view class="stat">
+        <view class="stat-num">{{gpBalance}}</view>
+        <view class="stat-label">焕新值</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat" bindtap="onFavTap" hover-class="stat-hover">
+        <view class="stat-num">{{favCount}}</view>
+        <view class="stat-label">收藏</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat">
+        <view class="stat-num">{{followingCount}}</view>
+        <view class="stat-label">关注</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat">
+        <view class="stat-num">{{fansCount}}</view>
+        <view class="stat-label">粉丝</view>
+      </view>
+    </view>
   </view>
+
+  <!-- 面部档案卡（slim版） -->
+  <view class="profile-face-card" bindtap="onFaceProfileTap" hover-class="card-hover" wx:if="{{faceProfile}}">
+    <view class="face-card-body-slim">
+      <image-safe src="{{faceProfile.avatar}}" class="face-slim-avatar" mode="aspectFill" />
+      <view class="face-slim-info">
+        <view class="face-slim-title">
+          <text class="face-slim-name">{{faceProfile.name}} · 面部档案</text>
+          <text class="face-slim-score">骨相 {{faceProfile.boneScore}}分</text>
+        </view>
+        <view class="face-slim-detail">
+          <text>{{faceProfile.faceShape}}</text><text class="dot">·</text>
+          <text>{{faceProfile.skinType}}</text><text class="dot">·</text>
+          <text>{{faceProfile.undertone}}</text>
+        </view>
+        <view class="face-slim-tags">
+          <text class="face-slim-tag" wx:for="{{faceProfile.traits}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+      <view class="face-slim-arrow">
+        <text class="arrow-icon">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- GP大卡 -->
+  <view class="profile-gp-card" bindtap="onGpCenterTap" hover-class="card-hover">
+    <view class="profile-gp-icon">⭐</view>
+    <view class="profile-gp-info">
+      <view class="profile-gp-title">焕新值 GP</view>
+      <view class="profile-gp-subtitle">每日任务 · 成就奖励 · 兑换商城</view>
+    </view>
+    <view class="profile-gp-balance">
+      <view class="profile-gp-num">{{gpBalance}}</view>
+      <view class="profile-gp-go">去查看 ›</view>
+    </view>
+  </view>
+
+  <!-- 功能宫格1（5项） -->
+  <view class="profile-grid-5">
+    <view
+      class="profile-grid-item"
+      wx:for="{{grid5}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onGridTap"
+      hover-class="grid-hover"
+    >
+      <view class="profile-grid-icon">{{item.icon}}</view>
+      <text class="profile-grid-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 功能宫格2（3项） -->
+  <view class="profile-grid-3">
+    <view
+      class="profile-grid-item"
+      wx:for="{{grid3}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onGridTap"
+      hover-class="grid-hover"
+    >
+      <view class="profile-grid-icon">{{item.icon}}</view>
+      <text class="profile-grid-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 功能宫格3（3项） -->
+  <view class="profile-grid-3">
+    <view
+      class="profile-grid-item"
+      wx:for="{{grid3Bottom}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onGridTap"
+      hover-class="grid-hover"
+    >
+      <view class="profile-grid-icon">{{item.icon}}</view>
+      <text class="profile-grid-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- 闺蜜浮窗 -->
+  <companion-fab bind:tap="onCompanionFabTap"></companion-fab>
 </view>

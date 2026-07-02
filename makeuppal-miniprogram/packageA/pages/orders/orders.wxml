@@ -1,0 +1,55 @@
+<!-- packageA/pages/orders/orders.wxml -->
+<view class="orders-page">
+  <!-- 顶部状态 tab -->
+  <scroll-view class="tab-bar" scroll-x="true">
+    <view class="tab-inner">
+      <view
+        class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+        wx:for="{{tabs}}"
+        wx:key="key"
+        data-key="{{item.key}}"
+        bindtap="switchTab"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 订单列表 -->
+  <scroll-view class="order-scroll" scroll-y="true">
+    <view class="order-list" wx:if="{{filteredOrders.length > 0}}">
+      <view class="order-card" wx:for="{{filteredOrders}}" wx:key="id" data-id="{{item.id}}" bindtap="openOrder">
+        <!-- 订单头 -->
+        <view class="order-head">
+          <text class="order-no">订单号：{{item.id}}</text>
+          <text class="order-status">{{statusText[item.status]}}</text>
+        </view>
+        <!-- 商品缩略图 -->
+        <view class="goods-thumbs">
+          <image-safe
+            wx:for="{{item.items}}"
+            wx:key="id"
+            wx:for-item="good"
+            class="thumb"
+            src="{{good.img}}"
+            mode="aspectFill"
+            width="64px"
+            height="64px"
+          ></image-safe>
+        </view>
+        <!-- 金额与操作 -->
+        <view class="order-foot">
+          <text class="order-time">{{item.createTime}}</text>
+          <view class="order-amount">
+            <text class="amount-label">共{{item.items.length}}件 合计：</text>
+            <text class="amount-value">¥{{item.totalAmount}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-tip" wx:else>
+      <text class="empty-icon">📦</text>
+      <text class="empty-text">暂无相关订单</text>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,31 @@
+/* components/toast/toast.wxss */
+.toast-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(45, 42, 38, 0.85);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 80%;
+}
+
+.toast-container.success { background: rgba(107, 158, 107, 0.9); }
+.toast-container.error { background: rgba(196, 92, 92, 0.9); }
+.toast-container.warning { background: rgba(212, 160, 60, 0.9); }
+
+.toast-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.toast-message {
+  text-align: center;
+  line-height: 1.4;
+}

@@ -1,0 +1,28 @@
+<!-- packageC/pages/brand/brand.wxml -->
+<view class="page-container brand-page">
+  <view class="brand-list">
+    <view class="brand-card card" wx:for="{{brands}}" wx:key="id">
+      <view class="brand-top">
+        <image-safe class="brand-logo" src="{{item.brandLogo}}" mode="aspectFill" width="56px" height="56px"></image-safe>
+        <view class="brand-meta">
+          <view class="brand-name-row">
+            <text class="brand-name">{{item.brandName}}</text>
+            <text wx:if="{{item.isOfficial}}" class="official-badge">官方认证</text>
+          </view>
+          <view class="brand-rating">
+            <rating-stars score="{{item.rating}}" size="sm"></rating-stars>
+            <text class="rating-text">{{item.rating}}</text>
+          </view>
+          <text class="brand-tag">{{item.templateCount}} 个模板 · {{item.priceGP}} GP 起</text>
+        </view>
+      </view>
+      <image-safe class="brand-cover" src="{{item.coverImage}}" mode="aspectFill" width="100%" height="140px"></image-safe>
+      <view class="brand-bottom">
+        <text class="brand-title ellipsis">{{item.title}}</text>
+        <view class="store-btn" data-id="{{item.id}}" data-name="{{item.brandName}}" bindtap="onEnterStore">
+          <text class="store-btn-text">进店</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

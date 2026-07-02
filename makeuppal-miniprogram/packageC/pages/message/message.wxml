@@ -1,0 +1,39 @@
+<!-- packageC/pages/message/message.wxml -->
+<view class="page-container message-page">
+  <!-- 3 tab -->
+  <view class="msg-tabs">
+    <view
+      class="msg-tab {{activeTab === item.key ? 'msg-tab--active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="onTabTap"
+    >
+      <text class="msg-tab-text">{{item.label}}</text>
+      <view wx:if="{{item.unread > 0}}" class="msg-dot">{{item.unread > 99 ? '99+' : item.unread}}</view>
+    </view>
+  </view>
+
+  <!-- 消息列表 -->
+  <view class="msg-list">
+    <view
+      class="msg-item {{item.unread ? 'msg-item--unread' : ''}}"
+      wx:for="{{messages}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="onMessageTap"
+    >
+      <view class="msg-avatar-wrap">
+        <user-avatar src="{{item.avatar}}" name="{{item.title}}" size="md"></user-avatar>
+        <view wx:if="{{item.unread}}" class="msg-red-dot"></view>
+      </view>
+      <view class="msg-content">
+        <view class="msg-head">
+          <text class="msg-title ellipsis">{{item.title}}</text>
+          <text class="msg-time">{{item.time}}</text>
+        </view>
+        <text class="msg-text ellipsis-2">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+</view>

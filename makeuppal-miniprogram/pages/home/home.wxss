@@ -1,24 +1,448 @@
-/* pages/home/home.wxss */
-.placeholder {
+/* pages/home/home.wxss - 首页样式 */
+
+.home-page {
+  padding: 0 var(--spacing-4);
+}
+
+/* ===== 面部档案卡片（紧凑版） ===== */
+.face-profile-compact {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FFFFFF, #FFF8F0);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  margin-top: var(--spacing-3);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.face-slim-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  border: 2px solid var(--color-accent);
+}
+
+.face-slim-info {
+  flex: 1;
+  margin-left: 12px;
+  min-width: 0;
+}
+
+.face-slim-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.face-slim-name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.face-slim-score {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  background: rgba(196, 149, 106, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.face-slim-detail {
+  margin-top: 4px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.face-slim-detail .dot {
+  margin: 0 4px;
+  color: var(--color-text-muted);
+}
+
+.face-slim-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.face-slim-tag {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  background: rgba(196, 149, 106, 0.08);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.face-slim-arrow {
+  flex-shrink: 0;
+  padding-left: 8px;
+}
+
+.face-slim-arrow .icon-arrow-right {
+  font-size: 22px;
+  color: var(--color-text-muted);
+  line-height: 1;
+}
+
+/* ===== 美妆闺蜜问候卡 ===== */
+.companion-greeting {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(232, 201, 168, 0.2), rgba(196, 149, 106, 0.1));
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  margin-top: var(--spacing-3);
+  border: 1px solid rgba(196, 149, 106, 0.15);
+}
+
+.companion-greeting-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.companion-greeting-content {
+  flex: 1;
+  margin-left: 12px;
+  min-width: 0;
+}
+
+.companion-greeting-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.companion-greeting-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.companion-greeting-action {
+  margin-top: 4px;
+}
+
+.companion-greeting-btn {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ===== 金刚位 5宫格 ===== */
+.kingkong-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-4);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4) var(--spacing-2);
+  box-shadow: var(--shadow-xs);
+}
+
+.kingkong-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.kingkong-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
   justify-content: center;
-  min-height: 80vh;
-  padding: 40px;
+  font-size: 24px;
+  margin-bottom: 6px;
 }
-.placeholder-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 12px;
+
+.kingkong-icon.mirror { background: linear-gradient(135deg, #FFE4E1, #FFC0CB); }
+.kingkong-icon.library { background: linear-gradient(135deg, #E6F3FF, #B0D4F1); }
+.kingkong-icon.mall { background: linear-gradient(135deg, #FFF4E6, #FFD9A8); }
+.kingkong-icon.scan { background: linear-gradient(135deg, #E8F5E9, #A5D6A7); position: relative; }
+.kingkong-icon.scan.new::after {
+  content: 'NEW';
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  font-size: 8px;
+  color: #fff;
+  background: var(--color-danger);
+  padding: 1px 4px;
+  border-radius: var(--radius-full);
 }
-.placeholder-desc {
-  font-size: 14px;
+.kingkong-icon.creator { background: linear-gradient(135deg, #F3E5F5, #CE93D8); }
+
+.kingkong-label {
+  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* ===== Banner 轮播 ===== */
+.hero-banner {
+  height: 180px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: var(--spacing-4);
+}
+
+.hero-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%);
+}
+
+.hero-content {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  right: 20px;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-size: var(--font-size-xs);
+  color: #fff;
+  background: rgba(196, 149, 106, 0.9);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
   margin-bottom: 8px;
 }
-.placeholder-hint {
-  font-size: 12px;
+
+.hero-badge.ai { background: linear-gradient(135deg, #C4956A, #A67B52); }
+.hero-badge.mall { background: linear-gradient(135deg, #D46A6A, #B85454); }
+.hero-badge.science { background: linear-gradient(135deg, #5B8EC4, #3B6EA5); }
+
+.hero-title {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: #fff;
+  line-height: 1.3;
+}
+
+.hero-desc {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 4px;
+}
+
+/* ===== 本周热度榜 ===== */
+.trending-section {
+  margin-top: var(--spacing-4);
+}
+
+.trending-scroll {
+  white-space: nowrap;
+  padding: 4px 0;
+}
+
+.trending-card {
+  display: inline-block;
+  width: 130px;
+  margin-right: 12px;
+  vertical-align: top;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.trending-card-img {
+  position: relative;
+  width: 130px;
+  height: 160px;
+}
+
+.trending-img {
+  width: 100%;
+  height: 100%;
+}
+
+.trending-rank {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trending-rank.rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); }
+.trending-rank.rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); }
+.trending-rank.rank-3 { background: linear-gradient(135deg, #CD7F32, #B87333); }
+
+.trending-card-info {
+  padding: 8px 10px;
+}
+
+.trending-card-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trending-card-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.trending-card-author {
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70px;
+}
+
+.trending-card-price {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+
+/* ===== 瀑布流：大家都在看 ===== */
+.waterfall-section {
+  margin-top: var(--spacing-4);
+}
+
+.waterfall-grid {
+  display: flex;
+  gap: 10px;
+}
+
+.waterfall-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.waterfall-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.waterfall-card-img {
+  position: relative;
+  width: 100%;
+}
+
+.waterfall-img {
+  width: 100%;
+  height: 100%;
+}
+
+.waterfall-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: var(--font-size-xs);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.waterfall-badge.l2 { background: linear-gradient(135deg, #C4956A, #A67B52); }
+.waterfall-badge.l3 { background: linear-gradient(135deg, #2D2A26, #1A1816); }
+.waterfall-badge.free { background: linear-gradient(135deg, #6B9E6B, #4F8A4F); }
+.waterfall-badge.gufeng { background: linear-gradient(135deg, #C45C5C, #A64545); }
+
+.waterfall-card-info {
+  padding: 8px 10px;
+}
+
+.waterfall-card-title {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.waterfall-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.waterfall-card-creator {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.waterfall-creator-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.waterfall-creator-name {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-left: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.waterfall-card-price {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
 }

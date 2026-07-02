@@ -1,0 +1,35 @@
+<!-- packageC/pages/earnings/earnings.wxml -->
+<view class="page-container earnings-page">
+  <!-- 余额卡片 -->
+  <view class="balance-card">
+    <text class="balance-label">可提现余额（GP）</text>
+    <text class="balance-value">{{balance}}</text>
+    <view class="balance-sub">
+      <text class="balance-total">累计收益 {{totalEarnings}} GP</text>
+    </view>
+    <view
+      class="withdraw-btn {{withdrawDisabled ? 'withdraw-btn--disabled' : ''}}"
+      bindtap="onWithdrawTap"
+    >
+      <text class="withdraw-btn-text">{{withdrawDisabled ? '余额不足' : '立即提现'}}</text>
+    </view>
+  </view>
+
+  <!-- 收支明细 -->
+  <view class="section-header">
+    <text class="section-title">收支明细</text>
+    <text class="section-more">近 30 天</text>
+  </view>
+  <view class="records-list card">
+    <view class="record-item" wx:for="{{records}}" wx:key="id">
+      <view class="record-left">
+        <text class="record-type">{{item.type}}</text>
+        <text class="record-date">{{item.date}}</text>
+      </view>
+      <view class="record-right">
+        <text class="record-amount {{item.amount < 0 ? 'record-amount--out' : ''}}">{{item.amount > 0 ? '+' : ''}}{{item.amount}}</text>
+        <text class="record-status record-status--{{item.statusClass}}">{{item.status}}</text>
+      </view>
+    </view>
+  </view>
+</view>

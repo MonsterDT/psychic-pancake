@@ -1,0 +1,69 @@
+<!-- packageC/pages/creator/creator.wxml -->
+<view class="page-container creator-page">
+  <!-- 创作者信息头 -->
+  <view class="creator-header">
+    <image-safe class="creator-avatar" src="{{creatorInfo.avatar}}" mode="aspectFill" width="64px" height="64px"></image-safe>
+    <view class="creator-meta">
+      <view class="creator-name-row">
+        <text class="creator-name">{{creatorInfo.name}}</text>
+        <text class="creator-level">Lv.{{creatorInfo.level}}</text>
+      </view>
+      <text class="creator-bio ellipsis-2">{{creatorInfo.bio}}</text>
+    </view>
+  </view>
+
+  <!-- 数据概览 4 卡 -->
+  <view class="stats-grid">
+    <view class="stat-card" wx:for="{{stats}}" wx:key="key">
+      <text class="stat-value">{{item.value}}</text>
+      <text class="stat-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="entry-row">
+    <view class="entry-item" bindtap="onEarningsTap">
+      <text class="entry-icon">💰</text>
+      <text class="entry-text">收益中心</text>
+      <text class="entry-arrow">›</text>
+    </view>
+    <view class="entry-item" bindtap="onDataCenterTap">
+      <text class="entry-icon">📊</text>
+      <text class="entry-text">数据看板</text>
+      <text class="entry-arrow">›</text>
+    </view>
+    <view class="entry-item" bindtap="onAcademyTap">
+      <text class="entry-icon">🎓</text>
+      <text class="entry-text">创作者学院</text>
+      <text class="entry-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 作品管理列表 -->
+  <view class="section-header">
+    <text class="section-title">我的作品</text>
+    <text class="section-more">共 {{works.length}} 个</text>
+  </view>
+  <view class="works-list">
+    <view class="work-item card" wx:for="{{works}}" wx:key="id" data-id="{{item.id}}" bindtap="onWorkTap">
+      <image-safe class="work-cover" src="{{item.cover}}" mode="aspectFill" width="96px" height="96px"></image-safe>
+      <view class="work-info">
+        <text class="work-title ellipsis-2">{{item.title}}</text>
+        <view class="work-stats">
+          <text class="work-stat">播放 {{item.views}}</text>
+          <text class="work-stat">点赞 {{item.likes}}</text>
+        </view>
+        <text class="work-status work-status--{{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 占位间距，避免发布按钮遮挡 -->
+  <view class="fab-placeholder"></view>
+
+  <!-- 发布入口按钮 -->
+  <view class="publish-fab" bindtap="onPublishTap">
+    <text class="publish-icon">＋</text>
+    <text class="publish-text">发布作品</text>
+  </view>
+</view>

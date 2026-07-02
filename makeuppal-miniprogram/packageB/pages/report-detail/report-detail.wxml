@@ -1,0 +1,138 @@
+<!-- packageB/pages/report-detail/report-detail.wxml -->
+<view class="page-report-detail">
+  <!-- 报告头部 -->
+  <view class="report-header">
+    <view class="report-meta">
+      <view class="report-type">{{reportType}}</view>
+      <view class="report-date">检测日期：{{reportDate}}</view>
+    </view>
+    <view class="report-total">
+      <text class="report-total-num">{{totalScore}}</text>
+      <text class="report-total-unit">分</text>
+      <view class="report-total-level">{{scoreLevel}}</view>
+    </view>
+  </view>
+
+  <!-- 三维评分雷达图 -->
+  <view class="section">
+    <view class="section-title">三维评分</view>
+    <view class="radar-card">
+      <!-- 雷达图（view 模拟） -->
+      <view class="radar-wrap">
+        <view class="radar-svg">
+          <!-- 背景同心三角 -->
+          <view class="radar-bg-tri radar-bg-1"></view>
+          <view class="radar-bg-tri radar-bg-2"></view>
+          <view class="radar-bg-tri radar-bg-3"></view>
+          <!-- 数据三角形（用 border 模拟填充） -->
+          <view class="radar-data-tri" style="clip-path: polygon({{radarPoints[0].x}}% {{radarPoints[0].y}}%, {{radarPoints[1].x}}% {{radarPoints[1].y}}%, {{radarPoints[2].x}}% {{radarPoints[2].y}}%);"></view>
+          <!-- 数据点 -->
+          <view class="radar-point" wx:for="{{radarPoints}}" wx:key="name" style="left: {{item.x}}%; top: {{item.y}}%;">
+            <view class="radar-point-dot"></view>
+          </view>
+          <!-- 标签 -->
+          <view class="radar-label" wx:for="{{radarPoints}}" wx:key="name" style="left: {{item.cx}}%; top: {{item.cy}}%;">
+            <text class="radar-label-name">{{item.name}}</text>
+            <text class="radar-label-val">{{item.value}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 三项分数列表 -->
+      <view class="score-list">
+        <view class="score-row">
+          <text class="score-row-name">骨相</text>
+          <view class="score-row-bar">
+            <view class="score-row-fill" style="width: {{scores.bone}}%;"></view>
+          </view>
+          <text class="score-row-val">{{scores.bone}}</text>
+        </view>
+        <view class="score-row">
+          <text class="score-row-name">皮相</text>
+          <view class="score-row-bar">
+            <view class="score-row-fill" style="width: {{scores.skin}}%;"></view>
+          </view>
+          <text class="score-row-val">{{scores.skin}}</text>
+        </view>
+        <view class="score-row">
+          <text class="score-row-name">妆相</text>
+          <view class="score-row-bar">
+            <view class="score-row-fill" style="width: {{scores.makeup}}%;"></view>
+          </view>
+          <text class="score-row-val">{{scores.makeup}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 六维数据条形图 -->
+  <view class="section">
+    <view class="section-title">六维数据</view>
+    <view class="dim-card">
+      <view class="dim-row" wx:for="{{dimensions}}" wx:key="label">
+        <view class="dim-label">{{item.label}}</view>
+        <view class="dim-bar">
+          <view class="dim-fill" style="width: {{item.width}};"></view>
+        </view>
+        <view class="dim-val">{{item.value}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 肤质/脸型/肤色分析 -->
+  <view class="section">
+    <view class="section-title">肤质 · 脸型 · 肤色</view>
+    <view class="analysis-card">
+      <view class="analysis-item">
+        <view class="analysis-head">
+          <text class="analysis-icon">💧</text>
+          <text class="analysis-name">肤质类型</text>
+          <text class="analysis-value">{{skinType}}</text>
+        </view>
+        <view class="analysis-desc">{{skinAnalysis}}</view>
+      </view>
+      <view class="analysis-divider"></view>
+      <view class="analysis-item">
+        <view class="analysis-head">
+          <text class="analysis-icon">🙂</text>
+          <text class="analysis-name">脸型</text>
+          <text class="analysis-value">{{faceShape}}</text>
+        </view>
+        <view class="analysis-desc">{{faceAnalysis}}</view>
+      </view>
+      <view class="analysis-divider"></view>
+      <view class="analysis-item">
+        <view class="analysis-head">
+          <text class="analysis-icon">🎨</text>
+          <text class="analysis-name">肤色</text>
+          <text class="analysis-value">{{skinTone}}</text>
+        </view>
+        <view class="analysis-desc">{{toneAnalysis}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐妆容 -->
+  <view class="section" wx:if="{{recommendations.length}}">
+    <view class="section-title">为你推荐的妆容</view>
+    <scroll-view scroll-x class="rec-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="rec-list">
+        <view class="rec-card" wx:for="{{recommendations}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapRecommend">
+          <view class="rec-cover">
+            <image src="{{item.img}}" mode="aspectFill" class="rec-cover-img"></image>
+          </view>
+          <view class="rec-info">
+            <view class="rec-title ellipsis">{{item.title}}</view>
+            <view class="rec-desc ellipsis-2">{{item.desc}}</view>
+            <view class="rec-tags" wx:if="{{item.tags.length}}">
+              <view class="rec-tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+                <text>{{tag}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

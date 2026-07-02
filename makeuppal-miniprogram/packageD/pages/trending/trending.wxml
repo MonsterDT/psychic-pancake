@@ -1,0 +1,66 @@
+<!--packageD/pages/trending/trending.wxml-->
+<view class="trending-page">
+
+  <!-- 榜单tab -->
+  <view class="trending-tabs">
+    <view
+      class="trending-tab {{currentTab === item.key ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      bindtap="onTabTap"
+      data-key="{{item.key}}"
+    >
+      <text class="tab-text">{{item.label}}</text>
+      <view class="tab-underline" wx:if="{{currentTab === item.key}}"></view>
+    </view>
+  </view>
+
+  <!-- TOP3 特殊样式 -->
+  <view class="top3" wx:if="{{list.length >= 3}}">
+    <view class="top3-item top3-2nd">
+      <image-safe src="{{list[1].avatar}}" class="top3-avatar" mode="aspectFill" />
+      <view class="top3-rank rank-2">2</view>
+      <text class="top3-name">{{list[1].title}}</text>
+      <text class="top3-author">{{list[1].author}}</text>
+      <text class="top3-likes">🔥 {{list[1].likesText}}</text>
+    </view>
+    <view class="top3-item top3-1st">
+      <view class="top3-crown">👑</view>
+      <image-safe src="{{list[0].avatar}}" class="top3-avatar top3-avatar-lg" mode="aspectFill" />
+      <view class="top3-rank rank-1">1</view>
+      <text class="top3-name">{{list[0].title}}</text>
+      <text class="top3-author">{{list[0].author}}</text>
+      <text class="top3-likes">🔥 {{list[0].likesText}}</text>
+    </view>
+    <view class="top3-item top3-3rd">
+      <image-safe src="{{list[2].avatar}}" class="top3-avatar" mode="aspectFill" />
+      <view class="top3-rank rank-3">3</view>
+      <text class="top3-name">{{list[2].title}}</text>
+      <text class="top3-author">{{list[2].author}}</text>
+      <text class="top3-likes">🔥 {{list[2].likesText}}</text>
+    </view>
+  </view>
+
+  <!-- 排行榜列表 4+ 名 -->
+  <view class="rank-list">
+    <view
+      class="rank-item"
+      wx:for="{{list}}"
+      wx:key="id"
+      wx:if="{{index >= 3}}"
+      bindtap="onItemTap"
+      data-id="{{item.id}}"
+    >
+      <text class="rank-num">{{index + 1}}</text>
+      <image-safe src="{{item.avatar}}" class="rank-avatar" mode="aspectFill" />
+      <view class="rank-info">
+        <text class="rank-title">{{item.title}}</text>
+        <text class="rank-author">{{item.author}}</text>
+      </view>
+      <view class="rank-likes">
+        <text class="likes-icon">🔥</text>
+        <text class="likes-num">{{item.likesText}}</text>
+      </view>
+    </view>
+  </view>
+</view>

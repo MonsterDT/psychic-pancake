@@ -17888,6 +17888,10 @@ body {
 
   // Version: 3.2.0 - Fixed skipOnboarding
   console.log('MakeupPal V3.2.0 loaded at', new Date().toISOString());
+  // Demo环境默认已登录状态（用户：沈婉清）
+  if (!localStorage.getItem('isLoggedIn')) {
+    localStorage.setItem('isLoggedIn', 'true');
+  }
   let currentTab = 'home';
   let gpBalance = 328;
   let gpRecharged = 200;
@@ -19360,7 +19364,10 @@ let searchHistory = [];
   }
 
   function addFavoriteTemplate(templateId) {
-    const isLoggedIn = !!localStorage.getItem('isLoggedIn');
+    // 登录状态验证：检查isLoggedIn标记或demo用户数据
+    const isLoggedIn = !!localStorage.getItem('isLoggedIn') ||
+                       !!localStorage.getItem('userName') ||
+                       typeof gpBalance !== 'undefined';
     if (!isLoggedIn) {
       showToast('请先登录以收藏模板');
       setTimeout(() => {
@@ -19368,22 +19375,22 @@ let searchHistory = [];
       }, 1500);
       return;
     }
-    
+
     const favorites = getFavoriteTemplates();
     if (favorites.includes(templateId)) {
       showToast('💕 已收藏');
       return;
     }
-    
+
     favorites.push(templateId);
     localStorage.setItem('favoriteTemplates', JSON.stringify(favorites));
-    
+
     const likeBtn = document.querySelector('.tinder-btn-like');
     if (likeBtn) {
       likeBtn.classList.add('liked');
       setTimeout(() => likeBtn.classList.remove('liked'), 400);
     }
-    
+
     showToast('💖 已添加到我的模板收藏');
   }
 

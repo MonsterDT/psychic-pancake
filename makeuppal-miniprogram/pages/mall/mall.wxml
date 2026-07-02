@@ -1,8 +1,108 @@
-<!-- pages/mall/mall.wxml -->
-<view class="page-container">
-  <view class="placeholder">
-    <text class="placeholder-title">🛍️ 市集</text>
-    <text class="placeholder-desc">美妆商品浏览与购买</text>
-    <text class="placeholder-hint">待实现：类目tab、商品瀑布流、购物车角标</text>
+<!--pages/mall/mall.wxml - 市集页-->
+<view class="page-container mall-page">
+
+  <!-- 顶部搜索栏（sticky） -->
+  <view class="mall-header">
+    <view class="mall-search-box" bindtap="onSearchTap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索妆容、品牌、商品..." value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm" confirm-type="search" />
+    </view>
+    <view class="header-right">
+      <view class="icon-btn" bindtap="onOrdersTap" hover-class="btn-hover">
+        <text class="icon-emoji">📋</text>
+      </view>
+      <view class="icon-btn cart-btn" bindtap="onCartTap" hover-class="btn-hover">
+        <text class="icon-emoji">🛒</text>
+        <view wx:if="{{cartCount > 0}}" class="cart-badge">{{cartCount}}</view>
+      </view>
+    </view>
   </view>
+
+  <!-- 分类 tab -->
+  <scroll-view class="mall-tabs" scroll-x="true" enhanced="true" show-scrollbar="{{false}}">
+    <view
+      class="mall-tab {{currentCat === item.key ? 'active' : ''}}"
+      wx:for="{{catTabs}}"
+      wx:key="key"
+      data-cat="{{item.key}}"
+      bindtap="onCatTap"
+      hover-class="tab-hover"
+    >
+      <text class="tab-icon">{{item.icon}}</text>
+      <text class="tab-text">{{item.label}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 子分类 -->
+  <scroll-view class="mall-sub-tabs" scroll-x="true" enhanced="true" show-scrollbar="{{false}}">
+    <view
+      class="mall-sub-tab {{currentSubCat === item ? 'active' : ''}}"
+      wx:for="{{subCatList}}"
+      wx:key="*this"
+      data-sub="{{item}}"
+      bindtap="onSubCatTap"
+      hover-class="subtab-hover"
+    >{{item}}</view>
+  </scroll-view>
+
+  <!-- 品牌官方 -->
+  <view class="brand-strip">
+    <view class="section-header">
+      <view class="section-title section-title-sm">品牌官方</view>
+      <view class="section-more" bindtap="onBrandTap" hover-class="btn-hover">品牌合作 ›</view>
+    </view>
+    <view class="brand-card" bindtap="onBrandTap" hover-class="card-hover">
+      <view class="brand-logo logo-ysl">Y</view>
+      <view class="brand-info">
+        <view class="brand-name-row">
+          <text class="brand-name">YSL 圣罗兰</text>
+          <text class="verified">官方认证</text>
+        </view>
+        <text class="brand-desc">官方妆容模板 12 个 · 评分 4.9</text>
+      </view>
+      <view class="brand-btn" catchtap="onBrandTap" hover-class="btn-hover">进店</view>
+    </view>
+    <view class="brand-card" bindtap="onBrandTap" hover-class="card-hover">
+      <view class="brand-logo logo-lancome">L</view>
+      <view class="brand-info">
+        <view class="brand-name-row">
+          <text class="brand-name">LANCÔME 兰蔻</text>
+          <text class="verified">官方</text>
+        </view>
+        <text class="brand-desc">官方妆容模板 8 个 · 评分 4.8</text>
+      </view>
+      <view class="brand-btn" catchtap="onBrandTap" hover-class="btn-hover">进店</view>
+    </view>
+  </view>
+
+  <!-- 热门商品 -->
+  <view class="section-header section-header-product">
+    <view class="section-title section-title-sm">热门商品</view>
+    <text class="product-count">共 {{productList.length}} 件</text>
+  </view>
+
+  <!-- 商品网格 -->
+  <view class="product-grid" wx:if="{{productList.length > 0}}">
+    <product-card
+      wx:for="{{productList}}"
+      wx:key="id"
+      product="{{item}}"
+      bind:tap="onProductTap"
+      bind:addcart="onAddCart"
+    ></product-card>
+  </view>
+
+  <!-- 空状态 -->
+  <empty-state
+    wx:else
+    icon="📦"
+    title="暂无商品"
+    desc="该分类下还没有商品，看看其他分类吧"
+  ></empty-state>
+
+  <!-- 底部留白 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- 闺蜜浮窗 -->
+  <companion-fab bind:tap="onCompanionFabTap"></companion-fab>
 </view>

@@ -1,0 +1,18 @@
+<!-- components/user-avatar/user-avatar.wxml -->
+<view class="user-avatar user-avatar--{{size}}">
+  <view class="avatar-wrap avatar-wrap--{{size}}">
+    <image-safe
+      wx:if="{{src}}"
+      class="avatar-img"
+      src="{{src}}"
+      mode="aspectFill"
+      width="100%"
+      height="100%"
+      bind:error="onImageError"
+    ></image-safe>
+    <view wx:else class="avatar-placeholder">
+      <text class="avatar-initial">{{initial}}</text>
+    </view>
+  </view>
+  <text wx:if="{{showName && name}}" class="avatar-name">{{name}}</text>
+</view>

@@ -1,0 +1,86 @@
+<!--packageD/pages/mirror-settings/mirror-settings.wxml-->
+<view class="mirror-page">
+
+  <!-- 实时预览区 -->
+  <view class="preview-area">
+    <view class="preview-mirror">
+      <text class="preview-emoji">🪞</text>
+      <text class="preview-text">实时预览</text>
+    </view>
+  </view>
+
+  <!-- 设置项 -->
+  <view class="settings-card">
+    <!-- 光照强度 -->
+    <view class="setting-item">
+      <view class="setting-header">
+        <text class="setting-label">光照强度</text>
+        <text class="setting-value">{{lightIntensity}}%</text>
+      </view>
+      <slider
+        min="0"
+        max="100"
+        value="{{lightIntensity}}"
+        activeColor="#C4956A"
+        block-size="20"
+        bindchange="onLightChange"
+      />
+    </view>
+
+    <!-- 肤色调整 -->
+    <view class="setting-item">
+      <view class="setting-header">
+        <text class="setting-label">肤色调整</text>
+        <text class="setting-value">{{skinToneLabel}}</text>
+      </view>
+      <slider
+        min="0"
+        max="100"
+        value="{{skinTone}}"
+        activeColor="#C4956A"
+        block-size="20"
+        bindchange="onSkinToneChange"
+      />
+    </view>
+
+    <!-- 美颜级别 -->
+    <view class="setting-item">
+      <view class="setting-header">
+        <text class="setting-label">美颜级别</text>
+        <text class="setting-value">{{beautyLevel}}级</text>
+      </view>
+      <slider
+        min="0"
+        max="10"
+        value="{{beautyLevel}}"
+        activeColor="#C4956A"
+        block-size="20"
+        bindchange="onBeautyChange"
+      />
+    </view>
+  </view>
+
+  <!-- 滤镜选择 -->
+  <view class="filter-card">
+    <text class="card-title">滤镜选择</text>
+    <view class="filter-grid">
+      <view
+        class="filter-item {{currentFilter === item.key ? 'active' : ''}}"
+        wx:for="{{filters}}"
+        wx:key="key"
+        bindtap="onFilterTap"
+        data-key="{{item.key}}"
+      >
+        <view class="filter-preview filter-{{item.key}}">
+          <text class="filter-emoji">{{item.icon}}</text>
+        </view>
+        <text class="filter-name">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-btn-wrap">
+    <button class="save-btn" bindtap="onSave">保存设置</button>
+  </view>
+</view>

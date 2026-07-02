@@ -1,0 +1,15 @@
+<!-- components/image-safe/image-safe.wxml -->
+<image
+  class="image-safe {{loaded ? 'loaded' : ''}} {{failed ? 'failed' : ''}}"
+  src="{{currentSrc}}"
+  mode="{{mode}}"
+  lazy-load="{{lazyLoad}}"
+  bind:load="onLoad"
+  bind:error="onError"
+  style="{{width ? 'width:' + width : ''}};{{height ? 'height:' + height : ''}};"
+>
+</image>
+<view wx:if="{{failed}}" class="image-placeholder">
+  <text class="placeholder-emoji">🖼️</text>
+  <text class="placeholder-text">{{placeholderText}}</text>
+</view>

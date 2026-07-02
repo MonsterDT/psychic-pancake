@@ -1,0 +1,61 @@
+<!-- packageA/pages/coupon/coupon.wxml -->
+<view class="coupon-page">
+  <!-- 顶部状态 tab -->
+  <view class="tab-bar">
+    <view
+      class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      bindtap="switchTab"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- 优惠券列表 -->
+  <scroll-view class="coupon-scroll" scroll-y="true">
+    <view class="coupon-list" wx:if="{{filteredCoupons.length > 0}}">
+      <view
+        class="coupon-card {{item.status !== 'unused' ? 'disabled' : ''}}"
+        wx:for="{{filteredCoupons}}"
+        wx:key="id"
+      >
+        <!-- 左侧金额 -->
+        <view class="coupon-left">
+          <view class="amount-row">
+            <text class="amount-unit">¥</text>
+            <text class="amount-value">{{item.amount}}</text>
+          </view>
+          <text class="threshold-text">{{item.threshold > 0 ? '满' + item.threshold + '可用' : '无门槛'}}</text>
+        </view>
+        <!-- 分隔 -->
+        <view class="coupon-sep">
+          <view class="sep-circle top"></view>
+          <view class="sep-line"></view>
+          <view class="sep-circle bottom"></view>
+        </view>
+        <!-- 右侧信息 -->
+        <view class="coupon-right">
+          <view class="coupon-name">{{item.name}}</view>
+          <view class="coupon-scope">{{item.scope}}</view>
+          <view class="coupon-valid">{{item.validStart}} 至 {{item.validEnd}}</view>
+          <view
+            class="coupon-btn"
+            wx:if="{{item.status === 'unused'}}"
+            data-id="{{item.id}}"
+            bindtap="useCoupon"
+            hover-class="btn-hover"
+            hover-stay-time="100"
+          >立即使用</view>
+          <view class="coupon-status-tag" wx:elif="{{item.status === 'used'}}">已使用</view>
+          <view class="coupon-status-tag" wx:else>已过期</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-tip" wx:else>
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">暂无优惠券</text>
+    </view>
+  </scroll-view>
+</view>

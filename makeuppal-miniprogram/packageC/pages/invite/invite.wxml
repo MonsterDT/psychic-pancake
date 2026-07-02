@@ -1,0 +1,63 @@
+<!-- packageC/pages/invite/invite.wxml -->
+<view class="page-container invite-page">
+  <!-- 邀请海报区 -->
+  <view class="poster-card">
+    <view class="poster-top">
+      <text class="poster-title">邀请好友，一起变美</text>
+      <text class="poster-sub">每邀请一位好友，最高可获 150 GP 奖励</text>
+    </view>
+    <view class="reward-summary">
+      <view class="reward-item">
+        <text class="reward-num">{{invitedCount}}</text>
+        <text class="reward-label">已邀请</text>
+      </view>
+      <view class="reward-divider"></view>
+      <view class="reward-item">
+        <text class="reward-num">{{totalReward}}</text>
+        <text class="reward-label">累计奖励(GP)</text>
+      </view>
+    </view>
+    <view class="reward-rules">
+      <text class="rule-title">奖励规则</text>
+      <view class="rule-item" wx:for="{{rewardRules}}" wx:key="*this">
+        <text class="rule-dot">·</text>
+        <text class="rule-text">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 邀请码 -->
+  <view class="code-card card">
+    <text class="code-label">我的邀请码</text>
+    <view class="code-row">
+      <text class="code-value">{{inviteCode}}</text>
+      <view class="copy-btn" bindtap="onCopyCode">
+        <text class="copy-btn-text">复制</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分享按钮 -->
+  <button class="share-btn" open-type="share">
+    <text class="share-btn-text">邀请微信好友</text>
+  </button>
+
+  <!-- 已邀请好友列表 -->
+  <view class="section-header">
+    <text class="section-title">已邀请好友</text>
+    <text class="section-more">共 {{invitedCount}} 位</text>
+  </view>
+  <view class="invitee-list card">
+    <view class="invitee-item" wx:for="{{invitees}}" wx:key="id">
+      <image class="invitee-avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+      <view class="invitee-info">
+        <text class="invitee-name ellipsis">{{item.name}}</text>
+        <text class="invitee-status">{{item.status}}</text>
+      </view>
+      <view class="invitee-right">
+        <text class="invitee-reward">+{{item.reward}} GP</text>
+        <text class="invitee-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,70 @@
+<!--packageD/pages/share/share.wxml-->
+<view class="share-page">
+
+  <!-- 分享海报预览 -->
+  <view class="poster-card">
+    <view class="poster">
+      <image-safe src="{{posterImage}}" class="poster-img" mode="aspectFill" />
+      <view class="poster-overlay">
+        <text class="poster-title">{{title}}</text>
+        <view class="poster-meta">
+          <text class="poster-author">{{author}}</text>
+          <view class="poster-brand">
+            <text class="brand-icon">💄</text>
+            <text class="brand-name">妆伴 MakeupPal</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="poster-tip">
+      <text>长按海报或点击下方按钮分享</text>
+    </view>
+  </view>
+
+  <!-- 分享平台网格 -->
+  <view class="platforms-card">
+    <text class="card-title">分享至</text>
+    <view class="platforms-grid">
+      <!-- 微信好友：button open-type="share" -->
+      <button class="platform-btn" open-type="share" plain="{{true}}">
+        <view class="platform-icon icon-wechat">
+          <text>💬</text>
+        </view>
+        <text class="platform-name">微信好友</text>
+      </button>
+
+      <view class="platform-btn" bindtap="onShareMoments">
+        <view class="platform-icon icon-moments">
+          <text>📡</text>
+        </view>
+        <text class="platform-name">朋友圈</text>
+      </view>
+
+      <view class="platform-btn" bindtap="onShareQQ">
+        <view class="platform-icon icon-qq">
+          <text>🐧</text>
+        </view>
+        <text class="platform-name">QQ</text>
+      </view>
+
+      <view class="platform-btn" bindtap="onShareWeibo">
+        <view class="platform-icon icon-weibo">
+          <text>📢</text>
+        </view>
+        <text class="platform-name">微博</text>
+      </view>
+
+      <view class="platform-btn" bindtap="onCopyLink">
+        <view class="platform-icon icon-link">
+          <text>🔗</text>
+        </view>
+        <text class="platform-name">复制链接</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 保存图片按钮 -->
+  <view class="save-btn-wrap">
+    <button class="save-btn" bindtap="onSaveImage">保存海报到相册</button>
+  </view>
+</view>

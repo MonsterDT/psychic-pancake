@@ -1,0 +1,12 @@
+<!-- components/companion-fab/companion-fab.wxml -->
+<view
+  class="companion-fab"
+  style="{{posStyle}}"
+  bindtap="onTap"
+  catchtouchmove="noop"
+  hover-class="companion-fab-hover"
+  hover-stay-time="120"
+>
+  <view class="companion-fab-pulse"></view>
+  <text class="companion-fab-icon">🌸</text>
+</view>

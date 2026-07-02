@@ -1,0 +1,74 @@
+<!--packageD/pages/scan/scan.wxml-->
+<view class="scan-page">
+
+  <!-- 相机扫码区 -->
+  <view class="scan-camera-wrap" wx:if="{{hasCameraAuth}}">
+    <camera
+      class="scan-camera"
+      device-position="back"
+      flash="auto"
+      binderror="onCameraError"
+    ></camera>
+
+    <!-- 扫描指引框 -->
+    <view class="scan-guide">
+      <view class="scan-corner top-left"></view>
+      <view class="scan-corner top-right"></view>
+      <view class="scan-corner bottom-left"></view>
+      <view class="scan-corner bottom-right"></view>
+      <text class="scan-guide-text">将产品成分表对准框内</text>
+    </view>
+
+    <!-- 扫描动画线 -->
+    <view class="scan-line"></view>
+  </view>
+
+  <!-- 无权限提示 -->
+  <view class="scan-permission" wx:else>
+    <text class="permission-emoji">📷</text>
+    <text class="permission-title">需要相机权限</text>
+    <text class="permission-desc">请允许访问相机进行成分扫描</text>
+    <button class="permission-btn" bindtap="onRequestCameraAuth">开启相机</button>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="scan-actions" wx:if="{{hasCameraAuth}}">
+    <view class="scan-action" bindtap="onTakePhoto">
+      <text class="action-icon">📸</text>
+      <text class="action-label">拍照识别</text>
+    </view>
+    <view class="scan-action" bindtap="onChooseFromAlbum">
+      <text class="action-icon">🖼️</text>
+      <text class="action-label">从相册选择</text>
+    </view>
+  </view>
+
+  <!-- 扫描结果 -->
+  <view class="scan-result" wx:if="{{showResult}}">
+    <view class="result-header">
+      <text class="result-title">成分分析结果</text>
+      <view class="risk-badge risk-{{overallRisk}}">
+        <text>{{riskText}}</text>
+      </view>
+    </view>
+
+    <view class="ingredient-list">
+      <view class="ingredient-item" wx:for="{{ingredients}}" wx:key="name">
+        <view class="ingredient-info">
+          <text class="ingredient-name">{{item.name}}</text>
+          <text class="ingredient-desc">{{item.desc}}</text>
+        </view>
+        <view class="risk-tag risk-{{item.riskLevel}}">
+          <text>{{item.riskLabel}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="result-tips">
+      <text class="tips-title">温馨提示</text>
+      <text class="tips-content">敏感肌请重点关注高风险成分，建议先在手腕内侧做过敏测试。</text>
+    </view>
+
+    <button class="rescan-btn" bindtap="onRescan">重新扫描</button>
+  </view>
+</view>

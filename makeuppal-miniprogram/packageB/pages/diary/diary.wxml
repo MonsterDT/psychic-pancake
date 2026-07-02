@@ -1,0 +1,85 @@
+<!-- packageB/pages/diary/diary.wxml -->
+<view class="page-diary">
+  <!-- 日历头部 -->
+  <view class="cal-header">
+    <view class="cal-nav" bindtap="onPrevMonth">
+      <text>‹</text>
+    </view>
+    <view class="cal-title">{{monthText}}</view>
+    <view class="cal-nav" bindtap="onNextMonth">
+      <text>›</text>
+    </view>
+  </view>
+
+  <!-- 日历 -->
+  <view class="calendar-card">
+    <!-- 周标题 -->
+    <view class="week-row">
+      <view class="week-cell" wx:for="{{weekHeaders}}" wx:key="*this">
+        <text>{{item}}</text>
+      </view>
+    </view>
+    <!-- 日期网格 -->
+    <view class="day-grid">
+      <view class="day-cell {{item.empty ? 'day-empty' : ''}} {{item.isToday ? 'day-today' : ''}} {{item.isSelected ? 'day-selected' : ''}} {{item.hasDiary ? 'day-has-diary' : ''}}" wx:for="{{calendarDays}}" wx:key="index" data-date="{{item.date}}" bindtap="onSelectDay">
+        <view class="day-num" wx:if="{{!item.empty}}">{{item.day}}</view>
+        <view class="day-dot" wx:if="{{item.hasDiary}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 当日日记内容 -->
+  <view class="diary-section">
+    <view class="diary-section-header">
+      <view class="diary-date-title">{{selectedDate}}</view>
+      <view class="add-diary-btn" bindtap="onAddDiary">
+        <text>+ 添加日记</text>
+      </view>
+    </view>
+
+    <view class="diary-content" wx:if="{{currentDiary}}">
+      <view class="diary-card">
+        <!-- 妆容名+心情 -->
+        <view class="diary-card-head">
+          <view class="diary-makeup">{{currentDiary.makeupName}}</view>
+          <view class="diary-mood">
+            <text class="diary-mood-icon">{{currentDiary.mood}}</text>
+            <text class="diary-mood-text">{{currentDiary.moodText}}</text>
+          </view>
+        </view>
+        <!-- 照片 -->
+        <view class="diary-photo" wx:if="{{currentDiary.photo}}" data-url="{{currentDiary.photo}}" bindtap="onPreviewPhoto">
+          <image src="{{currentDiary.photo}}" mode="aspectFill" class="diary-photo-img"></image>
+        </view>
+        <!-- 心情备注 -->
+        <view class="diary-note" wx:if="{{currentDiary.note}}">{{currentDiary.note}}</view>
+        <!-- 用时 + 产品 -->
+        <view class="diary-meta">
+          <view class="diary-duration" wx:if="{{currentDiary.duration}}">
+            <text class="diary-meta-icon">⏱️</text>
+            <text>{{currentDiary.duration}}</text>
+          </view>
+        </view>
+        <view class="diary-products" wx:if="{{currentDiary.products.length}}">
+          <text class="diary-products-label">使用产品：</text>
+          <view class="diary-product-chips">
+            <view class="diary-product-chip" wx:for="{{currentDiary.products}}" wx:for-item="prod" wx:key="*this">
+              <text>{{prod}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无日记占位 -->
+    <view class="diary-empty" wx:else>
+      <view class="diary-empty-icon">📝</view>
+      <view class="diary-empty-text">这一天还没有日记</view>
+      <view class="diary-empty-btn" bindtap="onAddDiary">
+        <text>写下今天的美妆</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-placeholder"></view>
+</view>

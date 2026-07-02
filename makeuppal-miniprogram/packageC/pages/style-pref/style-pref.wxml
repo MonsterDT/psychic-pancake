@@ -1,0 +1,25 @@
+<!-- packageC/pages/style-pref/style-pref.wxml -->
+<view class="page-container style-pref-page">
+  <view class="pref-header">
+    <text class="pref-title">选择你喜欢的妆容风格</text>
+    <text class="pref-desc">可多选，我们将为你推荐对应风格的妆容模板</text>
+  </view>
+
+  <view class="style-grid">
+    <view
+      class="style-tag {{item.selected ? 'style-tag--active' : ''}}"
+      wx:for="{{styles}}"
+      wx:key="key"
+      data-index="{{index}}"
+      bindtap="onStyleTap"
+    >
+      <text class="style-tag-text">{{item.label}}</text>
+      <text wx:if="{{item.selected}}" class="style-check">✓</text>
+    </view>
+  </view>
+
+  <view class="save-placeholder"></view>
+  <view class="save-btn" bindtap="onSave">
+    <text class="save-btn-text">保存偏好</text>
+  </view>
+</view>

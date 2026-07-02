@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "妆容详情",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe",
+    "tag-chip": "/components/tag-chip/tag-chip"
+  }
+}

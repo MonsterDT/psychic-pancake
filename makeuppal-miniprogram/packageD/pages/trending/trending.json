@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "热门榜单",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe"
+  }
+}

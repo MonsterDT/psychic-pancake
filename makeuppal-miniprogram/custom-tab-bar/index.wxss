@@ -1,0 +1,102 @@
+/* custom-tab-bar/index.wxss - 自定义底部导航栏样式 */
+
+.custom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: calc(var(--tab-bar-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: #FFFFFF;
+  box-shadow: 0 -2px 12px rgba(45, 42, 38, 0.06);
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* 单个tab项 */
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--tab-bar-height);
+  position: relative;
+}
+
+.tab-item.tab-hover {
+  opacity: 0.7;
+}
+
+/* 普通tab按钮 */
+.tab-normal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 100%;
+}
+
+.tab-normal .tab-icon {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.tab-normal .tab-text {
+  font-size: var(--font-size-xs);
+  color: #9B9590;
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.tab-normal.active .tab-text {
+  color: #C4956A;
+  font-weight: var(--font-weight-medium);
+}
+
+.tab-normal.active .tab-icon {
+  transform: scale(1.1);
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+/* 中间焕新按钮容器（占位，让中间留出凸起空间） */
+.tab-center-wrap {
+  position: relative;
+}
+
+/* 中间凸起圆角矩形按钮 */
+.tab-center-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  border-radius: 14px;
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 14px rgba(196, 149, 106, 0.45);
+  transition: all var(--duration-normal) var(--ease);
+}
+
+.tab-center-btn.active {
+  box-shadow: 0 6px 18px rgba(196, 149, 106, 0.6);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.tab-center-btn .tab-center-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.tab-center-btn .tab-center-text {
+  font-size: var(--font-size-xs);
+  color: #FFF8F0;
+  font-weight: var(--font-weight-medium);
+}

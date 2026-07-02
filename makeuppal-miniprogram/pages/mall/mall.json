@@ -1,4 +1,9 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "市集"
+  "navigationBarTitleText": "市集",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe",
+    "product-card": "/components/product-card/product-card",
+    "companion-fab": "/components/companion-fab/companion-fab",
+    "empty-state": "/components/empty-state/empty-state"
+  }
 }

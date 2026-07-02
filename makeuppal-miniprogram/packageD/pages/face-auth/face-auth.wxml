@@ -1,0 +1,85 @@
+<!--packageD/pages/face-auth/face-auth.wxml-->
+<view class="face-auth-page">
+
+  <!-- 步骤1：说明页 -->
+  <view class="step step-intro" wx:if="{{step === 1}}">
+    <view class="intro-icon">🔐</view>
+    <text class="intro-title">面部认证</text>
+    <text class="intro-subtitle">为你建立专属美妆档案</text>
+
+    <view class="intro-uses">
+      <view class="use-item">
+        <text class="use-icon">🤳</text>
+        <view class="use-text">
+          <text class="use-title">AI肤质分析</text>
+          <text class="use-desc">智能识别肤质、肤色、脸型特征</text>
+        </view>
+      </view>
+      <view class="use-item">
+        <text class="use-icon">💄</text>
+        <view class="use-text">
+          <text class="use-title">虚拟试妆</text>
+          <text class="use-desc">实时预览妆容效果，所见即所得</text>
+        </view>
+      </view>
+      <view class="use-item">
+        <text class="use-icon">📊</text>
+        <view class="use-text">
+          <text class="use-title">个性化推荐</text>
+          <text class="use-desc">基于面部特征推荐最适合的妆容</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="intro-privacy">
+      <text class="privacy-icon">🔒</text>
+      <text class="privacy-text">你的面部数据仅用于本应用功能，不会上传共享</text>
+    </view>
+
+    <button class="primary-btn" bindtap="onAgree">同意并开始认证</button>
+  </view>
+
+  <!-- 步骤2：拍照 -->
+  <view class="step step-capture" wx:if="{{step === 2}}">
+    <camera
+      wx:if="{{hasCameraAuth}}"
+      class="auth-camera"
+      device-position="front"
+      flash="off"
+      binderror="onCameraError"
+    ></camera>
+    <view class="camera-placeholder" wx:else>
+      <text class="placeholder-emoji">📷</text>
+      <text class="placeholder-text">无法访问相机</text>
+      <button class="primary-btn" bindtap="onRequestCameraAuth">开启相机权限</button>
+    </view>
+
+    <view class="face-guide" wx:if="{{hasCameraAuth}}">
+      <view class="face-oval"></view>
+      <text class="face-tip">请将脸部对准椭圆框内</text>
+    </view>
+
+    <view class="capture-actions" wx:if="{{hasCameraAuth}}">
+      <button class="primary-btn" bindtap="onCapture">拍照认证</button>
+    </view>
+  </view>
+
+  <!-- 步骤3：分析中 -->
+  <view class="step step-analyzing" wx:if="{{step === 3 && !authDone}}">
+    <view class="analyzing-ring">
+      <view class="ring-outer"></view>
+      <view class="ring-inner"></view>
+      <text class="analyzing-emoji">🔍</text>
+    </view>
+    <text class="analyzing-title">正在分析面部特征</text>
+    <text class="analyzing-tip">{{analyzingText}}</text>
+  </view>
+
+  <!-- 认证成功 -->
+  <view class="step step-success" wx:if="{{step === 3 && authDone}}">
+    <view class="success-icon">✓</view>
+    <text class="success-title">认证成功</text>
+    <text class="success-tip">已为你建立专属美妆档案</text>
+    <button class="primary-btn" bindtap="onFinish">完成</button>
+  </view>
+</view>

@@ -1,0 +1,137 @@
+<!-- packageB/pages/toolbox/toolbox.wxml -->
+<view class="page-toolbox">
+  <!-- 顶部说明 -->
+  <view class="intro-card">
+    <view class="intro-icon">🧰</view>
+    <view class="intro-info">
+      <view class="intro-title">美妆工具箱</view>
+      <view class="intro-desc">精选美妆实用工具，助你轻松打理妆容</view>
+    </view>
+  </view>
+
+  <!-- 工具网格 -->
+  <view class="tools-grid">
+    <view class="tool-card" wx:for="{{tools}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapTool">
+      <view class="tool-icon" style="background: {{item.color}}1a;">
+        <text>{{item.icon}}</text>
+      </view>
+      <view class="tool-name">{{item.name}}</view>
+      <view class="tool-desc ellipsis-2">{{item.desc}}</view>
+    </view>
+  </view>
+
+  <!-- 简单弹窗 -->
+  <view class="modal-mask" wx:if="{{modalVisible}}" bindtap="onCloseModal">
+    <view class="modal-box" catchtap="noop">
+      <view class="modal-head">
+        <view class="modal-title">{{modalTitle}}</view>
+        <view class="modal-close" bindtap="onCloseModal">
+          <text>✕</text>
+        </view>
+      </view>
+      <view class="modal-body">
+        <!-- 色号对比 -->
+        <view wx:if="{{modalContent === 'shade'}}">
+          <view class="demo-block">
+            <view class="demo-shades">
+              <view class="demo-shade" style="background: #C45C5C;">
+                <text class="demo-shade-name">正红</text>
+              </view>
+              <view class="demo-shade" style="background: #A8466E;">
+                <text class="demo-shade-name">浆果</text>
+              </view>
+              <view class="demo-shade" style="background: #D88C7A;">
+                <text class="demo-shade-name">豆沙</text>
+              </view>
+              <view class="demo-shade" style="background: #E8B4A0;">
+                <text class="demo-shade-name">裸粉</text>
+              </view>
+            </view>
+            <view class="demo-tip">点击色块可加入对比，查看不同色号在肤色上的效果差异</view>
+            <view class="demo-btn" bindtap="onSelectShade">
+              <text>加入对比</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 保质期查询 -->
+        <view wx:if="{{modalContent === 'expiry'}}">
+          <view class="demo-block">
+            <view class="demo-input-row">
+              <input class="demo-input" placeholder="请输入产品批号（如：AB1234）" />
+            </view>
+            <view class="demo-tip">输入批号即可查询生产日期、保质期与开封后效期（PAO）</view>
+            <view class="demo-btn" bindtap="onQueryExpiry">
+              <text>查询保质期</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 肤质测试 -->
+        <view wx:if="{{modalContent === 'skin'}}">
+          <view class="demo-block">
+            <view class="demo-question">
+              <view class="demo-q-title">Q1：洁面后2小时，T区出油情况？</view>
+              <view class="demo-q-options">
+                <view class="demo-q-opt">A. 明显出油</view>
+                <view class="demo-q-opt">B. 略有出油</view>
+                <view class="demo-q-opt">C. 干燥紧绷</view>
+              </view>
+            </view>
+            <view class="demo-tip">共5题，完成测试即可获取你的肤质类型与护理建议</view>
+            <view class="demo-btn" bindtap="onFinishSkinTest">
+              <text>完成测试</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 肤色检测 -->
+        <view wx:if="{{modalContent === 'tone'}}">
+          <view class="demo-block">
+            <view class="demo-icon-large">🌈</view>
+            <view class="demo-tip">通过分析你的肤色，判断冷暖调，推荐适合的彩妆色系</view>
+            <view class="demo-btn" bindtap="onDetectTone">
+              <text>开始检测</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 季节推荐 -->
+        <view wx:if="{{modalContent === 'season'}}">
+          <view class="demo-block">
+            <view class="season-list">
+              <view class="season-item">
+                <text class="season-icon">🌸</text>
+                <view class="season-info">
+                  <view class="season-name">春季</view>
+                  <view class="season-desc">轻盈保湿，柔和粉嫩色系</view>
+                </view>
+              </view>
+              <view class="season-item">
+                <text class="season-icon">☀️</text>
+                <view class="season-info">
+                  <view class="season-name">夏季</view>
+                  <view class="season-desc">控油防晒，清透持妆</view>
+                </view>
+              </view>
+              <view class="season-item">
+                <text class="season-icon">🍂</text>
+                <view class="season-info">
+                  <view class="season-name">秋季</view>
+                  <view class="season-desc">滋润修护，大地暖色系</view>
+                </view>
+              </view>
+              <view class="season-item">
+                <text class="season-icon">❄️</text>
+                <view class="season-info">
+                  <view class="season-name">冬季</view>
+                  <view class="season-desc">深层滋养，浓郁显色</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

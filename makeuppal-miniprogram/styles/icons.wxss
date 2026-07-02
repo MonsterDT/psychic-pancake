@@ -1,0 +1,132 @@
+/* styles/icons.wxss - 图标样式（emoji + CSS图标，替代内联SVG） */
+
+/* ===== 图标基础类 ===== */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.icon-sm { width: 18px; height: 18px; font-size: 15px; }
+.icon-lg { width: 32px; height: 32px; font-size: 26px; }
+.icon-xl { width: 48px; height: 48px; font-size: 40px; }
+
+/* ===== 导航图标 ===== */
+.icon-arrow-right::before { content: "›"; font-size: 28px; font-weight: 300; color: var(--color-text-muted); }
+.icon-arrow-left::before { content: "‹"; font-size: 28px; font-weight: 300; color: var(--color-text); }
+.icon-arrow-up::before { content: "⌃"; font-size: 22px; color: var(--color-text-muted); }
+.icon-arrow-down::before { content: "⌄"; font-size: 22px; color: var(--color-text-muted); }
+
+/* ===== 操作图标 ===== */
+.icon-close::before { content: "✕"; font-size: 18px; color: var(--color-text-secondary); }
+.icon-check::before { content: "✓"; font-size: 18px; color: var(--color-success); }
+.icon-plus::before { content: "+"; font-size: 22px; font-weight: 300; color: var(--color-text-secondary); }
+.icon-minus::before { content: "−"; font-size: 22px; font-weight: 300; color: var(--color-text-secondary); }
+
+/* ===== 功能图标（emoji） ===== */
+.icon-home::before { content: "🏠"; }
+.icon-library::before { content: "💄"; }
+.icon-mirror::before { content: "🪞"; }
+.icon-mall::before { content: "🛍️"; }
+.icon-profile::before { content: "👤"; }
+.icon-search::before { content: "🔍"; }
+.icon-cart::before { content: "🛒"; }
+.icon-scan::before { content: "🔬"; }
+.icon-share::before { content: "📤"; }
+.icon-heart::before { content: "🤍"; }
+.icon-heart-filled::before { content: "❤️"; }
+.icon-star::before { content: "⭐"; }
+.icon-star-filled::before { content: "🌟"; }
+.icon-camera::before { content: "📸"; }
+.icon-mic::before { content: "🎤"; }
+.icon-send::before { content: "💬"; }
+.icon-settings::before { content: "⚙️"; }
+.icon-bell::before { content: "🔔"; }
+.icon-gift::before { content: "🎁"; }
+.icon-coupon::before { content: "🎫"; }
+.icon-location::before { content: "📍"; }
+.icon-phone::before { content: "📱"; }
+
+/* ===== 美妆专属图标 ===== */
+.icon-makeup::before { content: "💄"; }
+.icon-skincare::before { content: "🧴"; }
+.icon-fragrance::before { content: "🌸"; }
+.icon-tool::before { content: "🖌️"; }
+.icon-brush::before { content: "🎨"; }
+.icon-palette::before { content: "🎨"; }
+.icon-lipstick::before { content: "💋"; }
+.icon-mirror-small::before { content: "🪞"; }
+.icon-sparkle::before { content: "✨"; }
+.icon-flower::before { content: "🌸"; }
+.icon-crown::before { content: "👑"; }
+.icon-diamond::before { content: "💎"; }
+
+/* ===== 状态图标 ===== */
+.icon-success::before { content: "✅"; }
+.icon-warning::before { content: "⚠️"; }
+.icon-error::before { content: "❌"; }
+.icon-info::before { content: "ℹ️"; }
+.icon-loading::before { content: "⏳"; }
+.icon-lock::before { content: "🔒"; }
+.icon-unlock::before { content: "🔓"; }
+.icon-fire::before { content: "🔥"; }
+.icon-new::before { content: "🆕"; }
+.icon-hot::before { content: "🔥"; }
+
+/* ===== 金刚位图标（大号emoji） ===== */
+.kingkong-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto var(--spacing-2);
+  background: var(--color-bg-alt);
+}
+
+.kingkong-icon.mirror { background: linear-gradient(135deg, #FFE5D9, #FFCDB2); }
+.kingkong-icon.library { background: linear-gradient(135deg, #F4DDBB, #E8C9A8); }
+.kingkong-icon.mall { background: linear-gradient(135deg, #FFD8C4, #FFB997); }
+.kingkong-icon.scan { background: linear-gradient(135deg, #D5E8D4, #B8E0C8); }
+.kingkong-icon.creator { background: linear-gradient(135deg, #FFE5F0, #FFC9DD); }
+
+/* ===== 功能区图标（我的页面） ===== */
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto var(--spacing-2);
+  background: var(--color-bg-alt);
+}
+
+/* ===== 订单状态图标 ===== */
+.order-status-icon {
+  font-size: 24px;
+  display: block;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/* ===== 标签图标 ===== */
+.tag-icon {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.tag-icon.hot { background: rgba(196,92,92,0.1); color: var(--color-danger); }
+.tag-icon.new { background: rgba(91,142,196,0.1); color: var(--color-info); }
+.tag-icon.special { background: rgba(212,160,60,0.1); color: var(--color-warning); }

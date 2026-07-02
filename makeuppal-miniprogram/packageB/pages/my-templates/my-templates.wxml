@@ -1,0 +1,38 @@
+<!-- packageB/pages/my-templates/my-templates.wxml -->
+<view class="page-my-templates">
+  <!-- 收藏列表 -->
+  <view class="fav-grid" wx:if="{{!isEmpty}}">
+    <view class="fav-card" wx:for="{{favoriteList}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapItem">
+      <view class="fav-cover">
+        <image-safe src="{{item.image}}" mode="aspectFill" class="fav-cover-img"></image-safe>
+        <view class="fav-remove" catchtap="onRemoveFavorite" data-id="{{item.id}}">
+          <text>✕</text>
+        </view>
+        <view class="fav-likes">
+          <text>❤️ {{item.likesText}}</text>
+        </view>
+      </view>
+      <view class="fav-info">
+        <view class="fav-title ellipsis">{{item.title}}</view>
+        <view class="fav-author ellipsis">{{item.author}}</view>
+        <view class="fav-desc ellipsis-2" wx:if="{{item.desc}}">{{item.desc}}</view>
+        <view class="fav-tags" wx:if="{{item.tags.length}}">
+          <view class="fav-tag" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">
+            <text>{{tag}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-wrap" wx:if="{{isEmpty}}">
+    <empty-state
+      icon="⭐"
+      title="还没有收藏模板"
+      desc="去颜库发现喜欢的妆容，点击收藏即可在此查看"
+      action-text="去颜库逛逛"
+      bind:action="onGoLibrary"
+    ></empty-state>
+  </view>
+</view>

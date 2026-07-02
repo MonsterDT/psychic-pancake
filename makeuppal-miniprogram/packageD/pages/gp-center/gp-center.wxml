@@ -1,0 +1,74 @@
+<!--packageD/pages/gp-center/gp-center.wxml-->
+<view class="gp-page">
+
+  <!-- GP余额大卡片 -->
+  <view class="gp-card">
+    <view class="gp-card-bg"></view>
+    <view class="gp-card-content">
+      <text class="gp-card-label">焕新值余额（GP）</text>
+      <text class="gp-card-balance">{{gpBalance}}</text>
+      <view class="gp-card-actions">
+        <view class="gp-card-btn" bindtap="onRecharge">
+          <text>充值焕新值</text>
+        </view>
+        <view class="gp-card-btn gp-card-btn-outline" bindtap="onWithdraw">
+          <text>提现收益</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 三项细分 -->
+    <view class="gp-breakdown">
+      <view class="breakdown-item">
+        <text class="breakdown-num">{{gpRecharged}}</text>
+        <text class="breakdown-label">充值GP</text>
+      </view>
+      <view class="breakdown-divider"></view>
+      <view class="breakdown-item">
+        <text class="breakdown-num">{{gpFree}}</text>
+        <text class="breakdown-label">免费GP</text>
+      </view>
+      <view class="breakdown-divider"></view>
+      <view class="breakdown-item">
+        <text class="breakdown-num">{{gpCreatorEarnings}}</text>
+        <text class="breakdown-label">创作收益</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收支明细 -->
+  <view class="block">
+    <view class="block-header">
+      <text class="block-title">收支明细</text>
+      <text class="block-action">全部</text>
+    </view>
+    <view class="detail-list">
+      <view class="detail-item" wx:for="{{transactions}}" wx:key="id">
+        <view class="detail-info">
+          <text class="detail-title">{{item.title}}</text>
+          <text class="detail-time">{{item.time}}</text>
+        </view>
+        <text class="detail-amount {{item.type === 'income' ? 'income' : 'expense'}}">
+          {{item.type === 'income' ? '+' : '-'}}{{item.amount}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 获取方式 -->
+  <view class="block">
+    <view class="block-header">
+      <text class="block-title">如何获取焕新值</text>
+    </view>
+    <view class="earn-list">
+      <view class="earn-item" wx:for="{{earnMethods}}" wx:key="title">
+        <text class="earn-icon">{{item.icon}}</text>
+        <view class="earn-info">
+          <text class="earn-title">{{item.title}}</text>
+          <text class="earn-desc">{{item.desc}}</text>
+        </view>
+        <text class="earn-amount">+{{item.amount}}</text>
+      </view>
+    </view>
+  </view>
+</view>

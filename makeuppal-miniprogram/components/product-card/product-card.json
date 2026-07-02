@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe",
+    "price-tag": "/components/price-tag/price-tag"
+  }
+}

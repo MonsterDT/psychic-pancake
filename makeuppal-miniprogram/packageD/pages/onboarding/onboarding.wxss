@@ -1,0 +1,115 @@
+/* packageD/pages/onboarding/onboarding.wxss */
+.onboarding-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--color-bg-alt), var(--color-bg));
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.safe-top-placeholder {
+  width: 100%;
+}
+
+/* 跳过按钮 */
+.skip-btn {
+  position: absolute;
+  top: 12px;
+  right: var(--spacing-4);
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  z-index: 5;
+}
+
+/* swiper */
+.onboarding-swiper {
+  flex: 1;
+  width: 100%;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-6) var(--spacing-6) 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.slide-img-wrap {
+  width: 80%;
+  height: 50vh;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--spacing-6);
+}
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--spacing-4);
+}
+
+.slide-title {
+  font-size: 26px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-3);
+}
+
+.slide-desc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+/* 指示点 */
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--spacing-4) 0;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  transition: all var(--duration-fast) var(--ease);
+}
+
+.indicator.active {
+  width: 24px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+}
+
+/* 操作按钮 */
+.actions {
+  padding: 0 var(--spacing-6) var(--spacing-4);
+}
+
+.next-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  color: #fff;
+  border-radius: var(--radius-full);
+  padding: 14px 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
+}

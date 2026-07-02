@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "搜索",
+  "usingComponents": {
+    "image-safe": "/components/image-safe/image-safe"
+  }
+}
