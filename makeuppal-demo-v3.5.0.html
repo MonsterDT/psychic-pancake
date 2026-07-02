@@ -1609,37 +1609,6 @@ body {
   border-radius: 4px;
 }
 
-/* ===== Live Center ===== */
-.kingkong-live-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-.live-banner { position: relative; height: 200px; overflow: hidden; }
-.live-banner img { width: 100%; height: 100%; object-fit: cover; }
-.live-banner-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2)); }
-.live-banner-content { position: absolute; bottom: 0; left: 0; right: 0; padding: var(--spacing-4); color: #fff; }
-.live-badge { display: inline-block; padding: 4px 12px; background: #ef4444; border-radius: 12px; font-size: 10px; margin-bottom: var(--spacing-2); }
-.live-banner-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); margin-bottom: var(--spacing-1); }
-.live-banner-meta { font-size: var(--font-size-xs); opacity: 0.8; margin-bottom: var(--spacing-3); }
-.live-banner-meta span { margin-right: var(--spacing-3); }
-
-.live-schedule { padding: var(--spacing-3); }
-.live-schedule-title { font-size: var(--font-size-base); font-weight: var(--font-weight-medium); margin-bottom: var(--spacing-3); }
-.live-schedule-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
-.live-schedule-item { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-3); background: var(--color-bg-card); border-radius: var(--radius-sm); }
-.live-schedule-time { width: 60px; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); color: var(--color-primary); text-align: center; }
-.live-schedule-info { flex: 1; }
-.live-schedule-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); }
-.live-schedule-host { font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 2px; }
-.live-schedule-status { padding: 4px 12px; border-radius: 12px; font-size: 10px; }
-.live-schedule-status.upcoming { background: var(--color-bg-alt); color: var(--color-text-muted); }
-
-.live-categories { padding: var(--spacing-3); }
-.live-categories-title { font-size: var(--font-size-base); font-weight: var(--font-weight-medium); margin-bottom: var(--spacing-3); }
-.live-categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-2); }
-.live-category-item { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-1); padding: var(--spacing-3); background: var(--color-bg-card); border-radius: var(--radius-sm); cursor: pointer; }
-.live-category-icon { font-size: 24px; }
-.live-category-label { font-size: var(--font-size-xs); }
-
 /* ===== Membership Center ===== */
 .membership-hero { display: flex; align-items: center; gap: var(--spacing-3); padding: var(--spacing-4); background: linear-gradient(135deg, var(--color-primary), #D4A574); color: #fff; }
 .membership-badge { font-size: 48px; }
@@ -4929,12 +4898,13 @@ body {
   color: #FF9800;
 }
 
-/* ============ King Kong Area (6-grid) ============ */
+/* ============ King Kong Area (4-grid) ============ */
 .kingkong-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--spacing-2);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
   padding: 0 var(--spacing-4) var(--spacing-4);
+  justify-items: center;
 }
 .kingkong-item {
   display: flex;
@@ -4948,14 +4918,14 @@ body {
   transform: scale(0.94); 
 }
 .kingkong-icon {
-  width: 52px; height: 52px;
-  border-radius: 16px;
+  width: 60px; height: 60px;
+  border-radius: 18px;
   background: linear-gradient(135deg, var(--color-bg-card) 0%, #FFF5EE 50%, #FFEBE0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 24px;
+  font-size: 28px;
   box-shadow: 0 2px 8px rgba(196, 149, 106, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(232, 221, 210, 0.6);
   transition: all var(--duration-normal) var(--ease);
@@ -6618,13 +6588,14 @@ body {
   color: #fff;
 }
 
-/* ============ King Kong Area (6-grid) ============ */
+/* ============ King Kong Area (4-grid) ============ */
 .kingkong-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--spacing-2);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-3);
   padding: 0 var(--spacing-4);
   margin-bottom: var(--spacing-5);
+  justify-items: center;
 }
 .kingkong-item {
   display: flex;
@@ -6638,14 +6609,14 @@ body {
   transform: scale(0.94); 
 }
 .kingkong-icon {
-  width: 52px; height: 52px;
-  border-radius: 16px;
+  width: 60px; height: 60px;
+  border-radius: 18px;
   background: linear-gradient(135deg, var(--color-bg-card) 0%, #FFF5EE 50%, #FFEBE0 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 24px;
+  font-size: 28px;
   box-shadow: 0 2px 8px rgba(196, 149, 106, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(232, 221, 210, 0.6);
   transition: all var(--duration-normal) var(--ease);
@@ -6819,27 +6790,27 @@ body {
 }
 .waterfall-grid {
   columns: 2;
-  column-gap: 12px;
-  padding: 0 16px;
+  column-gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
 }
 .waterfall-card {
   break-inside: avoid;
-  margin-bottom: 12px;
+  margin-bottom: var(--spacing-3);
   background: var(--color-bg-card);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  box-shadow: var(--shadow-md);
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--duration-normal) var(--ease);
 }
 .waterfall-card:active {
-  transform: scale(0.96);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transform: scale(0.97);
+  box-shadow: var(--shadow-sm);
 }
 .waterfall-card-img {
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: linear-gradient(135deg, #F5E6D3 0%, #E8DCC8 100%);
+  background: var(--color-bg-alt);
   position: relative;
   overflow: hidden;
 }
@@ -6848,89 +6819,91 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform var(--duration-normal) var(--ease);
 }
-.waterfall-card:hover .waterfall-card-img img {
-  transform: scale(1.03);
+.waterfall-card:active .waterfall-card-img img {
+  transform: scale(1.02);
 }
 .waterfall-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 10px;
+  top: var(--spacing-2);
+  left: var(--spacing-2);
+  font-size: var(--font-size-xs);
   padding: 3px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-sm);
 }
 .waterfall-badge.free {
-  background: linear-gradient(135deg, #6B9E6B 0%, #5A8A5A 100%);
+  background: linear-gradient(135deg, var(--color-success), #5A8A5A);
   color: #fff;
 }
 .waterfall-badge.l2 {
-  background: linear-gradient(135deg, #C4956A 0%, #B0855A 100%);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   color: #fff;
 }
 .waterfall-badge.l3 {
-  background: linear-gradient(135deg, #A67B52 0%, #8B6342 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark), #8B6342);
   color: #fff;
 }
 .waterfall-badge.gufeng {
-  background: linear-gradient(135deg, #C85050 0%, #A84040 100%);
+  background: linear-gradient(135deg, var(--color-danger), #A84040);
   color: #fff;
 }
 .waterfall-card-info {
-  padding: 12px;
+  padding: var(--spacing-3);
 }
 .waterfall-card-title {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text);
-  line-height: 1.45;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 10px;
-  min-height: 38px;
+  margin-bottom: var(--spacing-2);
+  min-height: 36px;
 }
 .waterfall-card-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--spacing-2);
 }
 .waterfall-card-creator {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--spacing-1);
   min-width: 0;
+  flex: 1;
 }
 .waterfall-creator-avatar {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #E8C9A8 0%, #D4B896 100%);
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary-light));
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: var(--font-size-xs);
   color: #fff;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 .waterfall-creator-name {
-  font-size: 11px;
-  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 60%;
+  flex: 1;
 }
 .waterfall-card-price {
-  font-size: 12px;
-  color: #C4956A;
-  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
 }
 
@@ -6943,12 +6916,44 @@ body {
   top: 0;
   z-index: 10;
   border-bottom: 1px solid var(--color-border-light);
+  transition: all var(--duration-normal) var(--ease);
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .library-search-row {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
   margin-bottom: var(--spacing-3);
+}
+.library-sub-tabs-wrapper {
+  padding: 0 var(--spacing-4);
+  padding-bottom: var(--spacing-3);
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border-light);
+  animation: slideDown var(--duration-normal) var(--ease);
+}
+.mode-transition-hide {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+.mode-transition-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#libraryWaterfall,
+#libraryCardSwipe,
+.library-sub-tabs-wrapper {
+  transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease);
 }
 .library-search-box {
   flex: 1;
@@ -6991,11 +6996,12 @@ body {
   gap: var(--spacing-4);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 2px;
+  padding-bottom: var(--spacing-1);
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-left: var(--spacing-4);
   padding-right: var(--spacing-4);
+  flex-shrink: 0;
 }
 .library-cat-tabs::-webkit-scrollbar { display: none; }
 .library-cat-tab {
@@ -7049,6 +7055,76 @@ body {
   background: var(--color-primary);
   color: #fff;
   border-color: var(--color-primary);
+}
+
+.library-mode-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 4px;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-full);
+}
+.mode-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  background: transparent;
+}
+.mode-switch-btn.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
+}
+.mode-switch-btn:active { transform: scale(0.95); }
+
+.library-card-swipe {
+  position: relative;
+  padding: var(--spacing-4);
+  padding-top: var(--spacing-5);
+  padding-bottom: calc(var(--spacing-6) + var(--tab-bar-height) + var(--safe-bottom));
+  min-height: calc(100vh - var(--header-height) - var(--tab-bar-height) - var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.library-card-swipe .card-stack {
+  width: 100%;
+  max-width: 340px;
+  height: 55vh;
+  max-height: 500px;
+  flex-shrink: 0;
+}
+.library-card-swipe .card-swipe-indicators {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-1);
+  margin-top: var(--spacing-4);
+  flex-shrink: 0;
+}
+.library-card-swipe .card-swipe-actions {
+  position: static;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--spacing-6) + var(--spacing-2));
+  margin-top: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  flex-shrink: 0;
+}
+.library-card-swipe .card-swipe-undo-btn {
+  position: absolute;
+  left: var(--spacing-4);
+  bottom: calc(var(--tab-bar-height) + var(--safe-bottom) + var(--spacing-5));
+  flex-shrink: 0;
 }
 
 /* ============ Mirror Page V2 ============ */
@@ -8641,36 +8717,34 @@ body {
   }
 
   .waterfall-grid {
-    column-gap: 10px;
-    padding: 0 14px;
+    column-gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
   }
 
   .waterfall-card {
-    margin-bottom: 10px;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
   }
 
   .waterfall-card-info {
-    padding: 10px;
+    padding: var(--spacing-2);
   }
 
   .waterfall-card-title {
-    font-size: 12px;
-    line-height: 1.4;
-    min-height: 34px;
-    margin-bottom: 8px;
+    font-size: var(--font-size-xs);
+    line-height: 1.45;
+    min-height: 32px;
+    margin-bottom: var(--spacing-1);
   }
 
   .waterfall-creator-avatar {
     width: 18px;
     height: 18px;
-    font-size: 9px;
+    font-size: var(--font-size-xs);
   }
 
   .waterfall-creator-name {
-    font-size: 10px;
-    max-width: 55%;
+    font-size: var(--font-size-xs);
   }
 
   .waterfall-card-price {
@@ -8769,31 +8843,29 @@ body {
   }
 
   .waterfall-grid {
-    column-gap: 8px;
-    padding: 0 12px;
+    column-gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-2);
   }
   .waterfall-card {
-    margin-bottom: 8px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-xs);
   }
   .waterfall-card-info {
-    padding: 8px;
+    padding: var(--spacing-1);
   }
   .waterfall-card-title {
-    font-size: 11px;
-    line-height: 1.35;
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
     min-height: 30px;
-    margin-bottom: 6px;
+    margin-bottom: var(--spacing-1);
   }
   .waterfall-creator-avatar {
     width: 16px;
     height: 16px;
-    font-size: 8px;
+    font-size: var(--font-size-xs);
   }
   .waterfall-creator-name {
-    font-size: 9px;
-    max-width: 50%;
+    font-size: var(--font-size-xs);
   }
   .waterfall-card-price {
     font-size: 10px;
@@ -10271,8 +10343,8 @@ body {
   position: relative;
   width: 100%;
   max-width: 340px;
-  height: 65vh;
-  max-height: 600px;
+  height: 60vh;
+  max-height: 580px;
   perspective: 1000px;
 }
 
@@ -10320,6 +10392,94 @@ body {
   opacity: 0;
   transition: opacity 0.15s ease;
 }
+.swipe-card-detail-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: none;
+  transition: all var(--duration-fast);
+  z-index: 10;
+}
+.swipe-card-detail-badge svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.swipe-card-detail-badge:active {
+  transform: scale(0.9);
+  background: rgba(0, 0, 0, 0.7);
+}
+.swipe-card-detail-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  font-size: 10px;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+.swipe-card-detail-badge:hover .swipe-card-detail-hint,
+.swipe-card-detail-badge:active .swipe-card-detail-hint {
+  opacity: 1;
+}
+
+.card-detail-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn var(--duration-fast) ease;
+}
+.card-detail-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.card-detail-loading-text {
+  margin-top: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: #fff;
+  font-weight: var(--font-weight-medium);
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .swipe-card.swipe-left .swipe-card-overlay,
 .swipe-card.swipe-right .swipe-card-overlay,
 .swipe-card.swipe-up .swipe-card-overlay { opacity: 1; }
@@ -10356,6 +10516,17 @@ body {
   z-index: 2;
   color: #fff;
 }
+.swipe-card-recommendation {
+  font-size: var(--font-size-xs);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-2);
+  font-weight: var(--font-weight-medium);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+}
 .swipe-card-title {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
@@ -10388,11 +10559,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--spacing-3);
 }
 .swipe-card-author {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-2);
+  flex: 1;
+  min-width: 0;
 }
 .swipe-card-author-avatar {
   width: 32px; height: 32px;
@@ -10401,14 +10575,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: var(--font-size-sm);
   color: #fff;
   font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
 }
 .swipe-card-author-name {
   font-size: var(--font-size-sm);
   color: #fff;
   font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .swipe-card-price {
   padding: 6px 14px;
@@ -10417,6 +10595,7 @@ body {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: #fff;
+  flex-shrink: 0;
 }
 
 .card-swipe-actions {
@@ -10463,6 +10642,25 @@ body {
   background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
   color: #fff;
   box-shadow: 0 4px 20px rgba(196, 149, 106, 0.4);
+}
+.swipe-action-btn.like.primary {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--color-danger), #FF6B6B);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(255, 107, 107, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.swipe-action-btn.like.primary span {
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+}
+.swipe-action-btn.like.primary:active {
+  transform: scale(0.9);
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.4);
 }
 
 .card-swipe-indicators {
@@ -10708,7 +10906,7 @@ body {
       </div>
     </div>
 
-    <!-- King Kong Area (5-grid) -->
+    <!-- King Kong Area (4-grid) -->
     <div class="kingkong-grid">
       <div class="kingkong-item" onclick="switchTab('mirror')">
         <div class="kingkong-icon mirror">🪞</div>
@@ -10725,14 +10923,6 @@ body {
       <div class="kingkong-item" onclick="openIngredientScan()">
         <div class="kingkong-icon scan new">🔬</div>
         <span class="kingkong-label">成分扫描</span>
-      </div>
-      <div class="kingkong-item" onclick="openLiveCenter()">
-        <div class="kingkong-icon live">🎥</div>
-        <span class="kingkong-label">美妆直播</span>
-      </div>
-      <div class="kingkong-item" onclick="openCardSwipe()">
-        <div class="kingkong-icon swipe">✨</div>
-        <span class="kingkong-label">卡片浏览</span>
       </div>
     </div>
 
@@ -11038,6 +11228,25 @@ body {
   <div class="page" id="page-library">
     <div class="library-header">
       <div class="library-search-row">
+        <div class="library-mode-switch" id="libraryModeSwitch">
+          <div class="mode-switch-btn" data-mode="card" onclick="switchLibraryMode('card')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+            </svg>
+            <span>卡片</span>
+          </div>
+          <div class="mode-switch-btn active" data-mode="waterfall" onclick="switchLibraryMode('waterfall')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18"/>
+              <path d="M3 15h18"/>
+            </svg>
+            <span>瀑布流</span>
+          </div>
+        </div>
         <div class="library-search-box" onclick="openSearch()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
@@ -11058,16 +11267,44 @@ body {
       </div>
     </div>
 
-    <div class="library-sub-tabs" id="librarySubTabs">
-      <span class="library-sub-tab active" onclick="switchLibrarySub(this)">全部</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">日常</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">约会</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">职场</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">派对</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">复古</span>
+    <div class="library-sub-tabs-wrapper" id="librarySubTabsWrapper">
+      <div class="library-sub-tabs" id="librarySubTabs">
+        <span class="library-sub-tab active" onclick="switchLibrarySub(this)">全部</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">日常</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">约会</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">职场</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">派对</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">复古</span>
+      </div>
     </div>
 
-    <div class="waterfall-grid" id="libraryWaterfall" style="margin-top: var(--spacing-3);"></div>
+    <div class="waterfall-grid" id="libraryWaterfall"></div>
+
+    <div class="library-card-swipe" id="libraryCardSwipe" style="display: none;">
+      <div class="card-stack" id="libraryCardStack"></div>
+      <div class="card-swipe-indicators" id="libraryCardIndicators"></div>
+      <div class="card-swipe-actions">
+        <div class="swipe-action-btn dislike" onclick="triggerLibrarySwipe('left')">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </div>
+        <div class="swipe-action-btn like primary" onclick="triggerLibrarySwipe('right')">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span>喜欢</span>
+        </div>
+      </div>
+      <div class="card-swipe-undo-btn" id="libraryCardUndoBtn" onclick="undoLibrarySwipe()" style="display:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 7v6h6"/>
+          <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
+        </svg>
+        回看
+      </div>
+    </div>
 
     <div style="height: 40px;"></div>
   </div>
@@ -12063,86 +12300,6 @@ body {
       <div class="address-empty-icon">📍</div>
       <div class="address-empty-text">暂无收货地址</div>
       <button class="btn btn-primary" onclick="openAddAddress()" style="margin-top: var(--spacing-4);">添加收货地址</button>
-    </div>
-  </div>
-
-  <!-- ===== Live Center Page ===== -->
-  <div class="page" id="page-live" style="display: none;">
-    <header class="app-header">
-      <div class="header-left">
-        <button class="icon-btn" onclick="switchTab('home')">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-        </button>
-        <h2 class="page-title">美妆直播</h2>
-      </div>
-    </header>
-    
-    <div class="live-banner">
-      <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Beauty%20influencer%20doing%20live%20makeup%20tutorial%2C%20professional%20studio%20lighting%2C%20ring%20light%2C%20cosmetics%20products%20on%20desk%2C%20engaging%20expression%2C%20live%20streaming%20setup&image_size=landscape_16_9" alt="直播封面">
-      <div class="live-banner-overlay"></div>
-      <div class="live-banner-content">
-        <div class="live-badge">🔴 直播中</div>
-        <div class="live-banner-title">明星化妆师手把手教你日常妆容</div>
-        <div class="live-banner-meta">
-          <span>👩‍🎨 李雅琳</span>
-          <span>👁️ 12.5万观看</span>
-        </div>
-        <button class="btn btn-primary" onclick="enterLiveRoom()">进入直播间</button>
-      </div>
-    </div>
-    
-    <div class="live-schedule">
-      <div class="live-schedule-title">今日直播预告</div>
-      <div class="live-schedule-list">
-        <div class="live-schedule-item">
-          <div class="live-schedule-time">14:00</div>
-          <div class="live-schedule-info">
-            <div class="live-schedule-name">新手底妆技巧</div>
-            <div class="live-schedule-host">张小美 · 美妆达人</div>
-          </div>
-          <div class="live-schedule-status upcoming">预约</div>
-        </div>
-        <div class="live-schedule-item">
-          <div class="live-schedule-time">16:00</div>
-          <div class="live-schedule-info">
-            <div class="live-schedule-name">夏日防晒专场</div>
-            <div class="live-schedule-host">王丽华 · 护肤专家</div>
-          </div>
-          <div class="live-schedule-status upcoming">预约</div>
-        </div>
-        <div class="live-schedule-item">
-          <div class="live-schedule-time">20:00</div>
-          <div class="live-schedule-info">
-            <div class="live-schedule-name">大牌口红测评</div>
-            <div class="live-schedule-host">陈芳芳 · 时尚博主</div>
-          </div>
-          <div class="live-schedule-status upcoming">预约</div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="live-categories">
-      <div class="live-categories-title">直播分类</div>
-      <div class="live-categories-grid">
-        <div class="live-category-item" onclick="showToast('该功能开发中')">
-          <div class="live-category-icon">💄</div>
-          <span class="live-category-label">口红试色</span>
-        </div>
-        <div class="live-category-item" onclick="showToast('该功能开发中')">
-          <div class="live-category-icon">🎨</div>
-          <span class="live-category-label">妆容教程</span>
-        </div>
-        <div class="live-category-item" onclick="showToast('该功能开发中')">
-          <div class="live-category-icon">🧴</div>
-          <span class="live-category-label">护肤分享</span>
-        </div>
-        <div class="live-category-item" onclick="showToast('该功能开发中')">
-          <div class="live-category-icon">🛍️</div>
-          <span class="live-category-label">好物推荐</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -16899,20 +17056,6 @@ function selectAddress(id) {
   }
 }
 
-function openLiveCenter() {
-  document.querySelectorAll('.page').forEach(p => {
-    p.classList.remove('active');
-    p.style.display = 'none';
-  });
-  const page = document.getElementById('page-live');
-  page.classList.add('active');
-  page.style.display = 'block';
-}
-
-function enterLiveRoom() {
-  showToast('正在进入直播间...');
-}
-
 function openMembershipCenter() {
   document.querySelectorAll('.page').forEach(p => {
     p.classList.remove('active');
@@ -18132,7 +18275,12 @@ let searchHistory = [];
         `<span class="library-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchLibrarySub(this, '${s}')">${s}</span>`
       ).join('');
     }
-    renderLibraryWaterfall(cat, '全部');
+    
+    if (currentLibraryMode === 'card' && libraryCardSwipe) {
+      libraryCardSwipe.loadData(cat);
+    } else {
+      renderLibraryWaterfall(cat, '全部');
+    }
     el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
@@ -18141,6 +18289,482 @@ let searchHistory = [];
     el.classList.add('active');
     renderLibraryWaterfall(currentLibraryCat, sub);
   }
+
+  let currentLibraryMode = 'waterfall';
+  let libraryCardSwipe = null;
+
+  function switchLibraryMode(mode) {
+    currentLibraryMode = mode;
+    document.querySelectorAll('.library-mode-switch .mode-switch-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+    
+    const waterfall = document.getElementById('libraryWaterfall');
+    const cardSwipe = document.getElementById('libraryCardSwipe');
+    const subTabsWrapper = document.getElementById('librarySubTabsWrapper');
+    
+    if (mode === 'card') {
+      waterfall.classList.add('mode-transition-hide');
+      subTabsWrapper.classList.add('mode-transition-hide');
+      
+      cardSwipe.style.display = 'flex';
+      cardSwipe.classList.remove('mode-transition-hide');
+      cardSwipe.classList.add('mode-transition-show');
+      
+      if (!libraryCardSwipe) {
+        libraryCardSwipe = new LibraryCardSwipeSystem();
+      }
+      libraryCardSwipe.loadData(currentLibraryCat);
+      
+      setTimeout(() => {
+        waterfall.style.display = 'none';
+        waterfall.classList.remove('mode-transition-show');
+      }, 250);
+    } else {
+      cardSwipe.classList.add('mode-transition-hide');
+      
+      waterfall.style.display = 'grid';
+      waterfall.classList.remove('mode-transition-hide');
+      waterfall.classList.add('mode-transition-show');
+      
+      subTabsWrapper.classList.remove('mode-transition-hide');
+      subTabsWrapper.classList.add('mode-transition-show');
+      
+      renderLibraryWaterfall(currentLibraryCat, '全部');
+      
+      setTimeout(() => {
+        cardSwipe.style.display = 'none';
+        cardSwipe.classList.remove('mode-transition-show');
+      }, 250);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  class LibraryCardSwipeSystem {
+    constructor() {
+      this.cardStack = document.getElementById('libraryCardStack');
+      this.indicators = document.getElementById('libraryCardIndicators');
+      this.undoBtn = document.getElementById('libraryCardUndoBtn');
+      this.cards = [];
+      this.currentIndex = 0;
+      this.actionHistory = [];
+      this.maxCards = 3;
+    }
+
+    loadData(cat) {
+      const catData = librarySubCats[cat] || [];
+      this.cards = this.getLibraryCardData(cat);
+      this.currentIndex = 0;
+      this.actionHistory = [];
+      this.undoBtn.style.display = 'none';
+      this.renderCards();
+    }
+
+    getLibraryCardData(cat) {
+      const dataMap = {
+        daren: [
+          { id: 'ld001', title: '氧气少女妆', desc: '清新自然，让你元气满满', tags: ['少女', '清新', '日常'], author: '张小美', price: '20 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Oxygen%20girl%20Asian%20woman%20makeup%2C%20light%20fresh%2C%20natural%20glow%2C%20soft%20makeup&image_size=portrait_4_3' },
+          { id: 'ld002', title: '复古红唇妆', desc: '经典复古，气场全开', tags: ['复古', '红唇', '气质'], author: '李雅琳', price: '30 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Vintage%20red%20lip%20Asian%20woman%2C%20classic%20elegant%2C%20bold%20lipstick&image_size=portrait_4_3' },
+          { id: 'ld003', title: '职场干练妆', desc: '专业自信，尽显职场魅力', tags: ['职场', '干练', '自信'], author: '王丽华', price: '25 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Professional%20business%20Asian%20woman%2C%20clean%20makeup%2C%20confident&image_size=portrait_4_3' },
+          { id: 'ld004', title: '蜜桃甜美妆', desc: '粉嫩可爱，少女心爆棚', tags: ['甜美', '蜜桃', '约会'], author: '陈芳芳', price: '18 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cute%20Asian%20girl%20peach%20makeup%2C%20pink%20cheeks%2C%20shimmer%20eyeshadow&image_size=portrait_4_3' },
+          { id: 'ld005', title: '清透奶油肌', desc: '完美底妆，无瑕美肌', tags: ['底妆', '奶油肌', '无瑕'], author: '美妆达人', price: '35 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Flawless%20cream%20skin%20Asian%20woman%2C%20perfect%20foundation%2C%20natural%20glow&image_size=portrait_4_3' }
+        ],
+        jubu: [
+          { id: 'lj001', title: '眼妆精致画法', desc: '学会这些技巧，眼睛会说话', tags: ['眼妆', '教程', '技巧'], author: '眼妆达人', price: '15 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Eye%20makeup%20tutorial%2C%20Asian%20woman%2C%20detailed%20eyeshadow&image_size=portrait_4_3' },
+          { id: 'lj002', title: '唇妆完美攻略', desc: '告别唇纹，唇色诱人', tags: ['唇妆', '攻略', '口红'], author: '唇妆专家', price: '12 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Lip%20makeup%20tutorial%2C%20Asian%20woman%2C%20perfect%20lipstick&image_size=portrait_4_3' },
+          { id: 'lj003', title: '修容立体技巧', desc: '打造精致小脸', tags: ['修容', '立体', '瘦脸'], author: '修容大师', price: '18 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Contouring%20makeup%2C%20Asian%20woman%2C%20sculpted%20face&image_size=portrait_4_3' }
+        ],
+        gufeng: [
+          { id: 'lg001', title: '古典桃花妆', desc: '人面桃花相映红', tags: ['国风', '桃花', '古典'], author: '国风美妆', price: '28 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Traditional%20Chinese%20peach%20blossom%20makeup%2C%20Asian%20woman%2C%20elegant&image_size=portrait_4_3' },
+          { id: 'lg002', title: '大唐风韵妆', desc: '梦回大唐盛世', tags: ['国风', '唐妆', '华丽'], author: '古韵美妆', price: '35 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Tang%20dynasty%20Chinese%20makeup%2C%20Asian%20woman%2C%20golden%20eyeshadow&image_size=portrait_4_3' }
+        ],
+        dapai: [
+          { id: 'lp001', title: '迪奥烈焰红唇', desc: '经典色号，永恒魅力', tags: ['大牌', '迪奥', '口红'], author: '大牌精选', price: '50 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Dior%20red%20lipstick%20makeup%2C%20Asian%20woman%2C%20luxury%20beauty&image_size=portrait_4_3' },
+          { id: 'lp002', title: '香奈儿优雅妆', desc: '法式优雅，品味之选', tags: ['大牌', '香奈儿', '优雅'], author: '大牌精选', price: '45 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Chanel%20elegant%20makeup%2C%20Asian%20woman%2C%20french%20style&image_size=portrait_4_3' }
+        ],
+        star: [
+          { id: 'ls001', title: '明星红毯妆', desc: '闪耀全场，星光熠熠', tags: ['明星', '红毯', '闪耀'], author: '明星同款', price: '40 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Red%20carpet%20celebrity%20makeup%2C%20Asian%20woman%2C%20glamorous&image_size=portrait_4_3' },
+          { id: 'ls002', title: '女团舞台妆', desc: '元气满满，活力四射', tags: ['明星', '女团', '舞台'], author: '明星同款', price: '32 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Kpop%20idol%20stage%20makeup%2C%20Asian%20woman%2C%20glittery%20eyeshadow&image_size=portrait_4_3' }
+        ],
+        qa: [
+          { id: 'lq001', title: '敏感肌护肤指南', desc: '温和护肤，远离敏感', tags: ['问答', '敏感肌', '护肤'], author: '护肤专家', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sensitive%20skin%20skincare%2C%20Asian%20woman%2C%20gentle%20products&image_size=portrait_4_3' },
+          { id: 'lq002', title: '新手化妆入门', desc: '从零开始学化妆', tags: ['问答', '新手', '入门'], author: '美妆导师', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Beginner%20makeup%20tutorial%2C%20Asian%20woman%2C%20step%20by%20step&image_size=portrait_4_3' }
+        ],
+        yinfa: [
+          { id: 'ly001', title: '优雅银龄妆容', desc: '从容优雅，岁月静好', tags: ['银发', '优雅', '成熟'], author: '银龄美妆', price: '22 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Elegant%20mature%20Asian%20woman%2C%20sophisticated%20makeup%2C%20graceful&image_size=portrait_4_3' },
+          { id: 'ly002', title: '自然护肤秘诀', desc: '养护肌肤，焕发光彩', tags: ['银发', '护肤', '自然'], author: '护肤专家', price: '18 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Natural%20skincare%20for%20mature%20skin%2C%20Asian%20woman%2C%20glowing&image_size=portrait_4_3' }
+        ]
+      };
+      return dataMap[cat] || dataMap['daren'];
+    }
+
+    renderCards() {
+      this.cardStack.innerHTML = '';
+      
+      if (this.cards.length === 0) {
+        this.cardStack.innerHTML = '<div style="text-align:center;color:#999;padding:40px;">暂无内容</div>';
+        return;
+      }
+      
+      const visibleCount = Math.min(this.maxCards, this.cards.length - this.currentIndex);
+      
+      for (let i = 0; i < visibleCount; i++) {
+        const cardData = this.cards[this.currentIndex + i];
+        const cardElement = this.createCardElement(cardData, i);
+        this.cardStack.appendChild(cardElement);
+      }
+      
+      this.updateIndicators();
+      this.setupCardGestures();
+    }
+
+    createCardElement(cardData, index) {
+      const card = document.createElement('div');
+      card.className = 'swipe-card';
+      card.dataset.index = this.currentIndex + index;
+      card.dataset.id = cardData.id;
+      
+      card.style.zIndex = this.maxCards - index;
+      card.style.transform = `translateY(${index * 10}px) scale(${1 - index * 0.02})`;
+      card.style.opacity = 1 - index * 0.15;
+      
+      const recommendation = recommendationEngine.generateRecommendation(cardData);
+      
+      card.onclick = () => openLibraryCardDetail(cardData.id);
+      
+      card.innerHTML = `
+        <div class="swipe-card-bg" style="background-image: url('${cardData.image}')"></div>
+        <div class="swipe-card-overlay">
+          <div class="swipe-card-badge" id="lib-badge-${cardData.id}"></div>
+        </div>
+        <div class="swipe-card-detail-badge">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="swipe-card-detail-hint">点击查看</span>
+        </div>
+        <div class="swipe-card-content">
+          <div class="swipe-card-recommendation">${recommendation}</div>
+          <div class="swipe-card-title">${cardData.title}</div>
+          <div class="swipe-card-desc">${cardData.desc}</div>
+          <div class="swipe-card-tags">
+            ${cardData.tags.map(tag => `<span class="swipe-card-tag">#${tag}</span>`).join('')}
+          </div>
+        </div>
+        <div class="swipe-card-footer">
+          <div class="swipe-card-author">
+            <div class="swipe-card-author-avatar">${cardData.author.charAt(0)}</div>
+            <div class="swipe-card-author-name">${cardData.author}</div>
+          </div>
+          <div class="swipe-card-price">${cardData.price}</div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    setupCardGestures() {
+      const topCard = this.cardStack.querySelector('.swipe-card');
+      if (!topCard) return;
+      
+      topCard.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+      topCard.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: true });
+      topCard.addEventListener('touchend', this.handleTouchEnd.bind(this));
+    }
+
+    handleTouchStart(e) {
+      const touch = e.touches[0];
+      this.startX = touch.clientX;
+      this.startY = touch.clientY;
+      this.startTime = Date.now();
+      this.dragging = true;
+    }
+
+    handleTouchMove(e) {
+      if (!this.dragging) return;
+      const touch = e.touches[0];
+      this.deltaX = touch.clientX - this.startX;
+      this.deltaY = touch.clientY - this.startY;
+      
+      const topCard = this.cardStack.querySelector('.swipe-card');
+      if (!topCard) return;
+      
+      topCard.classList.add('dragging');
+      const rotation = this.deltaX * 0.05;
+      topCard.style.transform = `translate(${this.deltaX}px, ${this.deltaY}px) rotate(${rotation}deg)`;
+      
+      const badge = topCard.querySelector('.swipe-card-badge');
+      if (this.deltaX > 50) {
+        badge.textContent = 'LIKE ❤️';
+        badge.className = 'swipe-card-badge like';
+      } else if (this.deltaX < -50) {
+        badge.textContent = 'NOPE ❌';
+        badge.className = 'swipe-card-badge dislike';
+      } else {
+        badge.textContent = '';
+        badge.className = 'swipe-card-badge';
+      }
+    }
+
+    handleTouchEnd() {
+      if (!this.dragging) return;
+      this.dragging = false;
+      
+      const topCard = this.cardStack.querySelector('.swipe-card');
+      if (!topCard) return;
+      
+      const duration = Date.now() - this.startTime;
+      const velocity = Math.sqrt(this.deltaX * this.deltaX + this.deltaY * this.deltaY) / duration;
+      const threshold = topCard.offsetWidth * 0.15;
+      
+      let direction = null;
+      if (Math.abs(this.deltaX) > threshold || velocity > 0.5) {
+        direction = this.deltaX > 0 ? 'right' : 'left';
+      }
+      
+      if (direction) {
+        this.triggerSwipe(direction);
+      } else {
+        topCard.classList.remove('dragging');
+        topCard.style.transform = '';
+        const badge = topCard.querySelector('.swipe-card-badge');
+        badge.textContent = '';
+        badge.className = 'swipe-card-badge';
+      }
+    }
+
+    triggerSwipe(direction) {
+      const topCard = this.cardStack.querySelector('.swipe-card');
+      if (!topCard) return;
+      
+      const cardData = this.cards[this.currentIndex];
+      
+      switch (direction) {
+        case 'left':
+          topCard.classList.add('swipe-left');
+          this.actionHistory.push({ type: 'skip', card: cardData, index: this.currentIndex });
+          showToast('已跳过');
+          break;
+        case 'right':
+          topCard.classList.add('swipe-right');
+          this.actionHistory.push({ type: 'like', card: cardData, index: this.currentIndex });
+          showToast('已收藏');
+          break;
+      }
+      
+      setTimeout(() => {
+        topCard.classList.add('dismissed');
+        this.currentIndex++;
+        this.updateIndicators();
+        this.undoBtn.style.display = this.actionHistory.length > 0 ? 'flex' : 'none';
+        
+        if (this.currentIndex >= this.cards.length - 1) {
+          this.loadMoreCards();
+        }
+        
+        setTimeout(() => {
+          this.renderCards();
+        }, 300);
+      }, 300);
+    }
+
+    undoLastSwipe() {
+      if (this.actionHistory.length === 0) return;
+      
+      const lastAction = this.actionHistory.pop();
+      this.currentIndex = lastAction.index;
+      
+      this.renderCards();
+      this.undoBtn.style.display = this.actionHistory.length > 0 ? 'flex' : 'none';
+      showToast('已回看');
+    }
+
+    updateIndicators() {
+      this.indicators.innerHTML = '';
+      const total = Math.min(5, this.cards.length);
+      const current = Math.min(this.currentIndex, total - 1);
+      
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('div');
+        dot.className = `swipe-dot ${i === current ? 'active' : ''}`;
+        this.indicators.appendChild(dot);
+      }
+    }
+
+    loadMoreCards() {
+      const moreCards = [
+        { id: 'lc001', title: '樱花粉黛妆', desc: '粉嫩甜美，少女心爆棚', tags: ['粉色', '甜美', '少女'], author: '粉色控', price: '32 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sakura%20pink%20makeup%2C%20Asian%20woman%20soft%20pink%20eyeshadow&image_size=portrait_4_3' },
+        { id: 'lc002', title: '酷飒欧美妆', desc: '立体轮廓，个性十足', tags: ['欧美', '立体', '个性'], author: '欧美达人', price: '60 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cool%20western%20makeup%2C%20Asian%20woman%20contoured%20face&image_size=portrait_4_3' },
+        { id: 'lc003', title: '森系精灵妆', desc: '清新自然，灵动脱俗', tags: ['森系', '自然', '精灵'], author: '自然美妆', price: '42 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Forest%20elf%20makeup%2C%20Asian%20woman%20green%20eyeshadow&image_size=portrait_4_3' }
+      ];
+      
+      this.cards.push(...moreCards);
+    }
+  }
+
+  function triggerLibrarySwipe(direction) {
+    if (libraryCardSwipe) {
+      libraryCardSwipe.triggerSwipe(direction);
+    }
+  }
+
+  function undoLibrarySwipe() {
+    if (libraryCardSwipe) {
+      libraryCardSwipe.undoLastSwipe();
+    }
+  }
+
+  function openLibraryCardDetail(cardId) {
+    let cardData;
+    if (cardId) {
+      cardData = libraryCardSwipe.cards.find(c => c.id === cardId);
+    } else if (libraryCardSwipe && libraryCardSwipe.cards[libraryCardSwipe.currentIndex]) {
+      cardData = libraryCardSwipe.cards[libraryCardSwipe.currentIndex];
+    }
+    
+    if (cardData) {
+      const loadingOverlay = document.createElement('div');
+      loadingOverlay.className = 'card-detail-loading';
+      loadingOverlay.innerHTML = `
+        <div class="card-detail-loading-spinner"></div>
+        <div class="card-detail-loading-text">正在加载 ${cardData.title}...</div>
+      `;
+      document.body.appendChild(loadingOverlay);
+      
+      setTimeout(() => {
+        loadingOverlay.remove();
+        showToast(`已打开：${cardData.title}`);
+      }, 800);
+    }
+  }
+
+  function showLibraryCardMenu() {
+    showToast('菜单功能开发中');
+  }
+
+  class SmartRecommendationEngine {
+    constructor() {
+      this.templates = {
+        morning: [
+          '☀️ 早安！今天试试这款妆容开启元气满满的一天',
+          '🌅 清晨时光，让美丽唤醒你的一天',
+          '💫 新的一天，新的妆容，新的心情',
+          '🌸 晨间护肤后，这款妆容最适合你'
+        ],
+        afternoon: [
+          '🌤️ 午后时光，补个美美的妆容继续闪耀',
+          '✨ 下午也要保持精致，这款妆容很适合',
+          '💄 忙碌间隙，给自己一个精致妆容',
+          '🎀 下午茶时光，让妆容为你加分'
+        ],
+        evening: [
+          '🌙 夜幕降临，换上精致妆容享受夜晚',
+          '🌟 晚间聚会必备，让你成为焦点',
+          '💎 精致夜妆，点亮你的夜晚',
+          '🔥 今晚的你，值得最美的妆容'
+        ],
+        weekend: [
+          '🎉 周末愉快！这款妆容让你尽情享受',
+          '🌿 周末放松，自然美丽最动人',
+          '💖 闲暇时光，用妆容犒劳自己',
+          '🌸 周末约会，这款妆容再合适不过'
+        ],
+        workday: [
+          '💼 职场精英必备，尽显专业魅力',
+          '🌟 工作日也要精致，这款妆容很干练',
+          '🎯 专业形象，从完美妆容开始',
+          '✨ 职场妆容，让你自信满满'
+        ],
+        date: [
+          '💕 约会必备，让他眼前一亮',
+          '💘 甜蜜约会，这款妆容最浪漫',
+          '🌹 心动时刻，最美的妆容给最爱的人',
+          '✨ 约会妆容，甜蜜又迷人'
+        ],
+        party: [
+          '🎉 派对女王，这款妆容让你闪耀全场',
+          '💃 狂欢时刻，妆容也要惊艳',
+          '✨ 派对妆容，成为全场焦点',
+          '🔥 今晚的派对，你就是主角'
+        ]
+      };
+      
+      this.tagKeywords = {
+        '日常': ['morning', 'afternoon', 'workday'],
+        '约会': ['date'],
+        '派对': ['party'],
+        '职场': ['workday'],
+        '甜美': ['date', 'weekend'],
+        '复古': ['evening', 'party'],
+        '少女': ['date', 'weekend'],
+        '优雅': ['evening', 'workday'],
+        '清新': ['morning', 'weekend'],
+        '气质': ['workday', 'evening']
+      };
+    }
+
+    getCurrentContext() {
+      const hour = new Date().getHours();
+      const day = new Date().getDay();
+      
+      let timeContext = 'afternoon';
+      if (hour >= 5 && hour < 12) {
+        timeContext = 'morning';
+      } else if (hour >= 18) {
+        timeContext = 'evening';
+      }
+      
+      let dayContext = 'workday';
+      if (day === 0 || day === 6) {
+        dayContext = 'weekend';
+      }
+      
+      return { timeContext, dayContext };
+    }
+
+    generateRecommendation(cardData) {
+      const context = this.getCurrentContext();
+      const tags = cardData.tags || [];
+      
+      let matchedTemplates = [];
+      
+      for (const tag of tags) {
+        const contexts = this.tagKeywords[tag];
+        if (contexts) {
+          matchedTemplates.push(...contexts);
+        }
+      }
+      
+      matchedTemplates = [...new Set(matchedTemplates)];
+      
+      let candidateTemplates = [];
+      if (matchedTemplates.length > 0) {
+        for (const ctx of matchedTemplates) {
+          if (this.templates[ctx]) {
+            candidateTemplates.push(...this.templates[ctx]);
+          }
+        }
+      } else {
+        candidateTemplates = [...this.templates[context.timeContext], ...this.templates[context.dayContext]];
+      }
+      
+      candidateTemplates = [...new Set(candidateTemplates)];
+      
+      const randomIndex = Math.floor(Math.random() * candidateTemplates.length);
+      return candidateTemplates[randomIndex] || '✨ 这款妆容很适合你';
+    }
+
+    generateBatchRecommendations(cards) {
+      return cards.map(card => ({
+        ...card,
+        recommendation: this.generateRecommendation(card)
+      }));
+    }
+  }
+
+  const recommendationEngine = new SmartRecommendationEngine();
 
   function goToLibraryCat(cat) {
     switchTab('library');
@@ -21271,15 +21895,15 @@ let searchHistory = [];
         </svg>
       </div>
       <div class="card-swipe-title" id="cardSwipeTitle">卡片浏览</div>
-    </div>
-    <div class="card-swipe-header-right">
       <div class="card-swipe-undo-btn" id="cardSwipeUndoBtn" onclick="undoLastSwipe()" style="display:none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 7v6h6"/>
           <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
         </svg>
-        撤销
+        回看
       </div>
+    </div>
+    <div class="card-swipe-header-right">
     </div>
   </div>
 
@@ -21717,17 +22341,20 @@ class ParticleSystem {
 }
 
 class CardSwipeSystem {
-  constructor() {
-    this.container = document.getElementById('cardSwipeContainer');
-    this.cardStack = document.getElementById('cardStack');
-    this.indicators = document.getElementById('cardSwipeIndicators');
-    this.emptyState = document.getElementById('cardSwipeEmpty');
-    this.undoBtn = document.getElementById('cardSwipeUndoBtn');
-    this.title = document.getElementById('cardSwipeTitle');
+  constructor(prefix = '') {
+    this.prefix = prefix;
+    const id = (name) => prefix ? `${prefix}${name.charAt(0).toUpperCase() + name.slice(1)}` : name;
     
-    this.particleSystem = new ParticleSystem(document.getElementById('particleContainer'));
-    this.comboBanner = document.getElementById('comboBanner');
-    this.fatigueOverlay = document.getElementById('fatigueOverlay');
+    this.container = document.getElementById(id('cardSwipeContainer'));
+    this.cardStack = document.getElementById(id('cardStack'));
+    this.indicators = document.getElementById(id('cardSwipeIndicators'));
+    this.emptyState = document.getElementById(id('cardSwipeEmpty'));
+    this.undoBtn = document.getElementById(id('cardSwipeUndoBtn'));
+    this.title = document.getElementById(id('cardSwipeTitle'));
+    
+    this.particleSystem = new ParticleSystem(document.getElementById(id('particleContainer')));
+    this.comboBanner = document.getElementById(id('comboBanner'));
+    this.fatigueOverlay = document.getElementById(id('fatigueOverlay'));
     
     this.currentScene = 'explore';
     this.currentMode = 'explore';
@@ -21756,23 +22383,50 @@ class CardSwipeSystem {
   init() {
     this.loadSceneData();
     this.renderCards();
-    this.setupGestures();
     this.startFatigueMonitoring();
   }
 
   loadSceneData() {
     const sceneData = {
       explore: [
-        { id: 'c001', title: '晚宴精致妆容', desc: '完美诠释优雅气质', tags: ['晚宴', '精致', '优雅'], author: '美妆师 Luna', price: '50 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Elegant%20Asian%20woman%20evening%20party%20makeup%2C%20glamorous%20red%20lipstick%2C%20shimmer%20eyeshadow%2C%20professional%20beauty%20portrait&image_size=portrait_4_3' },
-        { id: 'c002', title: '日常清新裸妆', desc: '自然透气，宛若天生', tags: ['日常', '裸妆', '清新'], author: '小妆日记', price: '30 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Fresh%20Asian%20woman%20natural%20daily%20makeup%2C%20light%20pink%20blush%2C%20nude%20lipstick%2C%20clean%20skincare%20look&image_size=portrait_4_3' },
-        { id: 'c003', title: '国风古韵妆', desc: '东方美学，古典雅致', tags: ['国风', '古风', '典雅'], author: '花西子', price: '80 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Traditional%20Chinese%20style%20makeup%2C%20Asian%20woman%20with%20red%20eyeshadow%20and%20lipstick%2C%20elegant%20ancient%20Chinese%20aesthetic&image_size=portrait_4_3' },
-        { id: 'c004', title: '通勤大地色眼妆', desc: '职场气场，干练专业', tags: ['通勤', '大地色', '职场'], author: '职场美妆', price: '25 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Professional%20Asian%20woman%20earth%20tone%20makeup%2C%20subtle%20brown%20eyeshadow%2C%20natural%20lipcolor%2C%20office%20ready%20look&image_size=portrait_4_3' },
-        { id: 'c005', title: '蜜桃少女妆', desc: '甜美可人，元气满满', tags: ['少女', '蜜桃', '元气'], author: '夏日限定', price: '35 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cute%20Asian%20woman%20peach%20makeup%2C%20soft%20pink%20cheeks%2C%20dewy%20skin%2C%20kawaii%20style&image_size=portrait_4_3' },
-        { id: 'c006', title: '复古港风妆容', desc: '经典复古，韵味十足', tags: ['复古', '港风', '经典'], author: '复古美学', price: '40 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Retro%20Hong%20Kong%20style%20makeup%2C%20Asian%20woman%20bold%20red%20lipstick%2C%20smoky%20eyes%2C%20vintage%2090s%20aesthetic&image_size=portrait_4_3' },
-        { id: 'c007', title: '夏日元气妆', desc: '活力四射，阳光明媚', tags: ['夏日', '元气', '活力'], author: '阳光美妆', price: '28 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Summer%20fresh%20energy%20makeup%2C%20Asian%20woman%20orange%20eyeshadow%2C%20peach%20blush%2C%20bright%20lip%2C%20sunny%20vibe&image_size=portrait_4_3' },
-        { id: 'c008', title: '清透奶油肌', desc: '无瑕底妆，通透自然', tags: ['底妆', '奶油肌', '清透'], author: '底妆达人', price: '45 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Flawless%20cream%20skin%20makeup%2C%20Asian%20woman%20perfect%20foundation%2C%20dewy%20glow%2C%20natural%20transparent%20finish&image_size=portrait_4_3' },
-        { id: 'c009', title: '焦糖枫叶妆', desc: '秋日限定，温暖迷人', tags: ['秋季', '枫叶', '温暖'], author: '季节美妆', price: '38 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Caramel%20maple%20autumn%20makeup%2C%20Asian%20woman%20warm%20orange%20eyeshadow%2C%20brown%20lipstick%2C%20fall%20aesthetic&image_size=portrait_4_3' },
-        { id: 'c010', title: '烟熏小恶魔', desc: '魅惑迷人，气场全开', tags: ['烟熏', '性感', '气场'], author: '派对女王', price: '55 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Smoky%20eye%20devil%20makeup%2C%20Asian%20woman%20dark%20eyeshadow%2C%20bold%20lipstick%2C%20sexy%20charming%20look&image_size=portrait_4_3' }
+        { id: 'e001', title: '晚宴精致妆容', desc: '优雅高贵，闪耀全场', tags: ['晚宴', '优雅', '派对'], author: '李雅琳', price: '35 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Beautiful%20Asian%20woman%20elegant%20evening%20makeup%2C%20red%20lipstick%2C%20golden%20eyeshadow%2C%20sparkling%20jewelry%2C%20formal%20dress%2C%20studio%20lighting&image_size=portrait_4_3' },
+        { id: 'e002', title: '日常清新裸妆', desc: '自然通透，元气满满', tags: ['日常', '清新', '裸妆'], author: '张小美', price: '20 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Fresh%20Asian%20woman%20natural%20makeup%2C%20light%20foundation%2C%20pink%20blush%2C%20dewy%20skin%2C%20casual%20style%2C%20bright%20natural%20light&image_size=portrait_4_3' },
+        { id: 'e003', title: '国风古韵妆', desc: '古典韵味，倾国倾城', tags: ['国风', '古典', '古韵'], author: '古风达人', price: '28 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Traditional%20Chinese%20beauty%20makeup%2C%20red%20eyeshadow%2C%20golden%20highlighter%2C%20elegant%20hairstyle%2C%20traditional%20dress%2C%20soft%20lighting&image_size=portrait_4_3' },
+        { id: 'e004', title: '通勤大地色眼妆', desc: '专业干练，职场必备', tags: ['通勤', '职场', '大地色'], author: '职场美妆', price: '25 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Professional%20Asian%20woman%20business%20makeup%2C%20brown%20eyeshadow%2C%20neutral%20lipstick%2C%20confident%20expression%2C%20office%20background&image_size=portrait_4_3' },
+        { id: 'e005', title: '蜜桃少女妆', desc: '粉嫩可爱，少女心爆棚', tags: ['甜美', '少女', '蜜桃'], author: '陈芳芳', price: '18 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cute%20Asian%20girl%20peach%20makeup%2C%20pink%20cheeks%2C%20shimmer%20eyeshadow%2C%20ponytail%2C%20kawaii%20style%2C%20pastel%20background&image_size=portrait_4_3' },
+        { id: 'e006', title: '复古港风妆容', desc: '经典复刻，韵味十足', tags: ['复古', '港风', '经典'], author: '复古达人', price: '30 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Retro%20Hong%20Kong%20style%20beauty%2C%20bold%20red%20lip%2C%20defined%20eyebrows%2C%20wavy%20hair%2C%20vintage%20fashion%2C%20warm%20tones&image_size=portrait_4_3' },
+        { id: 'e007', title: '夏日元气妆', desc: '活力四射，清凉一夏', tags: ['夏日', '元气', '活力'], author: '夏日美妆', price: '22 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Summer%20fresh%20Asian%20woman%20makeup%2C%20orange%20eyeshadow%2C%20coral%20lipstick%2C%20messy%20bun%2C%20sunny%20beach%20vibe&image_size=portrait_4_3' },
+        { id: 'e008', title: '清透奶油肌', desc: '无瑕美肌，宛若天生', tags: ['底妆', '奶油肌', '无瑕'], author: '底妆大师', price: '35 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Flawless%20cream%20skin%20Asian%20woman%2C%20perfect%20foundation%2C%20subtle%20contour%2C%20natural%20glow%2C%20minimal%20makeup%2C%20soft%20studio%20light&image_size=portrait_4_3' },
+        { id: 'e009', title: '焦糖枫叶妆', desc: '温暖浓郁，秋冬必备', tags: ['秋冬', '焦糖', '枫叶'], author: '季节美妆', price: '26 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Autumn%20maple%20Asian%20woman%20makeup%2C%20orange%20brown%20eyeshadow%2C%20burgundy%20lipstick%2C%20knit%20sweater%2C%20fall%20leaves%20background&image_size=portrait_4_3' },
+        { id: 'e010', title: '烟熏小恶魔', desc: '个性十足，气场全开', tags: ['烟熏', '个性', '朋克'], author: '个性美妆', price: '38 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Smoky%20eye%20Asian%20woman%2C%20dark%20eyeshadow%2C%20black%20lipstick%2C%20leather%20jacket%2C%20rock%20style%2C%20dramatic%20lighting&image_size=portrait_4_3' },
+        { id: 'e011', title: '樱花粉黛妆', desc: '粉嫩浪漫，春日限定', tags: ['樱花', '粉色', '浪漫'], author: '春日美妆', price: '32 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Sakura%20pink%20Asian%20woman%20makeup%2C%20soft%20pink%20eyeshadow%2C%20blossom%20accessories%2C%20kimono%20style%2C%20spring%20cherry%20blossom&image_size=portrait_4_3' },
+        { id: 'e012', title: '酷飒欧美妆', desc: '立体轮廓，气场十足', tags: ['欧美', '立体', '酷飒'], author: '欧美达人', price: '40 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Cool%20western%20Asian%20woman%20makeup%2C%20bold%20eyebrows%2C%20contoured%20face%2C%20nude%20lipstick%2C%20fashion%20photography&image_size=portrait_4_3' },
+        { id: 'e013', title: '森系精灵妆', desc: '清新自然，灵动脱俗', tags: ['森系', '自然', '精灵'], author: '自然美妆', price: '36 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Forest%20elf%20Asian%20woman%20makeup%2C%20green%20eyeshadow%2C%20dewy%20skin%2C%20flower%20crown%2C%20nature%20forest%20background&image_size=portrait_4_3' },
+        { id: 'e014', title: '暗黑哥特妆', desc: '神秘魅惑，个性张扬', tags: ['暗黑', '哥特', '个性'], author: '暗黑女王', price: '42 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Dark%20gothic%20Asian%20woman%20makeup%2C%20black%20eyeshadow%2C%20dark%20lipstick%2C%20gothic%20fashion%2C%20mysterious%20atmosphere&image_size=portrait_4_3' },
+        { id: 'e015', title: '奶茶裸色系', desc: '温柔知性，气质满分', tags: ['奶茶', '温柔', '知性'], author: '气质美妆', price: '28 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Milk%20tea%20nude%20Asian%20woman%20makeup%2C%20warm%20brown%20eyeshadow%2C%20taupe%20lipstick%2C%20elegant%20style%2C%20soft%20neutral%20tones&image_size=portrait_4_3' }
+      ],
+      gallery: [
+        { id: 'g001', title: '颜库精选 - 氧气少女', desc: '清新自然的氧气妆容', tags: ['颜库', '少女', '清新'], author: '精选', price: '20 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Oxygen%20girl%20Asian%20woman%20makeup%2C%20light%20fresh%2C%20natural%20glow%2C%20soft%20makeup&image_size=portrait_4_3' },
+        { id: 'g002', title: '颜库精选 - 复古红唇', desc: '经典复古红唇妆容', tags: ['颜库', '复古', '红唇'], author: '精选', price: '30 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Vintage%20red%20lip%20Asian%20woman%2C%20classic%20elegant%2C%20bold%20lipstick&image_size=portrait_4_3' },
+        { id: 'g003', title: '颜库精选 - 职场干练', desc: '专业职场妆容', tags: ['颜库', '职场', '干练'], author: '精选', price: '25 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Professional%20business%20Asian%20woman%2C%20clean%20makeup%2C%20confident&image_size=portrait_4_3' }
+      ],
+      ai: [
+        { id: 'ai001', title: 'AI定制 - 专属妆容', desc: '根据您的脸型智能推荐', tags: ['AI定制', '智能', '专属'], author: 'AI小美', price: '50 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=AI%20custom%20makeup%20Asian%20woman%2C%20futuristic%20style%2C%20high%20tech&image_size=portrait_4_3' },
+        { id: 'ai002', title: 'AI定制 - 风格转换', desc: '一键转换多种妆容风格', tags: ['AI定制', '转换', '风格'], author: 'AI小美', price: '60 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Style%20transformation%20Asian%20woman%2C%20versatile%20makeup%2C%20creative&image_size=portrait_4_3' },
+        { id: 'ai003', title: 'AI定制 - 季节限定', desc: '本季流行妆容推荐', tags: ['AI定制', '季节', '限定'], author: 'AI小美', price: '45 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Seasonal%20limited%20makeup%20Asian%20woman%2C%20trendy%2C%20fashion&image_size=portrait_4_3' }
+      ],
+      daily: [
+        { id: 'd001', title: '每日推荐 - 今日妆容', desc: '为您精选的今日妆容', tags: ['每日推荐', '精选', '今日'], author: '推荐官', price: '15 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Daily%20recommendation%20makeup%2C%20Asian%20woman%2C%20fresh%20daily&image_size=portrait_4_3' },
+        { id: 'd002', title: '每日推荐 - 热门妆容', desc: '当前最受欢迎妆容', tags: ['每日推荐', '热门', '流行'], author: '推荐官', price: '20 GP', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Trending%20popular%20makeup%2C%20Asian%20woman%2C%20viral%20beauty&image_size=portrait_4_3' }
+      ],
+      diary: [
+        { id: 'di001', title: '妆容日记 - Day 1', desc: '记录您的妆容成长', tags: ['日记', '成长', '记录'], author: '我的日记', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Makeup%20diary%20day%201%2C%20Asian%20woman%2C%20beginner%20makeup&image_size=portrait_4_3' },
+        { id: 'di002', title: '妆容日记 - Day 7', desc: '一周妆容回顾', tags: ['日记', '回顾', '一周'], author: '我的日记', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Makeup%20progress%20week%20Asian%20woman%2C%20improved%20skills&image_size=portrait_4_3' }
+      ],
+      guide: [
+        { id: 'gd001', title: '新手引导 - 基础底妆', desc: '从零开始学化妆', tags: ['新手', '引导', '底妆'], author: '教程', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Beginner%20foundation%20tutorial%2C%20Asian%20woman%2C%20step%20by%20step&image_size=portrait_4_3' },
+        { id: 'gd002', title: '新手引导 - 眼部妆容', desc: '轻松掌握眼妆技巧', tags: ['新手', '引导', '眼妆'], author: '教程', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Eye%20makeup%20tutorial%2C%20Asian%20woman%2C%20beginner%20friendly&image_size=portrait_4_3' },
+        { id: 'gd003', title: '新手引导 - 唇妆技巧', desc: '完美唇妆不翻车', tags: ['新手', '引导', '唇妆'], author: '教程', price: '免费', image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Lip%20makeup%20tutorial%2C%20Asian%20woman%2C%20perfect%20application&image_size=portrait_4_3' }
       ],
       favorites: []
     };
@@ -21816,6 +22470,12 @@ class CardSwipeSystem {
       <div class="swipe-card-bg" style="background-image: url('${cardData.image}')"></div>
       <div class="swipe-card-overlay">
         <div class="swipe-card-badge" id="badge-${cardData.id}"></div>
+      </div>
+      <div class="swipe-card-detail-badge" onclick="event.stopPropagation(); openCardDetail();">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
       </div>
       <div class="swipe-card-content">
         <div class="swipe-card-title">${cardData.title}</div>
@@ -22062,7 +22722,7 @@ class CardSwipeSystem {
       this.undoBtn.style.display = 'none';
     }
     
-    showToast('已撤销');
+    showToast('已回看');
   }
 
   updateIndicators() {

@@ -6,7 +6,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>妆伴 MakeupPal V3.4.0</title>
+    <title>妆伴 MakeupPal V3.6.0</title>
     <style>
 :root {
   --color-bg: #FFF8F0;
@@ -6775,6 +6775,136 @@ body {
   border-color: var(--color-primary);
 }
 
+.library-sub-tabs-wrapper {
+  padding: 0 var(--spacing-4);
+  padding-bottom: var(--spacing-3);
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.library-mode-switch {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 4px;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.mode-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  background: transparent;
+}
+.mode-switch-btn.active {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
+}
+.mode-switch-btn:active { transform: scale(0.95); }
+
+.library-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+}
+.library-color-card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease);
+}
+.library-color-card:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-sm);
+}
+.library-color-card.selected {
+  box-shadow: 0 0 0 3px var(--color-primary), var(--shadow-lg);
+}
+.library-color-swatch {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-3);
+  position: relative;
+}
+.library-color-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+}
+.library-color-info {
+  position: relative;
+  z-index: 2;
+}
+.library-color-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  margin-bottom: 4px;
+}
+.library-color-value {
+  font-size: var(--font-size-xs);
+  color: rgba(255,255,255,0.9);
+  font-family: monospace;
+}
+.library-color-body {
+  padding: var(--spacing-3);
+}
+.library-color-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--spacing-2);
+}
+.library-color-tag {
+  padding: 3px 8px;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  color: var(--color-text-secondary);
+}
+.library-color-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+.library-color-likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-transition-hide {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+.mode-transition-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#libraryWaterfall,
+#libraryCardGrid,
+.library-sub-tabs-wrapper {
+  transition: opacity var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease);
+}
+
 /* ============ Mirror Page V2 ============ */
 .mirror-hero-v2 {
   background: var(--color-hero-bg);
@@ -10441,6 +10571,25 @@ body {
   <div class="page" id="page-library">
     <div class="library-header">
       <div class="library-search-row">
+        <div class="library-mode-switch" id="libraryModeSwitch">
+          <div class="mode-switch-btn active" data-mode="card" onclick="switchLibraryMode('card')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+            </svg>
+            <span>卡片</span>
+          </div>
+          <div class="mode-switch-btn" data-mode="waterfall" onclick="switchLibraryMode('waterfall')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18"/>
+              <path d="M3 15h18"/>
+            </svg>
+            <span>瀑布流</span>
+          </div>
+        </div>
         <div class="library-search-box" onclick="openSearch()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/>
@@ -10461,16 +10610,19 @@ body {
       </div>
     </div>
 
-    <div class="library-sub-tabs" id="librarySubTabs">
-      <span class="library-sub-tab active" onclick="switchLibrarySub(this)">全部</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">日常</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">约会</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">职场</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">派对</span>
-      <span class="library-sub-tab" onclick="switchLibrarySub(this)">复古</span>
+    <div class="library-sub-tabs-wrapper" id="librarySubTabsWrapper">
+      <div class="library-sub-tabs" id="librarySubTabs">
+        <span class="library-sub-tab active" onclick="switchLibrarySub(this)">全部</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">日常</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">约会</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">职场</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">派对</span>
+        <span class="library-sub-tab" onclick="switchLibrarySub(this)">复古</span>
+      </div>
     </div>
 
-    <div class="waterfall-grid" id="libraryWaterfall" style="margin-top: var(--spacing-3);"></div>
+    <div class="waterfall-grid" id="libraryWaterfall"></div>
+    <div class="library-card-grid" id="libraryCardGrid" style="display: none;"></div>
 
     <div style="height: 40px;"></div>
   </div>
@@ -17884,14 +18036,184 @@ let searchHistory = [];
         `<span class="library-sub-tab ${i === 0 ? 'active' : ''}" onclick="switchLibrarySub(this, '${s}')">${s}</span>`
       ).join('');
     }
-    renderLibraryWaterfall(cat, '全部');
+    
+    if (currentLibraryMode === 'card') {
+      renderLibraryCardGrid(cat, '全部');
+    } else {
+      renderLibraryWaterfall(cat, '全部');
+    }
+    
     el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
   }
 
   function switchLibrarySub(el, sub) {
     document.querySelectorAll('.library-sub-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
-    renderLibraryWaterfall(currentLibraryCat, sub);
+    if (currentLibraryMode === 'card') {
+      renderLibraryCardGrid(currentLibraryCat, sub);
+    } else {
+      renderLibraryWaterfall(currentLibraryCat, sub);
+    }
+  }
+
+  let currentLibraryMode = 'card';
+  const libraryColorData = {
+    daren: [
+      { id: 'c001', name: '蜜桃珊瑚', value: '#FFB3BA', tags: ['日常', '甜美'], likes: 3256 },
+      { id: 'c002', name: '裸粉奶茶', value: '#D4A5A5', tags: ['通勤', '温柔'], likes: 4128 },
+      { id: 'c003', name: '复古红棕', value: '#8B4513', tags: ['派对', '气场'], likes: 2891 },
+      { id: 'c004', name: '豆沙玫瑰', value: '#BC8F8F', tags: ['约会', '浪漫'], likes: 5672 },
+      { id: 'c005', name: '橘调落日', value: '#FF7F50', tags: ['夏日', '元气'], likes: 3421 },
+      { id: 'c006', name: '烟熏玫瑰', value: '#E8B4B8', tags: ['轻熟', '优雅'], likes: 2987 },
+      { id: 'c007', name: '蜜桃乌龙', value: '#FFDAC1', tags: ['清新', '少女'], likes: 4567 },
+      { id: 'c008', name: '枫叶红棕', value: '#C3553A', tags: ['秋冬', '复古'], likes: 3892 },
+    ],
+    jubu: [
+      { id: 'c009', name: '大地哑光', value: '#8B7355', tags: ['眼妆', '日常'], likes: 2341 },
+      { id: 'c010', name: '香槟闪片', value: '#F7E7CE', tags: ['眼妆', '派对'], likes: 1892 },
+      { id: 'c011', name: '酒红微醺', value: '#722F37', tags: ['眼妆', '复古'], likes: 2671 },
+      { id: 'c012', name: '奶咖眉色', value: '#A0826D', tags: ['眉妆', '自然'], likes: 1543 },
+      { id: 'c013', name: '柔雾粉腮', value: '#FFB7C5', tags: ['腮红', '甜美'], likes: 3124 },
+      { id: 'c014', name: '元气橘腮', value: '#FFA07A', tags: ['腮红', '活力'], likes: 2876 },
+      { id: 'c015', name: '杏仁唇釉', value: '#E0B0FF', tags: ['唇妆', '温柔'], likes: 3456 },
+      { id: 'c016', name: '焦糖拿铁', value: '#C68E17', tags: ['唇妆', '秋冬'], likes: 2134 },
+    ],
+    gufeng: [
+      { id: 'c017', name: '朱砂红', value: '#FF4D4D', tags: ['唐妆', '经典'], likes: 4521 },
+      { id: 'c018', name: '黛青绿', value: '#20B2AA', tags: ['宋妆', '清雅'], likes: 3128 },
+      { id: 'c019', name: '烟紫色', value: '#9370DB', tags: ['明妆', '高贵'], likes: 2671 },
+      { id: 'c020', name: '海棠红', value: '#FF69B4', tags: ['汉妆', '柔美'], likes: 3892 },
+      { id: 'c021', name: '敦煌金', value: '#FFD700', tags: ['敦煌', '华丽'], likes: 4234 },
+      { id: 'c022', name: '远山黛', value: '#5F9EA0', tags: ['古风', '淡雅'], likes: 2789 },
+      { id: 'c023', name: '胭脂粉', value: '#FF69B4', tags: ['古风', '娇艳'], likes: 3567 },
+      { id: 'c024', name: '翡翠绿', value: '#00A86B', tags: ['古风', '清新'], likes: 2987 },
+    ],
+    dapai: [
+      { id: 'c025', name: 'YSL小金条', value: '#E63946', tags: ['YSL', '经典'], likes: 5678 },
+      { id: 'c026', name: 'Dior烈焰蓝金', value: '#8B0000', tags: ['Dior', '气质'], likes: 4892 },
+      { id: 'c027', name: 'Chanel丝绒', value: '#9B2226', tags: ['Chanel', '优雅'], likes: 5123 },
+      { id: 'c028', name: 'Lancôme菁纯', value: '#D4AF37', tags: ['Lancôme', '奢华'], likes: 4456 },
+      { id: 'c029', name: 'MAC子弹头', value: '#C14545', tags: ['MAC', '个性'], likes: 4234 },
+      { id: 'c030', name: 'Armani红管', value: '#DC143C', tags: ['Armani', '高级'], likes: 4678 },
+      { id: 'c031', name: 'Tom Ford', value: '#8B4513', tags: ['TF', '贵气'], likes: 3987 },
+      { id: 'c032', name: 'Gucci碎花', value: '#DE3163', tags: ['Gucci', '复古'], likes: 3567 },
+    ],
+    qa: [
+      { id: 'c033', name: '保湿底妆', value: '#FFE4E1', tags: ['底妆', '保湿'], likes: 2341 },
+      { id: 'c034', name: '控油哑光', value: '#F5F5F5', tags: ['底妆', '控油'], likes: 1892 },
+      { id: 'c035', name: '遮瑕提亮', value: '#FFF8DC', tags: ['底妆', '遮瑕'], likes: 2134 },
+      { id: 'c036', name: '眼影打底', value: '#E8E8E8', tags: ['眼妆', '打底'], likes: 1567 },
+      { id: 'c037', name: '睫毛打底', value: '#1A1A1A', tags: ['眼妆', '睫毛'], likes: 1234 },
+      { id: 'c038', name: '润唇膏', value: '#FFB6C1', tags: ['护肤', '唇部'], likes: 2876 },
+      { id: 'c039', name: '妆前乳', value: '#FAFAFA', tags: ['底妆', '妆前'], likes: 1987 },
+      { id: 'c040', name: '定妆喷雾', value: '#F0F8FF', tags: ['底妆', '定妆'], likes: 1765 },
+    ],
+    yinfa: [
+      { id: 'c041', name: '优雅玫瑰', value: '#B76E79', tags: ['日常', '优雅'], likes: 2134 },
+      { id: 'c042', name: '温柔豆沙', value: '#C4A484', tags: ['聚会', '温柔'], likes: 1876 },
+      { id: 'c043', name: '稳重棕红', value: '#8B4513', tags: ['职场', '稳重'], likes: 1567 },
+      { id: 'c044', name: '喜庆正红', value: '#DC143C', tags: ['婚礼', '喜庆'], likes: 2345 },
+      { id: 'c045', name: '典雅金棕', value: '#CD853F', tags: ['家宴', '典雅'], likes: 1987 },
+      { id: 'c046', name: '柔和珊瑚', value: '#FF7F50', tags: ['日常', '柔和'], likes: 1654 },
+      { id: 'c047', name: '温婉粉紫', value: '#DDA0DD', tags: ['聚会', '温婉'], likes: 1432 },
+      { id: 'c048', name: '成熟酒红', value: '#722F37', tags: ['职场', '成熟'], likes: 1789 },
+    ],
+    star: [
+      { id: 'c049', name: '杨幂同款', value: '#FF6B6B', tags: ['甜美', '明星'], likes: 6789 },
+      { id: 'c050', name: '迪丽热巴', value: '#FFB6C1', tags: ['轻熟', '明星'], likes: 5678 },
+      { id: 'c051', name: 'Jennie风', value: '#DEB887', tags: ['韩系', '明星'], likes: 7892 },
+      { id: 'c052', name: 'IU同款', value: '#F0E68C', tags: ['裸妆', '明星'], likes: 6543 },
+      { id: 'c053', name: '周迅清冷', value: '#B0C4DE', tags: ['清冷', '明星'], likes: 4321 },
+      { id: 'c054', name: '刘亦菲', value: '#FFB7C5', tags: ['仙气', '明星'], likes: 8923 },
+      { id: 'c055', name: 'Lisa同款', value: '#FF69B4', tags: ['韩系', '明星'], likes: 7654 },
+      { id: 'c056', name: '赵丽颖', value: '#FFDAB9', tags: ['甜美', '明星'], likes: 5432 },
+    ],
+  };
+
+  function switchLibraryMode(mode) {
+    currentLibraryMode = mode;
+    document.querySelectorAll('.library-mode-switch .mode-switch-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+    
+    const waterfall = document.getElementById('libraryWaterfall');
+    const cardGrid = document.getElementById('libraryCardGrid');
+    const subTabsWrapper = document.getElementById('librarySubTabsWrapper');
+    
+    if (mode === 'card') {
+      waterfall.classList.add('mode-transition-hide');
+      subTabsWrapper.classList.add('mode-transition-hide');
+      
+      cardGrid.style.display = 'grid';
+      cardGrid.classList.remove('mode-transition-hide');
+      cardGrid.classList.add('mode-transition-show');
+      
+      renderLibraryCardGrid(currentLibraryCat, '全部');
+      
+      setTimeout(() => {
+        waterfall.style.display = 'none';
+        waterfall.classList.remove('mode-transition-show');
+      }, 250);
+    } else {
+      cardGrid.classList.add('mode-transition-hide');
+      
+      waterfall.style.display = 'block';
+      waterfall.classList.remove('mode-transition-hide');
+      waterfall.classList.add('mode-transition-show');
+      
+      subTabsWrapper.classList.remove('mode-transition-hide');
+      subTabsWrapper.classList.add('mode-transition-show');
+      
+      renderLibraryWaterfall(currentLibraryCat, '全部');
+      
+      setTimeout(() => {
+        cardGrid.style.display = 'none';
+        cardGrid.classList.remove('mode-transition-show');
+      }, 250);
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderLibraryCardGrid(cat, sub) {
+    const items = libraryColorData[cat] || [];
+    const grid = document.getElementById('libraryCardGrid');
+    if (!grid) return;
+    
+    let filtered = items;
+    if (sub && sub !== '全部') {
+      filtered = items.filter(item => item.tags.some(tag => tag.includes(sub.replace('妆', '').replace('系', ''))));
+    }
+    
+    grid.innerHTML = filtered.map(item => getColorCard(item)).join('');
+  }
+
+  function getColorCard(item) {
+    return `
+      <div class="library-color-card" onclick="selectColorCard(this, '${item.id}')">
+        <div class="library-color-swatch" style="background: ${item.value}">
+          <div class="library-color-gradient"></div>
+          <div class="library-color-info">
+            <div class="library-color-name">${item.name}</div>
+            <div class="library-color-value">${item.value}</div>
+          </div>
+        </div>
+        <div class="library-color-body">
+          <div class="library-color-tags">
+            ${item.tags.map(tag => `<span class="library-color-tag">${tag}</span>`).join('')}
+          </div>
+          <div class="library-color-meta">
+            <span class="library-color-likes">♡ ${fmtNum(item.likes)}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function selectColorCard(el, id) {
+    document.querySelectorAll('.library-color-card').forEach(card => card.classList.remove('selected'));
+    el.classList.add('selected');
+    showToast(`已选择颜色: ${el.querySelector('.library-color-name').textContent}`);
   }
 
   function goToLibraryCat(cat) {
