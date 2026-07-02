@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "image-safe": "/components/image-safe/image-safe",
-    "companion-fab": "/components/companion-fab/companion-fab",
-    "empty-state": "/components/empty-state/empty-state"
-  },
-  "navigationBarTitleText": "颜库",
-  "enablePullDownRefresh": false
-}

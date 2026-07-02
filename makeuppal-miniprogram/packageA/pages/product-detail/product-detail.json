@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "商品详情",
-  "usingComponents": {
-    "image-safe": "/components/image-safe/image-safe",
-    "price-tag": "/components/price-tag/price-tag"
-  }
-}

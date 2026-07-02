@@ -1,8 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "navigationBarTitleText": "焕新",
-  "usingComponents": {
-    "image-safe": "/components/image-safe/image-safe",
-    "companion-fab": "/components/companion-fab/companion-fab"
-  }
-}

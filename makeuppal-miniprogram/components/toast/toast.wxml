@@ -1,5 +1,0 @@
-<!-- components/toast/toast.wxml -->
-<view wx:if="{{visible}}" class="toast-container {{type}}" animation="{{animationData}}">
-  <text class="toast-icon" wx:if="{{icon}}">{{icon}}</text>
-  <text class="toast-message">{{message}}</text>
-</view>

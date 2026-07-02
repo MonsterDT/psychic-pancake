@@ -1,0 +1,21 @@
+<!-- pages/webview/webview.wxml - web-view 容器，加载 H5 demo -->
+<view class="webview-container">
+  <view wx:if="{{loading}}" class="loading-tip">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">正在加载妆伴 MakeupPal...</view>
+    <view class="loading-url">{{url}}</view>
+  </view>
+  <view wx:if="{{errorMsg}}" class="error-tip">
+    <view class="error-title">加载失败</view>
+    <view class="error-msg">{{errorMsg}}</view>
+    <button class="retry-btn" bindtap="retryLoad">重新加载</button>
+  </view>
+  <web-view
+    wx:if="{{!errorMsg}}"
+    class="webview"
+    src="{{url}}"
+    bindmessage="onMessage"
+    bindload="onWebViewLoad"
+    binderror="onWebViewError">
+  </web-view>
+</view>

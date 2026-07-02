@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "image-safe": "/components/image-safe/image-safe",
-    "companion-fab": "/components/companion-fab/companion-fab"
-  },
-  "navigationBarTitleText": "妆伴",
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
-}

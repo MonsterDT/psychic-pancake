@@ -1,1079 +1,3079 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>妆伴 MakeupPal · Demo Showcase</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #C4956A;
-            --primary-light: #D4B08A;
-            --primary-lighter: #E8D5C0;
-            --primary-lightest: #F5EDE4;
-            --primary-dark: #A87D56;
-            --bg: #FBF6F0;
-            --bg-card: #FFFFFF;
-            --text: #2D2A26;
-            --text-secondary: #6B6560;
-            --text-muted: #9E9790;
-            --border: #EDE4DA;
-            --shadow-sm: 0 2px 8px rgba(196, 149, 106, 0.06);
-            --shadow-md: 0 8px 32px rgba(196, 149, 106, 0.08);
-            --shadow-lg: 0 20px 60px rgba(196, 149, 106, 0.12);
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(196, 149, 106, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -30%;
-            left: -15%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(212, 176, 138, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .showcase-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 32px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ===== Header ===== */
-        .showcase-header {
-            text-align: center;
-            margin-bottom: 48px;
-            animation: fadeInDown 0.8s ease;
-        }
-
-        .brand-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: var(--primary-lightest);
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--primary-dark);
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-        }
-
-        .brand-badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--primary);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .showcase-title {
-            font-family: 'Noto Serif SC', 'PingFang SC', serif;
-            font-size: 42px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 12px;
-            letter-spacing: 2px;
-        }
-
-        .showcase-title span {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .showcase-subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            font-weight: 400;
-            letter-spacing: 1px;
-        }
-
-        .showcase-version {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 4px 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: 'Plus Jakarta Sans', monospace;
-        }
-
-        /* ===== Main Content ===== */
-        .showcase-main {
-            display: flex;
-            gap: 48px;
-            align-items: flex-start;
-            justify-content: center;
-        }
-
-        /* ===== iPhone Frame ===== */
-        .iphone-wrapper {
-            flex-shrink: 0;
-            animation: fadeInUp 0.8s ease 0.2s both;
-            position: sticky;
-            top: 40px;
-        }
-
-        .iphone-frame {
-            width: 300px;
-            height: 648px;
-            background: #1C1C1E;
-            border-radius: 52px;
-            padding: 9px;
-            box-shadow: 
-                0 0 0 2px #2C2C2E,
-                0 25px 80px rgba(0, 0, 0, 0.25),
-                0 50px 120px rgba(196, 149, 106, 0.15);
-            position: relative;
-        }
-
-        .iphone-screen {
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            border-radius: 42px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .iphone-notch {
-            position: absolute;
-            top: 11px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 105px;
-            height: 32px;
-            background: #000;
-            border-radius: 22px;
-            z-index: 20;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .iphone-notch::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 16px;
-            width: 7px;
-            height: 7px;
-            background: #1C1C1E;
-            border-radius: 50%;
-        }
-
-        .iphone-notch::after {
-            content: '';
-            position: absolute;
-            top: 9px;
-            right: 14px;
-            width: 10px;
-            height: 10px;
-            background: #0a0a0a;
-            border-radius: 50%;
-            box-shadow: inset 0 0 2px rgba(100, 100, 100, 0.3);
-        }
-
-        .iphone-screen iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            transform: scale(1);
-            transform-origin: top left;
-        }
-
-        .iphone-side-btn {
-            position: absolute;
-            background: #2C2C2E;
-            border-radius: 2px;
-        }
-
-        .btn-volume-up {
-            left: -3px;
-            top: 120px;
-            width: 3px;
-            height: 32px;
-        }
-
-        .btn-volume-down {
-            left: -3px;
-            top: 168px;
-            width: 3px;
-            height: 32px;
-        }
-
-        .btn-silent {
-            left: -3px;
-            top: 80px;
-            width: 3px;
-            height: 24px;
-        }
-
-        .btn-power {
-            right: -3px;
-            top: 140px;
-            width: 3px;
-            height: 60px;
-        }
-
-        .iphone-label {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        /* ===== Feature Panel ===== */
-        .feature-panel {
-            flex: 1;
-            max-width: 420px;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .panel-section {
-            margin-bottom: 28px;
-        }
-
-        .panel-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .panel-title::before {
-            content: '';
-            width: 20px;
-            height: 1px;
-            background: var(--primary-lighter);
-        }
-
-        /* ===== Page Nav List ===== */
-        .page-nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .page-nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 18px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-nav-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, var(--primary), var(--primary-light));
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .page-nav-item:hover {
-            border-color: var(--primary-lighter);
-            transform: translateX(4px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .page-nav-item.active {
-            border-color: var(--primary-lighter);
-            background: linear-gradient(90deg, rgba(196, 149, 106, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
-        }
-
-        .page-nav-item.active::before {
-            transform: scaleY(1);
-        }
-
-        .page-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            background: var(--primary-lightest);
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .page-nav-item.active .page-icon {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
-        }
-
-        .page-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .page-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 2px;
-        }
-
-        .page-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .page-arrow {
-            color: var(--text-muted);
-            font-size: 12px;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateX(-4px);
-        }
-
-        .page-nav-item.active .page-arrow,
-        .page-nav-item:hover .page-arrow {
-            opacity: 1;
-            transform: translateX(0);
-            color: var(--primary);
-        }
-
-        /* ===== Feature Detail Card ===== */
-        .feature-detail-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .feature-detail-header {
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feature-detail-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-detail-title .emoji {
-            font-size: 22px;
-        }
-
-        .feature-detail-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .feature-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px;
-            background: var(--primary-lightest);
-            border-radius: var(--radius-sm);
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .feature-item:hover {
-            background: var(--primary-lighter);
-            transform: translateX(4px);
-        }
-
-        .feature-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--primary);
-            margin-top: 6px;
-            flex-shrink: 0;
-        }
-
-        .feature-text {
-            flex: 1;
-        }
-
-        .feature-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 2px;
-        }
-
-        .feature-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        /* ===== Stats Row ===== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            border-color: var(--primary-lighter);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .stat-number {
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        /* ===== Quick Actions ===== */
-        .quick-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 28px;
-        }
-
-        .action-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .action-chip:hover {
-            border-color: var(--primary);
-            color: var(--primary-dark);
-            background: var(--primary-lightest);
-            transform: translateY(-1px);
-        }
-
-        .action-chip .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--primary);
-        }
-
-        /* ===== Core Capabilities ===== */
-        .capabilities-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .capability-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .capability-card:hover {
-            border-color: var(--primary-lighter);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .capability-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--primary-lightest);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .capability-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 4px;
-        }
-
-        .capability-desc {
-            font-size: 11px;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        /* ===== Animations ===== */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>妆伴 MakeupPal · 项目展示平台</title>
+<meta name="description" content="妆伴 MakeupPal —— 面向亚洲女性的智能美妆助手，融合妆容推荐、教程学习、虚拟试妆、商品购买的一站式美妆体验平台。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="_shared/js/echarts.min.js"></script>
+<style>
+/* ============================================================
+   妆伴 MakeupPal · Showcase Platform
+   Aesthetic: Editorial Luxury Beauty — 玫瑰金暖调 · 杂志级排版
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    /* 色彩系统 —— 玫瑰金暖调 */
+    --primary: #C4956A;
+    --primary-light: #D4B08A;
+    --primary-lighter: #E8D5C0;
+    --primary-lightest: #F5EDE4;
+    --primary-dark: #A87D56;
+    --primary-darker: #8B6543;
+    --bg: #FBF6F0;
+    --bg-warm: #F7EFE6;
+    --bg-card: #FFFFFF;
+    --bg-dark: #2D2520;
+    --text: #2D2A26;
+    --text-secondary: #6B6560;
+    --text-muted: #9E9790;
+    --text-light: #C4BDB6;
+    --border: #EDE4DA;
+    --border-light: #F5EDE4;
+    --accent: #E8B4B8;
+    --accent-warm: #F0D9B5;
+    --success: #7FB069;
+    --shadow-sm: 0 2px 8px rgba(196, 149, 106, 0.06);
+    --shadow-md: 0 8px 32px rgba(196, 149, 106, 0.10);
+    --shadow-lg: 0 20px 60px rgba(196, 149, 106, 0.14);
+    --shadow-xl: 0 40px 100px rgba(196, 149, 106, 0.18);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-2xl: 40px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --content-max: 1280px;
+}
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+    font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 背景氛围 —— 固定径向光斑 */
+body::before {
+    content: '';
+    position: fixed;
+    top: -15%; right: -10%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(196, 149, 106, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -25%; left: -15%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(212, 176, 138, 0.10) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 噪点纹理叠加 */
+.grain {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection { background: var(--primary-lighter); color: var(--primary-darker); }
+
+/* ============================================================
+   导航栏 —— 毛玻璃固定顶部
+   ============================================================ */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 16px 0;
+    transition: all 0.4s var(--ease);
+    background: rgba(251, 246, 240, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid transparent;
+}
+.nav.scrolled {
+    padding: 10px 0;
+    border-bottom-color: var(--border-light);
+    box-shadow: 0 4px 24px rgba(196, 149, 106, 0.06);
+}
+.nav-inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.nav-logo-mark {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(196, 149, 106, 0.3);
+}
+.nav-logo-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+}
+.nav-logo-text span {
+    color: var(--primary);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    margin-left: 4px;
+    letter-spacing: 0.5px;
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+}
+.nav-link {
+    display: block;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s var(--ease);
+    position: relative;
+}
+.nav-link:hover { color: var(--primary-dark); background: var(--primary-lightest); }
+.nav-link.active {
+    color: var(--primary-dark);
+    background: var(--primary-lightest);
+}
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s var(--ease);
+    box-shadow: 0 4px 16px rgba(196, 149, 106, 0.3);
+    flex-shrink: 0;
+}
+.nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(196, 149, 106, 0.4);
+}
+.nav-toggle {
+    display: none;
+    width: 40px; height: 40px;
+    border: none;
+    background: var(--bg-card);
+    border-radius: 10px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: var(--shadow-sm);
+}
+.nav-toggle span {
+    width: 18px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: all 0.3s var(--ease);
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================================
+   通用布局
+   ============================================================ */
+.section {
+    position: relative;
+    z-index: 2;
+    padding: 120px 32px;
+}
+.section-inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+}
+.section-alt { background: var(--bg-warm); }
+.section-dark {
+    background: var(--bg-dark);
+    color: #F5EDE4;
+}
+.section-dark .eyebrow { color: var(--primary-light); }
+.section-dark .section-title { color: #fff; }
+.section-dark .section-desc { color: var(--text-light); }
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+.eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--primary);
+}
+.eyebrow.center { justify-content: center; }
+.eyebrow.center::after {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--primary);
+}
+
+.section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 20px;
+}
+.section-title .accent {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.section-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin-bottom: 56px;
+}
+.section-head-center { text-align: center; margin-bottom: 64px; }
+.section-head-center .section-desc { margin-left: auto; margin-right: auto; }
+
+/* 滚动入场动画 */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ============================================================
+   1. Hero 首屏
+   ============================================================ */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 32px 100px;
+    overflow: hidden;
+    z-index: 2;
+}
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 30%, rgba(196, 149, 106, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(232, 180, 184, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, #FFF8F0 0%, #F7EFE6 100%);
+    z-index: 0;
+}
+/* 装饰圆环 */
+.hero-deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+.hero-deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(196, 149, 106, 0.18);
+}
+.hero-deco-circle.c1 { width: 600px; height: 600px; top: -100px; right: -150px; animation: floatSlow 18s ease-in-out infinite; }
+.hero-deco-circle.c2 { width: 400px; height: 400px; top: -50px; right: -50px; border-color: rgba(196, 149, 106, 0.12); animation: floatSlow 22s ease-in-out infinite reverse; }
+.hero-deco-circle.c3 { width: 300px; height: 300px; bottom: -80px; left: -60px; border-color: rgba(232, 180, 184, 0.20); animation: floatSlow 16s ease-in-out infinite; }
+@keyframes floatSlow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-20px, 30px) scale(1.05); }
+}
+.hero-deco-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.4;
+}
+.hero-deco-dot.d1 { top: 25%; left: 15%; animation: pulse 3s ease-in-out infinite; }
+.hero-deco-dot.d2 { top: 65%; right: 20%; animation: pulse 3s ease-in-out infinite 1s; background: var(--accent); }
+.hero-deco-dot.d3 { bottom: 30%; left: 40%; animation: pulse 3s ease-in-out infinite 0.5s; }
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.4); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 900px;
+}
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-light);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary-dark);
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+    animation: fadeInDown 0.8s var(--ease) both;
+}
+.hero-badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 3px rgba(127, 176, 105, 0.2);
+    animation: pulse 2s infinite;
+}
+.hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(44px, 8vw, 96px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 8px;
+    animation: fadeInUp 0.9s var(--ease) 0.1s both;
+}
+.hero-title .en {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 500;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 12px;
+}
+.hero-slogan {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 28px auto 0;
+    animation: fadeInUp 0.9s var(--ease) 0.2s both;
+}
+.hero-slogan em {
+    font-style: normal;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+.hero-cta-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 44px;
+    animation: fadeInUp 0.9s var(--ease) 0.3s both;
+}
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.3s var(--ease);
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(196, 149, 106, 0.35);
+}
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(196, 149, 106, 0.45);
+}
+.btn-ghost {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+    background: #fff;
+    border-color: var(--primary-lighter);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+    animation: fadeInUp 0.9s var(--ease) 0.4s both;
+}
+.hero-stat {
+    min-width: 140px;
+    padding: 24px 28px;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.4s var(--ease);
+}
+.hero-stat:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-lighter);
+}
+.hero-stat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+.hero-stat-num .unit {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 2px;
+}
+.hero-stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: fadeInUp 1s var(--ease) 0.6s both;
+}
+.scroll-hint-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--primary), transparent);
+    position: relative;
+    overflow: hidden;
+}
+.scroll-hint-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 12px;
+    background: var(--primary);
+    animation: scrollDown 2s ease-in-out infinite;
+}
+@keyframes scrollDown {
+    0% { transform: translateY(-12px); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(40px); opacity: 0; }
+}
+
+/* ============================================================
+   2. 项目概述
+   ============================================================ */
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+}
+.overview-text .lead {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 24px;
+}
+.overview-text p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+.overview-vision {
+    margin-top: 32px;
+    padding: 28px;
+    background: linear-gradient(135deg, var(--primary-lightest), rgba(232, 213, 192, 0.4));
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary);
+}
+.overview-vision-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+.overview-vision-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+/* 痛点列表 */
+.pain-points {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 32px;
+}
+.pain-point {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: all 0.3s var(--ease);
+}
+.pain-point:hover {
+    border-color: var(--primary-lighter);
+    transform: translateX(6px);
+    box-shadow: var(--shadow-sm);
+}
+.pain-point-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--primary-lightest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.pain-point-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+.pain-point-text span {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* 用户画像网格 */
+.persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+}
+.persona-card {
+    padding: 24px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.persona-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+}
+.persona-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-lighter);
+}
+.persona-card:hover::before { transform: scaleX(1); }
+.persona-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-warm), var(--primary-lighter));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+.persona-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+.persona-tag {
+    display: inline-block;
+    font-size: 11px;
+    color: var(--primary-dark);
+    background: var(--primary-lightest);
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.persona-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ============================================================
+   3. 功能演示
+   ============================================================ */
+.demo-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 56px;
+    align-items: start;
+}
+.demo-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: sticky;
+    top: 100px;
+}
+.demo-tab {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.35s var(--ease);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    font-family: inherit;
+    width: 100%;
+}
+.demo-tab::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--primary), var(--primary-light));
+    transform: scaleY(0);
+    transition: transform 0.35s var(--ease);
+}
+.demo-tab:hover {
+    border-color: var(--primary-lighter);
+    transform: translateX(4px);
+}
+.demo-tab.active {
+    border-color: var(--primary-lighter);
+    background: linear-gradient(90deg, rgba(196, 149, 106, 0.08), transparent);
+    box-shadow: var(--shadow-sm);
+}
+.demo-tab.active::before { transform: scaleY(1); }
+.demo-tab-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--primary-lightest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    transition: all 0.35s var(--ease);
+}
+.demo-tab.active .demo-tab-icon {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 6px 16px rgba(196, 149, 106, 0.35);
+}
+.demo-tab-info { flex: 1; min-width: 0; }
+.demo-tab-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.demo-tab-count {
+    font-size: 11px;
+    color: var(--primary-dark);
+    background: var(--primary-lightest);
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-weight: 600;
+}
+.demo-tab-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Demo 设备区 */
+.demo-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.demo-device-wrap {
+    position: relative;
+    margin-bottom: 24px;
+}
+.demo-device {
+    width: 340px;
+    height: 700px;
+    background: #1C1C1E;
+    border-radius: 52px;
+    padding: 10px;
+    box-shadow:
+        0 0 0 2px #2C2C2E,
+        0 30px 80px rgba(0, 0, 0, 0.25),
+        0 60px 140px rgba(196, 149, 106, 0.18);
+    position: relative;
+}
+.demo-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--bg);
+    border-radius: 42px;
+    overflow: hidden;
+    position: relative;
+}
+.demo-notch {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 32px;
+    background: #000;
+    border-radius: 22px;
+    z-index: 20;
+    pointer-events: none;
+}
+.demo-notch::before {
+    content: '';
+    position: absolute;
+    top: 10px; left: 16px;
+    width: 7px; height: 7px;
+    background: #1C1C1E;
+    border-radius: 50%;
+}
+.demo-notch::after {
+    content: '';
+    position: absolute;
+    top: 9px; right: 14px;
+    width: 10px; height: 10px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    box-shadow: inset 0 0 2px rgba(100, 100, 100, 0.3);
+}
+.demo-screen iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+.demo-side-btn {
+    position: absolute;
+    background: #2C2C2E;
+    border-radius: 2px;
+}
+.demo-btn-vol-up { left: -3px; top: 130px; width: 3px; height: 34px; }
+.demo-btn-vol-down { left: -3px; top: 180px; width: 3px; height: 34px; }
+.demo-btn-silent { left: -3px; top: 86px; width: 3px; height: 26px; }
+.demo-btn-power { right: -3px; top: 150px; width: 3px; height: 64px; }
+
+.demo-device-label {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    margin-top: 16px;
+}
+.demo-device-label strong {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+/* 功能详情卡 */
+.demo-detail {
+    width: 100%;
+    max-width: 540px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+}
+.demo-detail-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+}
+.demo-detail-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 6px 16px rgba(196, 149, 106, 0.3);
+}
+.demo-detail-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+}
+.demo-detail-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+.demo-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.demo-feature {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: var(--primary-lightest);
+    border-radius: var(--radius-sm);
+    transition: all 0.25s var(--ease);
+}
+.demo-feature:hover {
+    background: var(--primary-lighter);
+    transform: translateY(-2px);
+}
+.demo-feature-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    margin-top: 7px;
+    flex-shrink: 0;
+}
+.demo-feature-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+.demo-feature-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ============================================================
+   4. 技术架构
+   ============================================================ */
+.arch-diagram {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 48px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+}
+.arch-diagram::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
+}
+.arch-layer {
+    margin-bottom: 28px;
+}
+.arch-layer:last-child { margin-bottom: 0; }
+.arch-layer-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.arch-layer-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--primary-lightest);
+    color: var(--primary-dark);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.arch-layer-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+}
+.arch-layer-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+.arch-layer-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 40px;
+}
+.arch-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-warm);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text);
+    transition: all 0.3s var(--ease);
+}
+.arch-item:hover {
+    border-color: var(--primary-lighter);
+    background: var(--primary-lightest);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+.arch-item-icon { font-size: 16px; }
+.arch-item strong { font-weight: 600; }
+.arch-item span { color: var(--text-muted); font-size: 11px; }
+
+/* 多端覆盖 */
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.platform-card {
+    padding: 32px 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.platform-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-lighter);
+}
+.platform-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, var(--primary-lightest));
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+}
+.platform-card:hover::after { opacity: 1; }
+.platform-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--primary-lightest), var(--primary-lighter));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 18px;
+}
+.platform-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+.platform-tech {
+    font-size: 12px;
+    color: var(--primary-dark);
+    font-weight: 500;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+.platform-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+.platform-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 100px;
+}
+.platform-status.live { background: rgba(127, 176, 105, 0.12); color: var(--success); }
+.platform-status.plan { background: var(--primary-lightest); color: var(--primary-dark); }
+.platform-status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ============================================================
+   5. 关键特性
+   ============================================================ */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.feature-card {
+    padding: 32px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-lighter);
+}
+.feature-card-glow {
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, var(--primary-lighter) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+}
+.feature-card:hover .feature-card-glow { opacity: 0.6; }
+.feature-card-num {
+    position: absolute;
+    top: 20px; right: 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--border);
+    line-height: 1;
+    transition: color 0.4s var(--ease);
+}
+.feature-card:hover .feature-card-num { color: var(--primary-lighter); }
+.feature-card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(196, 149, 106, 0.3);
+    position: relative;
+    z-index: 1;
+}
+.feature-card-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+.feature-card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   6. 使用场景
+   ============================================================ */
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+.scenario-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all 0.4s var(--ease);
+    display: flex;
+    flex-direction: column;
+}
+.scenario-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-lighter);
+}
+.scenario-banner {
+    height: 140px;
+    background: linear-gradient(135deg, var(--primary-lightest), var(--primary-lighter));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+    position: relative;
+    overflow: hidden;
+}
+.scenario-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.5), transparent 60%);
+}
+.scenario-card:nth-child(2) .scenario-banner { background: linear-gradient(135deg, #F5E6E8, #E8B4B8); }
+.scenario-card:nth-child(3) .scenario-banner { background: linear-gradient(135deg, #FFF4E0, #F0D9B5); }
+.scenario-card:nth-child(4) .scenario-banner { background: linear-gradient(135deg, #E8F0E4, #C5D9B8); }
+.scenario-card:nth-child(5) .scenario-banner { background: linear-gradient(135deg, #F0EAF5, #D4C5E0); }
+.scenario-card:nth-child(6) .scenario-banner { background: linear-gradient(135deg, #FFEFE5, #FFD4B8); }
+.scenario-body {
+    padding: 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.scenario-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.scenario-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--primary-lightest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.scenario-user-info strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+}
+.scenario-user-info span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+.scenario-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.scenario-story {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    flex: 1;
+}
+.scenario-flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+.scenario-flow-step {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--primary-dark);
+    background: var(--primary-lightest);
+    padding: 5px 10px;
+    border-radius: 100px;
+}
+.scenario-flow-arrow {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+/* ============================================================
+   7. 成果数据
+   ============================================================ */
+.data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+.data-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+}
+.data-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.data-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.data-card-title-icon { font-size: 20px; }
+.data-card-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-warm);
+    padding: 4px 10px;
+    border-radius: 100px;
+}
+.chart-box {
+    width: 100%;
+    height: 320px;
+}
+.data-card.full { grid-column: 1 / -1; }
+.data-card.full .chart-box { height: 380px; }
+
+/* 数据指标卡 */
+.metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.metric-card {
+    padding: 28px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-lighter);
+}
+.metric-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transform: scaleX(0);
+    transition: transform 0.4s var(--ease);
+}
+.metric-card:hover::before { transform: scaleX(1); }
+.metric-icon { font-size: 28px; margin-bottom: 12px; }
+.metric-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+.metric-num .unit { font-size: 16px; font-weight: 600; }
+.metric-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.metric-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ============================================================
+   8. 团队介绍
+   ============================================================ */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+.team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.4s var(--ease);
+    position: relative;
+    overflow: hidden;
+}
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-lighter);
+}
+.team-avatar {
+    width: 96px; height: 96px;
+    border-radius: 50%;
+    margin: 0 auto 18px;
+    background: linear-gradient(135deg, var(--primary-lightest), var(--primary-lighter));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+    border: 3px solid #fff;
+    box-shadow: 0 8px 24px rgba(196, 149, 106, 0.2);
+}
+.team-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; right: 4px;
+    width: 20px; height: 20px;
+    background: var(--success);
+    border: 3px solid #fff;
+    border-radius: 50%;
+}
+.team-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+.team-role {
+    font-size: 13px;
+    color: var(--primary-dark);
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+.team-bio {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+.team-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+.team-skill {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-warm);
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+}
+
+/* 团队文化 */
+.team-culture {
+    margin-top: 64px;
+    padding: 48px;
+    background: linear-gradient(135deg, var(--primary-lightest), rgba(232, 213, 192, 0.4));
+    border-radius: var(--radius-xl);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: center;
+}
+.team-culture-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+}
+.team-culture-title .accent {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.team-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.team-value {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+.team-value-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+}
+.team-value-text strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+.team-value-text span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ============================================================
+   9. Footer
+   ============================================================ */
+.footer {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    padding: 80px 32px 40px;
+    position: relative;
+    z-index: 2;
+}
+.footer-inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+}
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 32px;
+}
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.footer-brand-mark {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 22px;
+}
+.footer-brand-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+}
+.footer-brand-name span {
+    color: var(--primary-light);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    margin-left: 6px;
+}
+.footer-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-light);
+    max-width: 340px;
+    margin-bottom: 20px;
+}
+.footer-tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.footer-tech {
+    font-size: 11px;
+    color: var(--primary-light);
+    background: rgba(196, 149, 106, 0.12);
+    border: 1px solid rgba(196, 149, 106, 0.2);
+    padding: 5px 12px;
+    border-radius: 100px;
+}
+.footer-col-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a {
+    font-size: 13px;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.3s var(--ease);
+}
+.footer-col a:hover { color: var(--primary-light); }
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.footer-copy {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+.footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s var(--ease);
+}
+.footer-links a:hover { color: var(--primary-light); }
+
+/* ============================================================
+   动画
+   ============================================================ */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width: 1024px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .demo-layout { grid-template-columns: 320px 1fr; gap: 40px; }
+    .overview-grid { grid-template-columns: 1fr; gap: 48px; }
+    .persona-grid { grid-template-columns: repeat(2, 1fr); }
+    .platform-grid { grid-template-columns: 1fr; }
+    .scenarios-grid { grid-template-columns: repeat(2, 1fr); }
+    .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    .data-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .team-culture { grid-template-columns: 1fr; gap: 32px; }
+}
+
+@media (max-width: 768px) {
+    .section { padding: 80px 20px; }
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(251, 246, 240, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 16px 20px;
+        gap: 4px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+    }
+    .nav-link { width: 100%; }
+    .nav-cta { display: none; }
+
+    .hero { padding: 120px 20px 80px; }
+    .hero-stats { gap: 10px; }
+    .hero-stat { min-width: calc(50% - 5px); padding: 18px 14px; }
+    .hero-stat-num { font-size: 30px; }
+
+    .overview-grid { gap: 40px; }
+    .persona-grid { grid-template-columns: 1fr; }
+
+    .demo-layout { grid-template-columns: 1fr; gap: 40px; }
+    .demo-tabs {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        gap: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .demo-tab { min-width: 200px; flex-shrink: 0; }
+    .demo-device { width: 300px; height: 620px; }
+    .demo-features { grid-template-columns: 1fr; }
+
+    .arch-diagram { padding: 28px 20px; }
+    .arch-layer-items { padding-left: 0; }
+    .arch-layer-head { flex-wrap: wrap; }
+    .arch-layer-desc { margin-left: 0; width: 100%; }
+
+    .features-grid { grid-template-columns: 1fr; }
+    .scenarios-grid { grid-template-columns: 1fr; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .team-values { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 44px; }
+    .hero-cta-row { flex-direction: column; width: 100%; }
+    .hero-cta-row .btn { width: 100%; justify-content: center; }
+    .hero-stat { min-width: 100%; }
+    .metrics-row { grid-template-columns: 1fr; }
+    .demo-device { width: 280px; height: 580px; }
+    .section-title { font-size: 28px; }
+}
+</style>
 </head>
 <body>
-    <div class="showcase-container">
-        <!-- Header -->
-        <header class="showcase-header">
-            <div class="brand-badge">
-                <span class="brand-badge-dot"></span>
-                AI 虚拟试妆美妆 App
+
+<div class="grain"></div>
+
+<!-- ============================================================
+     导航栏
+     ============================================================ -->
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">
+            <div class="nav-logo-mark">妆</div>
+            <div class="nav-logo-text">妆伴<span>MakeupPal</span></div>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#overview" class="nav-link">概述</a></li>
+            <li><a href="#demo" class="nav-link">功能</a></li>
+            <li><a href="#architecture" class="nav-link">架构</a></li>
+            <li><a href="#features" class="nav-link">特性</a></li>
+            <li><a href="#scenarios" class="nav-link">场景</a></li>
+            <li><a href="#data" class="nav-link">数据</a></li>
+            <li><a href="#team" class="nav-link">团队</a></li>
+        </ul>
+        <a href="#demo" class="nav-cta">
+            <span>体验 Demo</span>
+            <span>→</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ============================================================
+     1. Hero 首屏
+     ============================================================ -->
+<section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-deco">
+        <div class="hero-deco-circle c1"></div>
+        <div class="hero-deco-circle c2"></div>
+        <div class="hero-deco-circle c3"></div>
+        <div class="hero-deco-dot d1"></div>
+        <div class="hero-deco-dot d2"></div>
+        <div class="hero-deco-dot d3"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            <span>V3.6.0 · 智能美妆助手 · trae 大赛参赛作品</span>
+        </div>
+        <h1 class="hero-title">
+            妆伴
+            <span class="en">MakeupPal</span>
+        </h1>
+        <p class="hero-slogan">
+            你的专属 <em>AI 美妆顾问</em>，融合妆容推荐、教程学习、虚拟试妆与商品购买，<br>
+            让每一次上妆都恰到好处。
+        </p>
+        <div class="hero-cta-row">
+            <a href="#demo" class="btn btn-primary">
+                <span>立即体验 Demo</span>
+                <span>→</span>
+            </a>
+            <a href="#overview" class="btn btn-ghost">
+                <span>了解项目</span>
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-num">7<span class="unit">大</span></div>
+                <div class="hero-stat-label">功能模块</div>
             </div>
-            <h1 class="showcase-title">妆伴 <span>MakeupPal</span></h1>
-            <p class="showcase-subtitle">你的专属 AI 美妆顾问 · 让每一次上妆都恰到好处</p>
-            <div class="showcase-version">v3.2.0 · Showcase Demo</div>
-        </header>
+            <div class="hero-stat">
+                <div class="hero-stat-num">3<span class="unit">端</span></div>
+                <div class="hero-stat-label">多端覆盖</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">43<span class="unit">+</span></div>
+                <div class="hero-stat-label">页面</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">V3.6</div>
+                <div class="hero-stat-label">当前版本</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-num">9<span class="unit">版</span></div>
+                <div class="hero-stat-label">迭代历程</div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-hint">
+        <span>向下滚动</span>
+        <div class="scroll-hint-line"></div>
+    </div>
+</section>
 
-        <!-- Main Content -->
-        <div class="showcase-main">
-            <!-- iPhone Frame -->
-            <div class="iphone-wrapper">
-                <div class="iphone-frame">
-                    <div class="iphone-side-btn btn-silent"></div>
-                    <div class="iphone-side-btn btn-volume-up"></div>
-                    <div class="iphone-side-btn btn-volume-down"></div>
-                    <div class="iphone-side-btn btn-power"></div>
-                    <div class="iphone-screen">
-                        <div class="iphone-notch"></div>
-                        <iframe id="demoFrame" src="demo-dist/index.html" title="MakeupPal Demo"></iframe>
+<!-- ============================================================
+     2. 项目概述
+     ============================================================ -->
+<section class="section" id="overview">
+    <div class="section-inner">
+        <div class="overview-grid">
+            <div class="overview-text reveal">
+                <div class="eyebrow">PROJECT OVERVIEW · 项目概述</div>
+                <h2 class="section-title">让美妆<span class="accent">不再盲目</span><br>让选择<span class="accent">恰到好处</span></h2>
+                <p class="lead">妆伴 MakeupPal 是一款面向亚洲女性的智能美妆助手 Web 应用，融合妆容推荐、教程学习、虚拟试妆、商品购买的一站式美妆体验平台。</p>
+                <p>我们以「AI 美妆闺蜜」为核心交互理念，通过面部档案分析、场景化推荐引擎、Tinder 风格滑动选妆、虚拟试妆预览与成分安全扫描，构建从「发现灵感」到「下单购买」的完整美妆决策闭环。</p>
+
+                <div class="overview-vision">
+                    <div class="overview-vision-label">PRODUCT VISION · 产品愿景</div>
+                    <div class="overview-vision-text">「让每一位女性都能找到最适合自己的妆容，让科技服务于美，而非定义美。」</div>
+                </div>
+
+                <div class="pain-points">
+                    <div class="pain-point">
+                        <div class="pain-point-icon">😣</div>
+                        <div class="pain-point-text">
+                            <strong>妆容选择困难</strong>
+                            <span>海量妆容教程不知哪种适合自己，试错成本高</span>
+                        </div>
+                    </div>
+                    <div class="pain-point">
+                        <div class="pain-point-icon">🧪</div>
+                        <div class="pain-point-text">
+                            <strong>成分安全焦虑</strong>
+                            <span>敏感肌无法快速判断产品成分是否安全</span>
+                        </div>
+                    </div>
+                    <div class="pain-point">
+                        <div class="pain-point-icon">📱</div>
+                        <div class="pain-point-text">
+                            <strong>试妆体验割裂</strong>
+                            <span>看教程、试妆容、买商品分散在多个 App</span>
+                        </div>
+                    </div>
+                    <div class="pain-point">
+                        <div class="pain-point-icon">💸</div>
+                        <div class="pain-point-text">
+                            <strong>冲动消费浪费</strong>
+                            <span>买回不适合的产品闲置，造成金钱浪费</span>
+                        </div>
                     </div>
                 </div>
-                <div class="iphone-label">iPhone 17 Pro · Demo Showcase</div>
             </div>
 
-            <!-- Feature Panel -->
-            <div class="feature-panel">
-                <!-- Stats -->
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label">核心页面</div>
+            <div class="reveal reveal-delay-2">
+                <div class="eyebrow">TARGET USERS · 目标用户画像</div>
+                <h3 style="font-family:'Noto Serif SC',serif;font-size:22px;font-weight:600;color:var(--text);margin-bottom:8px;">六类核心用户</h3>
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">覆盖美妆新手到资深达人的完整用户光谱</p>
+                <div class="persona-grid">
+                    <div class="persona-card">
+                        <div class="persona-avatar">🌸</div>
+                        <div class="persona-name">美妆新手</div>
+                        <div class="persona-tag">18-24岁</div>
+                        <div class="persona-desc">刚入门，需要清晰指引和教程，怕出错</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">功能模块</div>
+                    <div class="persona-card">
+                        <div class="persona-avatar">💼</div>
+                        <div class="persona-name">职场白领</div>
+                        <div class="persona-tag">25-35岁</div>
+                        <div class="persona-desc">追求高效通勤妆，时间紧、要专业</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">6大</div>
-                        <div class="stat-label">弹窗体系</div>
+                    <div class="persona-card">
+                        <div class="persona-avatar">🎨</div>
+                        <div class="persona-name">美妆爱好者</div>
+                        <div class="persona-tag">全年龄</div>
+                        <div class="persona-desc">热衷尝试新妆容，乐于分享创作</div>
                     </div>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="panel-section">
-                    <div class="panel-title">快速演示</div>
-                    <div class="quick-actions">
-                        <span class="action-chip" onclick="showOnboarding()">
-                            <span class="dot"></span>
-                            Onboarding 引导
-                        </span>
-                        <span class="action-chip" onclick="showTemplateDetail()">
-                            <span class="dot"></span>
-                            模板详情
-                        </span>
-                        <span class="action-chip" onclick="showGpCenter()">
-                            <span class="dot"></span>
-                            焕新值中心
-                        </span>
-                        <span class="action-chip" onclick="showShare()">
-                            <span class="dot"></span>
-                            分享面板
-                        </span>
+                    <div class="persona-card">
+                        <div class="persona-avatar">🍃</div>
+                        <div class="persona-name">敏感肌用户</div>
+                        <div class="persona-tag">关注成分</div>
+                        <div class="persona-desc">对成分极度敏感，需要安全扫描</div>
                     </div>
-                </div>
-
-                <!-- Page Navigation -->
-                <div class="panel-section">
-                    <div class="panel-title">核心页面</div>
-                    <div class="page-nav-list" id="pageNavList">
-                        <div class="page-nav-item active" data-page="home" onclick="switchPage(this, 'home')">
-                            <div class="page-icon">🏠</div>
-                            <div class="page-info">
-                                <div class="page-name">首页</div>
-                                <div class="page-desc">推荐 Feed · 热度榜 · 金刚区</div>
-                            </div>
-                            <div class="page-arrow">→</div>
-                        </div>
-                        <div class="page-nav-item" data-page="library" onclick="switchPage(this, 'library')">
-                            <div class="page-icon">📚</div>
-                            <div class="page-info">
-                                <div class="page-name">颜库</div>
-                                <div class="page-desc">模板瀑布流 · 分类浏览 · 问答</div>
-                            </div>
-                            <div class="page-arrow">→</div>
-                        </div>
-                        <div class="page-nav-item" data-page="mirror" onclick="switchPage(this, 'mirror')">
-                            <div class="page-icon">🪞</div>
-                            <div class="page-info">
-                                <div class="page-name">焕新镜面</div>
-                                <div class="page-desc">AI 虚拟试妆 · Chat 美妆顾问</div>
-                            </div>
-                            <div class="page-arrow">→</div>
-                        </div>
-                        <div class="page-nav-item" data-page="mall" onclick="switchPage(this, 'mall')">
-                            <div class="page-icon">🛍️</div>
-                            <div class="page-info">
-                                <div class="page-name">市集</div>
-                                <div class="page-desc">妆容商城 · 分类筛选 · 详情页</div>
-                            </div>
-                            <div class="page-arrow">→</div>
-                        </div>
-                        <div class="page-nav-item" data-page="profile" onclick="switchPage(this, 'profile')">
-                            <div class="page-icon">👤</div>
-                            <div class="page-info">
-                                <div class="page-name">我的</div>
-                                <div class="page-desc">个人中心 · GP 中心 · 工具箱</div>
-                            </div>
-                            <div class="page-arrow">→</div>
-                        </div>
+                    <div class="persona-card">
+                        <div class="persona-avatar">👵</div>
+                        <div class="persona-name">银发族</div>
+                        <div class="persona-tag">55岁+</div>
+                        <div class="persona-desc">希望优雅得体，操作要简单直观</div>
                     </div>
-                </div>
-
-                <!-- Feature Detail -->
-                <div class="panel-section">
-                    <div class="panel-title">功能亮点</div>
-                    <div class="feature-detail-card" id="featureDetail">
-                        <div class="feature-detail-header">
-                            <div class="feature-detail-title">
-                                <span class="emoji">🏠</span>
-                                <span>首页 · 内容发现入口</span>
-                            </div>
-                            <div class="feature-detail-subtitle">
-                                个性化推荐 Feed，热度榜单实时更新，一键进入核心功能
-                            </div>
-                        </div>
-                        <div class="feature-list" id="featureList">
-                            <div class="feature-item">
-                                <div class="feature-dot"></div>
-                                <div class="feature-text">
-                                    <div class="feature-name">面部档案卡</div>
-                                    <div class="feature-desc">肤质/脸型/骨相评分一目了然，点击查看详情</div>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-dot"></div>
-                                <div class="feature-text">
-                                    <div class="feature-name">金刚区五宫格</div>
-                                    <div class="feature-desc">镜面模式/局部搜索/商城/成分扫描/创作者快速入口</div>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-dot"></div>
-                                <div class="feature-text">
-                                    <div class="feature-name">本周热度榜</div>
-                                    <div class="feature-desc">Top 3 高亮展示，横向滚动浏览热门妆容</div>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-dot"></div>
-                                <div class="feature-text">
-                                    <div class="feature-name">瀑布流推荐</div>
-                                    <div class="feature-desc">双列卡片布局，算法推荐个性化妆容内容</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Core Capabilities -->
-                <div class="panel-section">
-                    <div class="panel-title">核心能力</div>
-                    <div class="capabilities-grid">
-                        <div class="capability-card">
-                            <div class="capability-icon">🔍</div>
-                            <div class="capability-name">成分安全扫描</div>
-                            <div class="capability-desc">拍照识别成分，敏感肌风险预警</div>
-                        </div>
-                        <div class="capability-card">
-                            <div class="capability-icon">🎨</div>
-                            <div class="capability-name">风格偏好</div>
-                            <div class="capability-desc">智能匹配适合你的妆容风格</div>
-                        </div>
-                        <div class="capability-card">
-                            <div class="capability-icon">📊</div>
-                            <div class="capability-name">肤质报告</div>
-                            <div class="capability-desc">AI 分析肤质，定制护肤建议</div>
-                        </div>
-                        <div class="capability-card">
-                            <div class="capability-icon">💎</div>
-                            <div class="capability-name">焕新值经济</div>
-                            <div class="capability-desc">任务驱动，GP 兑换商城闭环</div>
-                        </div>
+                    <div class="persona-card">
+                        <div class="persona-avatar">⭐</div>
+                        <div class="persona-name">美妆达人</div>
+                        <div class="persona-tag">KOL/创作者</div>
+                        <div class="persona-desc">发布妆容模板，影响他人、变现流量</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <script>
-        const pageFeatures = {
-            home: {
-                emoji: '🏠',
-                title: '首页 · 内容发现入口',
-                subtitle: '个性化推荐 Feed，热度榜单实时更新，一键进入核心功能',
-                features: [
-                    { name: '面部档案卡', desc: '肤质/脸型/骨相评分一目了然，点击查看详情' },
-                    { name: '金刚区五宫格', desc: '镜面模式/局部搜索/商城/成分扫描/创作者快速入口' },
-                    { name: '本周热度榜', desc: 'Top 3 高亮展示，横向滚动浏览热门妆容' },
-                    { name: '瀑布流推荐', desc: '双列卡片布局，算法推荐个性化妆容内容' }
-                ]
-            },
-            library: {
-                emoji: '📚',
-                title: '颜库 · 内容消费主场景',
-                subtitle: '海量妆容模板，7 大分类精准筛选，找到最适合你的那一款',
-                features: [
-                    { name: '七大主分类', desc: '达人精选/局部拆解/美妆问答/国风/银发/大牌/明星同款' },
-                    { name: '动态子分类', desc: '点击主分类动态加载子分类，层级清晰，筛选精准' },
-                    { name: '瀑布流布局', desc: '小红书风格双列卡片，不规则比例更显真实' },
-                    { name: '等级标签体系', desc: '免费/L2 精选/L3 大师，快速识别模板等级' }
-                ]
-            },
-            mirror: {
-                emoji: '🪞',
-                title: '焕新镜面 · AI 虚拟试妆',
-                subtitle: 'Chat + Mirror 双模式，对话推荐到一键试妆完整闭环',
-                features: [
-                    { name: 'AI 虚拟试妆', desc: '前置摄像头实时上脸效果预览，所见即所得' },
-                    { name: 'Chat 美妆顾问', desc: 'AI 对话智能推荐，快捷提问一键触发' },
-                    { name: '双模式切换', desc: '顶部 Chat/Mirror 切换按钮，流畅过渡' },
-                    { name: '滤镜与补光', desc: '美颜滤镜开关，色温补光调节，多档预设可选' }
-                ]
-            },
-            mall: {
-                emoji: '🛍️',
-                title: '市集 · 商业变现入口',
-                subtitle: '六大子分类，多层级筛选，商品详情页完整展示',
-                features: [
-                    { name: '六大子分类', desc: '达人推荐/自营品牌/热门榜/国风/银发/明星同款' },
-                    { name: '孙分类体系', desc: '每个子分类下有 5-6 个孙分类，精准定位' },
-                    { name: '商品详情页', desc: '大图展示/创作者信息/妆容步骤/产品清单' },
-                    { name: '一键试妆', desc: '详情页底部直达试妆，购买到体验无缝衔接' }
-                ]
-            },
-            profile: {
-                emoji: '👤',
-                title: '我的 · 用户资产与服务',
-                subtitle: '个人中心，焕新值管理，工具箱，品牌合作一站式',
-                features: [
-                    { name: '焕新值 GP', desc: '任务体系驱动活跃，兑换商城闭环变现' },
-                    { name: '我的模板', desc: '已收藏/已购买 Tab 切换，管理个人妆容资产' },
-                    { name: '功能工具箱', desc: '风格偏好/我的报告/门店地图/创作者中心' },
-                    { name: '品牌合作中心', desc: 'B 端品牌方入驻入口，SaaS 数据看板' }
-                ]
-            }
-        };
+<!-- ============================================================
+     3. 功能演示
+     ============================================================ -->
+<section class="section section-alt" id="demo">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">FEATURE DEMO · 功能演示</div>
+            <h2 class="section-title">七大功能模块 · <span class="accent">实时可交互</span></h2>
+            <p class="section-desc">点击左侧模块卡片，在右侧 iPhone 设备中实时体验妆伴的核心功能。每一个模块都经过精心设计，确保流畅、直观、有用的美妆体验。</p>
+        </div>
 
-        function switchPage(el, page) {
-            document.querySelectorAll('.page-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            el.classList.add('active');
+        <div class="demo-layout">
+            <div class="demo-tabs reveal" id="demoTabs">
+                <button class="demo-tab active" data-page="home">
+                    <div class="demo-tab-icon">🏠</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">首页 <span class="demo-tab-count">5 功能</span></div>
+                        <div class="demo-tab-desc">面部档案卡 / 金刚区 / 热度榜</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="library">
+                    <div class="demo-tab-icon">💄</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">颜库 <span class="demo-tab-count">4 功能</span></div>
+                        <div class="demo-tab-desc">Tinder 卡片滑动 / 瀑布流</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="mirror">
+                    <div class="demo-tab-icon">✨</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">焕新 <span class="demo-tab-count">4 功能</span></div>
+                        <div class="demo-tab-desc">虚拟试妆 / 拍照记录</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="mall">
+                    <div class="demo-tab-icon">🛍️</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">市集 <span class="demo-tab-count">6 功能</span></div>
+                        <div class="demo-tab-desc">商品列表 / 购物车 / 下单</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="profile">
+                    <div class="demo-tab-icon">👤</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">我的 <span class="demo-tab-count">8 功能</span></div>
+                        <div class="demo-tab-desc">焕新值 / 模板 / 报告 / 订单</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="companion">
+                    <div class="demo-tab-icon">🌸</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">美妆闺蜜 AI <span class="demo-tab-count">5 功能</span></div>
+                        <div class="demo-tab-desc">小美对话 / 8 场景推荐</div>
+                    </div>
+                </button>
+                <button class="demo-tab" data-page="scan">
+                    <div class="demo-tab-icon">🔬</div>
+                    <div class="demo-tab-info">
+                        <div class="demo-tab-name">成分扫描 <span class="demo-tab-count">3 功能</span></div>
+                        <div class="demo-tab-desc">拍照 / 相册 / 手动输入</div>
+                    </div>
+                </button>
+            </div>
 
-            const data = pageFeatures[page];
-            if (data) {
-                updateFeatureDetail(data);
-            }
-
-            const frame = document.getElementById('demoFrame');
-            if (frame && frame.contentWindow && frame.contentWindow.switchTab) {
-                try {
-                    frame.contentWindow.switchTab(page);
-                } catch (e) {
-                    console.log('Switch tab failed:', e);
-                }
-            }
-        }
-
-        function updateFeatureDetail(data) {
-            const header = document.querySelector('#featureDetail .feature-detail-header');
-            const list = document.getElementById('featureList');
-
-            header.innerHTML = `
-                <div class="feature-detail-title">
-                    <span class="emoji">${data.emoji}</span>
-                    <span>${data.title}</span>
-                </div>
-                <div class="feature-detail-subtitle">${data.subtitle}</div>
-            `;
-
-            list.innerHTML = data.features.map(f => `
-                <div class="feature-item">
-                    <div class="feature-dot"></div>
-                    <div class="feature-text">
-                        <div class="feature-name">${f.name}</div>
-                        <div class="feature-desc">${f.desc}</div>
+            <div class="demo-stage reveal reveal-delay-2">
+                <div class="demo-device-wrap">
+                    <div class="demo-device">
+                        <div class="demo-side-btn demo-btn-silent"></div>
+                        <div class="demo-side-btn demo-btn-vol-up"></div>
+                        <div class="demo-side-btn demo-btn-vol-down"></div>
+                        <div class="demo-side-btn demo-btn-power"></div>
+                        <div class="demo-screen">
+                            <div class="demo-notch"></div>
+                            <iframe id="demoFrame" src="makeuppal-demo-v3.6.0.html" title="妆伴 MakeupPal Demo"></iframe>
+                        </div>
+                    </div>
+                    <div class="demo-device-label">
+                        <strong>iPhone 17 Pro</strong> · 实时交互演示 · 可直接操作
                     </div>
                 </div>
-            `).join('');
-        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const frame = document.getElementById('demoFrame');
-            frame.addEventListener('load', function() {
-                console.log('Demo loaded successfully');
-                try {
-                    const doc = frame.contentDocument;
-                    if (doc) {
-                        doc.documentElement.style.setProperty('--safe-top', '52px');
-                        doc.documentElement.style.setProperty('--safe-bottom', '30px');
-                        const styleEl = doc.createElement('style');
-                        styleEl.textContent = `
-                            :root {
-                                --font-size-xs: 10px;
-                                --font-size-sm: 11px;
-                                --font-size-md: 13px;
-                                --font-size-lg: 15px;
-                                --font-size-xl: 17px;
-                                --font-size-2xl: 20px;
-                                --font-size-3xl: 24px;
-                                --spacing-1: 4px;
-                                --spacing-2: 6px;
-                                --spacing-3: 8px;
-                                --spacing-4: 10px;
-                                --spacing-5: 14px;
-                                --spacing-6: 18px;
-                                --spacing-7: 24px;
-                                --spacing-8: 32px;
-                            }
-                            .tab-bar { height: calc(56px + var(--safe-bottom)) !important; }
-                            .mirror-bottom-bar { padding: 10px 16px !important; padding-bottom: calc(10px + var(--safe-bottom)) !important; }
-                            .mirror-shutter-btn { width: 56px !important; height: 56px !important; }
-                            .mirror-face-ring-v2 { width: 130px !important; height: 130px !important; margin-bottom: 12px !important; }
-                            .mirror-face-inner { width: 64px !important; height: 64px !important; }
-                            .mirror-mode-switch-v2 { margin-top: calc(16px + var(--safe-top)) !important; }
-                            .mirror-settings-btn { top: calc(14px + var(--safe-top)) !important; }
-                            .home-header { padding-top: calc(12px + var(--safe-top)) !important; }
-                            .section-header { padding: 14px 16px 10px !important; }
-                            .library-cat-bar { padding-top: calc(8px + var(--safe-top)) !important; }
-                            .mall-header { padding-top: calc(10px + var(--safe-top)) !important; }
-                            .profile-header { padding-top: calc(12px + var(--safe-top)) !important; }
-                        `;
-                        doc.head.appendChild(styleEl);
-                    }
-                } catch (e) {
-                    console.log('Inject safe-area failed:', e);
+                <div class="demo-detail" id="demoDetail">
+                    <div class="demo-detail-head">
+                        <div class="demo-detail-icon">🏠</div>
+                        <div>
+                            <div class="demo-detail-title">首页</div>
+                            <div class="demo-detail-sub">个性化美妆主页，面部档案驱动的智能推荐</div>
+                        </div>
+                    </div>
+                    <div class="demo-features" id="demoFeatures"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     4. 技术架构
+     ============================================================ -->
+<section class="section section-dark" id="architecture">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">TECH ARCHITECTURE · 技术架构</div>
+            <h2 class="section-title">分层架构 · <span class="accent">多端统一</span></h2>
+            <p class="section-desc">妆伴采用清晰的分层架构，从表现层到数据层各司其职。同一套核心业务逻辑通过 Web、微信小程序、鸿蒙三端覆盖，最大化复用、最小化维护成本。</p>
+        </div>
+
+        <div class="arch-diagram reveal">
+            <div class="arch-layer">
+                <div class="arch-layer-head">
+                    <div class="arch-layer-num">1</div>
+                    <div class="arch-layer-title">表现层 · Presentation</div>
+                    <div class="arch-layer-desc">用户界面与交互</div>
+                </div>
+                <div class="arch-layer-items">
+                    <div class="arch-item"><span class="arch-item-icon">📱</span><strong>Web H5</strong><span>SPA 单页应用</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">💚</span><strong>微信小程序</strong><span>web-view 壳工程</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🔴</span><strong>鸿蒙 ArkTS</strong><span>规划中</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🎨</span><strong>玫瑰金设计系统</strong><span>CSS Variables</span></div>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-head">
+                    <div class="arch-layer-num">2</div>
+                    <div class="arch-layer-title">业务逻辑层 · Business</div>
+                    <div class="arch-layer-desc">核心功能与交互</div>
+                </div>
+                <div class="arch-layer-items">
+                    <div class="arch-item"><span class="arch-item-icon">🎯</span><strong>推荐引擎</strong><span>8 场景算法</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🎴</span><strong>Tinder 滑动</strong><span>20px 阈值 / 450ms 动画</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🤖</span><strong>小美 AI</strong><span>语音唤醒 / 对话推荐</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">📸</span><strong>虚拟试妆</strong><span>拍照 / 实时预览</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🔬</span><strong>成分扫描</strong><span>OCR + 安全评级</span></div>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-head">
+                    <div class="arch-layer-num">3</div>
+                    <div class="arch-layer-title">数据层 · Data</div>
+                    <div class="arch-layer-desc">统一数据源与存储</div>
+                </div>
+                <div class="arch-layer-items">
+                    <div class="arch-item"><span class="arch-item-icon">🔗</span><strong>getLibraryItems()</strong><span>统一数据接口</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">💾</span><strong>localStorage</strong><span>本地持久化</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">📦</span><strong>12 数据模块</strong><span>商品 / 妆容 / 用户</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🔄</span><strong>数据互通</strong><span>卡片↔瀑布流↔详情</span></div>
+                </div>
+            </div>
+
+            <div class="arch-layer">
+                <div class="arch-layer-head">
+                    <div class="arch-layer-num">4</div>
+                    <div class="arch-layer-title">工程层 · Engineering</div>
+                    <div class="arch-layer-desc">构建与部署</div>
+                </div>
+                <div class="arch-layer-items">
+                    <div class="arch-item"><span class="arch-item-icon">📜</span><strong>原生 JS</strong><span>无框架依赖</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🗃️</span><strong>单文件架构</strong><span>HTML + CSS + JS</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">⚙️</span><strong>PowerShell Server</strong><span>本地 HttpListener</span></div>
+                    <div class="arch-item"><span class="arch-item-icon">🔧</span><strong>Git 版本控制</strong><span>makeuppal-partner 分支</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="platform-grid">
+            <div class="platform-card reveal">
+                <div class="platform-icon">📱</div>
+                <div class="platform-name">Web H5</div>
+                <div class="platform-tech">HTML5 · CSS3 · 原生 JavaScript</div>
+                <div class="platform-desc">单文件 SPA 架构，无框架依赖，兼容主流移动浏览器，支持 iOS/Android/桌面全平台访问。</div>
+                <div class="platform-status live">
+                    <span class="platform-status-dot"></span>
+                    已上线 V3.6.0
+                </div>
+            </div>
+            <div class="platform-card reveal reveal-delay-1">
+                <div class="platform-icon">💚</div>
+                <div class="platform-name">微信小程序</div>
+                <div class="platform-tech">web-view 壳工程 · JSSDK</div>
+                <div class="platform-desc">通过 web-view 嵌入 H5 demo，保留小程序原生分享能力，支持 localStorage 持久化与 SPA 导航。</div>
+                <div class="platform-status live">
+                    <span class="platform-status-dot"></span>
+                    已部署
+                </div>
+            </div>
+            <div class="platform-card reveal reveal-delay-2">
+                <div class="platform-icon">🔴</div>
+                <div class="platform-name">鸿蒙 HarmonyOS</div>
+                <div class="platform-tech">ArkTS · ArkUI</div>
+                <div class="platform-desc">规划中的原生鸿蒙应用，将利用 ArkUI 声明式开发与分布式能力，实现跨设备美妆体验。</div>
+                <div class="platform-status plan">
+                    <span class="platform-status-dot"></span>
+                    规划中 V3.9.0
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     5. 关键特性
+     ============================================================ -->
+<section class="section" id="features">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">KEY FEATURES · 关键特性</div>
+            <h2 class="section-title">八大创新点 · <span class="accent">技术亮点</span></h2>
+            <p class="section-desc">从交互创新到架构设计，妆伴在每一个细节都追求极致体验。以下八大特性体现了产品的技术创新性与用户体验突破。</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">01</div>
+                <div class="feature-card-icon">🎴</div>
+                <div class="feature-card-title">Tinder 滑动选妆</div>
+                <div class="feature-card-desc">卡片式妆容浏览，左右滑动表达喜欢/不喜欢，20px 滑动阈值 + 450ms 弹性动画，让选妆像交友一样有趣。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-1">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">02</div>
+                <div class="feature-card-icon">🌸</div>
+                <div class="feature-card-title">小美 AI 美妆闺蜜</div>
+                <div class="feature-card-desc">「小美小美」语音唤醒，1 秒响应，8 大场景智能推荐，支持对话历史与个性化记忆，真正的 AI 美妆顾问。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-2">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">03</div>
+                <div class="feature-card-icon">🔗</div>
+                <div class="feature-card-title">统一数据源</div>
+                <div class="feature-card-desc">getLibraryItems() 统一接口，卡片模式与瀑布流模式共享同一数据源，确保跨视图数据一致性。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-3">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">04</div>
+                <div class="feature-card-icon">⏮️</div>
+                <div class="feature-card-title">回看功能</div>
+                <div class="feature-card-desc">已浏览妆容可回看追溯，记录用户决策路径，支持撤销「不喜欢」并重新评估，避免误操作。</div>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">05</div>
+                <div class="feature-card-icon">🔬</div>
+                <div class="feature-card-title">成分安全扫描</div>
+                <div class="feature-card-desc">拍照识别产品成分表，自动评级安全性，敏感肌友好提示，支持拍照、相册、手动输入三种方式。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-1">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">06</div>
+                <div class="feature-card-icon">🎨</div>
+                <div class="feature-card-title">玫瑰金设计系统</div>
+                <div class="feature-card-desc">高端美妆品牌视觉语言，#C4956A 玫瑰金主色，Noto Serif SC 衬线标题，16/24/32px 分层圆角，统一优雅。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-2">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">07</div>
+                <div class="feature-card-icon">📱</div>
+                <div class="feature-card-title">多端覆盖</div>
+                <div class="feature-card-desc">Web H5 + 微信小程序 + 鸿蒙三端架构，单文件核心 + web-view 壳工程，最大化复用、最小化维护。</div>
+            </div>
+            <div class="feature-card reveal reveal-delay-3">
+                <div class="feature-card-glow"></div>
+                <div class="feature-card-num">08</div>
+                <div class="feature-card-icon">🔒</div>
+                <div class="feature-card-title">隐私优先</div>
+                <div class="feature-card-desc">面部数据本地存储不上云，照片上传仅用于本地分析，3D 扫描调整为照片方案兼顾隐私与体验。</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     6. 使用场景
+     ============================================================ -->
+<section class="section section-alt" id="scenarios">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">USE CASES · 使用场景</div>
+            <h2 class="section-title">六类真实场景 · <span class="accent">用户旅程</span></h2>
+            <p class="section-desc">从清晨通勤到深夜护肤，从新手入门到达人创作，妆伴陪伴每一位用户走过完整的美妆决策旅程。</p>
+        </div>
+
+        <div class="scenarios-grid">
+            <div class="scenario-card reveal">
+                <div class="scenario-banner">🌅</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">👩</div>
+                        <div class="scenario-user-info">
+                            <strong>小林 · 22岁</strong>
+                            <span>美妆新手 · 大学生</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">清晨通勤妆</div>
+                    <div class="scenario-story">第一次约会不知如何化妆，打开妆伴让小美推荐适合学生身份的清新妆容，跟着教程一步步完成。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">唤醒小美</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">场景推荐</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">教程跟学</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card reveal reveal-delay-1">
+                <div class="scenario-banner">💼</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">👩‍💼</div>
+                        <div class="scenario-user-info">
+                            <strong>王姐 · 30岁</strong>
+                            <span>职场白领 · 经理</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">职场专业妆</div>
+                    <div class="scenario-story">重要会议前 10 分钟，需要快速打造干练职场妆。通过颜库 Tinder 滑动快速筛选通勤妆容，虚拟试妆预览效果。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">颜库滑动</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">虚拟试妆</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">一键收藏</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card reveal reveal-delay-2">
+                <div class="scenario-banner">🎨</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">👩‍🎨</div>
+                        <div class="scenario-user-info">
+                            <strong>Mia · 26岁</strong>
+                            <span>美妆爱好者 · 博主</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">创作发布妆容</div>
+                    <div class="scenario-story">创作了一款复古港风妆容，通过焕新拍照记录效果，发布到颜库供其他用户滑动浏览、学习跟做。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">焕新拍照</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">4步发布</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">社区分享</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card reveal">
+                <div class="scenario-banner">🍃</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">😌</div>
+                        <div class="scenario-user-info">
+                            <strong>陈阿姨 · 35岁</strong>
+                            <span>敏感肌用户 · 教师</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">敏感肌选品</div>
+                    <div class="scenario-story">在市集看到一款粉底，担心成分过敏。用成分扫描拍照识别，系统自动评级安全性，提示含酒精慎用。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">商品详情</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">成分扫描</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">安全决策</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card reveal reveal-delay-1">
+                <div class="scenario-banner">👵</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">🧓</div>
+                        <div class="scenario-user-info">
+                            <strong>张奶奶 · 60岁</strong>
+                            <span>银发族 · 退休</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">优雅日常妆</div>
+                    <div class="scenario-story">参加同学聚会想打扮得体，但操作不熟练。小美 AI 语音引导，简化流程推荐适合成熟肌肤的淡妆方案。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">语音唤醒</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">银发推荐</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">简单跟学</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card reveal reveal-delay-2">
+                <div class="scenario-banner">⭐</div>
+                <div class="scenario-body">
+                    <div class="scenario-user">
+                        <div class="scenario-avatar">🌟</div>
+                        <div class="scenario-user-info">
+                            <strong>Lisa · 28岁</strong>
+                            <span>美妆达人 · KOL</span>
+                        </div>
+                    </div>
+                    <div class="scenario-title">达人变现闭环</div>
+                    <div class="scenario-story">作为认证创作者，发布妆容模板获得焕新值 GP，GP 兑换商城权益，品牌合作中心对接 B 端商业合作。</div>
+                    <div class="scenario-flow">
+                        <span class="scenario-flow-step">发布模板</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">积累 GP</span>
+                        <span class="scenario-flow-arrow">→</span>
+                        <span class="scenario-flow-step">品牌合作</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     7. 成果数据
+     ============================================================ -->
+<section class="section" id="data">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">PROJECT METRICS · 成果数据</div>
+            <h2 class="section-title">用数据说话 · <span class="accent">项目成果</span></h2>
+            <p class="section-desc">从版本迭代历程到功能模块分布，从代码规模到页面数量，全方位呈现妆伴项目的工程成果与演进轨迹。</p>
+        </div>
+
+        <div class="metrics-row reveal">
+            <div class="metric-card">
+                <div class="metric-icon">📋</div>
+                <div class="metric-num">43<span class="unit">+</span></div>
+                <div class="metric-label">总页面数</div>
+                <div class="metric-sub">5 主 Tab + 38 子包</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔢</div>
+                <div class="metric-num">24.6<span class="unit">K</span></div>
+                <div class="metric-label">代码行数</div>
+                <div class="metric-sub">单文件 HTML 架构</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🧩</div>
+                <div class="metric-num">35<span class="unit">子功能</span></div>
+                <div class="metric-label">功能点总数</div>
+                <div class="metric-sub">7 大模块覆盖</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📦</div>
+                <div class="metric-num">12<span class="unit">模块</span></div>
+                <div class="metric-label">数据模块</div>
+                <div class="metric-sub">商品 / 妆容 / 用户</div>
+            </div>
+        </div>
+
+        <div class="data-grid">
+            <div class="data-card reveal">
+                <div class="data-card-head">
+                    <div class="data-card-title">
+                        <span class="data-card-title-icon">📈</span>
+                        版本迭代时间线
+                    </div>
+                    <div class="data-card-tag">V3.0.0 → V3.9.0</div>
+                </div>
+                <div class="chart-box" id="chartTimeline"></div>
+            </div>
+
+            <div class="data-card reveal reveal-delay-1">
+                <div class="data-card-head">
+                    <div class="data-card-title">
+                        <span class="data-card-title-icon">🎯</span>
+                        功能模块能力雷达
+                    </div>
+                    <div class="data-card-tag">7 大模块</div>
+                </div>
+                <div class="chart-box" id="chartRadar"></div>
+            </div>
+
+            <div class="data-card full reveal">
+                <div class="data-card-head">
+                    <div class="data-card-title">
+                        <span class="data-card-title-icon">📊</span>
+                        各模块子功能数量分布
+                    </div>
+                    <div class="data-card-tag">共 35 个功能点</div>
+                </div>
+                <div class="chart-box" id="chartBar"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     8. 团队介绍
+     ============================================================ -->
+<section class="section section-alt" id="team">
+    <div class="section-inner">
+        <div class="section-head-center reveal">
+            <div class="eyebrow center">OUR TEAM · 团队介绍</div>
+            <h2 class="section-title">背后的<span class="accent">创造者</span></h2>
+            <p class="section-desc">一支融合产品、设计、前端、AI 算法的小而美团队，以「让科技服务于美」为共同信念，打造妆伴的每一个细节。</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <div class="team-avatar">🎨</div>
+                <div class="team-name">梵妮</div>
+                <div class="team-role">产品负责人 / 设计</div>
+                <div class="team-bio">10 年美妆行业经验，定义玫瑰金视觉语言与产品愿景，主导用户体验设计。</div>
+                <div class="team-skills">
+                    <span class="team-skill">产品设计</span>
+                    <span class="team-skill">视觉设计</span>
+                    <span class="team-skill">美妆顾问</span>
+                </div>
+            </div>
+            <div class="team-card reveal reveal-delay-1">
+                <div class="team-avatar">💻</div>
+                <div class="team-name">Jimmy</div>
+                <div class="team-role">全栈工程师 / 架构</div>
+                <div class="team-bio">负责多端架构设计与核心功能开发，主导 Web/小程序/鸿蒙三端技术方案落地。</div>
+                <div class="team-skills">
+                    <span class="team-skill">前端架构</span>
+                    <span class="team-skill">多端开发</span>
+                    <span class="team-skill">工程化</span>
+                </div>
+            </div>
+            <div class="team-card reveal reveal-delay-2">
+                <div class="team-avatar">🤖</div>
+                <div class="team-name">Trae AI</div>
+                <div class="team-role">AI 开发伙伴</div>
+                <div class="team-bio">作为 AI 编程助手参与全程开发，协助代码生成、调试优化、架构设计与文档撰写。</div>
+                <div class="team-skills">
+                    <span class="team-skill">AI 编程</span>
+                    <span class="team-skill">代码生成</span>
+                    <span class="team-skill">智能调试</span>
+                </div>
+            </div>
+            <div class="team-card reveal reveal-delay-3">
+                <div class="team-avatar">🌸</div>
+                <div class="team-name">小美</div>
+                <div class="team-role">美妆闺蜜 AI</div>
+                <div class="team-bio">妆伴内置的 AI 美妆顾问，8 场景推荐引擎核心，24 小时在线陪伴每一位用户的美的旅程。</div>
+                <div class="team-skills">
+                    <span class="team-skill">场景推荐</span>
+                    <span class="team-skill">语音交互</span>
+                    <span class="team-skill">美妆知识</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-culture reveal">
+            <div>
+                <div class="eyebrow">TEAM CULTURE · 团队文化</div>
+                <div class="team-culture-title">以<span class="accent">美</span>为核<br>以<span class="accent">人</span>为本</div>
+            </div>
+            <div class="team-values">
+                <div class="team-value">
+                    <div class="team-value-icon">💎</div>
+                    <div class="team-value-text">
+                        <strong>极致细节</strong>
+                        <span>每一个像素、每一毫秒动画都精心打磨</span>
+                    </div>
+                </div>
+                <div class="team-value">
+                    <div class="team-value-icon">🤝</div>
+                    <div class="team-value-text">
+                        <strong>用户至上</strong>
+                        <span>所有决策以真实用户场景为出发点</span>
+                    </div>
+                </div>
+                <div class="team-value">
+                    <div class="team-value-icon">🚀</div>
+                    <div class="team-value-text">
+                        <strong>快速迭代</strong>
+                        <span>9 个版本持续演进，每周都有改进</span>
+                    </div>
+                </div>
+                <div class="team-value">
+                    <div class="team-value-icon">🔒</div>
+                    <div class="team-value-text">
+                        <strong>隐私优先</strong>
+                        <span>用户数据本地化，技术服务于人而非监控</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     9. Footer
+     ============================================================ -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand-col">
+                <div class="footer-brand">
+                    <div class="footer-brand-mark">妆</div>
+                    <div class="footer-brand-name">妆伴<span>MakeupPal</span></div>
+                </div>
+                <p class="footer-desc">面向亚洲女性的智能美妆助手，融合妆容推荐、教程学习、虚拟试妆、商品购买的一站式美妆体验平台。让每一次上妆都恰到好处。</p>
+                <div class="footer-tech-row">
+                    <span class="footer-tech">HTML5</span>
+                    <span class="footer-tech">CSS3</span>
+                    <span class="footer-tech">原生 JS</span>
+                    <span class="footer-tech">微信小程序</span>
+                    <span class="footer-tech">ECharts</span>
+                    <span class="footer-tech">web-view</span>
+                </div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">产品</div>
+                <ul>
+                    <li><a href="#demo">功能演示</a></li>
+                    <li><a href="#features">关键特性</a></li>
+                    <li><a href="#scenarios">使用场景</a></li>
+                    <li><a href="#data">成果数据</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">技术</div>
+                <ul>
+                    <li><a href="#architecture">技术架构</a></li>
+                    <li><a href="makeuppal-demo-v3.6.0.html" target="_blank">在线 Demo</a></li>
+                    <li><a href="makeuppal-miniprogram/README.md" target="_blank">小程序文档</a></li>
+                    <li><a href=".trae/documents/showcase_prd.md" target="_blank">PRD 文档</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-title">团队</div>
+                <ul>
+                    <li><a href="#team">团队介绍</a></li>
+                    <li><a href="#overview">项目背景</a></li>
+                    <li><a href="https://github.com" target="_blank">GitHub 仓库</a></li>
+                    <li><a href="mailto:contact@makeuppal.com">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 妆伴 MakeupPal · 梵妮美学出品 · trae 大赛参赛作品 · V3.6.0</div>
+            <div class="footer-links">
+                <a href="#">隐私政策</a>
+                <a href="#">服务条款</a>
+                <a href="#">使用指南</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ============================================================
+   妆伴 MakeupPal Showcase · 交互逻辑
+   ============================================================ */
+
+(function() {
+    'use strict';
+
+    /* ---------- 导航栏：滚动样式 + 移动端菜单 ---------- */
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navLinkItems = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 30) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    navToggle.addEventListener('click', function() {
+        navToggle.classList.toggle('open');
+        navLinks.classList.toggle('open');
+    });
+
+    navLinkItems.forEach(function(link) {
+        link.addEventListener('click', function() {
+            navToggle.classList.remove('open');
+            navLinks.classList.remove('open');
+        });
+    });
+
+    /* ---------- 导航高亮：滚动到对应区块 ---------- */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinkMap = {};
+    navLinkItems.forEach(function(link) {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            navLinkMap[href.substring(1)] = link;
+        }
+    });
+
+    function updateNavHighlight() {
+        let current = '';
+        const scrollPos = window.scrollY + 120;
+        sections.forEach(function(sec) {
+            const top = sec.offsetTop;
+            const height = sec.offsetHeight;
+            if (scrollPos >= top && scrollPos < top + height) {
+                current = sec.id;
+            }
+        });
+        navLinkItems.forEach(function(link) {
+            link.classList.remove('active');
+        });
+        if (current && navLinkMap[current]) {
+            navLinkMap[current].classList.add('active');
+        }
+    }
+    window.addEventListener('scroll', updateNavHighlight);
+    updateNavHighlight();
+
+    /* ---------- 滚动入场动画：IntersectionObserver ---------- */
+    const reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in');
+                    observer.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        reveals.forEach(function(el) { observer.observe(el); });
+    } else {
+        reveals.forEach(function(el) { el.classList.add('in'); });
+    }
+
+    /* ---------- 功能演示：模块切换 ---------- */
+    const demoTabs = document.querySelectorAll('.demo-tab');
+    const demoFrame = document.getElementById('demoFrame');
+    const demoDetailHead = document.querySelector('.demo-detail-head');
+    const demoFeatures = document.getElementById('demoFeatures');
+
+    const moduleData = {
+        home: {
+            icon: '🏠',
+            title: '首页',
+            sub: '个性化美妆主页，面部档案驱动的智能推荐',
+            features: [
+                { name: '面部档案卡', desc: '横排紧凑布局展示肤色/脸型/特征' },
+                { name: '金刚区入口', desc: '8 大功能一键直达' },
+                { name: 'Banner 轮播', desc: '活动与新品推荐' },
+                { name: '热度榜单', desc: '热门妆容实时排行' },
+                { name: '瀑布流推荐', desc: '个性化内容流' }
+            ]
+        },
+        library: {
+            icon: '💄',
+            title: '颜库',
+            sub: 'Tinder 风格滑动选妆 + 瀑布流双模式浏览',
+            features: [
+                { name: 'Tinder 卡片滑动', desc: '左右滑动喜欢/不喜欢' },
+                { name: '瀑布流模式', desc: '网格化浏览全部妆容' },
+                { name: '喜欢/不喜欢', desc: '一键收藏或跳过' },
+                { name: '发布妆容', desc: '4 步上传创作' }
+            ]
+        },
+        mirror: {
+            icon: '✨',
+            title: '焕新',
+            sub: '虚拟试妆与妆容记录，实时预览上妆效果',
+            features: [
+                { name: '虚拟试妆', desc: '拍照实时预览妆容' },
+                { name: '妆容选择', desc: '从颜库一键试妆' },
+                { name: '拍照记录', desc: '保存试妆对比' },
+                { name: '焕新历史', desc: '回顾试妆记录' }
+            ]
+        },
+        mall: {
+            icon: '🛍️',
+            title: '市集',
+            sub: '美妆商品一站式购物，从发现到下单',
+            features: [
+                { name: '商品列表', desc: '分类浏览美妆商品' },
+                { name: '分类筛选', desc: '按品类/品牌/价格' },
+                { name: '搜索', desc: '关键词快速查找' },
+                { name: '商品详情', desc: '成分/评价/规格' },
+                { name: '购物车', desc: '批量管理结算' },
+                { name: '下单支付', desc: '地址/支付/订单' }
+            ]
+        },
+        profile: {
+            icon: '👤',
+            title: '我的',
+            sub: '个人中心，管理资料、资产、订单与设置',
+            features: [
+                { name: '个人资料', desc: '头像/昵称/面部档案' },
+                { name: '焕新值 GP', desc: '任务体系积分商城' },
+                { name: '我的模板', desc: '已收藏/已购买' },
+                { name: '我的报告', desc: '肤质分析报告' },
+                { name: '订单管理', desc: '订单状态跟踪' },
+                { name: '地址管理', desc: '收货地址簿' },
+                { name: '小美设置', desc: 'AI 性格/记忆开关' },
+                { name: '功能工具箱', desc: '风格偏好/创作者中心' }
+            ]
+        },
+        companion: {
+            icon: '🌸',
+            title: '美妆闺蜜 AI · 小美',
+            sub: '「小美小美」语音唤醒，8 大场景智能推荐',
+            features: [
+                { name: '对话交互', desc: '自然语言美妆咨询' },
+                { name: '语音唤醒', desc: '「小美小美」1秒响应' },
+                { name: '8 场景推荐', desc: '通勤/约会/聚会等' },
+                { name: '智能推荐', desc: '基于面部档案' },
+                { name: '对话历史', desc: '记忆用户偏好' }
+            ]
+        },
+        scan: {
+            icon: '🔬',
+            title: '成分安全扫描',
+            sub: '拍照识别产品成分，自动评级安全性',
+            features: [
+                { name: '拍照扫描', desc: '实时拍摄成分表' },
+                { name: '相册选择', desc: '从相册导入图片' },
+                { name: '手动输入', desc: '输入产品名称查询' }
+            ]
+        }
+    };
+
+    function switchModule(page) {
+        const data = moduleData[page];
+        if (!data) return;
+
+        // 更新 Tab 状态
+        demoTabs.forEach(function(tab) {
+            tab.classList.toggle('active', tab.dataset.page === page);
         });
 
-        function showOnboarding() {
-            const frame = document.getElementById('demoFrame');
-            if (frame && frame.contentWindow && frame.contentWindow.showOnboarding) {
-                try {
-                    frame.contentWindow.showOnboarding();
-                } catch (e) {
-                    console.log('Show onboarding failed:', e);
-                }
-            }
-            showToast('📱 Onboarding 引导已打开');
-        }
+        // 更新详情卡
+        demoDetailHead.innerHTML =
+            '<div class="demo-detail-icon">' + data.icon + '</div>' +
+            '<div>' +
+                '<div class="demo-detail-title">' + data.title + '</div>' +
+                '<div class="demo-detail-sub">' + data.sub + '</div>' +
+            '</div>';
 
-        function showTemplateDetail() {
-            const frame = document.getElementById('demoFrame');
-            if (frame && frame.contentWindow && frame.contentWindow.openTemplateDetail) {
-                try {
-                    frame.contentWindow.switchTab('library');
-                    setTimeout(() => {
-                        frame.contentWindow.openTemplateDetail();
-                    }, 200);
-                } catch (e) {
-                    console.log('Show template detail failed:', e);
-                }
-            }
-            showToast('💄 模板详情已打开');
-        }
+        demoFeatures.innerHTML = data.features.map(function(f) {
+            return '<div class="demo-feature">' +
+                '<div class="demo-feature-dot"></div>' +
+                '<div>' +
+                    '<div class="demo-feature-name">' + f.name + '</div>' +
+                    '<div class="demo-feature-desc">' + f.desc + '</div>' +
+                '</div>' +
+            '</div>';
+        }).join('');
 
-        function showGpCenter() {
-            const frame = document.getElementById('demoFrame');
-            if (frame && frame.contentWindow && frame.contentWindow.openGpCenter) {
-                try {
-                    frame.contentWindow.switchTab('profile');
-                    setTimeout(() => {
-                        frame.contentWindow.openGpCenter();
-                    }, 200);
-                } catch (e) {
-                    console.log('Show GP center failed:', e);
+        // 控制 iframe 内 demo 切换页面
+        if (demoFrame && demoFrame.contentWindow) {
+            try {
+                if (typeof demoFrame.contentWindow.switchTab === 'function') {
+                    demoFrame.contentWindow.switchTab(page);
+                } else {
+                    // 尝试通过 postMessage 通知
+                    demoFrame.contentWindow.postMessage({ type: 'switchTab', page: page }, '*');
                 }
+            } catch (e) {
+                console.log('[Showcase] Demo 切换失败:', e);
             }
-            showToast('💎 焕新值中心已打开');
         }
+    }
 
-        function showShare() {
-            const frame = document.getElementById('demoFrame');
-            if (frame && frame.contentWindow && frame.contentWindow.openShareModal) {
-                try {
-                    frame.contentWindow.switchTab('library');
-                    setTimeout(() => {
-                        frame.contentWindow.openShareModal();
-                    }, 200);
-                } catch (e) {
-                    console.log('Show share failed:', e);
+    demoTabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            switchModule(tab.dataset.page);
+        });
+    });
+
+    // 初始化默认模块
+    switchModule('home');
+
+    /* ---------- Demo iframe 加载后注入适配样式 ---------- */
+    if (demoFrame) {
+        demoFrame.addEventListener('load', function() {
+            try {
+                const doc = demoFrame.contentDocument;
+                if (doc) {
+                    doc.documentElement.style.setProperty('--safe-top', '52px');
+                    doc.documentElement.style.setProperty('--safe-bottom', '30px');
+                    const styleEl = doc.createElement('style');
+                    styleEl.textContent =
+                        ':root{' +
+                            '--font-size-xs:10px;--font-size-sm:11px;--font-size-md:13px;' +
+                            '--font-size-lg:15px;--font-size-xl:17px;--font-size-2xl:20px;--font-size-3xl:24px;' +
+                            '--spacing-1:4px;--spacing-2:6px;--spacing-3:8px;--spacing-4:10px;' +
+                            '--spacing-5:14px;--spacing-6:18px;--spacing-7:24px;--spacing-8:32px;' +
+                        '}' +
+                        '.tab-bar{height:calc(56px + var(--safe-bottom))!important;}' +
+                        '.home-header{padding-top:calc(12px + var(--safe-top))!important;}' +
+                        '.section-header{padding:14px 16px 10px!important;}' +
+                        '.library-cat-bar{padding-top:calc(8px + var(--safe-top))!important;}' +
+                        '.mall-header{padding-top:calc(10px + var(--safe-top))!important;}' +
+                        '.profile-header{padding-top:calc(12px + var(--safe-top))!important;}';
+                    doc.head.appendChild(styleEl);
                 }
+            } catch (e) {
+                console.log('[Showcase] 注入样式失败:', e);
             }
-            showToast('📤 分享面板已打开');
-        }
+        });
+    }
 
-        function showToast(msg) {
-            const existing = document.querySelector('.showcase-toast');
-            if (existing) existing.remove();
-            
-            const toast = document.createElement('div');
-            toast.className = 'showcase-toast';
-            toast.textContent = msg;
-            toast.style.cssText = `
-                position: fixed;
-                top: 24px;
-                left: 50%;
-                transform: translateX(-50%) translateY(-20px);
-                background: rgba(45, 42, 38, 0.92);
-                color: white;
-                padding: 12px 24px;
-                border-radius: 12px;
-                font-size: 14px;
-                font-weight: 500;
-                z-index: 9999;
-                opacity: 0;
-                transition: all 0.3s ease;
-                backdrop-filter: blur(10px);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            `;
-            document.body.appendChild(toast);
-            
-            requestAnimationFrame(() => {
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateX(-50%) translateY(0)';
+    /* ---------- ECharts 数据可视化 ---------- */
+    function initCharts() {
+        // 1. 版本迭代时间线
+        const timelineEl = document.getElementById('chartTimeline');
+        if (timelineEl && window.echarts) {
+            const chart1 = echarts.init(timelineEl);
+            chart1.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(45, 37, 32, 0.92)',
+                    borderColor: '#C4956A',
+                    borderWidth: 1,
+                    textStyle: { color: '#F5EDE4', fontSize: 12 },
+                    formatter: function(params) {
+                        const p = params[0];
+                        return '<strong>' + p.name + '</strong><br>' +
+                               '时间：' + p.value[0] + '<br>' +
+                               '里程碑：' + p.data.milestone;
+                    }
+                },
+                grid: { left: 50, right: 30, top: 40, bottom: 60 },
+                xAxis: {
+                    type: 'category',
+                    data: ['V3.0', 'V3.1', 'V3.2', 'V3.3', 'V3.4', 'V3.5', 'V3.6', 'V3.7', 'V3.9'],
+                    axisLine: { lineStyle: { color: '#EDE4DA' } },
+                    axisLabel: { color: '#9E9790', fontSize: 11, fontFamily: 'Plus Jakarta Sans' }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '累计功能数',
+                    nameTextStyle: { color: '#9E9790', fontSize: 11 },
+                    axisLine: { show: false },
+                    axisTick: { show: false },
+                    splitLine: { lineStyle: { color: '#F5EDE4', type: 'dashed' } },
+                    axisLabel: { color: '#9E9790', fontSize: 11 }
+                },
+                series: [{
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    lineStyle: { width: 3, color: '#C4956A' },
+                    itemStyle: {
+                        color: '#C4956A',
+                        borderColor: '#fff',
+                        borderWidth: 2,
+                        shadowBlur: 8,
+                        shadowColor: 'rgba(196, 149, 106, 0.4)'
+                    },
+                    areaStyle: {
+                        color: {
+                            type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: 'rgba(196, 149, 106, 0.25)' },
+                                { offset: 1, color: 'rgba(196, 149, 106, 0.02)' }
+                            ]
+                        }
+                    },
+                    data: [
+                        { value: [8, 5], milestone: '基础框架 / 首页+颜库+焕新雏形' },
+                        { value: [12, 9], milestone: '首页/颜库/焕新 完整版' },
+                        { value: [18, 14], milestone: '市集/购物车 上线' },
+                        { value: [26, 20], milestone: '订单/个人中心/成分扫描' },
+                        { value: [28, 23], milestone: '卡片模式 引入' },
+                        { value: [30, 26], milestone: 'Tinder 滑动交互' },
+                        { value: [35, 30], milestone: '美妆闺蜜AI / 回看 / 数据互通 ★当前' },
+                        { value: [40, 33], milestone: '虚拟试妆增强 / 直播带货（规划）' },
+                        { value: [45, 36], milestone: 'AR试妆 / 个性化定制（规划）' }
+                    ]
+                }],
+                animationDuration: 1400,
+                animationEasing: 'cubicOut'
             });
-            
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(-20px)';
-                setTimeout(() => toast.remove(), 300);
-            }, 2000);
+            window.addEventListener('resize', function() { chart1.resize(); });
         }
-    </script>
+
+        // 2. 功能模块能力雷达
+        const radarEl = document.getElementById('chartRadar');
+        if (radarEl && window.echarts) {
+            const chart2 = echarts.init(radarEl);
+            chart2.setOption({
+                tooltip: {
+                    backgroundColor: 'rgba(45, 37, 32, 0.92)',
+                    borderColor: '#C4956A',
+                    borderWidth: 1,
+                    textStyle: { color: '#F5EDE4', fontSize: 12 }
+                },
+                radar: {
+                    indicator: [
+                        { name: '首页', max: 10 },
+                        { name: '颜库', max: 10 },
+                        { name: '焕新', max: 10 },
+                        { name: '市集', max: 10 },
+                        { name: '我的', max: 10 },
+                        { name: 'AI闺蜜', max: 10 },
+                        { name: '成分扫描', max: 10 }
+                    ],
+                    center: ['50%', '54%'],
+                    radius: '65%',
+                    axisName: { color: '#6B6560', fontSize: 12, fontWeight: 500 },
+                    splitLine: { lineStyle: { color: '#EDE4DA' } },
+                    splitArea: {
+                        areaStyle: {
+                            color: ['rgba(245, 237, 228, 0.3)', 'rgba(255, 255, 255, 0.5)']
+                        }
+                    },
+                    axisLine: { lineStyle: { color: '#EDE4DA' } }
+                },
+                series: [{
+                    type: 'radar',
+                    symbol: 'circle',
+                    symbolSize: 7,
+                    lineStyle: { width: 2, color: '#C4956A' },
+                    itemStyle: { color: '#C4956A', borderColor: '#fff', borderWidth: 2 },
+                    areaStyle: { color: 'rgba(196, 149, 106, 0.2)' },
+                    data: [{
+                        value: [9, 9.5, 8, 9, 9.5, 9, 7.5],
+                        name: '功能完整度'
+                    }]
+                }],
+                animationDuration: 1400,
+                animationEasing: 'cubicOut'
+            });
+            window.addEventListener('resize', function() { chart2.resize(); });
+        }
+
+        // 3. 各模块子功能数量分布
+        const barEl = document.getElementById('chartBar');
+        if (barEl && window.echarts) {
+            const chart3 = echarts.init(barEl);
+            chart3.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(45, 37, 32, 0.92)',
+                    borderColor: '#C4956A',
+                    borderWidth: 1,
+                    textStyle: { color: '#F5EDE4', fontSize: 12 },
+                    formatter: function(params) {
+                        const p = params[0];
+                        return '<strong>' + p.name + '</strong><br>子功能数：' + p.value + ' 个';
+                    }
+                },
+                grid: { left: 60, right: 40, top: 30, bottom: 40 },
+                xAxis: {
+                    type: 'category',
+                    data: ['首页', '颜库', '焕新', '市集', '我的', '美妆闺蜜AI', '成分扫描'],
+                    axisLine: { lineStyle: { color: '#EDE4DA' } },
+                    axisTick: { show: false },
+                    axisLabel: { color: '#6B6560', fontSize: 12, fontWeight: 500 }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '子功能数',
+                    nameTextStyle: { color: '#9E9790', fontSize: 11 },
+                    axisLine: { show: false },
+                    axisTick: { show: false },
+                    splitLine: { lineStyle: { color: '#F5EDE4', type: 'dashed' } },
+                    axisLabel: { color: '#9E9790', fontSize: 11 }
+                },
+                series: [{
+                    type: 'bar',
+                    barWidth: '42%',
+                    itemStyle: {
+                        borderRadius: [8, 8, 0, 0],
+                        color: {
+                            type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: '#C4956A' },
+                                { offset: 1, color: '#D4B08A' }
+                            ]
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        color: '#A87D56',
+                        fontSize: 13,
+                        fontWeight: 700,
+                        fontFamily: 'Plus Jakarta Sans'
+                    },
+                    data: [
+                        { value: 5 },
+                        { value: 4 },
+                        { value: 4 },
+                        { value: 6 },
+                        { value: 8, itemStyle: { color: {
+                            type: 'linear', x: 0, y: 0, x2: 0, y2: 1,
+                            colorStops: [
+                                { offset: 0, color: '#A87D56' },
+                                { offset: 1, color: '#C4956A' }
+                            ]
+                        } } },
+                        { value: 5 },
+                        { value: 3 }
+                    ]
+                }],
+                animationDuration: 1400,
+                animationDelay: function(idx) { return idx * 100; },
+                animationEasing: 'cubicOut'
+            });
+            window.addEventListener('resize', function() { chart3.resize(); });
+        }
+    }
+
+    // 图表延迟初始化，等待 ECharts 库加载
+    function tryInitCharts() {
+        if (window.echarts) {
+            initCharts();
+        } else {
+            setTimeout(tryInitCharts, 200);
+        }
+    }
+    tryInitCharts();
+
+    /* ---------- 平滑滚动到锚点 ---------- */
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href.length < 2) return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const offset = 80;
+                const top = target.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top: top, behavior: 'smooth' });
+            }
+        });
+    });
+
+    console.log('%c妆伴 MakeupPal Showcase %cV3.6.0', 
+        'background:linear-gradient(135deg,#C4956A,#A87D56);color:#fff;padding:6px 12px;border-radius:6px 0 0 6px;font-weight:600;',
+        'background:#2D2520;color:#F5EDE4;padding:6px 12px;border-radius:0 6px 6px 0;');
+    console.log('%ctrae 大赛参赛作品 · 梵妮美学出品', 'color:#C4956A;font-size:12px;');
+
+})();
+</script>
 
 </body>
 </html>

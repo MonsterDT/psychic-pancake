@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>妆伴 MakeupPal V3.6.0</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
     <style>
 :root {
   --color-bg: #FFF8F0;
@@ -4071,11 +4072,9 @@ body {
   align-items: center;
   justify-content: center;
   padding: 40px 24px;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  left: 50%;
-  transform: translateX(-50%);
-  right: auto;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .onboarding-overlay.show {
   display: flex;
@@ -4125,16 +4124,19 @@ body {
   to { transform: rotate(360deg); }
 }
 .onboarding-step h2 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
-  margin-bottom: 12px;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+  letter-spacing: 0.5px;
 }
 .onboarding-step p {
-  font-size: var(--font-size-base);
+  font-size: 14px;
   color: var(--color-text-secondary);
   line-height: 1.6;
-  margin-bottom: 32px;
+  margin: 0 0 24px 0;
+  letter-spacing: 0.3px;
 }
 
 .skin-grid {
@@ -4250,6 +4252,96 @@ body {
   width: 100%;
   max-width: 320px;
   margin-top: 24px;
+}
+
+/* Onboarding Step 0 - Brand Welcome */
+.ob-brand-decor {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 32px;
+  flex-shrink: 0;
+}
+.ob-deco-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(232, 196, 160, 0.3), rgba(196, 149, 106, 0.15));
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ob-deco-1 {
+  width: 180px; height: 180px;
+  animation: pulse 3s ease-in-out infinite;
+}
+.ob-deco-2 {
+  width: 140px; height: 140px;
+  animation: pulse 3s ease-in-out infinite 0.5s;
+}
+.ob-deco-3 {
+  width: 100px; height: 100px;
+  animation: pulse 3s ease-in-out infinite 1s;
+}
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
+}
+.ob-brand-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+.ob-logo-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E8C4A0, #C4956A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(196, 149, 106, 0.4);
+  margin-bottom: 16px;
+}
+.ob-brand-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 6px 0;
+  letter-spacing: 2px;
+  line-height: 1.2;
+}
+.ob-brand-subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+.ob-brand-slogan {
+  font-size: 15px;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+.ob-terms-links {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+}
+.ob-terms-links a {
+  color: var(--color-primary);
+  text-decoration: none;
 }
 .onboarding-skip {
   position: absolute;
@@ -4371,6 +4463,209 @@ body {
 }
 .ob-scan-status.scanning { color: var(--color-primary); }
 .ob-scan-status.done { color: var(--color-success); font-weight: 600; }
+
+/* Photo upload preview */
+.ob-scan-ring.has-photo {
+  border: 3px solid var(--color-success);
+  overflow: hidden;
+  animation: none;
+}
+.ob-scan-ring.has-photo::before { display: none; }
+.ob-scan-ring.has-photo .ob-scan-inner {
+  font-size: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+/* Photo Picker Action Sheet */
+.ob-photo-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ob-photo-picker.show {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+.ob-picker-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.ob-picker-sheet {
+  position: relative;
+  width: 100%;
+  max-width: var(--content-max-width);
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 12px 16px calc(12px + var(--safe-bottom));
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.ob-picker-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+.ob-picker-title {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.ob-picker-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-bg-card);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background var(--duration-fast) var(--ease);
+}
+.ob-picker-item:active { background: rgba(196, 149, 106, 0.1); }
+.ob-picker-icon { font-size: 22px; }
+.ob-picker-cancel {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* ===== Onboarding 响应式适配 ===== */
+@media (max-width: 360px) {
+  .ob-brand-decor {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 24px;
+  }
+  .ob-deco-1 { width: 144px; height: 144px; }
+  .ob-deco-2 { width: 112px; height: 112px; }
+  .ob-deco-3 { width: 80px; height: 80px; }
+  .ob-logo-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 12px;
+  }
+  .ob-brand-title {
+    font-size: 24px;
+    letter-spacing: 1.5px;
+  }
+  .ob-brand-subtitle { font-size: 12px; }
+  .ob-brand-slogan {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .onboarding-step h2 { font-size: 20px; }
+  .onboarding-step p { font-size: 13px; }
+  .onboarding-step { max-width: 280px; }
+  .ob-scan-ring {
+    width: 120px;
+    height: 120px;
+  }
+  .ob-scan-inner { font-size: 40px; }
+}
+
+@media (max-width: 320px) {
+  .onboarding-overlay { padding: 24px 16px; }
+  .ob-brand-decor {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 20px;
+  }
+  .ob-deco-1 { width: 126px; height: 126px; }
+  .ob-deco-2 { width: 98px; height: 98px; }
+  .ob-deco-3 { width: 70px; height: 70px; }
+  .ob-logo-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
+  }
+  .ob-brand-title { font-size: 22px; }
+  .ob-brand-subtitle { font-size: 11px; }
+  .ob-brand-slogan {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .ob-terms-links { font-size: 11px; }
+  .onboarding-step h2 { font-size: 18px; }
+  .onboarding-step p { font-size: 12px; }
+  .onboarding-btn { padding: 12px; font-size: 14px; }
+  .ob-skin-card { padding: 14px 10px; }
+  .ob-skin-emoji { font-size: 28px; }
+  .ob-skin-name { font-size: 12px; }
+  .ob-skin-desc { font-size: 10px; }
+}
+
+@media (min-width: 768px) {
+  .onboarding-overlay { padding: 60px 32px; }
+  .onboarding-step { max-width: 380px; }
+  .ob-brand-decor {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 40px;
+  }
+  .ob-deco-1 { width: 216px; height: 216px; }
+  .ob-deco-2 { width: 168px; height: 168px; }
+  .ob-deco-3 { width: 120px; height: 120px; }
+  .ob-logo-icon {
+    width: 84px;
+    height: 84px;
+    margin-bottom: 20px;
+  }
+  .ob-brand-title {
+    font-size: 34px;
+    letter-spacing: 3px;
+  }
+  .ob-brand-subtitle { font-size: 14px; }
+  .ob-brand-slogan {
+    font-size: 17px;
+    margin-bottom: 28px;
+  }
+  .onboarding-step h2 { font-size: 26px; }
+  .onboarding-step p { font-size: 15px; }
+  .ob-scan-ring {
+    width: 160px;
+    height: 160px;
+  }
+  .ob-scan-inner { font-size: 56px; }
+  .onboarding-btn {
+    padding: 16px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ob-brand-title { font-size: 38px; }
+  .ob-brand-slogan { font-size: 18px; }
+  .onboarding-step h2 { font-size: 28px; }
+}
 
 /* Onboarding Step 3 - Style Preference */
 .ob-style-list {
@@ -13984,15 +14279,29 @@ body {
   <div class="onboarding-overlay" id="onboarding-overlay">
     <!-- Step 0: Welcome -->
     <div class="onboarding-step active" data-step="0">
-      <div class="onboarding-icon">
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.3L12 16.8 5.8 21.2l2.4-7.3L2 9.4h7.6z"/>
-        </svg>
+      <div class="ob-brand-decor">
+        <div class="ob-deco-circle ob-deco-1"></div>
+        <div class="ob-deco-circle ob-deco-2"></div>
+        <div class="ob-deco-circle ob-deco-3"></div>
       </div>
-      <h2>欢迎来到妆伴</h2>
-      <p>你的专属 AI 美妆顾问，让每一次上妆都恰到好处</p>
+      <div class="ob-brand-logo">
+        <div class="ob-logo-icon">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.3L12 16.8 5.8 21.2l2.4-7.3L2 9.4h7.6z"/>
+          </svg>
+        </div>
+        <h1 class="ob-brand-title">妆伴</h1>
+        <p class="ob-brand-subtitle">MakeupPal · 你的专属 AI 美妆顾问</p>
+      </div>
+      <div class="ob-brand-slogan">让每一次上妆，都恰到好处</div>
       <div class="onboarding-btn-row">
         <button class="onboarding-btn" onclick="goToNextStep()">开始体验</button>
+      </div>
+      <div class="ob-terms-links">
+        <span>登录即表示同意</span>
+        <a href="javascript:showToast('服务条款')">《服务条款》</a>
+        <span>和</span>
+        <a href="javascript:showToast('隐私政策')">《隐私政策》</a>
       </div>
     </div>
 
@@ -14031,22 +14340,42 @@ body {
       </div>
     </div>
 
-    <!-- Step 2: Face Scan -->
+    <!-- Step 2: Face Photo Upload -->
     <div class="onboarding-step" data-step="2">
       <div class="onboarding-icon" style="background: linear-gradient(135deg, #E8D5C4, #C4956A);">
         <span style="font-size: 40px;">📸</span>
       </div>
-      <h2>扫描你的面部</h2>
+      <h2>上传你的面部照片</h2>
       <p>AI 智能分析骨相特征，找到最适合你的妆容风格</p>
       <div class="ob-scan-area" id="ob-scan-area">
-        <div class="ob-scan-ring">
-          <div class="ob-scan-inner">👤</div>
+        <div class="ob-scan-ring" id="ob-scan-ring">
+          <div class="ob-scan-inner" id="ob-scan-inner">👤</div>
         </div>
-        <div class="ob-scan-status" id="ob-scan-status">点击下方按钮开始</div>
+        <div class="ob-scan-status" id="ob-scan-status">点击下方按钮上传照片</div>
       </div>
       <div class="onboarding-btn-row">
         <button class="onboarding-btn onboarding-btn-secondary" onclick="goToPrevStep()">上一步</button>
-        <button class="onboarding-btn" id="ob-scan-btn" onclick="startObFaceScan()">📸 开始扫脸</button>
+        <button class="onboarding-btn" id="ob-scan-btn" onclick="openPhotoPicker()">📷 上传照片</button>
+      </div>
+      <input type="file" id="ob-photo-input" accept="image/*" capture="environment" style="display:none;">
+      <input type="file" id="ob-album-input" accept="image/*" style="display:none;">
+    </div>
+
+    <!-- Photo Picker Action Sheet -->
+    <div class="ob-photo-picker" id="ob-photo-picker">
+      <div class="ob-picker-mask" onclick="closePhotoPicker()"></div>
+      <div class="ob-picker-sheet">
+        <div class="ob-picker-handle"></div>
+        <div class="ob-picker-title">选择上传方式</div>
+        <button class="ob-picker-item" onclick="takePhoto()">
+          <span class="ob-picker-icon">📷</span>
+          <span>拍照</span>
+        </button>
+        <button class="ob-picker-item" onclick="chooseFromAlbum()">
+          <span class="ob-picker-icon">🖼️</span>
+          <span>从相册选择</span>
+        </button>
+        <button class="ob-picker-cancel" onclick="closePhotoPicker()">取消</button>
       </div>
     </div>
 
@@ -17939,6 +18268,42 @@ body {
     showToast('📝 编辑资料功能开发中');
   }
 
+  // ===== 小程序 web-view 环境适配 =====
+  var _mpEnv = false;
+  function checkMiniProgramEnv() {
+    if (typeof wx === 'undefined' || !wx.miniProgram) return;
+    try {
+      wx.miniProgram.getEnv(function(res) { _mpEnv = !!res.miniprogram; });
+    } catch(e) { _mpEnv = false; }
+  }
+  checkMiniProgramEnv();
+
+  // 自定义确认弹窗（替代原生 confirm，小程序环境样式更可控）
+  function mpConfirm(message, onOk) {
+    if (_mpEnv || /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;';
+      var box = document.createElement('div');
+      box.style.cssText = 'background:#fff;border-radius:12px;padding:20px;width:80%;max-width:300px;text-align:center;font-family:var(--font-sans);';
+      box.innerHTML = '<div style="margin-bottom:16px;color:var(--color-text);font-size:15px;line-height:1.5;">' + message + '</div>' +
+                      '<div style="display:flex;gap:12px;"><button id="mpCancel" style="flex:1;padding:10px;background:#f5ede4;border:none;border-radius:8px;color:var(--color-text-secondary);font-size:14px;">取消</button>' +
+                      '<button id="mpOk" style="flex:1;padding:10px;background:var(--color-primary);border:none;border-radius:8px;color:#fff;font-size:14px;">确定</button></div>';
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+      document.getElementById('mpOk').onclick = function() {
+        document.body.removeChild(overlay);
+        if (typeof onOk === 'function') onOk();
+      };
+      document.getElementById('mpCancel').onclick = function() {
+        document.body.removeChild(overlay);
+      };
+      return;
+    }
+    if (confirm(message)) {
+      if (typeof onOk === 'function') onOk();
+    }
+  }
+
   function switchTab(tab) {
     document.querySelectorAll('.page').forEach(p => {
       p.classList.remove('active');
@@ -20570,12 +20935,12 @@ let searchHistory = [];
       showToast('购物车已经是空的');
       return;
     }
-    if (confirm('确定要清空购物车吗？')) {
+    mpConfirm('确定要清空购物车吗？', function() {
       cartItems = [];
       updateCartBadge();
       renderCart();
       showToast('购物车已清空');
-    }
+    });
   }
 
   function renderCart() {
@@ -20913,11 +21278,11 @@ let searchHistory = [];
     const order = ordersData.find(o => o.id === orderId);
     if (!order) return;
     
-    if (confirm('确定要取消此订单吗？')) {
+    mpConfirm('确定要取消此订单吗？', function() {
       ordersData = ordersData.filter(o => o.id !== orderId);
       showToast('订单已取消');
       switchTab('orders');
-    }
+    });
   }
 
   function remindShip(orderId) {
@@ -20951,14 +21316,14 @@ let searchHistory = [];
     const order = ordersData.find(o => o.id === orderId);
     if (!order) return;
     
-    if (confirm('确定已收到商品吗？')) {
+    mpConfirm('确定已收到商品吗？', function() {
       const now = new Date();
       order.status = 'completed';
       order.statusText = '已完成';
       order.receiveTime = now.toLocaleString('zh-CN', { hour12: false }).replace(/\//g, '-');
       showToast('已确认收货，感谢您的购买！');
       openOrderDetail(orderId);
-    }
+    });
   }
 
   function buyAgain(orderId) {
@@ -21075,7 +21440,23 @@ let searchHistory = [];
 
   function doShare(platform) {
     closeShareModal();
-    
+
+    // 小程序 web-view 环境：通过 postMessage 通知小程序，引导用户点胶囊分享
+    if (typeof _mpEnv !== 'undefined' && _mpEnv && typeof wx !== 'undefined' && wx.miniProgram) {
+      wx.miniProgram.postMessage({
+        data: {
+          type: 'share',
+          platform: platform,
+          title: '梵妮美学 - 发现专属你的美',
+          desc: 'AI骨相识别，为你定制专属妆容，千人千面不撞脸',
+          path: '/pages/webview/webview'
+        }
+      });
+      showToast('请点击右上角"···"菜单完成分享');
+      return;
+    }
+
+    // 浏览器环境：保留原有逻辑
     var shareUrl = encodeURIComponent(window.location.href);
     var shareTitle = encodeURIComponent('梵妮美学 - 发现专属你的美');
     var shareDesc = encodeURIComponent('AI骨相识别，为你定制专属妆容，千人千面不撞脸');
@@ -21988,7 +22369,7 @@ let searchHistory = [];
       localStorage.setItem('faSelectedSource', faSelectedSource);
     } catch (e) {}
     hideFaceAuth();
-    showOnboarding();
+    showToast('面部授权已完成');
   }
 
   // 可在控制台直接调用的重置函数
@@ -22011,6 +22392,28 @@ let searchHistory = [];
     } catch (e) {}
     showFaceAuth();
     return true;
+  }
+
+  function initOnboarding() {
+    try {
+      const done = localStorage.getItem('onboardingCompleted');
+      if (done === 'true') {
+        console.log('Onboarding already completed, skipping');
+        return false;
+      }
+    } catch (e) {}
+    console.log('Showing onboarding for first-time user');
+    showOnboarding();
+    return true;
+  }
+
+  function resetOnboarding() {
+    try {
+      localStorage.removeItem('onboardingCompleted');
+      localStorage.removeItem('obSelectedSkin');
+      localStorage.removeItem('obSelectedStyles');
+    } catch (e) {}
+    showOnboarding();
   }
 
   // ===== Onboarding =====
@@ -22073,10 +22476,73 @@ let searchHistory = [];
     console.log('Skin selected:', type);
   }
 
-  function startObFaceScan() {
+  // ===== Photo Upload (替代 3D 扫脸) =====
+  let obUploadedPhoto = '';
+
+  function openPhotoPicker() {
+    const picker = document.getElementById('ob-photo-picker');
+    if (picker) picker.classList.add('show');
+  }
+
+  function closePhotoPicker() {
+    const picker = document.getElementById('ob-photo-picker');
+    if (picker) picker.classList.remove('show');
+  }
+
+  function takePhoto() {
+    closePhotoPicker();
+    const input = document.getElementById('ob-photo-input');
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  function chooseFromAlbum() {
+    closePhotoPicker();
+    const input = document.getElementById('ob-album-input');
+    if (input) {
+      input.value = '';
+      input.click();
+    }
+  }
+
+  // 处理照片选择
+  document.addEventListener('change', function(e) {
+    if (e.target.id === 'ob-photo-input' || e.target.id === 'ob-album-input') {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('请选择图片文件');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        obUploadedPhoto = ev.target.result;
+        const ring = document.getElementById('ob-scan-ring');
+        const inner = document.getElementById('ob-scan-inner');
+        const status = document.getElementById('ob-scan-status');
+        if (ring && inner) {
+          ring.classList.add('has-photo');
+          inner.style.backgroundImage = 'url(' + obUploadedPhoto + ')';
+        }
+        if (status) {
+          status.textContent = '照片已上传，正在分析...';
+          status.classList.add('scanning');
+        }
+        try {
+          localStorage.setItem('obUploadedPhoto', obUploadedPhoto);
+        } catch (err) {}
+        startObFaceAnalysis();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function startObFaceAnalysis() {
     if (obScanning) return;
     obScanning = true;
-    const ring = document.querySelector('.ob-scan-ring');
+    const ring = document.getElementById('ob-scan-ring');
     const status = document.getElementById('ob-scan-status');
     const btn = document.getElementById('ob-scan-btn');
 
@@ -22084,24 +22550,36 @@ let searchHistory = [];
     if (status) {
       status.textContent = 'AI 分析中...';
       status.classList.add('scanning');
+      status.classList.remove('done');
     }
-    if (btn) btn.disabled = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '⏳ 分析中...';
+    }
 
-    console.log('Face scan started');
+    console.log('Face photo analysis started');
 
     setTimeout(() => {
       if (ring) ring.classList.remove('scanning');
       if (status) {
-        status.textContent = '扫描完成！';
+        status.textContent = '分析完成！已为你生成骨相报告';
         status.classList.remove('scanning');
         status.classList.add('done');
       }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '✓ 查看分析结果';
+      }
       obScanning = false;
-      console.log('Face scan done, going to next step');
+      console.log('Face analysis done, going to next step');
       setTimeout(() => {
         goToNextStep();
-      }, 500);
+      }, 800);
     }, 2000);
+  }
+
+  function startObFaceScan() {
+    openPhotoPicker();
   }
 
   function toggleObStyle(el, style) {
@@ -22118,6 +22596,11 @@ let searchHistory = [];
 
   function finishOnboarding() {
     console.log('finishOnboarding called');
+    try {
+      localStorage.setItem('onboardingCompleted', 'true');
+      localStorage.setItem('obSelectedSkin', obSelectedSkin || '');
+      localStorage.setItem('obSelectedStyles', JSON.stringify(obSelectedStyles || []));
+    } catch (e) {}
     gpBalance += 100;
     updateGpDisplay();
     const ob = document.getElementById('onboarding-overlay');
@@ -22221,10 +22704,10 @@ let searchHistory = [];
     }
   });
 
-  // Auto-show face auth onboarding on first load
+  // Auto-show onboarding on first load
   window.addEventListener('load', function() {
     renderMarketProducts();
-    setTimeout(initFaceAuth, 500);
+    setTimeout(initOnboarding, 500);
   });
 
   // 消息监听：接收父页面指令

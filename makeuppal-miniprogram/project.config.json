@@ -1,5 +1,5 @@
 {
-  "description": "妆伴 MakeupPal - 美妆闺蜜AI小程序",
+  "description": "妆伴 MakeupPal - web-view 壳工程",
   "packOptions": {
     "ignore": [],
     "include": []

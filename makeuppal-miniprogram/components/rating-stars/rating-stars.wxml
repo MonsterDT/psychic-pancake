@@ -1,9 +1,0 @@
-<!-- components/rating-stars/rating-stars.wxml -->
-<view class="rating-stars rating-stars--{{size}}">
-  <view class="stars-track">
-    <text wx:for="{{starList}}" wx:key="*this" class="star star-empty">☆</text>
-  </view>
-  <view class="stars-fill" style="width: {{fillPercent}}%;">
-    <text wx:for="{{starList}}" wx:key="*this" class="star star-full">⭐</text>
-  </view>
-</view>

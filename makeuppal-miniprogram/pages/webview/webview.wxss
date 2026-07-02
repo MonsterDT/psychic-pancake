@@ -1,0 +1,104 @@
+/* pages/webview/webview.wxss - web-view 容器样式 */
+page {
+  height: 100%;
+  background: #FFF8F0;
+}
+
+.webview-container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.webview {
+  width: 100%;
+  height: 100%;
+}
+
+.loading-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFF8F0;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #F0E5D8;
+  border-top-color: #C4956A;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 15px;
+  color: #5C4A3D;
+  margin-bottom: 8px;
+}
+
+.loading-url {
+  font-size: 12px;
+  color: #9B9590;
+  word-break: break-all;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.error-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFF8F0;
+  padding: 0 32px;
+  z-index: 20;
+}
+
+.error-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #C4956A;
+  margin-bottom: 12px;
+}
+
+.error-msg {
+  font-size: 14px;
+  color: #5C4A3D;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.retry-btn {
+  background: linear-gradient(135deg, #E8C4A0, #C4956A);
+  color: #fff;
+  font-size: 15px;
+  border-radius: 24px;
+  padding: 0 32px;
+  min-width: 160px;
+  line-height: 44px;
+  border: none;
+}
+
+.retry-btn::after {
+  border: none;
+}

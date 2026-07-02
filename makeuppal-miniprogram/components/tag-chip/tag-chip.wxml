@@ -1,7 +1,0 @@
-<!-- components/tag-chip/tag-chip.wxml -->
-<view class="tag-chip tag-chip--{{type}} tag-chip--{{size}}">
-  <text class="tag-chip-text">{{text}}</text>
-  <view wx:if="{{closable}}" class="tag-chip-close" catchtap="onClose">
-    <text class="tag-chip-close-icon">✕</text>
-  </view>
-</view>

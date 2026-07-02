@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "面部档案",
-  "usingComponents": {
-    "image-safe": "/components/image-safe/image-safe",
-    "tag-chip": "/components/tag-chip/tag-chip"
-  }
-}

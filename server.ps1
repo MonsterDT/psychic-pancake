@@ -11,7 +11,7 @@ while ($listener.IsListening) {
     $response = $context.Response
     
     $path = $request.Url.LocalPath
-    if ($path -eq "/") { $path = "/makeuppal-demo-v3.3.0.html" }
+    if ($path -eq "/") { $path = "/makeuppal-demo-v3.6.0.html" }
     
     $filePath = Join-Path $baseDir $path.TrimStart("/")
     
