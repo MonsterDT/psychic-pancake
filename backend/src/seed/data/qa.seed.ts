@@ -1,0 +1,5 @@
+export const qaSeeds = [
+  { id: 'q001', title: '敏感肌能用烟酰胺吗？', coverImage: 'assets/images/covers/qa_001.jpg', category: '护肤', likes: 15600, tag: '敏感肌', type: 'qa', metadata: { question: '敏感肌能用烟酰胺吗？', summary: '低浓度烟酰胺敏感肌可以使用', answerCount: 23, viewCount: 45600, authorName: '皮肤科医生李', authorAvatar: 'assets/images/avatars/doctor_001.jpg' } },
+  { id: 'q002', title: '如何选择适合自己的粉底？', coverImage: 'assets/images/covers/qa_002.jpg', category: '底妆', likes: 28900, tag: '粉底', type: 'qa', metadata: { question: '如何选择适合自己的粉底？', summary: '根据肤质和肤色选择', answerCount: 45, viewCount: 89200, authorName: '美妆达人小美', authorAvatar: 'assets/images/avatars/ava_003.jpg' } },
+  { id: 'q003', title: '眼霜什么时候用最合适？', coverImage: 'assets/images/covers/qa_003.jpg', category: '护肤', likes: 12300, tag: '眼霜', type: 'qa', metadata: { question: '眼霜什么时候用最合适？', summary: '20岁开始使用预防胜于治疗', answerCount: 18, viewCount: 34500, authorName: '护肤专家王', authorAvatar: 'assets/images/avatars/doctor_002.jpg' } },
+];

@@ -1,0 +1,5 @@
+export const brandsSeeds = [
+  { id: 'b001', title: '兰蔻', coverImage: 'assets/images/covers/brand_lancome.jpg', category: '大牌精选', likes: 45600, tag: '高端', type: 'brand', metadata: { brandName: '兰蔻', brandLogo: 'assets/images/brands/lancome.png', templateCount: 25, priceGP: '高端', isOfficial: true } },
+  { id: 'b002', title: '雅诗兰黛', coverImage: 'assets/images/covers/brand_estee.jpg', category: '大牌精选', likes: 52300, tag: '高端', type: 'brand', metadata: { brandName: '雅诗兰黛', brandLogo: 'assets/images/brands/estee.png', templateCount: 32, priceGP: '高端', isOfficial: true } },
+  { id: 'b003', title: '迪奥', coverImage: 'assets/images/covers/brand_dior.jpg', category: '大牌精选', likes: 38900, tag: '高端', type: 'brand', metadata: { brandName: '迪奥', brandLogo: 'assets/images/brands/dior.png', templateCount: 18, priceGP: '高端', isOfficial: true } },
+];

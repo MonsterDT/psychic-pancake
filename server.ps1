@@ -1,7 +1,7 @@
 $listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://localhost:8080/")
+$listener.Prefixes.Add("http://localhost:8081/")
 $listener.Start()
-Write-Host "Server started at http://localhost:8080/" -ForegroundColor Green
+Write-Host "Server started at http://localhost:8081/" -ForegroundColor Green
 
 $baseDir = Get-Location
 
@@ -11,7 +11,7 @@ while ($listener.IsListening) {
     $response = $context.Response
     
     $path = $request.Url.LocalPath
-    if ($path -eq "/") { $path = "/makeuppal-demo-v3.6.0.html" }
+    if ($path -eq "/") { $path = "/makeuppal-demo-v3.6.5.html" }
     
     $filePath = Join-Path $baseDir $path.TrimStart("/")
     
@@ -29,6 +29,10 @@ while ($listener.IsListening) {
             ".svg" { $response.ContentType = "image/svg+xml" }
             default { $response.ContentType = "application/octet-stream" }
         }
+        
+        $response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate")
+        $response.Headers.Add("Pragma", "no-cache")
+        $response.Headers.Add("Expires", "0")
         
         $response.OutputStream.Write($content, 0, $content.Length)
     } else {

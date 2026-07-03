@@ -1,0 +1,5 @@
+export const celebritiesSeeds = [
+  { id: 'ce001', title: '刘亦菲同款清冷妆', coverImage: 'assets/images/covers/celebrity_001.jpg', category: '明星同款', likes: 67800, tag: '刘亦菲', type: 'celebrity', metadata: { celebrityName: '刘亦菲', celebrityPhoto: 'assets/images/celebrities/liuyifei.jpg', similarity: 95 } },
+  { id: 'ce002', title: '迪丽热巴红毯妆', coverImage: 'assets/images/covers/celebrity_002.jpg', category: '明星同款', likes: 54300, tag: '迪丽热巴', type: 'celebrity', metadata: { celebrityName: '迪丽热巴', celebrityPhoto: 'assets/images/celebrities/dilireba.jpg', similarity: 92 } },
+  { id: 'ce003', title: '赵丽颖清甜妆', coverImage: 'assets/images/covers/celebrity_003.jpg', category: '明星同款', likes: 48900, tag: '赵丽颖', type: 'celebrity', metadata: { celebrityName: '赵丽颖', celebrityPhoto: 'assets/images/celebrities/zhaoliying.jpg', similarity: 88 } },
+];

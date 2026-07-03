@@ -1,0 +1,9 @@
+node_modules/
+*.log
+.uploads/
+demo-dist/
+*.pyc
+__pycache__/
+*.zip
+.DS_Store
+Thumbs.db
