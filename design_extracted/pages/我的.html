@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的 · 妆伴</title>
+    <style id="theme-vars">
+/* ═══════════════════════════════════════════════════════════
+   MakeupPal V2 Brand CSS — Rose Gold × Sunset Orange
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand Colors ── */
+  --mp-rose-gold: #C4956A;
+  --mp-rose-light: #E8C9A8;
+  --mp-rose-dark: #A67B52;
+  --mp-sunset: #FF8C42;
+  --mp-peach: #FFC1A1;
+  --mp-champagne: #D4A574;
+
+  /* ── Semantic Colors ── */
+  --mp-success: #7DB87A;
+  --mp-warning: #D4A03C;
+  --mp-error: #E07866;
+  --mp-info: #5B8EC4;
+
+  /* ── Neutral Colors ── */
+  --mp-bg: #FFF6EC;
+  --mp-bg-white: #FFFFFF;
+  --mp-text-primary: #4A2511;
+  --mp-text-secondary: #6B3A1F;
+  --mp-text-tertiary: #9B8576;
+  --mp-border: #E8DDD2;
+  --mp-border-light: #F0E8DC;
+
+  /* ── Gradients ── */
+  --mp-gradient-primary: linear-gradient(to right, #C4956A, #FF8C42);
+  --mp-gradient-soft: linear-gradient(to right, #C4956A, #D4B896);
+  --mp-gradient-sunset: linear-gradient(to right, #FF8C42, #FFC1A1);
+  --mp-gradient-hero: linear-gradient(to right, #C4956A, #FF8C42 60%, #FFC1A1);
+  --mp-gradient-gp: linear-gradient(to right, #A67B52, #C4956A);
+  --mp-gradient-card-img: linear-gradient(to bottom, #FFC1A1, #E8943A 50%, #A65940);
+
+  /* ── Font Families ── */
+  --mp-font-display: 'Outfit', system-ui, sans-serif;
+  --mp-font-body: 'Inter', system-ui, sans-serif;
+  --mp-font-cn: 'Sarasa Gothic SC', 'PingFang SC', 'Noto Sans SC', sans-serif;
+
+  /* ── Type Scale ── */
+  --mp-text-hero: 56px;
+  --mp-text-title1: 28px;
+  --mp-text-title2: 17px;
+  --mp-text-heading: 14px;
+  --mp-text-body: 13px;
+  --mp-text-caption: 12px;
+  --mp-text-small: 11px;
+
+  /* ── Radius Scale ── */
+  --mp-radius-xs: 4px;
+  --mp-radius-sm: 8px;
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;
+  --mp-radius-xl: 24px;
+  --mp-radius-2xl: 32px;
+  --mp-radius-full: 9999px;
+  --mp-radius-pill: 50px;
+  --mp-radius-tab: 36px;
+
+  /* ── Spacing Scale ── */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 20px;
+  --mp-space-6: 24px;
+  --mp-space-8: 32px;
+  --mp-space-12: 48px;
+
+  /* ── Shadows (Warm Tone) ── */
+  --mp-shadow-xs: 0 2px 8px rgba(196, 149, 106, 0.06);
+  --mp-shadow-sm: 0 4px 16px rgba(196, 149, 106, 0.08);
+  --mp-shadow-md: 0 8px 24px rgba(196, 149, 106, 0.12);
+  --mp-shadow-lg: 0 16px 48px rgba(196, 149, 106, 0.16);
+  --mp-shadow-btn: 0 4px 16px rgba(196, 149, 106, 0.30);
+  --mp-shadow-gp: 0 8px 24px rgba(166, 123, 82, 0.25);
+
+  /* ── Transitions ── */
+  --mp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout Tokens ── */
+  --mp-tab-bar-height: 56px;
+  --mp-header-height: 56px;
+  --mp-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mp-safe-top: env(safe-area-inset-top, 0px);
+  --mp-content-max-width: 414px;
+
+  /* ── Z-index ── */
+  --mp-z-tab: 100;
+  --mp-z-sheet: 200;
+  --mp-z-modal: 300;
+  --mp-z-toast: 400;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-border: var(--mp-border);
+  }
+  @layer base {
+    body { background: var(--mp-background); color: var(--mp-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-[88px]">
+
+      <!-- ═══ Profile Header Area ═══ -->
+      <section class="relative overflow-hidden" style="min-height: 220px;">
+        <!-- Blurred background image -->
+        <div class="absolute inset-0">
+          <img src="../assets/image_2_yi19x4.jpg" alt="" class="h-full w-full object-cover scale-110" style="filter: blur(18px) brightness(0.6); transform: scale(1.1);">
+          <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(74,37,17,0.2) 0%, rgba(74,37,17,0.7) 70%, rgba(74,37,17,0.95) 100%);"></div>
+        </div>
+
+        <!-- User info centered -->
+        <div class="relative z-10 flex flex-col items-center pt-10 pb-6 px-5">
+          <!-- Settings icon top-right -->
+          <button class="absolute top-3 right-4 inline-flex h-9 w-9 items-center justify-center rounded-full" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);" aria-label="设置">
+            <i data-lucide="settings" class="w-5 h-5" style="color: rgba(255,255,255,0.85);"></i>
+          </button>
+
+          <!-- Avatar with gradient border ring -->
+          <div class="rounded-full p-[4px]" style="background: var(--mp-gradient-primary);">
+            <img src="../assets/image_9_yi19x4.jpg" alt="用户头像" class="h-[72px] w-[72px] rounded-full object-cover" style="border: 3px solid rgba(255,255,255,0.9);">
+          </div>
+
+          <!-- Username -->
+          <h1 class="mt-3 text-[18px] font-semibold text-white" style="font-family: var(--mp-font-cn);">小美妆达人</h1>
+
+          <!-- User ID -->
+          <p class="mt-1 text-[12px]" style="color: rgba(255,255,255,0.7);">@xiaomei妆伴ID</p>
+
+          <!-- Edit profile button -->
+          <button class="mt-4 inline-flex items-center justify-center px-5 h-8 rounded-full text-[13px] font-medium" style="border: 1px solid rgba(255,255,255,0.5); color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.08); border-radius: var(--mp-radius-pill);" data-dom-id="edit-profile-btn">
+            编辑资料
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══ GP Balance Card ═══ -->
+      <section class="px-4 -mt-3 relative z-20">
+        <div class="rounded-[24px] p-5" style="background: var(--mp-gradient-gp); box-shadow: var(--mp-shadow-gp);">
+          <div class="flex items-center justify-between">
+            <span class="text-[13px]" style="color: rgba(255,255,255,0.8);">焕新值</span>
+            <button class="inline-flex items-center justify-center px-4 h-7 rounded-full text-[12px] font-medium" style="background: rgba(255,255,255,0.95); color: var(--mp-text-primary); border-radius: var(--mp-radius-pill);" data-dom-id="gp-recharge-btn">
+              充值
+            </button>
+          </div>
+          <p class="mt-2 text-[36px] font-bold text-white" style="font-family: var(--mp-font-display); font-variant-numeric: tabular-nums;">2,580</p>
+          <p class="mt-1 text-[12px]" style="color: rgba(255,255,255,0.5);">本月消耗 320 点</p>
+        </div>
+      </section>
+
+      <!-- ═══ Stats Row ═══ -->
+      <section class="px-4 mt-4">
+        <div class="flex items-center justify-around py-3 rounded-[16px]" style="background: var(--mp-bg-white);">
+          <div class="flex flex-col items-center">
+            <span class="text-[20px] font-bold" style="font-family: var(--mp-font-display); color: var(--mp-text-primary);">128</span>
+            <span class="mt-0.5 text-[11px]" style="color: var(--mp-text-tertiary);">收藏</span>
+          </div>
+          <div class="h-8 w-px" style="background: var(--mp-border-light);"></div>
+          <div class="flex flex-col items-center">
+            <span class="text-[20px] font-bold" style="font-family: var(--mp-font-display); color: var(--mp-text-primary);">56</span>
+            <span class="mt-0.5 text-[11px]" style="color: var(--mp-text-tertiary);">关注</span>
+          </div>
+          <div class="h-8 w-px" style="background: var(--mp-border-light);"></div>
+          <div class="flex flex-col items-center">
+            <span class="text-[20px] font-bold" style="font-family: var(--mp-font-display); color: var(--mp-text-primary);">234</span>
+            <span class="mt-0.5 text-[11px]" style="color: var(--mp-text-tertiary);">粉丝</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Feature Menu Grid ═══ -->
+      <section class="px-4 mt-5">
+        <div class="grid grid-cols-3 gap-3">
+          <!-- 我的妆容 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-my-looks">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-peach), var(--mp-rose-light));">
+              <i data-lucide="sparkles" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">我的妆容</span>
+          </button>
+
+          <!-- 焕新记录 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-refresh-history">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-champagne), var(--mp-rose-light));">
+              <i data-lucide="refresh-cw" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">焕新记录</span>
+          </button>
+
+          <!-- 收藏夹 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-favorites">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-sunset), var(--mp-peach));">
+              <i data-lucide="heart" class="w-[18px] h-[18px]" style="color: white;"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">收藏夹</span>
+          </button>
+
+          <!-- 会员中心 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-vip">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-champagne), var(--mp-sunset));">
+              <i data-lucide="crown" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">会员中心</span>
+          </button>
+
+          <!-- 皮肤档案 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-skin">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-rose-light), var(--mp-peach));">
+              <i data-lucide="scan-face" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">皮肤档案</span>
+          </button>
+
+          <!-- 设置 -->
+          <button class="flex flex-col items-center gap-2 py-4 rounded-[16px] transition-shadow duration-200" style="background: var(--mp-bg-white);" data-dom-id="menu-settings">
+            <div class="inline-flex h-10 w-10 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-border-light), var(--mp-rose-light));">
+              <i data-lucide="settings" class="w-[18px] h-[18px]" style="color: var(--mp-text-tertiary);"></i>
+            </div>
+            <span class="text-[13px] truncate" style="color: var(--mp-text-secondary);">设置</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══ Recent Activity Section ═══ -->
+      <section class="px-4 mt-6">
+        <h2 class="text-[15px] font-semibold mb-3" style="color: var(--mp-text-primary);">最近动态</h2>
+
+        <div class="flex flex-col gap-3">
+          <!-- Activity 1 -->
+          <div class="flex items-center gap-3 rounded-[16px] p-3" style="background: var(--mp-bg-white); box-shadow: var(--mp-shadow-xs);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-peach), var(--mp-rose-light));">
+              <i data-lucide="sparkles" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[13px] font-medium truncate" style="color: var(--mp-text-primary);">创建了新妆容「夏日蜜桃妆」</p>
+              <p class="text-[11px] mt-0.5 truncate" style="color: var(--mp-text-tertiary);">3小时前</p>
+            </div>
+          </div>
+
+          <!-- Activity 2 -->
+          <div class="flex items-center gap-3 rounded-[16px] p-3" style="background: var(--mp-bg-white); box-shadow: var(--mp-shadow-xs);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-champagne), var(--mp-sunset));">
+              <i data-lucide="refresh-cw" class="w-[18px] h-[18px]" style="color: var(--mp-rose-dark);"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[13px] font-medium truncate" style="color: var(--mp-text-primary);">完成焕新体验「晚宴精致妆」</p>
+              <p class="text-[11px] mt-0.5 truncate" style="color: var(--mp-text-tertiary);">昨天</p>
+            </div>
+          </div>
+
+          <!-- Activity 3 -->
+          <div class="flex items-center gap-3 rounded-[16px] p-3" style="background: var(--mp-bg-white); box-shadow: var(--mp-shadow-xs);">
+            <div class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style="background: linear-gradient(135deg, var(--mp-sunset), var(--mp-peach));">
+              <i data-lucide="heart" class="w-[18px] h-[18px]" style="color: white;"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[13px] font-medium truncate" style="color: var(--mp-text-primary);">收藏了「韩系清透底妆教程」</p>
+              <p class="text-[11px] mt-0.5 truncate" style="color: var(--mp-text-tertiary);">3天前</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Floating Pill Tab Bar ═══ -->
+      <nav class="fixed bottom-3 left-1/2 z-[100] -translate-x-1/2" style="padding-bottom: env(safe-area-inset-bottom, 0px);" data-dom-id="tab-bar">
+        <div class="flex items-center gap-1 rounded-full px-2 py-2" style="background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); box-shadow: var(--mp-shadow-lg); border: 1px solid var(--mp-border-light);">
+
+          <!-- 首页 -->
+          <button class="flex flex-col items-center justify-center w-12 h-12 rounded-full" data-dom-id="tab-home" aria-label="首页">
+            <i data-lucide="home" class="w-5 h-5" style="color: var(--mp-text-tertiary);"></i>
+            <span class="text-[10px] mt-0.5" style="color: var(--mp-text-tertiary);">首页</span>
+          </button>
+
+          <!-- 颜库 -->
+          <button class="flex flex-col items-center justify-center w-12 h-12 rounded-full" data-dom-id="tab-library" aria-label="颜库">
+            <i data-lucide="palette" class="w-5 h-5" style="color: var(--mp-text-tertiary);"></i>
+            <span class="text-[10px] mt-0.5" style="color: var(--mp-text-tertiary);">颜库</span>
+          </button>
+
+          <!-- 焕新 (center, elevated) -->
+          <button class="flex items-center justify-center w-14 h-14 rounded-full" style="background: var(--mp-gradient-primary); box-shadow: var(--mp-shadow-btn);" data-dom-id="tab-mirror" aria-label="焕新">
+            <i data-lucide="scan" class="w-[22px] h-[22px]" style="color: white;"></i>
+          </button>
+
+          <!-- 市集 -->
+          <button class="flex flex-col items-center justify-center w-12 h-12 rounded-full" data-dom-id="tab-mall" aria-label="市集">
+            <i data-lucide="shopping-bag" class="w-5 h-5" style="color: var(--mp-text-tertiary);"></i>
+            <span class="text-[10px] mt-0.5" style="color: var(--mp-text-tertiary);">市集</span>
+          </button>
+
+          <!-- 我的 (active, gradient) -->
+          <button class="flex flex-col items-center justify-center w-12 h-12 rounded-full" style="background: var(--mp-gradient-primary);" data-dom-id="tab-profile" aria-label="我的">
+            <i data-lucide="user" class="w-5 h-5" style="color: white;"></i>
+            <span class="text-[10px] mt-0.5 text-white font-medium">我的</span>
+          </button>
+
+        </div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

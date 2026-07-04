@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled</title>
+    <style id="theme-vars">
+/* ═══════════════════════════════════════════════════════════
+   MakeupPal V2 Brand CSS — Rose Gold × Sunset Orange
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand Colors ── */
+  --mp-rose-gold: #C4956A;
+  --mp-rose-light: #E8C9A8;
+  --mp-rose-dark: #A67B52;
+  --mp-sunset: #FF8C42;
+  --mp-peach: #FFC1A1;
+  --mp-champagne: #D4A574;
+
+  /* ── Semantic Colors ── */
+  --mp-success: #7DB87A;
+  --mp-warning: #D4A03C;
+  --mp-error: #E07866;
+  --mp-info: #5B8EC4;
+
+  /* ── Neutral Colors ── */
+  --mp-bg: #FFF6EC;
+  --mp-bg-white: #FFFFFF;
+  --mp-bg-dark: #1A1A1A;
+  --mp-text-primary: #4A2511;
+  --mp-text-secondary: #6B3A1F;
+  --mp-text-tertiary: #9B8576;
+  --mp-border: #E8DDD2;
+  --mp-border-light: #F0E8DC;
+
+  /* ── Gradients ── */
+  --mp-gradient-primary: linear-gradient(to right, #C4956A, #FF8C42);
+  --mp-gradient-soft: linear-gradient(to right, #C4956A, #D4B896);
+  --mp-gradient-sunset: linear-gradient(to right, #FF8C42, #FFC1A1);
+  --mp-gradient-hero: linear-gradient(to right, #C4956A, #FF8C42 60%, #FFC1A1);
+  --mp-gradient-gp: linear-gradient(to right, #A67B52, #C4956A);
+  --mp-gradient-card-img: linear-gradient(to bottom, #FFC1A1, #E8943A 50%, #A65940);
+
+  /* ── Font Families ── */
+  --mp-font-display: 'Outfit', system-ui, sans-serif;
+  --mp-font-body: 'Inter', system-ui, sans-serif;
+  --mp-font-cn: 'Sarasa Gothic SC', 'PingFang SC', 'Noto Sans SC', sans-serif;
+
+  /* ── Type Scale ── */
+  --mp-text-hero: 56px;
+  --mp-text-title1: 28px;
+  --mp-text-title2: 17px;
+  --mp-text-heading: 14px;
+  --mp-text-body: 13px;
+  --mp-text-caption: 12px;
+  --mp-text-small: 11px;
+
+  /* ── Radius Scale ── */
+  --mp-radius-xs: 4px;
+  --mp-radius-sm: 8px;
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;
+  --mp-radius-xl: 24px;
+  --mp-radius-2xl: 32px;
+  --mp-radius-full: 9999px;
+  --mp-radius-pill: 50px;
+  --mp-radius-tab: 36px;
+
+  /* ── Spacing Scale ── */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 20px;
+  --mp-space-6: 24px;
+  --mp-space-8: 32px;
+  --mp-space-12: 48px;
+
+  /* ── Shadows (Warm Tone) ── */
+  --mp-shadow-xs: 0 2px 8px rgba(196, 149, 106, 0.06);
+  --mp-shadow-sm: 0 4px 16px rgba(196, 149, 106, 0.08);
+  --mp-shadow-md: 0 8px 24px rgba(196, 149, 106, 0.12);
+  --mp-shadow-lg: 0 16px 48px rgba(196, 149, 106, 0.16);
+  --mp-shadow-btn: 0 4px 16px rgba(196, 149, 106, 0.30);
+  --mp-shadow-gp: 0 8px 24px rgba(166, 123, 82, 0.25);
+
+  /* ── Transitions ── */
+  --mp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout Tokens ── */
+  --mp-tab-bar-height: 56px;
+  --mp-header-height: 56px;
+  --mp-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mp-safe-top: env(safe-area-inset-top, 0px);
+  --mp-content-max-width: 414px;
+
+  /* ── Z-index ── */
+  --mp-z-tab: 100;
+  --mp-z-sheet: 200;
+  --mp-z-modal: 300;
+  --mp-z-toast: 400;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-border: var(--mp-border);
+  }
+  @layer base {
+    body { background: var(--mp-background); color: var(--mp-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="relative w-full h-screen overflow-hidden" style="background: var(--mp-bg-dark); font-family: var(--mp-font-cn), var(--mp-font-body), system-ui, sans-serif;">
+
+      <!-- Full-Screen Camera View -->
+      <img src="../assets/image_6_yi19x4.jpg" alt="Camera preview" class="absolute inset-0 w-full h-full object-cover" />
+
+      <!-- Face Outline Guide Overlay -->
+      <div class="absolute left-0 right-0 flex items-center justify-center pointer-events-none" style="top: 10%; height: 80%;">
+        <div class="w-52 h-72 rounded-full" style="border: 2px dashed var(--mp-rose-gold); opacity: 0.2;"></div>
+      </div>
+
+      <!-- Top Controls -->
+      <div class="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-3 z-10" style="padding-top: calc(var(--mp-safe-top, 0px) + 12px);">
+        <!-- Left: Close button -->
+        <button class="w-12 h-12 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="Close">
+          <i data-lucide="x" class="w-5 h-5 text-white"></i>
+        </button>
+
+        <!-- Center: Title -->
+        <span class="text-white text-sm font-medium" style="font-size: 14px; text-shadow: 0 1px 4px rgba(0,0,0,0.5);">焕新试妆</span>
+
+        <!-- Right: Flash, Beauty, Settings -->
+        <div class="flex items-center gap-2">
+          <button class="w-11 h-11 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="Flash toggle">
+            <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+          </button>
+          <button class="w-11 h-11 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="Beauty filter level">
+            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+          </button>
+          <button class="w-11 h-11 flex items-center justify-center rounded-full" style="background: rgba(0,0,0,0.4);" aria-label="Settings">
+            <i data-lucide="sliders-horizontal" class="w-5 h-5 text-white"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Makeup Category Strip -->
+      <div class="absolute left-4 right-4 flex justify-center z-10" style="top: 28%;">
+        <div class="inline-flex items-center gap-2 px-3 py-2 overflow-x-auto no-scrollbar" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: var(--mp-radius-full);">
+          <!-- Active category -->
+          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shrink-0 text-white text-xs font-medium" style="background: var(--mp-gradient-primary); font-size: var(--mp-text-body);">
+            <i data-lucide="circle" class="w-3.5 h-3.5"></i>
+            <span>底妆</span>
+          </button>
+          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shrink-0 text-white/70 text-xs font-medium" style="background: rgba(255,255,255,0.12); font-size: var(--mp-text-body);">
+            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+            <span>眼妆</span>
+          </button>
+          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shrink-0 text-white/70 text-xs font-medium" style="background: rgba(255,255,255,0.12); font-size: var(--mp-text-body);">
+            <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+            <span>唇妆</span>
+          </button>
+          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shrink-0 text-white/70 text-xs font-medium" style="background: rgba(255,255,255,0.12); font-size: var(--mp-text-body);">
+            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+            <span>腮红</span>
+          </button>
+          <button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shrink-0 text-white/70 text-xs font-medium" style="background: rgba(255,255,255,0.12); font-size: var(--mp-text-body);">
+            <i data-lucide="sun" class="w-3.5 h-3.5"></i>
+            <span>修容</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Selector Panel -->
+      <div class="absolute left-4 right-4 flex justify-center z-10" style="top: 53%;">
+        <div class="px-5 py-3.5" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: var(--mp-radius-xl); width: calc(100% - 32px); max-width: 340px;">
+          <!-- Color swatches row -->
+          <div class="flex items-center justify-center gap-3 mb-2.5">
+            <button class="w-9 h-9 rounded-full shrink-0" style="background: #F5D5C0; border: 3px solid white;" aria-label="Color option 1"></button>
+            <button class="w-9 h-9 rounded-full shrink-0" style="background: #E8B89A;" aria-label="Color option 2"></button>
+            <button class="w-9 h-9 rounded-full shrink-0" style="background: #D4966A;" aria-label="Color option 3"></button>
+            <button class="w-9 h-9 rounded-full shrink-0" style="background: #C07850;" aria-label="Color option 4"></button>
+            <button class="w-9 h-9 rounded-full shrink-0" style="background: #A85E3A;" aria-label="Color option 5"></button>
+          </div>
+          <!-- Product name + brand -->
+          <div class="text-center">
+            <p class="text-white text-xs font-medium truncate" style="font-size: var(--mp-text-heading);">丝绒粉底气垫</p>
+            <p class="truncate" style="color: var(--mp-rose-light); opacity: 0.7; font-size: var(--mp-text-caption);">MakeupPal Studio</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Capture Bar -->
+      <div class="absolute bottom-0 left-0 right-0 z-10" style="padding-bottom: calc(var(--mp-tab-bar-height) + var(--mp-safe-bottom, 0px) + 16px);">
+        <div class="flex items-center justify-center gap-8 px-8">
+          <!-- Left: Photo gallery thumbnail -->
+          <button class="w-11 h-11 rounded-lg overflow-hidden shrink-0" style="border: 2px solid rgba(255,255,255,0.3);" aria-label="Photo gallery">
+            <div class="w-full h-full flex items-center justify-center" style="background: rgba(255,255,255,0.1);">
+              <i data-lucide="image" class="w-5 h-5 text-white/50"></i>
+            </div>
+          </button>
+
+          <!-- Center: Capture button with gradient border -->
+          <button class="shrink-0 rounded-full" style="width: 72px; height: 72px; padding: 3px; background: var(--mp-gradient-primary); box-shadow: var(--mp-shadow-btn);" aria-label="Capture photo">
+            <div class="w-full h-full rounded-full flex items-center justify-center" style="background: white;">
+              <div class="rounded-full flex items-center justify-center" style="width: 52px; height: 52px; background: linear-gradient(135deg, var(--mp-rose-gold), var(--mp-sunset)); opacity: 0.12;"></div>
+            </div>
+          </button>
+
+          <!-- Right: Switch camera -->
+          <button class="w-11 h-11 flex items-center justify-center rounded-full shrink-0" style="background: rgba(0,0,0,0.4);" aria-label="Switch camera">
+            <i data-lucide="refresh-cw" class="w-5 h-5 text-white"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Bar -->
+      <nav class="absolute bottom-0 left-0 right-0 z-20 flex justify-center" style="padding-bottom: var(--mp-safe-bottom, 0px);">
+        <div class="inline-flex items-center" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: var(--mp-radius-tab); height: var(--mp-tab-bar-height); box-shadow: var(--mp-shadow-lg);">
+          <a href="home.html" class="flex flex-col items-center justify-center px-4 py-1.5 min-w-[56px]" style="color: rgba(255,255,255,0.5);" data-dom-id="tab-home">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span class="mt-0.5" style="font-size: var(--mp-text-small);">首页</span>
+          </a>
+          <a href="library-waterfall.html" class="flex flex-col items-center justify-center px-4 py-1.5 min-w-[56px]" style="color: rgba(255,255,255,0.5);" data-dom-id="tab-library">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            <span class="mt-0.5" style="font-size: var(--mp-text-small);">颜库</span>
+          </a>
+          <!-- Active: Mirror tab (center, elevated) -->
+          <a href="mirror.html" class="flex flex-col items-center justify-center px-4 py-1.5 min-w-[56px] -mt-3 rounded-full" style="background: var(--mp-gradient-primary); color: white; box-shadow: var(--mp-shadow-gp);" data-dom-id="tab-mirror">
+            <i data-lucide="scan-face" class="w-5 h-5"></i>
+            <span class="mt-0.5" style="font-size: var(--mp-text-small);">焕新</span>
+          </a>
+          <a href="mall.html" class="flex flex-col items-center justify-center px-4 py-1.5 min-w-[56px]" style="color: rgba(255,255,255,0.5);" data-dom-id="tab-mall">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span class="mt-0.5" style="font-size: var(--mp-text-small);">市集</span>
+          </a>
+          <a href="profile.html" class="flex flex-col items-center justify-center px-4 py-1.5 min-w-[56px]" style="color: rgba(255,255,255,0.5);" data-dom-id="tab-profile">
+            <i data-lucide="user" class="w-5 h-5"></i>
+            <span class="mt-0.5" style="font-size: var(--mp-text-small);">我的</span>
+          </a>
+        </div>
+      </nav>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

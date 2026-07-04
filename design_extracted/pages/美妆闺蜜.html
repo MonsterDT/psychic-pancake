@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美妆闺蜜 · 妆伴</title>
+    <style id="theme-vars">
+/* ═══════════════════════════════════════════════════════════
+   MakeupPal V2 Brand CSS — Rose Gold × Sunset Orange
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand Colors ── */
+  --mp-rose-gold: #C4956A;
+  --mp-rose-light: #E8C9A8;
+  --mp-rose-dark: #A67B52;
+  --mp-sunset: #FF8C42;
+  --mp-peach: #FFC1A1;
+  --mp-champagne: #D4A574;
+
+  /* ── Semantic Colors ── */
+  --mp-success: #7DB87A;
+  --mp-warning: #D4A03C;
+  --mp-error: #E07866;
+  --mp-info: #5B8EC4;
+
+  /* ── Neutral Colors ── */
+  --mp-bg: #FFF6EC;
+  --mp-bg-white: #FFFFFF;
+  --mp-text-primary: #4A2511;
+  --mp-text-secondary: #6B3A1F;
+  --mp-text-tertiary: #9B8576;
+  --mp-border: #E8DDD2;
+  --mp-border-light: #F0E8DC;
+
+  /* ── Gradients ── */
+  --mp-gradient-primary: linear-gradient(to right, #C4956A, #FF8C42);
+  --mp-gradient-soft: linear-gradient(to right, #C4956A, #D4B896);
+  --mp-gradient-sunset: linear-gradient(to right, #FF8C42, #FFC1A1);
+  --mp-gradient-hero: linear-gradient(to right, #C4956A, #FF8C42 60%, #FFC1A1);
+  --mp-gradient-gp: linear-gradient(to right, #A67B52, #C4956A);
+  --mp-gradient-card-img: linear-gradient(to bottom, #FFC1A1, #E8943A 50%, #A65940);
+
+  /* ── Font Families ── */
+  --mp-font-display: 'Outfit', system-ui, sans-serif;
+  --mp-font-body: 'Inter', system-ui, sans-serif;
+  --mp-font-cn: 'Sarasa Gothic SC', 'PingFang SC', 'Noto Sans SC', sans-serif;
+
+  /* ── Type Scale ── */
+  --mp-text-hero: 56px;
+  --mp-text-title1: 28px;
+  --mp-text-title2: 17px;
+  --mp-text-heading: 14px;
+  --mp-text-body: 13px;
+  --mp-text-caption: 12px;
+  --mp-text-small: 11px;
+
+  /* ── Radius Scale ── */
+  --mp-radius-xs: 4px;
+  --mp-radius-sm: 8px;
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;
+  --mp-radius-xl: 24px;
+  --mp-radius-2xl: 32px;
+  --mp-radius-full: 9999px;
+  --mp-radius-pill: 50px;
+  --mp-radius-tab: 36px;
+
+  /* ── Spacing Scale ── */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 20px;
+  --mp-space-6: 24px;
+  --mp-space-8: 32px;
+  --mp-space-12: 48px;
+
+  /* ── Shadows (Warm Tone) ── */
+  --mp-shadow-xs: 0 2px 8px rgba(196, 149, 106, 0.06);
+  --mp-shadow-sm: 0 4px 16px rgba(196, 149, 106, 0.08);
+  --mp-shadow-md: 0 8px 24px rgba(196, 149, 106, 0.12);
+  --mp-shadow-lg: 0 16px 48px rgba(196, 149, 106, 0.16);
+  --mp-shadow-btn: 0 4px 16px rgba(196, 149, 106, 0.30);
+  --mp-shadow-gp: 0 8px 24px rgba(166, 123, 82, 0.25);
+
+  /* ── Transitions ── */
+  --mp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout Tokens ── */
+  --mp-tab-bar-height: 56px;
+  --mp-header-height: 56px;
+  --mp-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mp-safe-top: env(safe-area-inset-top, 0px);
+  --mp-content-max-width: 414px;
+
+  /* ── Z-index ── */
+  --mp-z-tab: 100;
+  --mp-z-sheet: 200;
+  --mp-z-modal: 300;
+  --mp-z-toast: 400;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-border: var(--mp-border);
+  }
+  @layer base {
+    body { background: var(--mp-background); color: var(--mp-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="flex flex-col h-screen" style="max-width: var(--mp-content-max-width); margin: 0 auto;">
+
+        <!-- ═══ Chat Header ═══ -->
+        <header class="sticky top-0 z-50 flex items-center justify-between px-4 shrink-0" style="height: var(--mp-header-height); background: var(--mp-bg-white); border-bottom: 1px solid var(--mp-border-light);">
+            <button data-dom-id="chat-close" class="flex items-center justify-center w-9 h-9 rounded-lg" style="color: var(--mp-text-primary);" aria-label="Close chat">
+                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-1.5">
+                <span class="font-semibold text-[15px]" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">美妆闺蜜</span>
+                <i data-lucide="sparkles" class="w-5 h-5" style="color: var(--mp-rose-gold);"></i>
+            </div>
+            <button class="flex items-center justify-center w-9 h-9 rounded-lg" style="color: var(--mp-text-secondary);" aria-label="Conversation history">
+                <i data-lucide="clock" class="w-5 h-5"></i>
+            </button>
+        </header>
+
+        <!-- ═══ Chat Messages (scrollable) ═══ -->
+        <div class="flex-1 overflow-y-auto px-4 pt-4 pb-4" style="background: var(--mp-bg);">
+
+            <!-- AI Message 1 -->
+            <div class="flex gap-2.5 mb-5">
+                <div class="shrink-0 w-9 h-9 rounded-full overflow-hidden p-[2px]" style="background: var(--mp-gradient-primary);">
+                    <img src="../assets/image_8_yi19x4.jpg" alt="AI Assistant" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div class="max-w-[75%] px-3.5 py-2.5" style="background: var(--mp-bg-white); border-radius: 4px var(--mp-radius-xl) var(--mp-radius-xl) var(--mp-radius-xl); box-shadow: var(--mp-shadow-xs);">
+                    <p class="text-[13px] leading-[1.65]" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">嗨～我是你的美妆闺蜜！今天想尝试什么新妆容呢？我可以根据你的脸型和肤色为你推荐哦 💕</p>
+                </div>
+            </div>
+
+            <!-- User Message -->
+            <div class="flex justify-end mb-5">
+                <div class="max-w-[75%] px-3.5 py-2.5" style="background: var(--mp-gradient-primary); border-radius: var(--mp-radius-xl) 4px var(--mp-radius-xl) var(--mp-radius-xl);">
+                    <p class="text-[13px] leading-[1.65]" style="font-family: var(--mp-font-cn); color: var(--mp-bg-white);">我想找一个适合上班的日常妆容，不要太浓</p>
+                </div>
+            </div>
+
+            <!-- AI Message 2 -->
+            <div class="flex gap-2.5 mb-4">
+                <div class="shrink-0 w-9 h-9 rounded-full overflow-hidden p-[2px]" style="background: var(--mp-gradient-primary);">
+                    <img src="../assets/image_8_yi19x4.jpg" alt="AI Assistant" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div class="max-w-[75%] px-3.5 py-2.5" style="background: var(--mp-bg-white); border-radius: 4px var(--mp-radius-xl) var(--mp-radius-xl) var(--mp-radius-xl); box-shadow: var(--mp-shadow-xs);">
+                    <p class="text-[13px] leading-[1.65]" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">根据你的脸型分析，推荐你试试这几个清新自然的职场妆容 👇</p>
+                </div>
+            </div>
+
+            <!-- Recommendation Cards -->
+            <div class="flex gap-3 pl-[46px] mb-5 overflow-x-auto no-scrollbar pb-1">
+                <!-- Card 1 -->
+                <div class="shrink-0 overflow-hidden" style="width: 140px; border-radius: var(--mp-radius-lg); background: var(--mp-bg-white); box-shadow: var(--mp-shadow-sm);">
+                    <div class="overflow-hidden" style="height: 80px;">
+                        <img src="../assets/image_1_yi19x4.jpg" alt="职场裸妆" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-2.5">
+                        <p class="text-[12px] font-medium leading-tight mb-1 truncate" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">职场裸妆</p>
+                        <div class="flex items-center gap-0.5 mb-2">
+                            <i data-lucide="star" class="w-3 h-3" style="color: #E8A838; fill: #E8A838;"></i>
+                            <span class="text-[11px]" style="font-family: var(--mp-font-body); color: var(--mp-text-tertiary);">4.8</span>
+                        </div>
+                        <button class="w-full text-center text-[11px] font-medium text-white" style="background: var(--mp-gradient-primary); border-radius: var(--mp-radius-pill); padding: 5px 0;">试试</button>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="shrink-0 overflow-hidden" style="width: 140px; border-radius: var(--mp-radius-lg); background: var(--mp-bg-white); box-shadow: var(--mp-shadow-sm);">
+                    <div class="overflow-hidden" style="height: 80px;">
+                        <img src="../assets/image_1_yi19x4.jpg" alt="清新通勤妆" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-2.5">
+                        <p class="text-[12px] font-medium leading-tight mb-1 truncate" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">清新通勤妆</p>
+                        <div class="flex items-center gap-0.5 mb-2">
+                            <i data-lucide="star" class="w-3 h-3" style="color: #E8A838; fill: #E8A838;"></i>
+                            <span class="text-[11px]" style="font-family: var(--mp-font-body); color: var(--mp-text-tertiary);">4.8</span>
+                        </div>
+                        <button class="w-full text-center text-[11px] font-medium text-white" style="background: var(--mp-gradient-primary); border-radius: var(--mp-radius-pill); padding: 5px 0;">试试</button>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="shrink-0 overflow-hidden" style="width: 140px; border-radius: var(--mp-radius-lg); background: var(--mp-bg-white); box-shadow: var(--mp-shadow-sm);">
+                    <div class="overflow-hidden" style="height: 80px;">
+                        <img src="../assets/image_1_yi19x4.jpg" alt="优雅 OL 妆" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-2.5">
+                        <p class="text-[12px] font-medium leading-tight mb-1 truncate" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">优雅 OL 妆</p>
+                        <div class="flex items-center gap-0.5 mb-2">
+                            <i data-lucide="star" class="w-3 h-3" style="color: #E8A838; fill: #E8A838;"></i>
+                            <span class="text-[11px]" style="font-family: var(--mp-font-body); color: var(--mp-text-tertiary);">4.8</span>
+                        </div>
+                        <button class="w-full text-center text-[11px] font-medium text-white" style="background: var(--mp-gradient-primary); border-radius: var(--mp-radius-pill); padding: 5px 0;">试试</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Reply Chips -->
+            <div class="flex gap-2 pl-[46px] overflow-x-auto no-scrollbar pb-1">
+                <button class="shrink-0 text-[12px] whitespace-nowrap px-3.5 py-1.5" style="font-family: var(--mp-font-cn); color: var(--mp-text-secondary); background: var(--mp-bg-white); border: 1px solid var(--mp-border); border-radius: var(--mp-radius-pill);">自然妆</button>
+                <button class="shrink-0 text-[12px] whitespace-nowrap px-3.5 py-1.5" style="font-family: var(--mp-font-cn); color: var(--mp-text-secondary); background: var(--mp-bg-white); border: 1px solid var(--mp-border); border-radius: var(--mp-radius-pill);">裸妆</button>
+                <button class="shrink-0 text-[12px] whitespace-nowrap px-3.5 py-1.5" style="font-family: var(--mp-font-cn); color: var(--mp-text-secondary); background: var(--mp-bg-white); border: 1px solid var(--mp-border); border-radius: var(--mp-radius-pill);">通勤妆</button>
+                <button class="shrink-0 text-[12px] whitespace-nowrap px-3.5 py-1.5" style="font-family: var(--mp-font-cn); color: var(--mp-text-secondary); background: var(--mp-bg-white); border: 1px solid var(--mp-border); border-radius: var(--mp-radius-pill);">伪素颜</button>
+                <button class="shrink-0 text-[12px] whitespace-nowrap px-3.5 py-1.5" style="font-family: var(--mp-font-cn); color: var(--mp-text-secondary); background: var(--mp-bg-white); border: 1px solid var(--mp-border); border-radius: var(--mp-radius-pill);">元气妆</button>
+            </div>
+
+        </div>
+
+        <!-- ═══ Chat Input Bar (fixed bottom) ═══ -->
+        <div class="sticky bottom-0 flex items-center gap-2.5 px-4 shrink-0" style="background: var(--mp-bg-white); border-top: 1px solid var(--mp-border-light); padding-top: 10px; padding-bottom: calc(10px + var(--mp-safe-bottom));">
+            <button class="flex items-center justify-center shrink-0 w-11 h-11 rounded-full" style="background: var(--mp-bg); color: var(--mp-rose-gold);" aria-label="Add attachment">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+            <div class="flex-1 flex items-center" style="height: 50px; background: var(--mp-bg); border-radius: var(--mp-radius-pill); padding: 0 16px;">
+                <input type="text" placeholder="问我任何美妆问题..." class="flex-1 bg-transparent text-[13px] outline-none" style="font-family: var(--mp-font-cn); color: var(--mp-text-primary);">
+            </div>
+            <button class="flex items-center justify-center shrink-0 w-11 h-11 rounded-full text-white" style="background: var(--mp-gradient-primary);" aria-label="Send message">
+                <i data-lucide="send" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
