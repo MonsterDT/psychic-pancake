@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>市集 · 妆伴</title>
+    <style id="theme-vars">
+/* ═══════════════════════════════════════════════════════════
+   MakeupPal V2 Brand CSS — Rose Gold × Sunset Orange
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand Colors ── */
+  --mp-rose-gold: #C4956A;
+  --mp-rose-light: #E8C9A8;
+  --mp-rose-dark: #A67B52;
+  --mp-sunset: #FF8C42;
+  --mp-peach: #FFC1A1;
+  --mp-champagne: #D4A574;
+
+  /* ── Semantic Colors ── */
+  --mp-success: #7DB87A;
+  --mp-warning: #D4A03C;
+  --mp-error: #E07866;
+  --mp-info: #5B8EC4;
+
+  /* ── Neutral Colors ── */
+  --mp-bg: #FFF6EC;
+  --mp-bg-white: #FFFFFF;
+  --mp-text-primary: #4A2511;
+  --mp-text-secondary: #6B3A1F;
+  --mp-text-tertiary: #9B8576;
+  --mp-border: #E8DDD2;
+  --mp-border-light: #F0E8DC;
+
+  /* ── Gradients ── */
+  --mp-gradient-primary: linear-gradient(to right, #C4956A, #FF8C42);
+  --mp-gradient-soft: linear-gradient(to right, #C4956A, #D4B896);
+  --mp-gradient-sunset: linear-gradient(to right, #FF8C42, #FFC1A1);
+  --mp-gradient-hero: linear-gradient(to right, #C4956A, #FF8C42 60%, #FFC1A1);
+  --mp-gradient-gp: linear-gradient(to right, #A67B52, #C4956A);
+  --mp-gradient-card-img: linear-gradient(to bottom, #FFC1A1, #E8943A 50%, #A65940);
+
+  /* ── Font Families ── */
+  --mp-font-display: 'Outfit', system-ui, sans-serif;
+  --mp-font-body: 'Inter', system-ui, sans-serif;
+  --mp-font-cn: 'Sarasa Gothic SC', 'PingFang SC', 'Noto Sans SC', sans-serif;
+
+  /* ── Type Scale ── */
+  --mp-text-hero: 56px;
+  --mp-text-title1: 28px;
+  --mp-text-title2: 17px;
+  --mp-text-heading: 14px;
+  --mp-text-body: 13px;
+  --mp-text-caption: 12px;
+  --mp-text-small: 11px;
+
+  /* ── Radius Scale ── */
+  --mp-radius-xs: 4px;
+  --mp-radius-sm: 8px;
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;
+  --mp-radius-xl: 24px;
+  --mp-radius-2xl: 32px;
+  --mp-radius-full: 9999px;
+  --mp-radius-pill: 50px;
+  --mp-radius-tab: 36px;
+
+  /* ── Spacing Scale ── */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 20px;
+  --mp-space-6: 24px;
+  --mp-space-8: 32px;
+  --mp-space-12: 48px;
+
+  /* ── Shadows (Warm Tone) ── */
+  --mp-shadow-xs: 0 2px 8px rgba(196, 149, 106, 0.06);
+  --mp-shadow-sm: 0 4px 16px rgba(196, 149, 106, 0.08);
+  --mp-shadow-md: 0 8px 24px rgba(196, 149, 106, 0.12);
+  --mp-shadow-lg: 0 16px 48px rgba(196, 149, 106, 0.16);
+  --mp-shadow-btn: 0 4px 16px rgba(196, 149, 106, 0.30);
+  --mp-shadow-gp: 0 8px 24px rgba(166, 123, 82, 0.25);
+
+  /* ── Transitions ── */
+  --mp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout Tokens ── */
+  --mp-tab-bar-height: 56px;
+  --mp-header-height: 56px;
+  --mp-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mp-safe-top: env(safe-area-inset-top, 0px);
+  --mp-content-max-width: 414px;
+
+  /* ── Z-index ── */
+  --mp-z-tab: 100;
+  --mp-z-sheet: 200;
+  --mp-z-modal: 300;
+  --mp-z-toast: 400;
+}
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-border: var(--mp-border);
+  }
+  @layer base {
+    body { background: var(--mp-background); color: var(--mp-text-primary); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="max-w-[414px] mx-auto pb-24">
+
+        <!-- Search Bar -->
+        <section class="px-4 pt-4 pb-2">
+            <div class="flex items-center gap-2">
+                <div class="flex-1 flex items-center gap-2 rounded-[50px] border border-[var(--mp-border)] bg-[var(--mp-bg-white)] px-4 py-2.5" style="box-shadow: var(--mp-shadow-xs);">
+                    <i data-lucide="search" class="w-4 h-4 shrink-0" style="color: var(--mp-text-tertiary);"></i>
+                    <input type="text" placeholder="搜索美妆好物..." class="flex-1 bg-transparent text-[13px] outline-none placeholder:text-[var(--mp-text-tertiary)]" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">
+                </div>
+                <button class="inline-flex items-center justify-center w-10 h-10 rounded-[var(--mp-radius-lg)] bg-[var(--mp-bg-white)] border border-[var(--mp-border)] shrink-0" aria-label="扫码">
+                    <i data-lucide="scan-line" class="w-5 h-5" style="color: var(--mp-text-secondary);"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Category Icons Row -->
+        <section class="px-4 pt-2 pb-1">
+            <div class="flex gap-4 overflow-x-auto no-scrollbar pb-1">
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-skincare">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-rose-light); border: 2px solid var(--mp-rose-gold);">
+                        <i data-lucide="droplets" class="w-6 h-6" style="color: var(--mp-rose-gold);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">护肤</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-makeup">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-peach); opacity: 0.25;">
+                        <i data-lucide="sparkles" class="w-6 h-6" style="color: var(--mp-sunset);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-secondary); font-family: var(--mp-font-cn);">彩妆</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-perfume">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-peach); opacity: 0.25;">
+                        <i data-lucide="wind" class="w-6 h-6" style="color: var(--mp-sunset);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-secondary); font-family: var(--mp-font-cn);">香水</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-tools">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-peach); opacity: 0.25;">
+                        <i data-lucide="paintbrush" class="w-6 h-6" style="color: var(--mp-sunset);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-secondary); font-family: var(--mp-font-cn);">工具</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-personal">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-peach); opacity: 0.25;">
+                        <i data-lucide="heart" class="w-6 h-6" style="color: var(--mp-sunset);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-secondary); font-family: var(--mp-font-cn);">个护</span>
+                </div>
+
+                <div class="flex flex-col items-center gap-1.5 shrink-0" data-dom-id="cat-limited">
+                    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--mp-peach); opacity: 0.25;">
+                        <i data-lucide="gift" class="w-6 h-6" style="color: var(--mp-sunset);"></i>
+                    </div>
+                    <span class="text-[11px] whitespace-nowrap" style="color: var(--mp-text-secondary); font-family: var(--mp-font-cn);">限定</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Sale Banner -->
+        <section class="px-4 pt-3 pb-1">
+            <div class="relative w-full overflow-hidden rounded-[var(--mp-radius-xl)]" style="aspect-ratio: 16/7;">
+                <img src="../assets/image_0_yi19x4.jpg" alt="夏日美妆季促销活动" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(74,37,17,0.55) 0%, rgba(166,123,82,0.30) 100%);"></div>
+                <div class="relative z-10 flex flex-col justify-center h-full px-5 py-4">
+                    <h2 class="text-white font-bold text-[20px] leading-tight" style="font-family: var(--mp-font-cn); text-shadow: 0 1px 4px rgba(0,0,0,0.2);">夏日美妆季</h2>
+                    <p class="text-white/85 text-[13px] mt-1" style="font-family: var(--mp-font-cn);">全场低至5折</p>
+                    <button class="inline-flex items-center justify-center mt-3 px-5 py-1.5 rounded-[var(--mp-radius-pill)] text-white text-[12px] font-semibold whitespace-nowrap w-fit" style="background: var(--mp-gradient-primary); box-shadow: var(--mp-shadow-btn); font-family: var(--mp-font-cn);">
+                        立即抢购
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid -->
+        <section class="px-4 pt-4 pb-2">
+            <div class="grid grid-cols-2 gap-2">
+
+                <!-- Product 1 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="精华液" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-primary); font-family: var(--mp-font-cn);">热门</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">光感透亮精华液 30ml</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;299</span>
+                            <span class="text-[11px] line-through" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-body);">&#165;459</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售2.3k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="口红" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-sunset); font-family: var(--mp-font-cn);">新品</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">丝绒雾面唇釉 蜜桃色</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;168</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售5.1k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="面膜" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-gp); font-family: var(--mp-font-cn);">GP专享</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">玫瑰保湿面膜 10片装</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;89</span>
+                            <span class="text-[11px] line-through" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-body);">&#165;129</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售8.7k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="眼影盘" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-primary); font-family: var(--mp-font-cn);">热门</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">落日晚霞九色眼影盘</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;239</span>
+                            <span class="text-[11px] line-through" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-body);">&#165;359</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售1.2k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="防晒霜" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-sunset); font-family: var(--mp-font-cn);">新品</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">清透水感防晒霜 SPF50</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;199</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售3.6k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="rounded-[var(--mp-radius-xl)] bg-[var(--mp-bg-white)] overflow-hidden" style="box-shadow: var(--mp-shadow-xs);">
+                    <div class="relative aspect-square">
+                        <img src="../assets/image_7_yi19x4.jpg" alt="定妆喷雾" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 inline-flex items-center justify-center px-2 py-0.5 rounded-[var(--mp-radius-full)] text-white text-[10px] font-semibold whitespace-nowrap" style="background: var(--mp-gradient-gp); font-family: var(--mp-font-cn);">GP专享</span>
+                    </div>
+                    <div class="px-3 pt-2 pb-3">
+                        <h3 class="text-[13px] leading-snug line-clamp-2" style="color: var(--mp-text-primary); font-family: var(--mp-font-cn);">持久定妆喷雾 100ml</h3>
+                        <div class="flex items-baseline gap-1.5 mt-1.5">
+                            <span class="text-[15px] font-bold" style="color: var(--mp-rose-gold); font-family: var(--mp-font-display);">&#165;129</span>
+                            <span class="text-[11px] line-through" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-body);">&#165;189</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-2">
+                            <span class="text-[10px]" style="color: var(--mp-text-tertiary); font-family: var(--mp-font-cn);">已售4.0k</span>
+                            <button class="inline-flex items-center justify-center w-[28px] h-[28px] rounded-[var(--mp-radius-pill)] text-white shrink-0" style="background: var(--mp-gradient-primary);" aria-label="加入购物车">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Tab Bar (Floating Pill Capsule) -->
+    <nav class="fixed bottom-3 left-1/2 -translate-x-1/2 z-[var(--mp-z-tab)]" style="max-width: calc(414px - 32px); width: calc(100% - 32px);">
+        <div class="flex items-center justify-around rounded-[var(--mp-radius-tab)] px-1 py-1" style="background: var(--mp-bg-white); box-shadow: var(--mp-shadow-lg); border: 1px solid var(--mp-border-light);">
+            <a href="home.html" class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-[var(--mp-radius-md)] whitespace-nowrap transition-opacity" style="color: var(--mp-text-tertiary);" data-dom-id="tab-home">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                <span class="text-[10px]" style="font-family: var(--mp-font-cn);">首页</span>
+            </a>
+            <a href="library-card.html" class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-[var(--mp-radius-md)] whitespace-nowrap transition-opacity" style="color: var(--mp-text-tertiary);" data-dom-id="tab-library">
+                <i data-lucide="palette" class="w-5 h-5"></i>
+                <span class="text-[10px]" style="font-family: var(--mp-font-cn);">颜库</span>
+            </a>
+            <a href="mirror.html" class="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-[var(--mp-radius-md)] whitespace-nowrap transition-opacity" style="color: var(--mp-text-tertiary);" data-dom-id="tab-mirror">
+                <div class="inline-flex items-center justify-center w-9 h-9 rounded-full text-white -mt-3" style="background: var(--mp-gradient-primary); box-shadow: var(--mp-shadow-btn);">
+                    <i data-lucide="sparkles" class="w-[22px] h-[22px]"></i>
+                </div>
+                <span class="text-[10px] -mt-0.5" style="font-family: var(--mp-font-cn);">焕新</span>
+            </a>
+            <a href="mall.html" class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-[var(--mp-radius-md)] whitespace-nowrap" style="background: var(--mp-gradient-primary); color: white; box-shadow: var(--mp-shadow-sm);" data-dom-id="tab-mall">
+                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                <span class="text-[10px] font-semibold" style="font-family: var(--mp-font-cn);">市集</span>
+            </a>
+            <a href="profile.html" class="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-[var(--mp-radius-md)] whitespace-nowrap transition-opacity" style="color: var(--mp-text-tertiary);" data-dom-id="tab-profile">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                <span class="text-[10px]" style="font-family: var(--mp-font-cn);">我的</span>
+            </a>
+        </div>
+        <div style="height: var(--mp-safe-bottom);"></div>
+    </nav>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

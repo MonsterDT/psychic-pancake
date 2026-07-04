@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   MakeupPal V2 Brand CSS — Rose Gold × Sunset Orange
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* ── Brand Colors ── */
+  --mp-rose-gold: #C4956A;
+  --mp-rose-light: #E8C9A8;
+  --mp-rose-dark: #A67B52;
+  --mp-sunset: #FF8C42;
+  --mp-peach: #FFC1A1;
+  --mp-champagne: #D4A574;
+
+  /* ── Semantic Colors ── */
+  --mp-success: #7DB87A;
+  --mp-warning: #D4A03C;
+  --mp-error: #E07866;
+  --mp-info: #5B8EC4;
+
+  /* ── Neutral Colors ── */
+  --mp-bg: #FFF6EC;
+  --mp-bg-white: #FFFFFF;
+  --mp-bg-dark: #1A1A1A;
+  --mp-text-primary: #4A2511;
+  --mp-text-secondary: #6B3A1F;
+  --mp-text-tertiary: #9B8576;
+  --mp-border: #E8DDD2;
+  --mp-border-light: #F0E8DC;
+
+  /* ── Gradients ── */
+  --mp-gradient-primary: linear-gradient(to right, #C4956A, #FF8C42);
+  --mp-gradient-soft: linear-gradient(to right, #C4956A, #D4B896);
+  --mp-gradient-sunset: linear-gradient(to right, #FF8C42, #FFC1A1);
+  --mp-gradient-hero: linear-gradient(to right, #C4956A, #FF8C42 60%, #FFC1A1);
+  --mp-gradient-gp: linear-gradient(to right, #A67B52, #C4956A);
+  --mp-gradient-card-img: linear-gradient(to bottom, #FFC1A1, #E8943A 50%, #A65940);
+
+  /* ── Font Families ── */
+  --mp-font-display: 'Outfit', system-ui, sans-serif;
+  --mp-font-body: 'Inter', system-ui, sans-serif;
+  --mp-font-cn: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', system-ui, sans-serif;
+
+  /* ── Type Scale ── */
+  --mp-text-hero: 56px;
+  --mp-text-title1: 28px;
+  --mp-text-title2: 17px;
+  --mp-text-heading: 14px;
+  --mp-text-body: 13px;
+  --mp-text-caption: 12px;
+  --mp-text-small: 11px;
+
+  /* ── Radius Scale ── */
+  --mp-radius-xs: 4px;
+  --mp-radius-sm: 8px;
+  --mp-radius-md: 12px;
+  --mp-radius-lg: 16px;
+  --mp-radius-xl: 24px;
+  --mp-radius-2xl: 32px;
+  --mp-radius-full: 9999px;
+  --mp-radius-pill: 50px;
+  --mp-radius-tab: 36px;
+
+  /* ── Spacing Scale ── */
+  --mp-space-1: 4px;
+  --mp-space-2: 8px;
+  --mp-space-3: 12px;
+  --mp-space-4: 16px;
+  --mp-space-5: 20px;
+  --mp-space-6: 24px;
+  --mp-space-8: 32px;
+  --mp-space-12: 48px;
+
+  /* ── Shadows (Warm Tone) ── */
+  --mp-shadow-xs: 0 2px 8px rgba(196, 149, 106, 0.06);
+  --mp-shadow-sm: 0 4px 16px rgba(196, 149, 106, 0.08);
+  --mp-shadow-md: 0 8px 24px rgba(196, 149, 106, 0.12);
+  --mp-shadow-lg: 0 16px 48px rgba(196, 149, 106, 0.16);
+  --mp-shadow-btn: 0 4px 16px rgba(196, 149, 106, 0.30);
+  --mp-shadow-gp: 0 8px 24px rgba(166, 123, 82, 0.25);
+
+  /* ── Transitions ── */
+  --mp-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Layout Tokens ── */
+  --mp-tab-bar-height: 56px;
+  --mp-header-height: 56px;
+  --mp-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mp-safe-top: env(safe-area-inset-top, 0px);
+  --mp-content-max-width: 414px;
+
+  /* ── Z-index ── */
+  --mp-z-tab: 100;
+  --mp-z-sheet: 200;
+  --mp-z-modal: 300;
+  --mp-z-toast: 400;
+}
+
+@theme inline {
+  --color-border: var(--mp-border);
+  --color-rose-gold: var(--mp-rose-gold);
+  --color-sunset: var(--mp-sunset);
+  --color-peach: var(--mp-peach);
+  --font-cn: var(--mp-font-cn);
+  --font-display: var(--mp-font-display);
+}
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    background: var(--mp-bg);
+    color: var(--mp-text-primary);
+    font-family: var(--mp-font-cn);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    overscroll-behavior-y: none;
+  }
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+  }
+  input, textarea {
+    font-family: inherit;
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ── Utilities ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Multi-platform device frame ──
+   The device-frame is always a flex column with a fixed height
+   so the floating tab bar (absolute) anchors to the frame bottom
+   on BOTH mobile (viewport) and desktop (centered phone mockup).
+   Page content scrolls inside the flex-1 main area. */
+.device-frame {
+  width: 100%;
+  max-width: var(--mp-content-max-width);
+  margin: 0 auto;
+  position: relative;
+  background: var(--mp-bg);
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  body {
+    background: linear-gradient(135deg, #F5E6D3 0%, #FFE8D6 50%, #F5E6D3 100%);
+  }
+  .device-frame {
+    height: calc(100vh - 40px);
+    margin: 20px auto;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(74, 37, 17, 0.25), 0 0 0 8px #1a1a1a, 0 0 0 10px #2a2a2a;
+  }
+  .device-frame::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 22px;
+    background: #1a1a1a;
+    border-radius: 0 0 14px 14px;
+    z-index: 9999;
+    pointer-events: none;
+  }
+}
+
+/* The scrollable page content area inside the device frame */
+.device-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* ── Animation keyframes ── */
+@keyframes mp-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes mp-slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes mp-pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@keyframes mp-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes mp-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes mp-bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.mp-fade-in { animation: mp-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.mp-scale-in { animation: mp-scale-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.mp-slide-up { animation: mp-slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* Toast */
+.mp-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 6rem;
+  transform: translateX(-50%);
+  background: rgba(74, 37, 17, 0.92);
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  z-index: 9999;
+  backdrop-filter: blur(12px);
+  font-family: var(--mp-font-cn);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  animation: mp-fade-in 0.25s ease both;
+  pointer-events: none;
+}
