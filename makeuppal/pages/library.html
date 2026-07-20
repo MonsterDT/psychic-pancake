@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>颜库 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+  <div class="page-container">
+    <header class="top-nav">
+      <span class="top-nav-title">颜库</span>
+      <div class="flex gap-2">
+        <button class="top-nav-btn" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="px-4 py-2">
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar" style="scroll-padding-left: 16px;">
+          <button class="tag-tab tag-tab--active" data-category="featured" onclick="MakeupPal.switchCategory('featured')">达人精选</button>
+          <button class="tag-tab tag-tab--inactive" data-category="partial" onclick="MakeupPal.switchCategory('partial')">局部拆解</button>
+          <button class="tag-tab tag-tab--inactive" data-category="guofeng" onclick="MakeupPal.switchCategory('guofeng')">国风专区</button>
+          <button class="tag-tab tag-tab--inactive" data-category="commute" onclick="MakeupPal.switchCategory('commute')">通勤妆</button>
+          <button class="tag-tab tag-tab--inactive" data-category="date" onclick="MakeupPal.switchCategory('date')">约会妆</button>
+          <button class="tag-tab tag-tab--inactive" data-category="party" onclick="MakeupPal.switchCategory('party')">派对妆</button>
+          <button class="tag-tab tag-tab--inactive" data-category="daily" onclick="MakeupPal.switchCategory('daily')">日常</button>
+        </div>
+      </div>
+
+      <div class="px-4 pb-4">
+        <div style="columns:2; column-gap:var(--space-12);">
+          
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">韩式白开水妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">新手友好</span>
+                <span class="card-makeup__tag">淡颜系</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.8
+                </span>
+                <span class="card-makeup__stat">1.2k 收藏</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #F0C850 0%, #D4A03C 100%);aspect-ratio:3/5;"></div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">日系元气桃花妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">约会妆</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.9
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #E88585 0%, #C45C5C 100%);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--color-danger)" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">复古港风红唇妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">复古</span>
+                <span class="card-makeup__tag">气场</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.7
+                </span>
+                <span class="card-makeup__stat">3.1k</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #B89AC8 0%, #8B6FB0 100%);aspect-ratio:4/5;"></div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">清冷感新中式妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">国风</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.9
+                </span>
+                <span class="card-makeup__stat">1.8k</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #D4B896 0%, #C4956A 100%);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">通勤气质裸妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">通勤</span>
+                <span class="card-makeup__tag">伪素颜</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.6
+                </span>
+                <span class="card-makeup__stat">4.5k</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #6B6560 0%, #2D2A26 100%);aspect-ratio:3/5;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">派对闪亮烟熏妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">派对</span>
+                <span class="card-makeup__tag">欧美风</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.8
+                </span>
+                <span class="card-makeup__stat">2.7k</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <nav class="bottom-tabbar tabbar safe-area">
+      <button class="tabbar-item inactive" data-page="home" aria-label="首页">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="tabbar-label">首页</span>
+      </button>
+      <button class="tabbar-item active" data-page="library" aria-label="颜库">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span class="tabbar-label">颜库</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="guide" aria-label="跟我画">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="10 8 16 12 10 16 10 8"></polygon>
+        </svg>
+        <span class="tabbar-label">跟着画</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="profile" aria-label="我的">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="tabbar-label">我的</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

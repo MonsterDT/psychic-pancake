@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>分步指导 — 妆伴 MakeupPal</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@1.7.0"></script>
+  <style id="theme-vars">
+:root {
+  --color-bg: #FFF8F0;
+  --color-bg-alt: #FFF1E6;
+  --color-bg-soft: #FFFAF5;
+  --color-bg-secondary: #FFF5EB;
+  --color-bg-card: #FFFFFF;
+  --color-text: #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-muted: #9B9590;
+  --color-primary: #C4956A;
+  --color-primary-light: #D4B896;
+  --color-primary-lighter: #E8D5BE;
+  --color-primary-lightest: #F5EDE3;
+  --color-primary-dark: #A67B52;
+  --color-primary-darker: #8B6542;
+  --color-accent: #E8C9A8;
+  --color-border: #E8DDD2;
+  --color-border-light: #F0E8DF;
+  --color-border-lighter: #F7F1EA;
+  --color-success: #6B9E6B;
+  --color-success-light: #8FBC8F;
+  --color-success-lighter: #D4E8D4;
+  --color-danger: #C45C5C;
+  --color-danger-light: #E88585;
+  --color-danger-lighter: #F5D4D4;
+  --color-warning: #E8A03C;
+  --color-warning-light: #F0B860;
+  --color-warning-lighter: #FAE8CC;
+  --color-gold: #D4A03C;
+  --color-gold-light: #E8B84C;
+  --color-gold-dark: #B8860B;
+  --color-pink: #E8A0A0;
+  --color-purple: #B89AC8;
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Roboto', sans-serif;
+  --font-xs: 11px;
+  --font-sm: 12px;
+  --font-base: 14px;
+  --font-md: 15px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 22px;
+  --font-weight-body: 400;
+  --font-weight-heading: 600;
+  --font-line-height: 1.5;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 999px;
+  --shadow-xs: 0 1px 2px rgba(45,42,38,0.04), 0 1px 1px rgba(196,149,106,0.03);
+  --shadow-sm: 0 2px 8px rgba(45,42,38,0.06), 0 1px 3px rgba(196,149,106,0.05);
+  --shadow-md: 0 6px 20px rgba(45,42,38,0.08), 0 2px 8px rgba(196,149,106,0.06);
+  --shadow-lg: 0 12px 32px rgba(45,42,38,0.1), 0 4px 12px rgba(196,149,106,0.08);
+  --shadow-xl: 0 20px 60px rgba(45,42,38,0.15), 0 8px 24px rgba(196,149,106,0.1);
+  --shadow-gold: 0 4px 20px rgba(212,160,60,0.25);
+  --shadow-primary: 0 6px 20px rgba(196,149,106,0.3);
+  --shadow-primary-lg: 0 12px 36px rgba(196,149,106,0.4);
+  --shadow-inner: inset 0 1px 2px rgba(45,42,38,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --gradient-primary: linear-gradient(135deg, #D4B896 0%, #C4956A 50%, #A67B52 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #E0C8A8 0%, #D4A876 50%, #B68B62 100%);
+  --gradient-gold: linear-gradient(135deg, #F0C850 0%, #D4A03C 50%, #B8860B 100%);
+  --gradient-rose: linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);
+  --gradient-soft: linear-gradient(180deg, #FFFAF5 0%, #FFF8F0 100%);
+  --gradient-dark: linear-gradient(180deg, #2D2A26 0%, #1A1816 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FFFAF5 100%);
+  --gradient-success: linear-gradient(135deg, #8FBC8F 0%, #6B9E6B 100%);
+  --gradient-warning: linear-gradient(135deg, #F0B860 0%, #E8A03C 100%);
+  --gradient-danger: linear-gradient(135deg, #E88585 0%, #C45C5C 100%);
+  --color-page-bg: var(--color-bg);
+  --color-surface: var(--color-bg-card);
+  --color-on-surface: var(--color-text);
+  --color-on-surface-secondary: var(--color-text-secondary);
+  --color-on-surface-muted: var(--color-text-muted);
+  --color-brand: var(--color-primary);
+  --color-brand-light: var(--color-primary-light);
+  --color-brand-lighter: var(--color-primary-lighter);
+  --color-brand-lightest: var(--color-primary-lightest);
+  --color-brand-dark: var(--color-primary-dark);
+  --color-brand-darker: var(--color-primary-darker);
+  --color-brand-accent: var(--color-accent);
+  --color-divider: var(--color-border);
+  --color-divider-light: var(--color-border-light);
+  --color-divider-lighter: var(--color-border-lighter);
+  --radius-button: var(--radius-sm);
+  --radius-card: var(--radius-lg);
+  --radius-card-sm: var(--radius-md);
+  --shadow-card: var(--shadow-sm);
+  --type-xs: var(--font-xs);
+  --type-sm: var(--font-sm);
+  --type-base: var(--font-base);
+  --type-md: var(--font-md);
+  --type-lg: var(--font-lg);
+  --type-xl: var(--font-xl);
+  --type-2xl: var(--font-2xl);
+}
+  </style>
+</head>
+<body class="min-h-screen">
+<main class="max-w-[430px] mx-auto pb-24">
+
+  <!-- Top Nav Bar -->
+  <header class="sticky top-0 z-30 flex items-center justify-between px-4 h-12" style="background: color-mix(in srgb, var(--color-bg) 90%, transparent); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+    <!-- Back Arrow -->
+    <button data-dom-id="btn-back" class="inline-flex items-center justify-center w-9 h-9" style="-webkit-tap-highlight-color: transparent;" aria-label="返回">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Title -->
+    <h1 class="text-center" style="font-size: var(--font-lg); font-weight: 600; color: var(--color-text);">韩式白开水妆</h1>
+
+    <!-- Share Icon -->
+    <button class="inline-flex items-center justify-center w-9 h-9" style="-webkit-tap-highlight-color: transparent;" aria-label="分享">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Step Progress Bar -->
+  <section class="pt-5 pb-3">
+    <div class="guide-progress">
+      <!-- Step 1 - completed -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle completed"></div>
+      </div>
+      <div class="guide-progress-line completed"></div>
+      <!-- Step 2 - completed -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle completed"></div>
+      </div>
+      <div class="guide-progress-line completed"></div>
+      <!-- Step 3 - active -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle active"></div>
+      </div>
+      <div class="guide-progress-line pending"></div>
+      <!-- Step 4 - pending -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle pending"></div>
+      </div>
+      <div class="guide-progress-line pending"></div>
+      <!-- Step 5 - pending -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle pending"></div>
+      </div>
+      <div class="guide-progress-line pending"></div>
+      <!-- Step 6 - pending -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle pending"></div>
+      </div>
+      <div class="guide-progress-line pending"></div>
+      <!-- Step 7 - pending -->
+      <div class="guide-progress-node">
+        <div class="guide-progress-circle pending"></div>
+      </div>
+    </div>
+    <!-- Step label -->
+    <p class="text-center mt-2" style="font-size: var(--font-xs); color: var(--color-text-muted);">步骤 3/7</p>
+  </section>
+
+  <!-- Main Step Image Area -->
+  <section class="px-4 pt-2">
+    <div class="w-full" style="aspect-ratio: 1/1; background: var(--gradient-soft); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+      <!-- Eye-makeup illustration placeholder -->
+      <svg width="120" height="80" viewBox="0 0 120 80" fill="none" style="opacity: 0.25;">
+        <path d="M20 40 C20 20, 60 10, 60 40 C60 10, 100 20, 100 40" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <ellipse cx="60" cy="44" rx="22" ry="8" fill="var(--color-primary-lighter)" opacity="0.4"/>
+        <circle cx="60" cy="42" r="6" fill="var(--color-primary-light)" opacity="0.3"/>
+      </svg>
+      <!-- Decorative circles -->
+      <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary-lightest); opacity: 0.5;"></div>
+      <div style="position: absolute; bottom: 30px; left: 25px; width: 24px; height: 24px; border-radius: 50%; background: var(--color-accent); opacity: 0.3;"></div>
+    </div>
+  </section>
+
+  <!-- Step Title & Description -->
+  <section class="px-4 pt-5">
+    <h2 style="font-size: var(--font-xl); font-weight: 600; color: var(--color-text); margin-bottom: 10px;">Step 3 · 眼妆晕染</h2>
+    <p style="font-size: var(--font-base); color: var(--color-text-secondary); line-height: 1.6;">用晕染刷蘸取浅棕色眼影，从眼尾三分之一处开始，向眼头方向轻轻晕染。注意保持层次感的渐变过渡。</p>
+  </section>
+
+  <!-- Pro Tips Card -->
+  <section class="px-4 pt-5">
+    <div style="background: var(--color-bg-alt); border-radius: var(--radius-lg); padding: var(--space-12) var(--space-16); box-shadow: var(--shadow-xs); display: flex; gap: var(--space-12); align-items: flex-start;">
+      <!-- Lightbulb icon -->
+      <div class="flex-shrink-0 mt-0.5">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18h6"></path>
+          <path d="M10 22h4"></path>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+        </svg>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p style="font-size: var(--font-sm); font-weight: 600; color: var(--color-gold); margin-bottom: 4px;">小美贴士</p>
+        <p style="font-size: var(--font-sm); color: var(--color-text-secondary); line-height: 1.5;">从眼尾向眼头轻扫晕染，少量多次叠加更自然哦~</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timer Section -->
+  <section class="flex flex-col items-center pt-8 pb-6">
+    <div class="timer-icon-wrap mb-3">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+    </div>
+    <p style="font-size: var(--font-lg); font-weight: 600; color: var(--color-text);">等待 30 秒</p>
+    <p class="mt-1" style="font-size: var(--font-sm); color: var(--color-text-muted);">让眼影充分晕染融合</p>
+  </section>
+
+  <!-- Bottom Action Area -->
+  <section class="px-4 pt-4 pb-4">
+    <div class="flex gap-3">
+      <!-- Previous Step Button -->
+      <button class="btn btn-secondary flex-1" style="padding: 12px 16px; font-size: var(--font-base); border-radius: var(--radius-sm); -webkit-tap-highlight-color: transparent;">
+        上一步
+      </button>
+      <!-- Complete / Next Step Button -->
+      <button data-dom-id="btn-next" class="btn btn-primary flex-1" style="padding: 12px 16px; font-size: var(--font-base); border-radius: var(--radius-sm); -webkit-tap-highlight-color: transparent;">
+        <!-- Check SVG inline -->
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        完成，下一步
+      </button>
+    </div>
+  </section>
+
+  <!-- Bottom TabBar -->
+  <nav class="tabbar" style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); max-width: 430px; width: 100%; z-index: 40;">
+    <button data-dom-id="tab-home" class="tabbar-item inactive" aria-label="首页">
+      <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      <span class="tabbar-label">首页</span>
+    </button>
+    <button data-dom-id="tab-library" class="tabbar-item inactive" aria-label="颜库">
+      <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      <span class="tabbar-label">颜库</span>
+    </button>
+    <button data-dom-id="tab-guide" class="tabbar-item active" aria-label="跟我画">
+      <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polygon points="10 8 16 12 10 16 10 8"></polygon>
+      </svg>
+      <span class="tabbar-label">跟着画</span>
+    </button>
+    <button data-dom-id="tab-profile" class="tabbar-item inactive" aria-label="我的">
+      <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span class="tabbar-label">我的</span>
+    </button>
+  </nav>
+
+</main>
+
+<script>lucide.createIcons();</script>
+  <style id="component-vars">
+/* Button */
+.btn { display: inline-flex; align-items: center; justify-content: center; border: none; outline: none; cursor: pointer; font-family: var(--font-family); font-weight: 600; border-radius: var(--radius-sm); transition: all var(--transition-fast); text-decoration: none; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+.btn:active { opacity: 0.8; transform: scale(0.98); }
+.btn-primary { background: var(--gradient-primary); color: white; padding: 12px 24px; font-size: var(--font-base); box-shadow: var(--shadow-primary); }
+.btn-secondary { background: var(--color-bg-alt); color: var(--color-text); padding: 12px 24px; font-size: var(--font-base); }
+.btn-sm { font-size: var(--font-sm); padding: 8px 16px; }
+
+/* TabBar */
+.tabbar { width: 100%; height: 78px; background: color-mix(in srgb, var(--color-bg) 95%, transparent); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent); display: flex; align-items: center; justify-content: space-around; flex-shrink: 0; position: relative; }
+.tabbar-item { display: flex; flex-direction: column; align-items: center; gap: 5px; position: relative; cursor: pointer; -webkit-tap-highlight-color: transparent; flex: 1; }
+.tabbar-item .tabbar-icon { font-size: 24px; line-height: 1; transition: color var(--transition-base), opacity var(--transition-base); }
+.tabbar-item .tabbar-label { font-size: var(--font-xs); font-weight: 500; transition: color var(--transition-base), font-weight var(--transition-base); }
+.tabbar-item.inactive .tabbar-icon { opacity: 0.4; }
+.tabbar-item.inactive .tabbar-label { color: var(--color-text-muted); font-weight: 500; }
+.tabbar-item.active .tabbar-icon { color: var(--color-primary); }
+.tabbar-item.active .tabbar-label { color: var(--color-primary); font-weight: 600; }
+.tabbar-item.active::before { content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 24px; height: 3px; border-radius: 0 0 3px 3px; background: var(--gradient-primary); }
+
+/* Home Indicator */
+.home-indicator { display: flex; justify-content: center; padding: 6px 0 4px; background: color-mix(in srgb, var(--color-bg) 95%, transparent); }
+.home-indicator span { width: 134px; height: 5px; border-radius: 3px; background: var(--color-text); opacity: 0.15; }
+  </style>
+  <style type="text/tailwindcss">
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-card: var(--color-bg-card);
+  --color-muted: var(--color-bg-alt);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-text-secondary);
+  --color-accent: var(--color-accent);
+  --color-border: var(--color-border);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-destructive: var(--color-danger);
+  --color-ring: var(--color-primary);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+  </style>
+  <style id="semantic-token-fallback">
+body, .bg-background { background-color: var(--color-bg); }
+.text-foreground { color: var(--color-text); }
+.bg-card { background-color: var(--color-bg-card); }
+.bg-muted { background-color: var(--color-bg-alt); }
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted-foreground { color: var(--color-text-muted); }
+.text-accent { color: var(--color-accent); }
+.border-border { border-color: var(--color-border); }
+.text-destructive { color: var(--color-danger); }
+.bg-destructive { background-color: var(--color-danger); }
+.ring-ring { --tw-ring-color: var(--color-primary); }
+  </style>
+  <style>
+@layer base {
+  body {
+    font-family: var(--font-family);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-body);
+    line-height: var(--font-line-height);
+    color: var(--color-text);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+  </style>
+<style>
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(196,149,106,0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(196,149,106,0); }
+  100% { box-shadow: 0 0 0 0 rgba(196,149,106,0); }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.guide-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-16);
+}
+
+.guide-progress-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.guide-progress-circle {
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.guide-progress-circle.completed {
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+}
+
+.guide-progress-circle.active {
+  width: 14px;
+  height: 14px;
+  background: var(--color-primary);
+  box-shadow: var(--shadow-primary);
+  animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.guide-progress-circle.pending {
+  width: 10px;
+  height: 10px;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+}
+
+.guide-progress-line {
+  width: 28px;
+  height: 2px;
+  flex-shrink: 0;
+}
+
+.guide-progress-line.completed {
+  background: var(--color-primary);
+}
+
+.guide-progress-line.pending {
+  background: var(--color-border-light);
+}
+
+.timer-icon-wrap {
+  animation: gentle-float 3s ease-in-out infinite;
+}
+</style>
+</body>
+</html>

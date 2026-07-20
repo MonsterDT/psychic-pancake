@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>我的 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+  <div class="page-container">
+    <main class="page-content">
+      
+      <div style="position:relative;padding:40px 16px 24px;background:var(--gradient-primary);border-radius:0 0 var(--radius-xl) var(--radius-xl);">
+        <div style="display:flex;align-items:center;gap:var(--space-12);">
+          <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,0.6);">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div style="color:#fff;font-size:var(--font-lg);font-weight:600;margin-bottom:2px;">小美同学</div>
+            <div style="color:rgba(255,255,255,0.8);font-size:var(--font-sm);">新手上路 · 多指教~ ✨</div>
+          </div>
+          <button style="padding:6px 14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:var(--radius-full);color:#fff;font-size:var(--font-sm);font-weight:500;cursor:pointer;">
+            编辑资料
+          </button>
+        </div>
+
+        <div style="display:flex;margin-top:var(--space-20);background:rgba(255,255,255,0.15);border-radius:var(--radius-lg);padding:var(--space-12) 0;">
+          <div style="flex:1;text-align:center;">
+            <div style="color:#fff;font-size:var(--font-lg);font-weight:600;">12</div>
+            <div style="color:rgba(255,255,255,0.75);font-size:var(--font-xs);">收藏妆容</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.3);margin:4px 0;"></div>
+          <div style="flex:1;text-align:center;">
+            <div style="color:#fff;font-size:var(--font-lg);font-weight:600;">5</div>
+            <div style="color:rgba(255,255,255,0.75);font-size:var(--font-xs);">已完成</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,0.3);margin:4px 0;"></div>
+          <div style="flex:1;text-align:center;">
+            <div style="color:#fff;font-size:var(--font-lg);font-weight:600;">3.5h</div>
+            <div style="color:rgba(255,255,255,0.75);font-size:var(--font-xs);">学习时长</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:0 16px;margin-top:-12px;position:relative;z-index:10;">
+        <div class="card-resume" data-navigate="guide">
+          <div class="card-resume__thumb" style="background:linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);">
+            <div class="card-resume__thumb-placeholder"></div>
+          </div>
+          <div class="card-resume__body">
+            <div class="card-resume__title">韩式白开水妆</div>
+            <div class="card-resume__progress">已完成 <span>3/7</span> 步 · 继续加油~</div>
+          </div>
+          <button class="card-resume__btn">继续</button>
+        </div>
+      </div>
+
+      <div style="padding:24px 16px 0;">
+        <div class="section-label">常用功能</div>
+        <div style="background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);overflow:hidden;">
+          
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">我的收藏</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-success-lighter);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">学习记录</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-warning-lighter);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l2.4 7.4h7.6l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">我的勋章</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item" data-navigate="profile">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">面部档案</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="padding:24px 16px 0;">
+        <div class="section-label">更多</div>
+        <div style="background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);overflow:hidden;">
+          
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">帮助中心</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">意见反馈</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">隐私设置</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <div style="height:1px;background:var(--color-border-lighter);margin-left:64px;"></div>
+
+          <div style="display:flex;align-items:center;padding:14px 16px;gap:var(--space-12);cursor:pointer;transition:background var(--transition-fast);" class="menu-item">
+            <div style="width:36px;height:36px;border-radius:var(--radius-md);background:var(--color-bg-alt);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <span style="flex:1;font-size:var(--font-base);color:var(--color-text);font-weight:500;">通用设置</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="padding:24px 16px 32px;text-align:center;">
+        <div style="color:var(--color-text-muted);font-size:var(--font-xs);">妆伴 MakeupPal v1.0.0</div>
+      </div>
+
+    </main>
+
+    <nav class="bottom-tabbar tabbar safe-area">
+      <button class="tabbar-item inactive" data-page="home" aria-label="首页">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="tabbar-label">首页</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="library" aria-label="颜库">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span class="tabbar-label">颜库</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="guide" aria-label="跟我画">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="10 8 16 12 10 16 10 8"></polygon>
+        </svg>
+        <span class="tabbar-label">跟着画</span>
+      </button>
+      <button class="tabbar-item active" data-page="profile" aria-label="我的">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="tabbar-label">我的</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>
