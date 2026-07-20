@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>滑看发现 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+  <div class="page-container">
+    <header class="top-nav" style="position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;background:transparent;backdrop-filter:none;">
+      <span class="top-nav-title" style="color:#fff;">滑看发现</span>
+      <div class="flex gap-2">
+        <button class="top-nav-btn" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main style="height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;" id="discoverFeed">
+      
+      <section style="height:100vh;scroll-snap-align:start;position:relative;background:linear-gradient(180deg, #FFD1DC 0%, #E8A0B8 50%, #D48BA0 100%);">
+        <div style="position:absolute;top:60%;right:16px;display:flex;flex-direction:column;gap:24px;z-index:10;">
+          <button onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button data-navigate="chat" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <polyline points="16 6 12 2 8 6"/>
+              <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
+          </button>
+        </div>
+
+        <div style="position:absolute;bottom:100px;left:0;right:0;padding:0 16px 0 16px;z-index:10;">
+          <div style="display:flex;align-items:center;gap:var(--space-12);margin-bottom:var(--space-12);">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.5);">
+              <span style="color:#fff;font-size:var(--font-sm);font-weight:600;">L</span>
+            </div>
+            <div style="flex:1;">
+              <div style="color:#fff;font-size:var(--font-md);font-weight:600;">@美妆达人Luna</div>
+              <div style="color:rgba(255,255,255,0.7);font-size:var(--font-xs);">3分钟前</div>
+            </div>
+            <button style="padding:6px 14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:var(--radius-full);color:#fff;font-size:var(--font-sm);font-weight:500;cursor:pointer;">
+              + 关注
+            </button>
+          </div>
+          <h2 style="color:#fff;font-size:var(--font-lg);font-weight:600;margin:0 0 8px 0;">韩式白开水妆｜伪素颜天花板！</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:var(--font-sm);line-height:1.5;margin:0 0 12px 0;">
+            超详细的日常妆容教程，新手也能轻松get~ 清透底妆+清淡眼妆，打造天生好皮的感觉💄
+          </p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#伪素颜</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#新手教程</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#日常妆</span>
+          </div>
+        </div>
+
+        <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:var(--space-12);">
+          <button style="display:flex;align-items:center;gap:8px;padding:12px 24px;background:#fff;border:none;border-radius:var(--radius-full);color:var(--color-primary);font-size:var(--font-base);font-weight:600;cursor:pointer;box-shadow:var(--shadow-md);" data-navigate="guide">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            立即跟着画
+          </button>
+        </div>
+      </section>
+
+      <section style="height:100vh;scroll-snap-align:start;position:relative;background:linear-gradient(180deg, #F0C850 0%, #D4A03C 50%, #B8862E 100%);">
+        <div style="position:absolute;top:60%;right:16px;display:flex;flex-direction:column;gap:24px;z-index:10;">
+          <button onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="true" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--color-danger)" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button data-navigate="chat" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <polyline points="16 6 12 2 8 6"/>
+              <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
+          </button>
+        </div>
+
+        <div style="position:absolute;bottom:100px;left:0;right:0;padding:0 16px 0 16px;z-index:10;">
+          <div style="display:flex;align-items:center;gap:var(--space-12);margin-bottom:var(--space-12);">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.5);">
+              <span style="color:#fff;font-size:var(--font-sm);font-weight:600;">小</span>
+            </div>
+            <div style="flex:1;">
+              <div style="color:#fff;font-size:var(--font-md);font-weight:600;">@小鹿的化妆台</div>
+              <div style="color:rgba(255,255,255,0.7);font-size:var(--font-xs);">1小时前</div>
+            </div>
+            <button style="padding:6px 14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:var(--radius-full);color:#fff;font-size:var(--font-sm);font-weight:500;cursor:pointer;">
+              + 关注
+            </button>
+          </div>
+          <h2 style="color:#fff;font-size:var(--font-lg);font-weight:600;margin:0 0 8px 0;">日系元气桃花妆｜约会必画！</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:var(--font-sm);line-height:1.5;margin:0 0 12px 0;">
+            粉粉嫩嫩的桃花妆，谁画谁好看！约会见男神的秘密武器~ 🌸
+          </p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#约会妆</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#桃花眼</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#日系</span>
+          </div>
+        </div>
+
+        <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:var(--space-12);">
+          <button style="display:flex;align-items:center;gap:8px;padding:12px 24px;background:#fff;border:none;border-radius:var(--radius-full);color:var(--color-primary);font-size:var(--font-base);font-weight:600;cursor:pointer;box-shadow:var(--shadow-md);" data-navigate="guide">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            立即跟着画
+          </button>
+        </div>
+      </section>
+
+      <section style="height:100vh;scroll-snap-align:start;position:relative;background:linear-gradient(180deg, #B89AC8 0%, #8B6FB0 50%, #6B4F8F 100%);">
+        <div style="position:absolute;top:60%;right:16px;display:flex;flex-direction:column;gap:24px;z-index:10;">
+          <button onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/>
+              <circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button data-navigate="chat" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </button>
+          <button style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <polyline points="16 6 12 2 8 6"/>
+              <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
+          </button>
+        </div>
+
+        <div style="position:absolute;bottom:100px;left:0;right:0;padding:0 16px 0 16px;z-index:10;">
+          <div style="display:flex;align-items:center;gap:var(--space-12);margin-bottom:var(--space-12);">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.5);">
+              <span style="color:#fff;font-size:var(--font-sm);font-weight:600;">墨</span>
+            </div>
+            <div style="flex:1;">
+              <div style="color:#fff;font-size:var(--font-md);font-weight:600;">@墨染国风美妆</div>
+              <div style="color:rgba(255,255,255,0.7);font-size:var(--font-xs);">3小时前</div>
+            </div>
+            <button style="padding:6px 14px;background:rgba(255,255,255,0.25);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.4);border-radius:var(--radius-full);color:#fff;font-size:var(--font-sm);font-weight:500;cursor:pointer;">
+              + 关注
+            </button>
+          </div>
+          <h2 style="color:#fff;font-size:var(--font-lg);font-weight:600;margin:0 0 8px 0;">清冷感新中式妆｜高级感拉满</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:var(--font-sm);line-height:1.5;margin:0 0 12px 0;">
+            东方美学的现代演绎~ 低饱和配色+干净线条，清冷又高级，姐妹们快学起来！
+          </p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#新中式</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#清冷感</span>
+            <span style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:var(--radius-full);font-size:var(--font-xs);">#国风</span>
+          </div>
+        </div>
+
+        <div style="position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:var(--space-12);">
+          <button style="display:flex;align-items:center;gap:8px;padding:12px 24px;background:#fff;border:none;border-radius:var(--radius-full);color:var(--color-primary);font-size:var(--font-base);font-weight:600;cursor:pointer;box-shadow:var(--shadow-md);" data-navigate="guide">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            立即跟着画
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

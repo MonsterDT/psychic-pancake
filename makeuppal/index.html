@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>首页 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+  <div class="page-container">
+    <main class="page-content">
+      <div class="flex items-center justify-between px-4 pt-6 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="makeupal-heading-lg" style="color:var(--color-text)">早上好，小美</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            <path d="M11.3 7.7C11.1 8.4 11 9.2 11 10"/>
+            <path d="M17 11c0 2.2-1.2 4.2-3 5.3"/>
+            <path d="M4 14c0-2.2 1.2-4.2 3-5.3"/>
+            <path d="M11.3 17.3C10 16.6 9 15.4 8.5 14"/>
+            <path d="M12 17v4"/>
+            <path d="M8 21h8"/>
+            <circle cx="12" cy="11" r="1"/>
+          </svg>
+        </div>
+        <div class="flex items-center gap-3">
+          <button aria-label="通知" style="background:none;border:none;cursor:pointer;padding:4px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </button>
+          <div data-navigate="profile" style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--gradient-primary);flex-shrink:0;cursor:pointer;"></div>
+        </div>
+      </div>
+
+      <div class="mx-4 mt-3 animate-item" data-navigate="profile" style="cursor:pointer;">
+        <div class="card-profile" style="position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:var(--gradient-primary);opacity:0.12;pointer-events:none;border-radius:var(--radius-lg);"></div>
+          <div style="flex-shrink:0;width:48px;height:48px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;background:var(--color-primary-lightest);position:relative;z-index:1;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9"/>
+              <path d="M9 2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V2Z"/>
+              <path d="M12 10v2"/>
+              <path d="M12 14h.01"/>
+            </svg>
+          </div>
+          <div style="flex:1;min-width:0;position:relative;z-index:1;">
+            <div style="font-size:var(--font-md);font-weight:var(--font-weight-heading);color:var(--color-text);margin-bottom:2px;">完善你的面部档案</div>
+            <div style="font-size:var(--font-xs);color:var(--color-text-muted);">解锁专属妆造推荐</div>
+          </div>
+          <div class="card-profile__action" style="position:relative;z-index:1;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mx-4 mt-5">
+        <button data-navigate="discover" style="flex:1;background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;border:none;cursor:pointer;transition:box-shadow var(--transition-base);">
+          <div style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l1.5 4.5H18l-3.7 2.7L16 15l-4-3-4 3 1.7-4.8L6 7.5h4.5z"/>
+              <path d="M5 16l1 1.5L5 19"/>
+              <path d="M19 16l-1 1.5L19 19"/>
+              <path d="M2 20h20"/>
+            </svg>
+          </div>
+          <span style="font-size:var(--font-xs);font-weight:var(--font-weight-heading);color:var(--color-text);">AI 焕新</span>
+        </button>
+        <button data-navigate="library" style="flex:1;background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;border:none;cursor:pointer;transition:box-shadow var(--transition-base);">
+          <div style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <span style="font-size:var(--font-xs);font-weight:var(--font-weight-heading);color:var(--color-text);">颜库</span>
+        </button>
+        <button data-navigate="chat" style="flex:1;background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;border:none;cursor:pointer;transition:box-shadow var(--transition-base);">
+          <div style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <span style="font-size:var(--font-xs);font-weight:var(--font-weight-heading);color:var(--color-text);">AI 闺蜜</span>
+        </button>
+        <button data-navigate="guide" style="flex:1;background:var(--color-bg-card);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;border:none;cursor:pointer;transition:box-shadow var(--transition-base);">
+          <div style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-primary-lightest);display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="10 8 16 12 10 16 10 8"/>
+            </svg>
+          </div>
+          <span style="font-size:var(--font-xs);font-weight:var(--font-weight-heading);color:var(--color-text);">跟着画</span>
+        </button>
+      </div>
+
+      <div class="mx-4 mt-6 animate-item">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-12);">
+          <span style="font-size:var(--font-lg);font-weight:var(--font-weight-heading);color:var(--color-text);">继续跟练</span>
+          <span data-navigate="library" style="font-size:var(--font-sm);color:var(--color-primary);font-weight:var(--font-weight-heading);cursor:pointer;">查看全部</span>
+        </div>
+        <div class="card-resume" data-navigate="guide">
+          <div class="card-resume__thumb" style="background:var(--gradient-rose);">
+            <div class="card-resume__thumb-placeholder"></div>
+          </div>
+          <div class="card-resume__body">
+            <div class="card-resume__title">韩式白开水妆</div>
+            <div class="card-resume__progress">已完成 <span>3/7</span> 步 · 继续加油~</div>
+          </div>
+          <button class="card-resume__btn">继续</button>
+        </div>
+      </div>
+
+      <div class="mx-4 mt-6 animate-item">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-12);">
+          <span style="font-size:var(--font-lg);font-weight:var(--font-weight-heading);color:var(--color-text);">今日推荐</span>
+          <span data-navigate="library" style="font-size:var(--font-sm);color:var(--color-primary);font-weight:var(--font-weight-heading);cursor:pointer;">更多</span>
+        </div>
+        <div style="display:flex;gap:var(--space-12);overflow-x:auto;padding-bottom:var(--space-8);" class="no-scrollbar">
+          
+          <div class="card-makeup card-base animate-item" data-navigate="detail" style="flex-shrink:0;width:150px;">
+            <div class="card-makeup__image" style="background:var(--gradient-rose);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title">韩式白开水妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">新手友好</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.8
+                </span>
+                <span class="card-makeup__stat">1.2k 收藏</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base animate-item" data-navigate="detail" style="flex-shrink:0;width:150px;">
+            <div class="card-makeup__image" style="background:var(--gradient-gold);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--color-danger)" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title">日系元气桃花妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">约会妆</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.9
+                </span>
+                <span class="card-makeup__stat">2.3k 收藏</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base animate-item" data-navigate="detail" style="flex-shrink:0;width:150px;">
+            <div class="card-makeup__image" style="background:var(--gradient-primary);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title">通勤气质裸妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">通勤</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.6
+                </span>
+                <span class="card-makeup__stat">4.5k 收藏</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mx-4 mt-6 animate-item">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-12);">
+          <span style="font-size:var(--font-lg);font-weight:var(--font-weight-heading);color:var(--color-text);;">达人精选</span>
+          <span data-navigate="library" style="font-size:var(--font-sm);color:var(--color-primary);font-weight:var(--font-weight-heading);cursor:pointer;">更多</span>
+        </div>
+        <div style="columns:2; column-gap:var(--space-12);">
+          
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:var(--gradient-rose);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">韩式白开水妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">新手友好</span>
+                <span class="card-makeup__tag">淡颜系</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.8
+                </span>
+                <span class="card-makeup__stat">1.2k 收藏</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:var(--gradient-gold);aspect-ratio:3/5;"></div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">日系元气桃花妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">约会妆</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.9
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:var(--gradient-danger);aspect-ratio:3/4;">
+              <div class="card-makeup__image-badge" onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--color-danger)" stroke="var(--color-danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">复古港风红唇妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">复古</span>
+                <span class="card-makeup__tag">气场</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.7
+                </span>
+                <span class="card-makeup__stat">3.1k</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-makeup card-base mb-3 break-inside-avoid animate-item" data-navigate="detail">
+            <div class="card-makeup__image" style="background:linear-gradient(135deg, #B89AC8 0%, #8B6FB0 100%);aspect-ratio:4/5;"></div>
+            <div class="card-makeup__content">
+              <div class="card-makeup__title truncate">清冷感新中式妆</div>
+              <div class="card-makeup__tags">
+                <span class="card-makeup__tag">国风</span>
+              </div>
+              <div class="card-makeup__stats">
+                <span class="card-makeup__stat card-makeup__stat--star">
+                  <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  4.9
+                </span>
+                <span class="card-makeup__stat">1.8k</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <nav class="bottom-tabbar tabbar safe-area">
+      <button class="tabbar-item active" data-page="home" aria-label="首页">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span class="tabbar-label">首页</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="library" aria-label="颜库">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+        <span class="tabbar-label">颜库</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="guide" aria-label="跟我画">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="10 8 16 12 10 16 10 8"></polygon>
+        </svg>
+        <span class="tabbar-label">跟着画</span>
+      </button>
+      <button class="tabbar-item inactive" data-page="profile" aria-label="我的">
+        <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="tabbar-label">我的</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

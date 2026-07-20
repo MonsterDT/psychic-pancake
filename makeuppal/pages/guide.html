@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>跟着画 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+  <div class="page-container">
+    <header class="top-nav" style="position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;">
+      <button class="top-nav-btn" data-back aria-label="返回">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+      <span class="top-nav-title">韩式白开水妆</span>
+      <button class="top-nav-btn" aria-label="更多">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+          <circle cx="5" cy="12" r="1"/>
+        </svg>
+      </button>
+    </header>
+
+    <main class="page-content" style="padding-top:48px;">
+      
+      <div style="padding:var(--space-16);background:var(--color-bg-alt);">
+        <div class="step-nodes" id="stepNodes">
+          <div class="step-node">
+            <div class="step-circle completed"></div>
+          </div>
+          <div class="step-line completed"></div>
+          <div class="step-node">
+            <div class="step-circle completed"></div>
+          </div>
+          <div class="step-line completed"></div>
+          <div class="step-node">
+            <div class="step-circle completed"></div>
+          </div>
+          <div class="step-line completed"></div>
+          <div class="step-node">
+            <div class="step-circle active"></div>
+          </div>
+          <div class="step-line pending"></div>
+          <div class="step-node">
+            <div class="step-circle pending"></div>
+          </div>
+          <div class="step-line pending"></div>
+          <div class="step-node">
+            <div class="step-circle pending"></div>
+          </div>
+          <div class="step-line pending"></div>
+          <div class="step-node">
+            <div class="step-circle pending"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:var(--space-20) var(--space-16);">
+        <div style="display:flex;align-items:center;gap:var(--space-8);margin-bottom:var(--space-8);">
+          <div style="width:32px;height:32px;border-radius:var(--radius-full);background:var(--color-primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:var(--font-sm);font-weight:var(--font-weight-heading);">4</div>
+          <div style="font-size:var(--font-sm);color:var(--color-text-muted);">共 7 步</div>
+        </div>
+        <h1 style="font-size:var(--font-2xl);font-weight:var(--font-weight-heading);color:var(--color-text);margin:0 0 var(--space-4) 0;">眼线勾勒</h1>
+        <p style="font-size:var(--font-base);color:var(--color-text-secondary);margin:0 0 var(--space-16) 0;">约 3 分钟</p>
+
+        <div style="width:100%;aspect-ratio:4/3;border-radius:var(--radius-lg);background:linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);margin-bottom:var(--space-20);position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <button style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:3px;">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-bottom:var(--space-20);">
+          <h2 style="font-size:var(--font-lg);font-weight:var(--font-weight-heading);color:var(--color-text);margin:0 0 var(--space-12) 0;">步骤说明</h2>
+          <p style="font-size:var(--font-base);line-height:var(--font-line-height);color:var(--color-text-secondary);margin:0 0 var(--space-16) 0;">
+            沿着睫毛根部细细描绘眼线，眼尾微微上扬约15度，打造自然有神的眼型。新手推荐使用极细眼线液笔，更容易控制线条。
+          </p>
+          
+          <div style="background:var(--color-bg-alt);border-radius:var(--radius-md);padding:var(--space-16);margin-bottom:var(--space-16);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-8);">
+              <div style="flex-shrink:0;width:20px;height:20px;border-radius:var(--radius-full);background:var(--color-primary-lightest);color:var(--color-primary);display:flex;align-items:center;justify-content:center;font-size:var(--font-xs);font-weight:var(--font-weight-heading);margin-top:1px;">1</div>
+              <p style="font-size:var(--font-sm);line-height:var(--font-line-height);color:var(--color-text-secondary);margin:0;">
+                从眼尾三分之一处开始，贴着睫毛根部向眼头方向轻轻描画
+              </p>
+            </div>
+          </div>
+
+          <div style="background:var(--color-bg-alt);border-radius:var(--radius-md);padding:var(--space-16);margin-bottom:var(--space-16);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-8);">
+              <div style="flex-shrink:0;width:20px;height:20px;border-radius:var(--radius-full);background:var(--color-primary-lightest);color:var(--color-primary);display:flex;align-items:center;justify-content:center;font-size:var(--font-xs);font-weight:var(--font-weight-heading);margin-top:1px;">2</div>
+              <p style="font-size:var(--font-sm);line-height:var(--font-line-height);color:var(--color-text-secondary);margin:0;">
+                眼尾处轻轻上扬约15度，拉出细细的小尾巴，长度约3-5mm
+              </p>
+            </div>
+          </div>
+
+          <div style="background:var(--color-bg-alt);border-radius:var(--radius-md);padding:var(--space-16);">
+            <div style="display:flex;align-items:flex-start;gap:var(--space-8);">
+              <div style="flex-shrink:0;width:20px;height:20px;border-radius:var(--radius-full);background:var(--color-primary-lightest);color:var(--color-primary);display:flex;align-items:center;justify-content:center;font-size:var(--font-xs);font-weight:var(--font-weight-heading);margin-top:1px;">3</div>
+              <p style="font-size:var(--font-sm);line-height:var(--font-line-height);color:var(--color-text-secondary);margin:0;">
+                检查两边眼线是否对称，不对称的地方用棉签轻轻修正
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:var(--space-28);">
+          <h2 style="font-size:var(--font-lg);font-weight:var(--font-weight-heading);color:var(--color-text);margin:0 0 var(--space-12) 0;">小技巧</h2>
+          <div style="background:var(--color-warning-lighter);border-radius:var(--radius-md);padding:var(--space-16);display:flex;gap:var(--space-12);">
+            <div style="flex-shrink:0;width:20px;height:20px;margin-top:2px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+                <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+              </svg>
+            </div>
+            <p style="font-size:var(--font-sm);line-height:var(--font-line-height);color:var(--color-warning);margin:0;">
+              手抖星人可以用棉签辅助，把棉签横放在眼尾处，沿着棉签边缘画眼线，又直又对称！
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;padding:var(--space-12) var(--space-16);background:var(--color-bg);border-top:1px solid var(--color-border-light);z-index:50;display:flex;gap:var(--space-12);align-items:center;padding-bottom:calc(12px + 16px);">
+      <button style="padding:var(--space-12) var(--space-16);background:var(--color-bg-alt);border:none;border-radius:var(--radius-md);font-size:var(--font-base);font-weight:var(--font-weight-heading);color:var(--color-text-secondary);cursor:pointer;white-space:nowrap;">上一步</button>
+      <button onclick="event.stopPropagation(); MakeupPal.toggleFavorite(this);" data-favorited="false" style="width:44px;height:44px;border-radius:var(--radius-full);background:var(--color-bg-alt);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+      <button data-navigate="chat" style="width:44px;height:44px;border-radius:var(--radius-full);background:var(--color-bg-alt);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </button>
+      <button class="btn btn-primary" style="flex:1;">下一步</button>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+</body>
+</html>

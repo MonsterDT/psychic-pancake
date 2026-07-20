@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en" class="light" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜库 — 妆伴 MakeupPal</title>
+    <style id="theme-vars">
+/* Source: structured-spec */
+/* @light-only */
+
+:root {
+  /* ── bg ── */
+  --color-bg:             #FFF8F0;
+  --color-bg-alt:         #FFF1E6;
+  --color-bg-soft:        #FFFAF5;
+  --color-bg-secondary:   #FFF5EB;
+  --color-bg-card:        #FFFFFF;
+
+  /* ── text ── */
+  --color-text:           #2D2A26;
+  --color-text-secondary: #6B6560;
+  --color-text-muted:     #9B9590;
+
+  /* ── accent ── */
+  --color-primary:        #C4956A;
+  --color-primary-light:  #D4B896;
+  --color-primary-lighter: #E8D5BE;
+  --color-primary-lightest: #F5EDE3;
+  --color-primary-dark:   #A67B52;
+  --color-primary-darker: #8B6542;
+  --color-accent:         #E8C9A8;
+
+  /* ── border ── */
+  --color-border:         #E8DDD2;
+  --color-border-light:   #F0E8DF;
+  --color-border-lighter: #F7F1EA;
+
+  /* ── status ── */
+  --color-success:        #6B9E6B;
+  --color-success-light:  #8FBC8F;
+  --color-success-lighter: #D4E8D4;
+  --color-danger:         #C45C5C;
+  --color-danger-light:   #E88585;
+  --color-danger-lighter: #F5D4D4;
+  --color-warning:        #E8A03C;
+  --color-warning-light:  #F0B860;
+  --color-warning-lighter: #FAE8CC;
+
+  /* ── decorative ── */
+  --color-gold:           #D4A03C;
+  --color-gold-light:     #E8B84C;
+  --color-gold-dark:      #B8860B;
+  --color-pink:           #E8A0A0;
+  --color-purple:         #B89AC8;
+
+  /* ── typography ── */
+  --font-family:          -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Roboto', sans-serif;
+  --font-xs:              11px;
+  --font-sm:              12px;
+  --font-base:            14px;
+  --font-md:              15px;
+  --font-lg:              16px;
+  --font-xl:              18px;
+  --font-2xl:             22px;
+  --font-weight-body:     400;
+  --font-weight-heading:  600;
+  --font-line-height:     1.5;
+
+  /* ── spacing ── */
+  --space-8:              8px;
+  --space-12:             12px;
+  --space-16:             16px;
+
+  /* ── radius ── */
+  --radius-sm:            8px;
+  --radius-md:            12px;
+  --radius-lg:            16px;
+  --radius-xl:            20px;
+  --radius-2xl:           24px;
+  --radius-full:          999px;
+
+  /* ── shadow ── */
+  --shadow-xs:            0 1px 2px rgba(45,42,38,0.04), 0 1px 1px rgba(196,149,106,0.03);
+  --shadow-sm:            0 2px 8px rgba(45,42,38,0.06), 0 1px 3px rgba(196,149,106,0.05);
+  --shadow-md:            0 6px 20px rgba(45,42,38,0.08), 0 2px 8px rgba(196,149,106,0.06);
+  --shadow-lg:            0 12px 32px rgba(45,42,38,0.1), 0 4px 12px rgba(196,149,106,0.08);
+  --shadow-xl:            0 20px 60px rgba(45,42,38,0.15), 0 8px 24px rgba(196,149,106,0.1);
+  --shadow-gold:          0 4px 20px rgba(212,160,60,0.25);
+  --shadow-primary:       0 6px 20px rgba(196,149,106,0.3);
+  --shadow-primary-lg:    0 12px 36px rgba(196,149,106,0.4);
+  --shadow-inner:         inset 0 1px 2px rgba(45,42,38,0.04), inset 0 0 0 1px rgba(255,255,255,0.8);
+
+  /* ── motion ── */
+  --transition-fast:      0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base:     0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:      0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── gradient ── */
+  --gradient-primary:        linear-gradient(135deg, #D4B896 0%, #C4956A 50%, #A67B52 100%);
+  --gradient-primary-hover:  linear-gradient(135deg, #E0C8A8 0%, #D4A876 50%, #B68B62 100%);
+  --gradient-gold:           linear-gradient(135deg, #F0C850 0%, #D4A03C 50%, #B8860B 100%);
+  --gradient-rose:           linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);
+  --gradient-soft:           linear-gradient(180deg, #FFFAF5 0%, #FFF8F0 100%);
+  --gradient-dark:           linear-gradient(180deg, #2D2A26 0%, #1A1816 100%);
+  --gradient-card:           linear-gradient(180deg, #FFFFFF 0%, #FFFAF5 100%);
+  --gradient-success:        linear-gradient(135deg, #8FBC8F 0%, #6B9E6B 100%);
+  --gradient-warning:        linear-gradient(135deg, #F0B860 0%, #E8A03C 100%);
+  --gradient-danger:         linear-gradient(135deg, #E88585 0%, #C45C5C 100%);
+
+  /* ── semantic aliases (required by fill-html-head.mjs) ── */
+  --color-foreground:         var(--color-text);
+  --color-card:               var(--color-bg-card);
+  --color-muted:              var(--color-bg-alt);
+  --color-radius-sm:          var(--radius-sm);
+  --color-radius-md:          var(--radius-md);
+  --color-radius-lg:          var(--radius-lg);
+
+  /* ── portable aliases ── */
+  --color-page-bg:           var(--color-bg);
+  --color-surface:            var(--color-bg-card);
+  --color-on-surface:        var(--color-text);
+  --color-on-surface-secondary: var(--color-text-secondary);
+  --color-on-surface-muted:  var(--color-text-muted);
+  --color-brand:             var(--color-primary);
+  --color-brand-light:       var(--color-primary-light);
+  --color-brand-lighter:     var(--color-primary-lighter);
+  --color-brand-lightest:    var(--color-primary-lightest);
+  --color-brand-dark:        var(--color-primary-dark);
+  --color-brand-darker:      var(--color-primary-darker);
+  --color-brand-accent:      var(--color-accent);
+  --color-divider:           var(--color-border);
+  --color-divider-light:     var(--color-border-light);
+  --color-divider-lighter:   var(--color-border-lighter);
+  --radius-button:           var(--radius-sm);
+  --radius-card:             var(--radius-lg);
+  --radius-card-sm:          var(--radius-md);
+  --shadow-card:             var(--shadow-sm);
+  --type-xs:                 var(--font-xs);
+  --type-sm:                 var(--font-sm);
+  --type-base:               var(--font-base);
+  --type-md:                 var(--font-md);
+  --type-lg:                 var(--font-lg);
+  --type-xl:                 var(--font-xl);
+  --type-2xl:                var(--font-2xl);
+}
+
+/* ── Typography utility classes ── */
+.makeupal-text-xs   { font-size: var(--font-xs);   line-height: var(--font-line-height); }
+.makeupal-text-sm   { font-size: var(--font-sm);   line-height: var(--font-line-height); }
+.makeupal-text-base { font-size: var(--font-base);  line-height: var(--font-line-height); }
+.makeupal-text-md   { font-size: var(--font-md);   line-height: var(--font-line-height); }
+.makeupal-text-lg   { font-size: var(--font-lg);   line-height: var(--font-line-height); }
+.makeupal-text-xl   { font-size: var(--font-xl);   line-height: var(--font-line-height); }
+.makeupal-text-2xl  { font-size: var(--font-2xl);  line-height: var(--font-line-height); }
+
+.makeupal-heading   { font-size: var(--font-lg);    font-weight: var(--font-weight-heading); line-height: var(--font-line-height); }
+.makeupal-heading-lg{ font-size: var(--font-xl);   font-weight: var(--font-weight-heading); line-height: var(--font-line-height); }
+.makeupal-heading-xl{ font-size: var(--font-2xl);   font-weight: var(--font-weight-heading); line-height: var(--font-line-height); }
+
+.makeupal-body      { font-size: var(--font-base);   font-weight: var(--font-weight-body); line-height: var(--font-line-height); }
+.makeupal-caption   { font-size: var(--font-xs);    font-weight: var(--font-weight-body); line-height: var(--font-line-height); color: var(--color-text-muted); }
+
+    
+/* ═══════════════════════════════════════════════════════════════
+   components.css — Design System Component Definitions
+   Auto-extracted from preview/component-*.html
+   DO NOT EDIT MANUALLY — regenerate via extract-components-css.mjs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Button ────────────────────────────────────────────────── */
+/* @anatomy
+   <div class="page"> <h1 class="page-title">Button</h1> <!-- 1. Primary --> <div class="section"> <div class="section-label">Primary</div>
+*/
+.page {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .page-title {
+      font-size: var(--font-2xl);
+      font-weight: var(--font-weight-heading);
+      margin-bottom: var(--space-16);
+      color: var(--color-text);
+    }
+
+    .section {
+      margin-bottom: var(--space-16);
+    }
+
+    .section-label {
+      font-size: var(--font-xs);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--space-12);
+    }
+
+    .section-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .section-buttons--row {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    /* ── Base button ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:active {
+      opacity: 0.8;
+      transform: scale(0.98);
+    }
+
+    /* ── Primary ── */
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 12px 24px;
+      font-size: var(--font-base);
+      box-shadow: var(--shadow-primary);
+    }
+
+    /* ── Secondary ── */
+    .btn-secondary {
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      padding: 12px 24px;
+      font-size: var(--font-base);
+    }
+
+    /* ── Outline ── */
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+      padding: 12px 24px;
+      font-size: var(--font-base);
+    }
+
+    /* ── Danger ── */
+    .btn-danger {
+      background: var(--color-danger);
+      color: white;
+      padding: 12px 24px;
+      font-size: var(--font-base);
+    }
+
+    /* ── Size: sm ── */
+    .btn-sm {
+      font-size: var(--font-sm);
+      padding: 8px 16px;
+    }
+
+    /* ── Size: md (default) ── */
+    .btn-md {
+      font-size: var(--font-base);
+      padding: 12px 24px;
+    }
+
+    /* ── Size: lg ── */
+    .btn-lg {
+      font-size: var(--font-lg);
+      padding: 16px 32px;
+      width: 100%;
+    }
+
+    /* ── Disabled ── */
+    .btn:disabled,
+    .btn-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+/* ── Card ──────────────────────────────────────────────────── */
+/* @anatomy
+   <div class="page-shell"> <!-- Page Header --> <h1 class="page-title">Card</h1> <p class="page-subtitle">MakeupPal Design System &mdash; Component Preview</p> <!-- ── 1. Makeup Thumbnail Card ── --> <div class="section"> <div class="section-label">1. Makeup Thumbnail Card (Default)</div>
+*/
+/* ── Page reset & layout ── */
+
+
+    .page-shell {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: var(--space-16) var(--space-16) 48px;
+    }
+
+    /* ── Page header ── */
+    .page-title {
+      font-size: var(--font-2xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .page-subtitle {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-16);
+    }
+
+    /* ── Section labels ── */
+    .section {
+      margin-bottom: var(--space-16);
+    }
+
+    .section-label {
+      font-size: var(--font-xs);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-12);
+    }
+
+    /* ── Shared card base ── */
+    .card-base {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    /* ── 1. Makeup Thumbnail Card (default) ── */
+    .card-makeup {
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: box-shadow var(--transition-base), transform var(--transition-base);
+    }
+
+    .card-makeup:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .card-makeup__image {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--gradient-soft);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-makeup__image-placeholder {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-lighter);
+      opacity: 0.6;
+    }
+
+    .card-makeup__image-badge {
+      position: absolute;
+      top: var(--space-12);
+      right: var(--space-12);
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-makeup__image-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: var(--color-text-muted);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-makeup__content {
+      padding: var(--space-12) var(--space-16) var(--space-16);
+    }
+
+    .card-makeup__title {
+      font-size: var(--font-base);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+      line-height: 1.4;
+    }
+
+    .card-makeup__tags {
+      display: flex;
+      gap: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+
+    .card-makeup__tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px var(--space-8);
+      font-size: var(--font-xs);
+      font-weight: var(--font-weight-body);
+      color: var(--color-text-secondary);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-full);
+      line-height: 1.4;
+    }
+
+    .card-makeup__stats {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-makeup__stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .card-makeup__stat svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .card-makeup__stat--star svg {
+      fill: var(--color-gold);
+      stroke: var(--color-gold);
+    }
+
+    .card-makeup__stat--eye svg {
+      fill: none;
+      stroke: var(--color-text-muted);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── 2. Step Card ── */
+    .card-step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xs);
+      padding: var(--space-12);
+      cursor: pointer;
+      transition: box-shadow var(--transition-base);
+    }
+
+    .card-step:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-step__number {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-heading);
+    }
+
+    .card-step__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-step__title {
+      font-size: var(--font-base);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-step__duration {
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-step__thumb {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-step__thumb-placeholder {
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-lighter);
+      opacity: 0.5;
+    }
+
+    /* ── 3. Profile Card ── */
+    .card-profile {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-16);
+      cursor: pointer;
+      transition: box-shadow var(--transition-base);
+    }
+
+    .card-profile:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-profile__avatar {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-full);
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-profile__avatar svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+      opacity: 0.85;
+    }
+
+    .card-profile__info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-profile__name {
+      font-size: var(--font-md);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+
+    .card-profile__desc {
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-profile__action {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-profile__action svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: var(--color-text-muted);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── 4. Resume Card ── */
+    .card-resume {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: var(--space-12) var(--space-16);
+      cursor: pointer;
+      transition: box-shadow var(--transition-base);
+    }
+
+    .card-resume:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-resume__thumb {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-resume__thumb-placeholder {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary-lighter);
+      opacity: 0.5;
+    }
+
+    .card-resume__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-resume__title {
+      font-size: var(--font-base);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-resume__progress {
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+    }
+
+    .card-resume__progress span {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-heading);
+    }
+
+    .card-resume__btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-16);
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-heading);
+      color: #fff;
+      background: var(--color-primary);
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .card-resume__btn:hover {
+      background: var(--color-primary-dark);
+    }
+
+    /* ── 5. Empty State Card ── */
+    .card-empty {
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      padding: 40px var(--space-16) var(--space-16);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .card-empty__icon {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-full);
+      background: var(--color-bg-alt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-16);
+    }
+
+    .card-empty__icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: var(--color-text-muted);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.6;
+    }
+
+    .card-empty__title {
+      font-size: var(--font-md);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .card-empty__desc {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-16);
+      max-width: 240px;
+    }
+
+    .card-empty__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-16);
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-body);
+      color: var(--color-primary);
+      background: transparent;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .card-empty__btn:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-lightest);
+    }
+
+/* ── Chat Bubble ───────────────────────────────────────────── */
+/* @anatomy
+   <div class="page"> <h1 class="page-title">ChatBubble</h1> <p class="page-subtitle">AI 闺蜜 &ldquo;小美&rdquo; 聊天气泡组件</p> <!-- ═══ Variant 1: AI Welcome Message ═══ --> <div class="section"> <div class="section-label">1. AI Welcome Message</div>
+*/
+.page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: var(--space-16);
+    }
+
+    .page-title {
+      font-size: var(--font-xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .page-subtitle {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-16);
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: var(--space-16);
+      padding-bottom: var(--space-16);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: var(--font-xs);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-12);
+    }
+
+    /* ── Chat layout ── */
+    .chat-row {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+
+    .chat-row.user {
+      flex-direction: row-reverse;
+    }
+
+    /* ── Avatar ── */
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: var(--gradient-primary);
+      color: #fff;
+    }
+
+    /* ── Bubble ── */
+    .bubble {
+      max-width: 80%;
+      padding: var(--space-12);
+      font-size: var(--font-base);
+      line-height: var(--font-line-height);
+      word-break: break-word;
+    }
+
+    .bubble.ai {
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      border-radius: var(--radius-lg);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .bubble.user {
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      border-bottom-right-radius: 4px;
+    }
+
+    /* ── Recommended cards inside bubble ── */
+    .card-scroll {
+      display: flex;
+      gap: var(--space-8);
+      overflow-x: auto;
+      padding-bottom: var(--space-8);
+      margin-top: var(--space-8);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .card-scroll::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .card-scroll::-webkit-scrollbar-thumb {
+      background: var(--color-border);
+      border-radius: var(--radius-full);
+    }
+
+    .rec-card {
+      flex-shrink: 0;
+      width: 80px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xs);
+      background: var(--color-bg-card);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition-fast);
+    }
+
+    .rec-card:active {
+      transform: scale(0.97);
+    }
+
+    .rec-card-thumb {
+      width: 80px;
+      height: 60px;
+      background: var(--gradient-rose);
+    }
+
+    .rec-card-title {
+      padding: 4px 6px;
+      font-size: var(--font-xs);
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .view-all-link {
+      display: inline-block;
+      margin-top: var(--space-8);
+      font-size: var(--font-sm);
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-heading);
+    }
+
+    /* ── Typing indicator ── */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: var(--space-12);
+      background: var(--color-bg-alt);
+      border-radius: var(--radius-lg);
+      border-bottom-left-radius: 4px;
+      box-shadow: var(--shadow-xs);
+      width: fit-content;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--color-text-muted);
+      animation: typingPulse 1.2s ease-in-out infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+/* ── Progress Bar ──────────────────────────────────────────── */
+/* @anatomy
+   <div class="page"> <h1 class="page-title">ProgressBar — MakeupPal Design System</h1> <!-- ═══ Section 1: Step Nodes Progress ═══ --> <div class="section"> <div class="section-label">Step Nodes Progress</div>
+*/
+.page {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .page-title {
+      font-size: var(--font-xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-16);
+    }
+
+    .section {
+      margin-bottom: var(--space-16);
+      padding: var(--space-16);
+      background: var(--color-bg-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+
+    .section-label {
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-12);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .variant-block {
+      margin-bottom: var(--space-16);
+    }
+
+    .variant-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .variant-caption {
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-12);
+    }
+
+    /* ── Step Nodes Progress ── */
+    .step-nodes {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) 0;
+    }
+
+    .step-node {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .step-circle {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: all var(--transition-base);
+    }
+
+    .step-circle.completed {
+      background: var(--color-primary);
+    }
+
+    .step-circle.active {
+      background: var(--color-primary);
+      width: 12px;
+      height: 12px;
+      box-shadow: var(--shadow-primary);
+      animation: pulse-ring 2s ease-in-out infinite;
+    }
+
+    .step-circle.pending {
+      background: var(--color-bg-card);
+      border: 2px solid var(--color-border);
+    }
+
+
+    .step-line {
+      width: 28px;
+      height: 2px;
+      flex-shrink: 0;
+    }
+
+    .step-line.completed {
+      background: var(--color-primary);
+    }
+
+    .step-line.pending {
+      background: var(--color-border-light);
+    }
+
+    /* ── Linear Progress Bar ── */
+    .linear-bar-group {
+      padding: var(--space-8) 0;
+    }
+
+    .linear-bar-wrap {
+      margin-bottom: var(--space-16);
+    }
+
+    .linear-bar-wrap:last-child {
+      margin-bottom: 0;
+    }
+
+    .linear-bar-track {
+      width: 100%;
+      height: 4px;
+      background: var(--color-border-lighter);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .linear-bar-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: var(--radius-full);
+      transition: width var(--transition-slow);
+    }
+
+    .linear-bar-label {
+      margin-top: var(--space-8);
+      font-size: var(--font-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Circular Timer ── */
+    .circular-timer-group {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: var(--space-16);
+      padding: var(--space-8) 0;
+    }
+
+    .circular-timer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .circular-timer-svg {
+      width: 80px;
+      height: 80px;
+      transform: rotate(-90deg);
+    }
+
+    .circular-timer-track {
+      fill: none;
+      stroke: var(--color-border-lighter);
+      stroke-width: 4;
+    }
+
+    .circular-timer-fill {
+      fill: none;
+      stroke: var(--color-primary);
+      stroke-width: 4;
+      stroke-linecap: round;
+      transition: stroke-dashoffset var(--transition-slow);
+    }
+
+    .circular-timer-center {
+      position: relative;
+      margin-top: -56px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 80px;
+    }
+
+    .circular-timer-number {
+      font-size: var(--font-xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+    }
+
+    .circular-timer-label {
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+      margin-top: var(--space-8);
+    }
+
+/* ── Tab Bar ───────────────────────────────────────────────── */
+/* @anatomy
+   <div class="page"> <h1 class="page-title">TabBar</h1> <p class="page-subtitle">MakeupPal Design System &mdash; Bottom Navigation Component</p> <!-- ── Variant 1: Default Bottom TabBar (full phone context) ── --> <div class="section-label">Default Bottom TabBar</div>
+*/
+.page {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: var(--space-16);
+    }
+
+    .page-title {
+      font-size: var(--font-2xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .page-subtitle {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-16);
+    }
+
+    /* ── Phone Frame ── */
+    .phone-frame {
+      width: 100%;
+      height: 500px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      position: relative;
+      background: var(--color-bg-card);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: var(--space-16);
+    }
+
+    .phone-frame .mock-content {
+      flex: 1;
+      padding: var(--space-16);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
+      overflow-y: auto;
+    }
+
+    .phone-frame-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* ── Mock page content ── */
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-12) var(--space-16);
+    }
+
+    .mock-header-title {
+      font-size: var(--font-lg);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+    }
+
+    .mock-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: var(--gradient-primary);
+    }
+
+    .mock-search-bar {
+      margin: 0 var(--space-16);
+      height: 40px;
+      border-radius: var(--radius-full);
+      background: var(--color-bg-alt);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-16);
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+    }
+
+    .mock-card-row {
+      display: flex;
+      gap: var(--space-12);
+      padding: 0 var(--space-16);
+      overflow-x: hidden;
+    }
+
+    .mock-card {
+      flex: 1;
+      min-width: 0;
+      height: 120px;
+      border-radius: var(--radius-md);
+      background: var(--color-bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+    }
+
+    .mock-section-title {
+      padding: var(--space-12) var(--space-16) 0;
+      font-size: var(--font-md);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+    }
+
+    .mock-list {
+      padding: var(--space-8) var(--space-16);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .mock-list-item {
+      height: 60px;
+      border-radius: var(--radius-md);
+      background: var(--color-bg-alt);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-12);
+      font-size: var(--font-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── TabBar Component ── */
+    .tabbar {
+      width: 100%;
+      height: 78px;
+      background: color-mix(in srgb, var(--color-bg) 95%, transparent);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-shrink: 0;
+      position: relative;
+      padding-bottom: 0;
+    }
+
+    .tabbar.safe-area {
+      padding-bottom: 16px;
+      height: 94px;
+    }
+
+    .tabbar-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      position: relative;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex: 1;
+    }
+
+    .tabbar-item .tabbar-icon {
+      font-size: 24px;
+      line-height: 1;
+      transition: color var(--transition-base), opacity var(--transition-base);
+    }
+
+    .tabbar-item .tabbar-label {
+      font-size: var(--font-xs);
+      font-weight: 500;
+      transition: color var(--transition-base), font-weight var(--transition-base);
+    }
+
+    .tabbar-item.inactive .tabbar-icon {
+      opacity: 0.4;
+    }
+
+    .tabbar-item.inactive .tabbar-label {
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    .tabbar-item.active .tabbar-icon {
+      color: var(--color-primary);
+    }
+
+    .tabbar-item.active .tabbar-label {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .tabbar-item.active::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 0 0 3px 3px;
+      background: var(--gradient-primary);
+    }
+
+    /* ── Section Labels ── */
+    .section-label {
+      font-size: var(--font-md);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+      margin-top: var(--space-16);
+    }
+
+    .section-label:first-of-type {
+      margin-top: 0;
+    }
+
+    .section-desc {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-12);
+    }
+
+    /* ── State Comparison ── */
+    .state-grid {
+      display: flex;
+      gap: var(--space-12);
+      margin-bottom: var(--space-16);
+      overflow-x: auto;
+      padding-bottom: var(--space-8);
+    }
+
+    .state-card {
+      min-width: 200px;
+      flex-shrink: 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+      overflow: hidden;
+      background: var(--color-bg-card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .state-card-label {
+      padding: var(--space-8) var(--space-12);
+      font-size: var(--font-xs);
+      color: var(--color-text-muted);
+      text-align: center;
+      background: var(--color-bg-alt);
+      border-bottom: 1px solid var(--color-border-lighter);
+    }
+
+    .state-card-body {
+      height: 60px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .state-card-body .tabbar {
+      border-top: none;
+      height: 60px;
+    }
+
+    /* ── Safe Area Variant ── */
+    .safe-area-phone-frame {
+      width: 100%;
+      height: 520px;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      position: relative;
+      background: var(--color-bg-card);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: var(--space-16);
+    }
+
+    .safe-area-phone-frame .phone-frame-inner {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Home Indicator ── */
+    .home-indicator {
+      display: flex;
+      justify-content: center;
+      padding: 6px 0 4px;
+      background: color-mix(in srgb, var(--color-bg) 95%, transparent);
+    }
+
+    .home-indicator span {
+      width: 134px;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--color-text);
+      opacity: 0.15;
+    }
+
+/* ── Tag ───────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="tag-default">新手友好</span> <span class="tag-default">淡颜系</span> <span class="tag-default">10分钟</span>
+*/
+.container {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .page-title {
+      font-size: var(--font-xl);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text);
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      font-size: var(--font-sm);
+      color: var(--color-text-muted);
+      margin-bottom: 32px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-label {
+      font-size: var(--font-sm);
+      font-weight: var(--font-weight-heading);
+      color: var(--color-text-secondary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+
+    /* ── Default Tag ── */
+    .tag-default {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-bg-alt);
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      padding: 4px 12px;
+      font-weight: 400;
+      line-height: var(--font-line-height);
+    }
+
+    /* ── Active Tag ── */
+    .tag-active {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-primary-lightest);
+      color: var(--color-primary-dark);
+      border: 1px solid var(--color-primary-lighter);
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      padding: 4px 12px;
+      font-weight: 400;
+      line-height: var(--font-line-height);
+    }
+
+    /* ── Difficulty Tags ── */
+    .tag-difficulty {
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      padding: 4px 12px;
+      font-weight: 400;
+      line-height: var(--font-line-height);
+    }
+
+    .tag-difficulty--green {
+      background: var(--color-success-lighter);
+      color: var(--color-success);
+    }
+
+    .tag-difficulty--amber {
+      background: var(--color-warning-lighter);
+      color: var(--color-warning);
+    }
+
+    .tag-difficulty--red {
+      background: var(--color-danger-lighter);
+      color: var(--color-danger);
+    }
+
+    /* ── Status Tags ── */
+    .tag-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      padding: 4px 12px;
+      font-weight: 400;
+      line-height: var(--font-line-height);
+    }
+
+    .tag-status--active {
+      background: var(--color-primary-lightest);
+      color: var(--color-primary);
+    }
+
+    .tag-status--done {
+      background: var(--color-success-lighter);
+      color: var(--color-success);
+    }
+
+    .tag-status--skipped {
+      background: var(--color-bg-alt);
+      color: var(--color-text-muted);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .status-dot--pulse {
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    .status-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    .status-check::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 3px;
+      border-left: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(-45deg) translateY(-1px);
+    }
+
+
+    /* ── Category Tab Tags ── */
+    .tag-tab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      padding: 6px 16px;
+      font-weight: 400;
+      line-height: var(--font-line-height);
+      cursor: default;
+      white-space: nowrap;
+    }
+
+    .tag-tab--active {
+      background: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    .tag-tab--inactive {
+      background: var(--color-bg-alt);
+      color: var(--color-text-secondary);
+    }
+    
+</style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.1/dist/index.global.js"></script>
+    <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <style type="text/tailwindcss">
+  @theme inline {
+    --color-foreground: var(--color-foreground);
+    --color-card: var(--color-card);
+    --color-primary: var(--color-primary);
+    --color-muted: var(--color-muted);
+    --color-accent: var(--color-accent);
+    --color-border: var(--color-border);
+    --color-background: var(--color-bg);
+    --radius-sm: var(--color-radius-sm);
+    --radius-md: var(--color-radius-md);
+    --radius-lg: var(--color-radius-lg);
+  }
+  @layer base {
+    body { background: var(--color-bg); color: var(--color-foreground); }
+    td, th { @apply break-words; word-break: break-all; word-break: auto-phrase; }
+    th { @apply whitespace-nowrap; }
+  }
+    </style>
+    <style id="semantic-token-fallback">
+      .bg-foreground { background-color: var(--color-foreground); }
+      .text-foreground { color: var(--color-foreground); }
+      .border-foreground { border-color: var(--color-foreground); }
+      .ring-foreground { --tw-ring-color: var(--color-foreground); }
+      .bg-card { background-color: var(--color-card); }
+      .text-card { color: var(--color-card); }
+      .border-card { border-color: var(--color-card); }
+      .ring-card { --tw-ring-color: var(--color-card); }
+      .bg-primary { background-color: var(--color-primary); }
+      .text-primary { color: var(--color-primary); }
+      .border-primary { border-color: var(--color-primary); }
+      .ring-primary { --tw-ring-color: var(--color-primary); }
+      .bg-muted { background-color: var(--color-muted); }
+      .text-muted { color: var(--color-muted); }
+      .border-muted { border-color: var(--color-muted); }
+      .ring-muted { --tw-ring-color: var(--color-muted); }
+      .bg-accent { background-color: var(--color-accent); }
+      .text-accent { color: var(--color-accent); }
+      .border-accent { border-color: var(--color-accent); }
+      .ring-accent { --tw-ring-color: var(--color-accent); }
+      .bg-border { background-color: var(--color-border); }
+      .text-border { color: var(--color-border); }
+      .border-border { border-color: var(--color-border); }
+      .ring-border { --tw-ring-color: var(--color-border); }
+      .bg-background { background-color: var(--color-bg); }
+      .text-background { color: var(--color-bg); }
+      .border-background { border-color: var(--color-bg); }
+      .ring-background { --tw-ring-color: var(--color-bg); }
+    </style>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      [data-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+      }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased">
+    <main class="pb-[100px]">
+      <!-- Top Nav Bar -->
+      <header class="sticky top-0 z-30 flex items-center justify-between px-4 h-12" style="background:color-mix(in srgb, var(--color-bg) 92%, transparent); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+        <button class="inline-flex items-center justify-center w-9 h-9" aria-label="返回">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <h1 class="absolute left-1/2 -translate-x-1/2" style="font-size:var(--font-xl); font-weight:600; color:var(--color-text);">颜库</h1>
+        <button class="inline-flex items-center justify-center w-9 h-9" aria-label="搜索">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </header>
+
+      <!-- Search Bar -->
+      <div class="px-4 mt-2 mb-3">
+        <div class="flex items-center gap-2 h-10 px-4" style="background:var(--color-bg-soft); border:1px solid var(--color-border-light); border-radius:var(--radius-full);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span style="font-size:var(--font-sm); color:var(--color-text-muted);">搜索妆容、教程、达人...</span>
+        </div>
+      </div>
+
+      <!-- Category Tag Row -->
+      <div class="flex flex-nowrap overflow-x-auto gap-2 px-4 mb-3 no-scrollbar" style="-webkit-overflow-scrolling:touch;">
+        <span class="tag-tab tag-tab--active shrink-0">达人精选</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">局部拆解</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">国风专区</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">通勤妆</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">约会妆</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">派对妆</span>
+        <span class="tag-tab tag-tab--inactive shrink-0">日常</span>
+      </div>
+
+      <!-- Filter Row -->
+      <div class="flex items-center justify-between px-4 mb-4">
+        <div class="flex items-center gap-1.5">
+          <span style="font-size:var(--font-sm); font-weight:600; color:var(--color-primary);">最热</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+        </div>
+        <div class="flex items-center gap-3">
+          <span style="font-size:var(--font-sm); color:var(--color-text-muted);">最新</span>
+          <span style="font-size:var(--font-sm); color:var(--color-text-muted);">评分最高</span>
+        </div>
+      </div>
+
+      <!-- Masonry Grid -->
+      <div class="px-4" style="columns:2; column-gap:var(--space-12);">
+
+        <!-- Card 1 -->
+        <div data-dom-id="card-item-1" class="card-makeup card-base mb-3 break-inside-avoid">
+          <div class="card-makeup__image" style="background:var(--gradient-rose); aspect-ratio:3/4;">
+            <div class="card-makeup__image-badge">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+          </div>
+          <div class="card-makeup__content">
+            <div class="card-makeup__title truncate">韩式白开水妆</div>
+            <div class="card-makeup__tags">
+              <span class="card-makeup__tag">新手友好</span>
+              <span class="card-makeup__tag">淡颜系</span>
+            </div>
+            <div class="card-makeup__stats">
+              <span class="card-makeup__stat card-makeup__stat--star">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.8
+              </span>
+              <span class="card-makeup__stat">1.2k 收藏</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div data-dom-id="card-item-2" class="card-makeup card-base mb-3 break-inside-avoid">
+          <div class="card-makeup__image" style="background:var(--gradient-gold); aspect-ratio:3/5;"></div>
+          <div class="card-makeup__content">
+            <div class="card-makeup__title truncate">日系元气桃花妆</div>
+            <div class="card-makeup__tags">
+              <span class="card-makeup__tag">10分钟</span>
+              <span class="card-makeup__tag">日常</span>
+            </div>
+            <div class="card-makeup__stats">
+              <span class="card-makeup__stat card-makeup__stat--star">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.6
+              </span>
+              <span class="card-makeup__stat">856</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card-makeup card-base mb-3 break-inside-avoid">
+          <div class="card-makeup__image" style="background:var(--gradient-soft); aspect-ratio:3/4;">
+            <div class="card-makeup__image-badge" style="background:rgba(255,255,255,0.9);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-danger)" stroke="var(--color-danger)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+          </div>
+          <div class="card-makeup__content">
+            <div class="card-makeup__title truncate">法式慵懒裸妆</div>
+            <div class="card-makeup__tags">
+              <span class="card-makeup__tag">约会</span>
+              <span class="card-makeup__tag">进阶</span>
+            </div>
+            <div class="card-makeup__stats">
+              <span class="card-makeup__stat card-makeup__stat--star">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.9
+              </span>
+              <span class="card-makeup__stat">2.3k</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card-makeup card-base mb-3 break-inside-avoid">
+          <div class="card-makeup__image" style="background:var(--gradient-primary); aspect-ratio:3/4.2;"></div>
+          <div class="card-makeup__content">
+            <div class="card-makeup__title truncate">通勤十分钟妆</div>
+            <div class="card-makeup__tags">
+              <span class="card-makeup__tag">新手友好</span>
+            </div>
+            <div class="card-makeup__stats">
+              <span class="card-makeup__stat card-makeup__stat--star">
+                <svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                4.7
+              </span>
+              <span class="card-makeup__stat">1.8k</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom TabBar -->
+      <nav class="tabbar safe-area fixed bottom-0 left-0 right-0 z-30">
+        <div class="tabbar-item inactive" data-dom-id="tab-home">
+          <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="tabbar-label">首页</span>
+        </div>
+        <div class="tabbar-item active" data-dom-id="tab-library">
+          <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.04-.23-.29-.38-.63-.38-1.04 0-.92.74-1.67 1.67-1.67H16c3.31 0 6-2.69 6-6 0-5.17-4.49-9-10-9z"/></svg>
+          <span class="tabbar-label">颜库</span>
+        </div>
+        <div class="tabbar-item inactive" data-dom-id="tab-guide">
+          <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <span class="tabbar-label">跟着画</span>
+        </div>
+        <div class="tabbar-item inactive" data-dom-id="tab-profile">
+          <svg class="tabbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="tabbar-label">我的</span>
+        </div>
+      </nav>
+    </main>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

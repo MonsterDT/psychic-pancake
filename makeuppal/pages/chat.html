@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AI闺蜜 — 妆伴 MakeupPal</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+  <div class="page-container">
+    <header class="top-nav" style="position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:50;">
+      <button class="top-nav-btn" data-back aria-label="返回">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+      <span class="top-nav-title">AI 闺蜜</span>
+      <button class="top-nav-btn" aria-label="更多">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1"/>
+          <circle cx="19" cy="12" r="1"/>
+          <circle cx="5" cy="12" r="1"/>
+        </svg>
+      </button>
+    </header>
+
+    <main class="page-content" style="padding-top:48px;padding-bottom:100px;">
+      <div class="chat-container" id="chatContainer" style="padding:var(--space-16) var(--space-12);">
+        
+        <div class="chat-row">
+          <div class="avatar">美</div>
+          <div class="bubble ai">
+            嗨~ 我是你的AI闺蜜小美✨ 今天想画什么风格的妆呀？我可以帮你推荐适合的妆容哦~
+          </div>
+        </div>
+
+        <div class="chat-row">
+          <div class="avatar">美</div>
+          <div style="max-width:85%;">
+            <div class="bubble ai" style="margin-bottom:var(--space-8);">
+              根据你的肤色和脸型，我觉得你可以试试这些妆容：
+            </div>
+            <div class="card-scroll">
+              <div class="rec-card" data-navigate="detail">
+                <div class="rec-card-thumb" style="background:linear-gradient(135deg, #FFD1DC 0%, #E8A0B8 100%);"></div>
+                <div class="rec-card-title">韩式白开水妆</div>
+              </div>
+              <div class="rec-card" data-navigate="detail">
+                <div class="rec-card-thumb" style="background:linear-gradient(135deg, #F0C850 0%, #D4A03C 100%);"></div>
+                <div class="rec-card-title">日系桃花妆</div>
+              </div>
+              <div class="rec-card" data-navigate="detail">
+                <div class="rec-card-thumb" style="background:linear-gradient(135deg, #B89AC8 0%, #8B6FB0 100%);"></div>
+                <div class="rec-card-title">清冷感中式</div>
+              </div>
+              <div class="rec-card" data-navigate="detail">
+                <div class="rec-card-thumb" style="background:linear-gradient(135deg, #E88585 0%, #C45C5C 100%);"></div>
+                <div class="rec-card-title">复古港风妆</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-row user">
+          <div class="avatar" style="background:var(--color-bg-alt);color:var(--color-text-secondary);">你</div>
+          <div class="bubble user">
+            推荐一下适合通勤的妆容吧~
+          </div>
+        </div>
+
+        <div class="chat-row">
+          <div class="avatar">美</div>
+          <div class="bubble ai">
+            通勤妆的话，推荐你试试「通勤气质裸妆」哦~ 自然得体又显气色，而且10分钟就能搞定，特别适合赶时间的早上！
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;z-index:50;">
+      <div style="padding:var(--space-8) var(--space-12);background:var(--color-bg);border-top:1px solid var(--color-border-light);">
+        <div style="display:flex;gap:var(--space-8);margin-bottom:var(--space-8);overflow-x:auto;padding-bottom:4px;" class="no-scrollbar">
+          <button onclick="quickAsk(this)" class="tag-default" style="white-space:nowrap;cursor:pointer;">今天约会化什么妆</button>
+          <button onclick="quickAsk(this)" class="tag-default" style="white-space:nowrap;cursor:pointer;">新手推荐</button>
+          <button onclick="quickAsk(this)" class="tag-default" style="white-space:nowrap;cursor:pointer;">帮我选口红色号</button>
+          <button onclick="quickAsk(this)" class="tag-default" style="white-space:nowrap;cursor:pointer;">单眼皮怎么画眼影</button>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:var(--space-8);">
+          <button style="width:36px;height:36px;border-radius:var(--radius-full);background:var(--color-bg-alt);border:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </button>
+          <div style="flex:1;position:relative;">
+            <textarea 
+              id="chatInput"
+              placeholder="和小美聊聊化妆那点事~"
+              style="width:100%;min-height:40px;max-height:120px;padding:10px 44px 10px 14px;border:1px solid var(--color-border-light);border-radius:var(--radius-full);background:var(--color-bg-alt);font-size:var(--font-base);font-family:var(--font-family);color:var(--color-text);resize:none;outline:none;line-height:20px;transition:border-color var(--transition-fast);"
+              rows="1"
+              onkeydown="handleKeyDown(event, this)"
+              oninput="autoResize(this)"
+            ></textarea>
+          </div>
+          <button onclick="sendMessage()" class="btn btn-primary" style="width:44px;height:44px;padding:0;border-radius:var(--radius-full);flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div style="height:16px;background:var(--color-bg);"></div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+    }
+
+    function handleKeyDown(event, textarea) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function quickAsk(btn) {
+      const input = document.getElementById('chatInput');
+      input.value = btn.textContent;
+      sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      MakeupPal.sendMessage(input);
+    }
+  </script>
+</body>
+</html>
